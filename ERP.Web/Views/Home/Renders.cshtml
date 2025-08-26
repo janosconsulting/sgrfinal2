@@ -1,0 +1,29 @@
+﻿@model List<Mantenimiento.Datos.Entidades.Video>
+<!--Start Blog One-->
+<section class="blog-one blog-one--blog">
+    <div class="container">
+        <div class="sec-title text-center">
+            @*<span class="sec-title__tagline">Visiting our blog</span>*@
+            <h2 class="sec-title__title">Renders</h2>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <!--Start Single Blog One-->
+                <div class="col-xl-6 col-lg-6">
+                    <div class="blog-one__single">
+
+                        <iframe width="560" height="315" src="@item.link" title="@item.titulo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+                        <div class="overlay-text">
+                            <span>@item.titulo</span>
+                        </div>
+
+                    </div>
+                </div>
+                <!--End Single Blog One-->
+            }
+        </div>
+    </div>
+</section>
+<!--End Blog One-->

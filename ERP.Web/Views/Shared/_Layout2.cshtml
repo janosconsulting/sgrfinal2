@@ -1,0 +1,924 @@
+﻿<!DOCTYPE html>
+<!--
+Author: Keenthemes
+Product Name: Metronic - Bootstrap 5 HTML, VueJS, React, Angular. Laravel, Asp.Net Core, Ruby on Rails, Spring Boot, Blazor, Django, Express.js, Node.js, Flask Admin Dashboard Theme & Template
+Product Version: 8.1.6
+Purchase: https://1.envato.market/EA4JP
+Website: http://www.keenthemes.com
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
+-->
+<html lang="es-pe">
+<!--begin::Head-->
+<head>
+    <base href="" />
+    <title>Sistema de Gestión de Procesos</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask & Laravel versions. Grab your copy now and get life-time updates for free." />
+    <meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Metronic - Bootstrap 5 HTML, VueJS, React, Angular. Laravel, Asp.Net Core, Ruby on Rails, Spring Boot, Blazor, Django, Express.js, Node.js, Flask Admin Dashboard Theme & Template" />
+    <meta property="og:url" content="https://keenthemes.com/metronic" />
+    <meta property="og:site_name" content="Keenthemes | Metronic" />
+    <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+    <link rel="shortcut icon" href="@Url.Content("~/Scripts/metronic/media/logos/favicon.ico")" />
+    <!--begin::Fonts(mandatory for all pages)-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+
+
+    <!-- Summernote CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+
+
+
+
+
+
+    <!--end::Fonts-->
+    <!--begin::Vendor Stylesheets(used for this page only)-->
+    <link href="@Url.Content("~/Scripts/metronic/plugins/custom/fullcalendar/fullcalendar.bundle.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/metronic/plugins/custom/datatables/datatables.bundle.css")" rel="stylesheet" type="text/css" />
+    <!--end::Vendor Stylesheets-->
+    <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+    <link href="@Url.Content("~/Scripts/metronic/plugins/global/plugins.bundle.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/metronic/css/style.bundle.css")" rel="stylesheet" type="text/css" />
+    <!--end::Global Stylesheets Bundle-->
+    <style>
+        @{
+            var appwrapper = "0";
+            var appheader = "0";
+            if (Session["usuario"] != null)
+            {
+                appwrapper = "calc(var(--kt-app-sidebar-width) + var(--kt-app-sidebar-gap-start,0px) + var(--kt-app-sidebar-gap-end,0px))";
+                appheader = "calc(var(--kt-app-sidebar-width) + var(--kt-app-sidebar-gap-start,0px) + var(--kt-app-sidebar-gap-end,0px))";
+            }
+        }
+
+        @@media (min-width: 992px) {
+            .app-wrapper {
+                margin-left: @appwrapper !important;
+            }
+            .app-header{
+                left: @appheader !important;
+            }
+        }
+
+    </style>
+    <style>
+        /* Estilos personalizados para el selector de color */
+        #color_selector {
+            width: 50px; /* Ancho personalizado */
+            height: 50px; /* Altura personalizada */
+            padding: 2px; /* Eliminar relleno */
+            border: 5px; /* Eliminar borde */
+            border-radius: 4px; /* Opcional: aplicar un borde redondeado */
+        }
+    </style>
+</head>
+<!--end::Head-->
+<!--begin::Body-->
+<body id="kt_app_body" data-kt-app-header-fixed="true" data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" class="app-default">
+    <!--begin::Theme mode setup on page load-->
+    <script>var defaultThemeMode = "light"; var themeMode; if (document.documentElement) { if (document.documentElement.hasAttribute("data-theme-mode")) { themeMode = document.documentElement.getAttribute("data-theme-mode"); } else { if (localStorage.getItem("data-theme") !== null) { themeMode = localStorage.getItem("data-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-theme", themeMode); }</script>
+    <!--end::Theme mode setup on page load-->
+    <!--begin::App-->
+    <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+        <!--begin::Page-->
+        <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+            <!--begin::Header-->
+            <div id="kt_app_header" class="app-header">
+                <!--begin::Header container-->
+                <div class="app-container container-fluid d-flex align-items-stretch flex-stack" id="kt_app_header_container">
+                    <!--begin::Sidebar toggle-->
+                    <div class="d-flex align-items-center d-block d-lg-none ms-n3" title="Show sidebar menu">
+                        <div class="btn btn-icon btn-active-color-primary w-35px h-35px me-2" id="kt_app_sidebar_mobile_toggle">
+                            <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
+                            <span class="svg-icon svg-icon-2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="currentColor" />
+                                    <path opacity="0.3" d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z" fill="currentColor" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </div>
+                        <!--begin::Logo image-->
+                        <a href="@Url.Action("Index","Dashboard")">
+                            <img alt="Logo" src="@Url.Content("~/Scripts/metronic/media/logos/demo38-small.svg")" class="h-30px" />
+                        </a>
+                        <!--end::Logo image-->
+                    </div>
+                    <!--end::Sidebar toggle-->
+                    <!--begin::Toolbar wrapper-->
+                    <div class="app-navbar flex-lg-grow-1" id="kt_app_header_navbar">
+                        <div class="app-navbar-item d-flex align-items-stretch flex-lg-grow-1">
+                        </div>
+                        <div class="d-flex align-items-stretch" id="kt_app_header_menu_wrapper">
+                            <!--begin::Menu holder-->
+                            <div class="app-header-menu app-header-mobile-drawer align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="app-header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_header_menu_toggle" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_app_body', lg: '#kt_app_header_menu_wrapper'}">
+                                <!--begin::Menu-->
+                                <!--<div class="menu menu-rounded menu-column menu-lg-row menu-active-bg menu-title-gray-600 menu-state-dark menu-arrow-gray-400 fw-semibold fw-semibold fs-6 align-items-stretch my-5 my-lg-0 px-2 px-lg-0" id="#kt_app_header_menu" data-kt-menu="true">-->
+                                <!--begin:Menu item-->
+                                <!--<div data-kt-menu-placement="bottom-start" data-kt-menu-offset="-250,0" class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2">-->
+                                <!--begin:Menu link-->
+                                <!--<a href="@Url.Action("Index","Home")" class="menu-link"><span class="menu-title">Inicio</span><span class="menu-arrow d-lg-none"></span></a>-->
+                                <!--end:Menu link-->
+                                <!--</div>-->
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <!--<div data-kt-menu-placement="bottom-start" data-kt-menu-offset="-400,0" class="menu-item menu-lg-down-accordion me-0 me-lg-2">-->
+                                <!--begin:Menu link-->
+                                <!--<a href="@Url.Action("Publicaciones","Articulo")" class="menu-link"><span class="menu-title">Artículos y publicaciones</span><span class="menu-arrow d-lg-none"></span></a>-->
+                                <!--end:Menu link-->
+                                <!--</div>-->
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <!--<div data-kt-menu-placement="bottom-start" data-kt-menu-offset="12,0" class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">-->
+                                <!--begin:Menu link-->
+                                <!--<a href="@Url.Action("Perfiles","Autor")" class="menu-link"><span class="menu-title">Perfiles</span><span class="menu-arrow d-lg-none"></span></a>-->
+                                <!--end:Menu link-->
+                                <!--</div>-->
+                                <!--end:Menu item-->
+                                <!--</div>-->
+                                <!--end::Menu-->
+                            </div>
+                            <!--end::Menu holder-->
+                        </div>
+                        <!--begin::User menu-->
+                        <!--begin::User menu-->
+                        <div class="app-navbar-item ms-1 ms-md-3" id="kt_header_user_menu_toggle">
+                            <!--begin::Menu wrapper-->
+                            @{ var esAdmin = Convert.ToInt32(Session["esAdmin"]); }
+                            @if (Session["usuario"] != null)
+                            {
+                                <div class="cursor-pointer symbol symbol-circle symbol-35px symbol-md-45px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                                    <img src="@Url.Content("~/Scripts/metronic/media/avatars/300-2.jpg")" alt="user" />
+                                </div> <!--begin::User account menu-->
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" data-kt-menu="true">
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <div class="menu-content d-flex align-items-center px-3">
+                                            <!--begin::Avatar-->
+                                            <div class="symbol symbol-50px me-5">
+                                                <img alt="Logo" src="@Url.Content("~/Scripts/metronic/media/avatars/300-2.jpg")" />
+                                            </div>
+                                            <!--end::Avatar-->
+                                            <!--begin::Username-->
+                                            <div class="d-flex flex-column">
+                                                <div class="fw-bold d-flex align-items-center fs-5">
+                                                    @Session["usuario"]
+                                                    <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">@(esAdmin==1? "Administrador":"Autor")</span>
+                                                </div>
+                                            </div>
+                                            <!--end::Username-->
+                                        </div>
+                                    </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu separator-->
+                                    <div class="separator my-2"></div>
+                                    <!--end::Menu separator-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-5">
+                                        <a href="@Url.Action("MisDatos","Dashboard")" class="menu-link px-5">Mi perfil</a>
+                                    </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu separator-->
+                                    <div class="separator my-2"></div>
+                                    <!--end::Menu separator-->
+                                    <div class="menu-item px-5">
+                                        <a href="@Url.Action("Salir","Login")" class="menu-link px-5">Cerrar sesión</a>
+                                    </div>
+                                    <!--end::Menu item-->
+                                </div> <!--end::User account menu--> }
+                            else
+                            { <!--begin::Toolbar-->
+                                <div class="flex-equal text-end ms-1">
+                                    <a href="@Url.Action("Index","Login")" class="btn btn-success h-35px w-150px d-flex flex-center h-lg-40px">Iniciar sesión</a>
+                                </div> <!--begin::Toolbar-->
+                                <div class="flex-equal text-end ms-1">
+                                    <button class="btn btn-secondary h-35px w-200px d-flex flex-center h-lg-40px" data-bs-toggle="modal" data-bs-target="#kt_modal_add_autor">Crear cuenta nueva</button>
+                                </div>
+                            }
+                            <!--end::Menu wrapper-->
+                        </div>
+                        <!--end::User menu-->
+                        <!--end::User menu-->
+                    </div>
+                    <!--end::Navbar-->
+                    <!--begin::Separator-->
+                    <div class="app-navbar-separator separator d-none d-lg-flex"></div>
+                    <!--end::Separator-->
+                </div>
+                <!--end::Header container-->
+            </div>
+            <!--end::Header-->
+            <!--begin::Wrapper-->
+            <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+                @if (Session["usuario"] != null)
+                {<!--begin::Sidebar-->
+                    <div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
+                        <div class="app-sidebar-header d-flex flex-stack d-none d-lg-flex pt-8 pb-2" id="kt_app_sidebar_header">
+                            <!--begin::Logo-->
+                            <a href="@Url.Action("Index","Dashboard")" class="app-sidebar-logo">
+                                <img alt="Logo" src="@Url.Content("~/Scripts/metronic/media/logos/demo38.svg")" class="h-25px d-none d-sm-inline app-sidebar-logo-default theme-light-show" />
+                                <img alt="Logo" src="@Url.Content("~/Scripts/metronic/media/logos/demo38-dark.svg")" class="h-20px h-lg-25px theme-dark-show" />
+                            </a>
+                            <!--end::Logo-->
+                            <!--begin::Sidebar toggle-->
+                            <div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-sm btn-icon bg-light btn-color-gray-700 btn-active-color-primary d-none d-lg-flex rotate" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
+                                <!--begin::Svg Icon | path: icons/duotune/text/txt011.svg-->
+                                <span class="svg-icon svg-icon-4 rotate-180">
+                                    <svg width="24" height="21" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="14" height="3" rx="1.5" transform="matrix(-1 0 0 1 24 0)" fill="currentColor" />
+                                        <rect width="24" height="3" rx="1.5" transform="matrix(-1 0 0 1 24 9)" fill="currentColor" />
+                                        <rect width="18" height="3" rx="1.5" transform="matrix(-1 0 0 1 24 18)" fill="currentColor" />
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </div>
+                            <!--end::Sidebar toggle-->
+                        </div>
+                        <!--begin::Navs-->
+                        <div class="app-sidebar-navs flex-column-fluid py-6" id="kt_app_sidebar_navs">
+                            <div id="kt_app_sidebar_navs_wrappers" class="app-sidebar-wrapper hover-scroll-y my-2" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_header" data-kt-scroll-wrappers="#kt_app_sidebar_navs" data-kt-scroll-offset="5px">
+                                <!--begin::Teams-->
+                                <div class="app-sidebar-menu-secondary menu menu-rounded menu-column mb-6">
+                                    <!--begin::Heading-->
+                                    <div class="menu-item mb-2">
+                                        <div class="menu-heading text-uppercase fs-7 fw-bold">Cuenta</div>
+                                        <!--begin::Separator-->
+                                        <div class="app-sidebar-separator separator"></div>
+                                        <!--end::Separator-->
+                                    </div>
+                                    <!--end::Heading-->
+                                    <!--begin::Menu Item-->
+                                    <div class="menu-item">
+                                        <!--begin::Menu link-->
+                                        <a class="menu-link" href="@Url.Action("MisDatos","Dashboard")">
+                                            <!--begin::Icon-->
+                                            <span class="menu-icon">
+                                                <i class="fonticon-setting fs-2"></i>
+                                            </span>
+                                            <!--end::Icon-->
+                                            <!--begin::Title-->
+                                            <span class="menu-title">Mis datos</span>
+                                            <!--end::Title-->
+                                        </a>
+                                        <!--end::Menu link-->
+                                    </div>
+                                    <!--end::Menu Item-->
+                                </div>
+                                <!--end::Teams-->
+                                <!--begin::Sidebar menu-->
+                                <div id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false" class="app-sidebar-menu-primary menu menu-column menu-rounded menu-sub-indention menu-state-bullet-primary">
+                                    <!--begin::Heading-->
+                                    <div class="menu-item mb-2">
+                                        <div class="menu-heading text-uppercase fs-7 fw-bold">Menu</div>
+                                        <!--begin::Separator-->
+                                        <div class="app-sidebar-separator separator"></div>
+                                        <!--end::Separator-->
+                                    </div>
+                                    <!--end::Heading-->
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fonticon-setting fs-2"></i>
+                                            </span>
+                                            <span class="menu-title">Mantenimiento</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link" href="@Url.Action("Index","Proyecto")">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Proyecto</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link" href="@Url.Action("Index","Cliente")">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Cliente</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link" href="@Url.Action("Index","TipoRequerimiento")">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Tipo Requerimiento</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link" href="@Url.Action("Index","Trabajador")">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Trabajador</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                        </div>
+                                        <!--end:Menu sub-->
+                                    </div>
+                                    <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="las la-tasks fs-1"></i>
+                                            </span>
+                                            <span class="menu-title">Procesos</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link" href="@Url.Action("Index","Requerimiento")">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Requerimiento</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link" href="@Url.Action("Index","Tareas")">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Tareas</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                        </div>
+                                        <!--end:Menu sub-->
+                                    </div>
+                                    <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="las la-info-circle fs-1"></i>
+                                            </span>
+                                            <span class="menu-title">Reportes</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link" href="@Url.Action("Index","Proyecto")">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Proyecto</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                        </div>
+                                        <!--end:Menu sub-->
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link" href="@Url.Action("Index","RequerimientosporTrabajador")">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Requerimientos Por Trabajador</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                        </div>
+                                        <!--end:Menu sub-->
+                                    </div>
+                                </div>
+                                <!--end::Sidebar menu-->
+                            </div>
+                        </div>
+                        <!--end::Navs-->
+                    </div> <!--end::Sidebar-->
+                }
+                <!--begin::Main-->
+                <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                    <!--begin::Content wrapper-->
+                    @RenderBody()
+                    <!--end::Content wrapper-->
+                    <!--begin::Footer-->
+                    <div id="kt_app_footer" class="app-footer">
+                        <!--begin::Footer container-->
+                        <div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
+                            <!--begin::Copyright-->
+                            <div class="text-dark order-2 order-md-1">
+                                <span class="text-muted fw-semibold me-1">2022&copy;</span>
+                                <a href="https://keenthemes.com" target="_blank" class="text-gray-800 text-hover-primary">Keenthemes</a>
+                            </div>
+                            <!--end::Copyright-->
+                        </div>
+                        <!--end::Footer container-->
+                    </div>
+                    <!--end::Footer-->
+                </div>
+                <!--end:::Main-->
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Page-->
+    </div>
+    <!--end::App-->
+    <!--begin::Modal - Add task-->
+    <div class="modal fade" id="kt_modal_add_autor" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header" id="kt_modal_add_user_header">
+                    <!--begin::Modal title-->
+                    <h2 class="fw-bold" id="titleModal">Registrarte</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-autors-modal-action="close">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <!--begin::Form-->
+                    <form id="kt_modal_add_autor_form" class="form" action="#">
+                        <!--begin::Scroll-->
+                        <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+                            <!--begin::Heading-->
+                            <div class="pb-10 pb-lg-15">
+                                <!--begin::Title-->
+                                <h2 class="fw-bold text-dark">Información personal </h2>
+                                <!--end::Title-->
+
+                            </div>
+                            <!--end::Heading-->
+                            <!--begin::Input group-->
+                            <div class="row g-9 mb-8">
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row">
+                                    <input type="hidden" id="idAutor" value="0" />
+                                    <label class="required fs-6 fw-semibold mb-2">Tipo documento identidad</label>
+                                    <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Seleccione un tipo de documento" id="idTipoIdentidad" name="idTipoIdentidad">
+                                        <option value="">Seleccione un tipo...</option>
+                                        <option value="1">DNI</option>
+                                        <option value="2">RUC</option>
+                                    </select>
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row">
+                                    <label class="required fs-6 fw-semibold mb-2">Nro. documento</label>
+                                    <!--begin::Input-->
+                                    <div class="position-relative d-flex align-items-center">
+                                        <!--begin::Input-->
+                                        <input type="text" id="nroIdentidad" name="nroIdentidad" class="form-control form-control-solid mb-3 mb-lg-0" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="row mb-5">
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="required fs-5 fw-semibold mb-2">Nombres</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control form-control-solid" placeholder="" id="nombres" name="nombres" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row">
+                                    <!--end::Label-->
+                                    <label class="required fs-5 fw-semibold mb-2">Apellido paterno</label>
+                                    <!--end::Label-->
+                                    <!--end::Input-->
+                                    <input type="text" class="form-control form-control-solid" placeholder="" id="apellidoPaterno" name="apellidoPaterno" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="row mb-5">
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="required fs-5 fw-semibold mb-2">Apellido materno</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control form-control-solid" placeholder="" id="apellidoMaterno" name="apellidoMaterno" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row">
+                                    <!--begin::Wrapper-->
+                                    <div class="d-flex flex-stack">
+                                        <!--begin::Label-->
+                                        <div class="me-5">
+                                            <!--begin::Label-->
+                                            <label class="fs-5 fw-semibold">Es alumno?</label>
+                                            <!--end::Label-->
+                                        </div>
+                                        <!--end::Label-->
+                                        <!--begin::Switch-->
+                                        <label class="form-check form-switch form-check-custom form-check-solid">
+                                            <!--begin::Input-->
+                                            <input class="form-check-input" id="cboEsAlumno" name="esAlumno" type="checkbox" />
+                                            <!--end::Input-->
+                                            <!--begin::Label-->
+                                            <span class="form-check-label fw-semibold text-muted">Si</span>
+                                            <!--end::Label-->
+                                        </label>
+                                        <!--end::Switch-->
+                                    </div>
+                                    <!--begin::Wrapper-->
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <!--<div class="row mb-5">-->
+                            <!--begin::Col-->
+                            <!--<div class="col-md-12 fv-row">-->
+                            <!--begin::Label-->
+                            <!--<label class="required fs-5 fw-semibold mb-2">Biografía</label>-->
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <!--<textarea class="form-control" id="biografia" name="biografia" data-kt-autosize="true"></textarea>-->
+                            <!--end::Input-->
+                            <!--</div>-->
+                            <!--end::Col-->
+                            <!--</div>-->
+                            <!--end::Input group-->
+                            <!--begin::Heading-->
+                            <div class="pb-10 pb-lg-15">
+                                <!--begin::Title-->
+                                <h2 class="fw-bold text-dark">Información de acceso </h2>
+                                <!--end::Title-->
+
+                            </div>
+                            <!--end::Heading-->
+                            <!--begin::Input group-->
+                            <div class="row mb-5">
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="required fs-5 fw-semibold mb-2">Usuario</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control form-control-solid" placeholder="" id="username" name="username" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row">
+                                    <!--end::Label-->
+                                    <label class="required fs-5 fw-semibold mb-2">Contraseña</label>
+                                    <!--end::Label-->
+                                    <!--end::Input-->
+                                    <input type="password" class="form-control form-control-solid" placeholder="" id="password" name="password" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Input group-->
+                        </div>
+                        <!--end::Scroll-->
+                        <!--begin::Actions-->
+                        <div class="text-center pt-15">
+                            <button type="reset" class="btn btn-light me-3" data-kt-autors-modal-action="cancel">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" data-kt-autors-modal-action="submit">
+                                <span class="indicator-label">Guardar</span>
+                                <span class="indicator-progress">
+                                    Espere un momento...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                        </div>
+                        <!--end::Actions-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - Add task-->
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+        <span class="svg-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="currentColor" />
+                <path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="currentColor" />
+            </svg>
+        </span>
+        <!--end::Svg Icon-->
+    </div>
+    <!--end::Scrolltop-->
+    <!--begin::Javascript-->
+    <script>
+        var hostUrl = "assets/";
+        // Definir el objeto de configuración para el idioma español
+        var spanishLocale = {
+
+            weekdays: {
+                shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+                longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
+            },
+            months: {
+                shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                longhand: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+            },
+            firstDayOfWeek: 1,
+            rangeSeparator: ' a ',
+            weekAbbreviation: 'Sm',
+            scrollTitle: 'Desplazar para aumentar',
+            toggleTitle: 'Haz clic para cambiar',
+            time_24hr: true
+        };
+
+    </script>
+    <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+    <script src="@Url.Content("~/Scripts/metronic/plugins/global/plugins.bundle.js")"></script>
+    <script src="@Url.Content("~/Scripts/metronic/js/scripts.bundle.js")"></script>
+    <!--end::Global Javascript Bundle-->
+    <!--begin::Vendors Javascript(used for this page only)-->
+    <script src="@Url.Content("~/Scripts/metronic/plugins/custom/fullcalendar/fullcalendar.bundle.js")"></script>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
+    <script src="@Url.Content("~/Scripts/metronic/plugins/custom/datatables/datatables.bundle.js")"></script>
+
+   
+    
+    <!-- Summernote JS -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+
+
+
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="@Url.Content("~/Scripts/metronic/js/widgets.bundle.js")"></script>
+    <script src="@Url.Content("~/Scripts/metronic/js/custom/widgets.js")"></script>
+    <script src="@Url.Content("~/Scripts/metronic/js/custom/apps/chat/chat.js")"></script>
+    <script src="@Url.Content("~/Scripts/metronic/js/custom/utilities/modals/upgrade-plan.js")"></script>
+    <script src="@Url.Content("~/Scripts/metronic/js/custom/utilities/modals/users-search.js")"></script>
+    <script src="@Url.Content("~/Scripts/library.js?v=5.0")" type="text/javascript"></script>
+    <!--end::Custom Javascript-->
+    <!--end::Javascript-->
+    @RenderSection("scripts", required: false)
+
+    <script>
+        "use strict";
+        var KTUsersAddUser = (function () {
+            const t = document.getElementById("kt_modal_add_autor"),
+                e = t.querySelector("#kt_modal_add_autor_form"),
+                n = new bootstrap.Modal(t);
+            return {
+                init: function () {
+                    (() => {
+                        var o = FormValidation.formValidation(e, {
+                            fields: {
+                                idTipoIdentidad: {
+                                    validators: { notEmpty: { message: "El tipo de identidad es requerido" } },
+                                },
+                                nroIdentidad: {
+                                    validators: { notEmpty: { message: "El nro de documento es requerido" } },
+                                },
+                                nombres: {
+                                    validators: { notEmpty: { message: "El nombre es requerido" } },
+                                },
+                                apellidoPaterno: {
+                                    validators: { notEmpty: { message: "El apellido paterno es requerido" } },
+                                },
+                                apellidoMaterno: {
+                                    validators: { notEmpty: { message: "El apellido materno es requerido" } },
+                                },
+                                //biografia: {
+                                //    validators: { notEmpty: { message: "Ingrese su biografía" } },
+                                //},
+                                username: {
+                                    validators: { notEmpty: { message: "El usuario es requerido" } },
+                                },
+                                password: {
+                                    validators: { notEmpty: { message: "La contraseña es requerida" } },
+                                },
+                            },
+                            plugins: {
+                                trigger: new FormValidation.plugins.Trigger(),
+                                bootstrap: new FormValidation.plugins.Bootstrap5({
+                                    rowSelector: ".fv-row",
+                                    eleInvalidClass: "",
+                                    eleValidClass: "",
+                                }),
+                            },
+                        });
+                        const i = t.querySelector('[data-kt-autors-modal-action="submit"]');
+                        i.addEventListener("click", (t) => {
+                            t.preventDefault(),
+                                o &&
+                                o.validate().then(function (t) {
+
+                                    if (t === "Valid") {
+                                        i.setAttribute("data-kt-indicator", "on");
+                                        i.disabled = true;
+
+                                        const formData = new FormData(e);
+                                        const formDataEnvio = new FormData();
+                                        formDataEnvio.append("Autor.idAutor", $("#idAutor").val());
+                                        formDataEnvio.append("Autor.idTipoIdentidad", formData.get('idTipoIdentidad'));
+                                        formDataEnvio.append("Autor.nroIdentidad", formData.get('nroIdentidad'));
+                                        formDataEnvio.append("Autor.nombres", formData.get('nombres'));
+                                        formDataEnvio.append("Autor.apellidoPaterno", formData.get('apellidoPaterno'));
+                                        formDataEnvio.append("Autor.apellidoMaterno", formData.get('apellidoMaterno'));
+                                        //formDataEnvio.append("Autor.biografia", formData.get('biografia'));
+                                        formDataEnvio.append("Autor.esAlumno", $('#cboEsAlumno').is(":checked") ? 1 : 0);
+                                        formDataEnvio.append("Autor.idEstado", 1);
+                                        formDataEnvio.append("Usuario.username", formData.get('username'));
+                                        formDataEnvio.append("Usuario.contrasenia", formData.get('password'));
+
+                                        // Realizar la solicitud Ajax
+                                        $.ajax({
+                                            url: "Autor/Registrar",
+                                            type: "POST",
+                                            data: formDataEnvio,
+                                            processData: false,
+                                            contentType: false,
+                                            success: function (response) {
+                                                ShowMessage(response.idResultado, response.mensaje, function () {
+                                                    window.location.reload();
+                                                    n.hide();
+                                                });
+
+                                            },
+                                            error: function (error) {
+                                                console.error("Error al enviar el formulario");
+                                                console.log(error);
+
+                                                // Mostrar mensaje de error
+                                                Swal.fire({
+                                                    text: "Se produjo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
+                                                    icon: "error",
+                                                    buttonsStyling: false,
+                                                    confirmButtonText: "Ok, entendido",
+                                                    customClass: { confirmButton: "btn btn-primary" },
+                                                });
+                                            },
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            text: "Lo sentimos, parece que se han detectado algunos errores, inténtalo de nuevo.",
+                                            icon: "error",
+                                            buttonsStyling: !1,
+                                            confirmButtonText: "Ok, ¡entendido!",
+                                            customClass: { confirmButton: "btn btn-primary" },
+                                        });
+                                    }
+
+                                    console.log("validated!")
+
+                                });
+                        }),
+                            t
+                                .querySelector('[data-kt-autors-modal-action="cancel"]')
+                                .addEventListener("click", (t) => {
+                                    t.preventDefault(),
+                                        Swal.fire({
+                                            text: "¿Está seguro de que desea cancelar?",
+                                            icon: "warning",
+                                            showCancelButton: !0,
+                                            buttonsStyling: !1,
+                                            confirmButtonText: "¡Sí, cancelar!",
+                                            cancelButtonText: "No, regresar",
+                                            customClass: {
+                                                confirmButton: "btn btn-primary",
+                                                cancelButton: "btn btn-active-light",
+                                            },
+                                        }).then(function (t) {
+                                            t.value
+                                                ? (e.reset(), n.hide())
+                                                : "cancel" === t.dismiss &&
+                                                Swal.fire({
+                                                    text: "Your form has not been cancelled!.",
+                                                    icon: "error",
+                                                    buttonsStyling: !1,
+                                                    confirmButtonText: "Ok, got it!",
+                                                    customClass: { confirmButton: "btn btn-primary" },
+                                                });
+                                        });
+                                }),
+                            t
+                                .querySelector('[data-kt-autors-modal-action="close"]')
+                                .addEventListener("click", (t) => {
+                                    t.preventDefault(),
+                                        Swal.fire({
+                                            text: "Are you sure you would like to cancel?",
+                                            icon: "warning",
+                                            showCancelButton: !0,
+                                            buttonsStyling: !1,
+                                            confirmButtonText: "Yes, cancel it!",
+                                            cancelButtonText: "No, return",
+                                            customClass: {
+                                                confirmButton: "btn btn-primary",
+                                                cancelButton: "btn btn-active-light",
+                                            },
+                                        }).then(function (t) {
+                                            t.value
+                                                ? (e.reset(), n.hide())
+                                                : "cancel" === t.dismiss &&
+                                                Swal.fire({
+                                                    text: "Your form has not been cancelled!.",
+                                                    icon: "error",
+                                                    buttonsStyling: !1,
+                                                    confirmButtonText: "Ok, got it!",
+                                                    customClass: { confirmButton: "btn btn-primary" },
+                                                });
+                                        });
+                                });
+                    })();
+                },
+            };
+        })();
+        KTUtil.onDOMContentLoaded(function () {
+            KTUsersAddUser.init();
+        });
+
+        $(document).ready(function () {
+
+        });
+    </script>
+</body>
+<!--end::Body-->
+</html>
+

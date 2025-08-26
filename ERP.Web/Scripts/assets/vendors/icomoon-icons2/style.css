@@ -1,0 +1,123 @@
+@font-face {
+  font-family: 'alori-icon-three';
+  src: url('fonts/alori-icon-threec59d.eot?lci3d7');
+  src: url('fonts/alori-icon-threec59d.eot?lci3d7#iefix') format('embedded-opentype'),
+    url('fonts/alori-icon-threec59d.ttf?lci3d7') format('truetype'),
+    url('fonts/alori-icon-threec59d.woff?lci3d7') format('woff'),
+    url('fonts/alori-icon-threec59d.svg?lci3d7#alori-icon-three') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="alori-icon-three-"],
+[class*=" alori-icon-three-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'alori-icon-three' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.alori-icon-three-arrow-down:before {
+  content: "\e900";
+}
+
+.alori-icon-three-arrow-up:before {
+  content: "\e901";
+}
+
+.alori-icon-three-arrow-left:before {
+  content: "\e902";
+}
+
+.alori-icon-three-arrow-right:before {
+  content: "\e903";
+}
+
+.alori-icon-three-check:before {
+  content: "\e904";
+}
+
+.alori-icon-three-clock1:before {
+  content: "\e905";
+}
+
+.alori-icon-three-email:before {
+  content: "\e906";
+}
+
+.alori-icon-three-heart:before {
+  content: "\e907";
+}
+
+.alori-icon-three-location:before {
+  content: "\e908";
+}
+
+.alori-icon-three-phone:before {
+  content: "\e909";
+}
+
+.alori-icon-three-phone1:before {
+  content: "\e90a";
+}
+
+.alori-icon-three-quote:before {
+  content: "\e90b";
+}
+
+.alori-icon-three-right-arrow:before {
+  content: "\e90c";
+}
+
+.alori-icon-three-search:before {
+  content: "\e90d";
+}
+
+.alori-icon-three-search1:before {
+  content: "\e90e";
+}
+
+.alori-icon-three-send:before {
+  content: "\e90f";
+}
+
+.alori-icon-three-size:before {
+  content: "\e910";
+}
+
+.alori-icon-three-swastika:before {
+  content: "\e911";
+}
+
+.alori-icon-three-up-arrow:before {
+  content: "\e912";
+}
+
+.alori-icon-three-down-arrow:before {
+  content: "\e913";
+}
+
+.alori-icon-three-left-arrow:before {
+  content: "\e914";
+}
+
+.alori-icon-three-right-arrow1:before {
+  content: "\e915";
+}
+
+.alori-icon-three-user:before {
+  content: "\e916";
+}
+
+.alori-icon-three-user-flow:before {
+  content: "\e917";
+}

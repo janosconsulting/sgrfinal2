@@ -1,0 +1,143 @@
+﻿<!--Start Footer Three-->
+<footer class="footer-three">
+    <div class="footer-three__top">
+        <div class="footer-three__top-bg"
+             style="background-color: #565252"></div> <!--background-image: url(@Url.Content("~/Scripts/assets/images/backgrounds/footer-v3-bg.jpg"));-->
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="footer-three__top-wrapper">
+                        <div class="row">
+
+                            <!--Start Footer Widget Column Two-->
+                            <div class="col-xl-3 col-lg-6 col-md-6 wow animated fadeInUp" data-wow-delay="0.1s">
+                                <div class="footer-widget__column-two footer-widget__about-two">
+                                    <div class="logo-box">
+                                        <a href="index.html">
+                                            <img src="@Url.Content("~/Scripts/assets/images/resources/IMG-20230106-WA0001_Footer.jpg")"
+                                                 alt="">
+                                        </a>
+                                    </div>
+
+                                    <p class="footer-widget__about-two-text">
+
+                                    </p>
+
+                                    <div class="social-links">
+                                        <ul>
+                                            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End Footer Widget Column Two-->
+                            <!--Start Footer Widget Column Two-->
+                            <div class="col-xl-4 col-lg-6 col-md-6 wow animated fadeInUp" data-wow-delay="0.1s">
+                                <div class="footer-widget__column-two footer-widget__address-two">
+                                    <h2 class="footer-widget__title-two" style="color: white;">CUSTOMER SALES & SUPPORT</h2>
+
+                                    <ul class="footer-widget__address-two-contact-info">
+                                        <li>
+                                            <div class="icon-box">
+                                                <span class="alori-icon-three-email"></span>
+                                            </div>
+
+                                            <div class="text-box">
+                                                <p>
+                                                    <a href="mailto:needhelp@company.com" style="color: white;">sales@fourcorners.es</a>
+                                                </p>
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="icon-box">
+                                                <span class="alori-icon-three-phone1"></span>
+                                            </div>
+
+                                            <div class="text-box">
+                                                <p>
+                                                    <a href="tel:123456789" style="color: white;">+1 (407) 624-9153</a>
+                                                </p>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--End Footer Widget Column Two-->
+                            <!--Start Footer Widget Column Two-->
+                            <div class="col-xl-3 col-lg-6 col-md-6 wow animated fadeInUp" data-wow-delay="0.1s">
+                                <div class="footer-widget__column-two footer-widget__services-two">
+                                    <h2 class="footer-widget__title-two" style="color: white;">SERVICES</h2>
+
+                                    <ul class="footer-widget__services-two-list" style="margin-left:20px">
+                                        <li>
+                                            <a href="#" style="color: white;">
+                                                <span class="fa fa-check"></span> KITCHEN CABINETS
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" style="color: white;">
+                                                <span class="fa fa-check"></span> BATHROOM VANITIES
+                                            </a>
+                                           
+                                        </li>
+                                      
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--End Footer Widget Column Two-->
+                            <!--Start Footer Widget Column Two-->
+                            <div class="col-xl-2 col-lg-6 col-md-6 wow animated fadeInUp" data-wow-delay="0.1s">
+                                <div class="footer-widget__column-two footer-widget__newsletter-two">
+                                    <h2 class="footer-widget__title-two" style="color: white;">OUR WORK</h2>
+
+                                    <ul class="footer-widget__services-two-list">
+                                        <li>
+                                            <a href="#" style="color: white;">GALLERY</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--End Footer Widget Column Two-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Contact Page Google Map Start-->
+    <section class="contact-page-google-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23580.220030421184!2d-81.38236143753966!3d28.5330859506041!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88e77afdfd79f2f7%3A0x6abb38a58ec50592!2s255%20S%20Orange%20Ave%20Suite%20104%2C%20Orlando%2C%20FL%2032801%2C%20EE.%20UU.!5e0!3m2!1ses-419!2spe!4v1688754334649!5m2!1ses-419!2spe" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </section>
+    <!--Contact Page Google Map End-->
+    <!--Start Footer One Bottom-->
+    <div class="footer-three__bottom clearfix" style="background:#001014">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="footer-three__bottom-inner">
+                        <div class="footer-three__bottom-text">
+                            @{var anio = DateTime.Now.Year; }
+                            <p  style="color:#fff;">Four Corners, @DateTime.Now.Year. All Rights Reserved.</p>
+                        </div> 
+
+                        <div class="footer-three__bottom-menu">
+                            <ul>
+                                <li><a href="#" style="color:#fff;">Privacy & Terms</a></li>
+                                <li><a href="@Url.Action("AboutAs","Home")" style="color:#fff;"> Contact Us</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Footer One Bottom-->
+</footer>
+<!--End Footer Three-->

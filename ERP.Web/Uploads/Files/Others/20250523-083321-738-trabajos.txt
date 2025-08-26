@@ -1,0 +1,8 @@
+combo de proyecto
+tipo implementacion
+comentario
+
+tarea 2
+en requeriemiento agregar nueva tarea 
+crear en la base de datos idtarerequerimmiento
+por cada detalle de requerimiento debe tener una tarea de cada uno

@@ -1,0 +1,167 @@
+﻿@model Mantenimiento.Negocio.Poco.GestionarRequerimientoPoco
+
+@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="d-flex flex-column flex-column-fluid mb-4">
+    <!-- (Toolbar y demás arriba igual) -->
+</div>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="modal fade show d-block" tabindex="-1" role="dialog" style="background-color: rgba(0, 0, 0, 0.5); z-index: 1050;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content text-center p-4" style="border-radius: 1rem;">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <i class="fas fa-check-circle" style="font-size: 60px; color: #28a745;"></i>
+                    </div>
+                    <h4 class="mb-2 text-success">¡Registro exitoso!</h4>
+                    <p class="mb-4">@TempData["Mensaje"]</p>
+                    <a href="@Url.Action("Index", "Requerimiento")" class="btn btn-success">Listo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        <div class="row mb-2">
+            <div class="col-md-4"><strong>Requerimiento:</strong> @Model.Requerimiento.idRequerimiento</div>
+            <div class="col-md-4"><strong>Proyecto:</strong> @Model.Requerimiento.idProyecto</div>
+        </div>
+    </div>
+</div>
+
+@if (Model.ListaDetalleRequerimiento != null && Model.ListaDetalleRequerimiento.Any())
+{
+    <form action="@Url.Action("EditarDetalle", "Requerimiento")" method="post" enctype="multipart/form-data">
+        @for (int i = 0; i < Model.ListaDetalleRequerimiento.Count; i++)
+        {
+            var item = Model.ListaDetalleRequerimiento[i];
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-secondary text-dark">
+                    <span>Detalle ID: @item.idDetalleRequerimiento</span>
+                </div>
+                <div class="card-body">
+                    <input type="hidden" name="ListaDetalleRequerimiento[@i].idDetalleRequerimiento" value="@item.idDetalleRequerimiento" />
+                    <input type="hidden" name="ListaDetalleRequerimiento[@i].idRequerimiento" value="@Model.Requerimiento.idRequerimiento" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Descripción</label>
+                        <textarea name="ListaDetalleRequerimiento[@i].descripcion" class="form-control" maxlength="300">@item.descripcion</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Comentario Cliente</label>
+                        <textarea name="ListaDetalleRequerimiento[@i].comentarioCliente" class="form-control" maxlength="300">@item.comentarioCliente</textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Asignado A:</label>
+                            <select name="ListaDetalleRequerimiento[@i].idPersona" class="form-select">
+                                <option value="">Seleccione Trabajador</option>
+                                @foreach (var trabajador in Model.ListarTrabajadores)
+                                {
+                                    <option value="@trabajador.idPersona" @(trabajador.idPersona == item.idPersona ? "selected" : "")>
+                                        @trabajador.nombreCli
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Estado Desarrollo</label>
+                            <select name="ListaDetalleRequerimiento[@i].estadoDesarrollo" class="form-select">
+                                <option value="0" @(item.estadoDesarrollo == 0 ? "selected" : "")>Pendiente</option>
+                                <option value="1" @(item.estadoDesarrollo == 1 ? "selected" : "")>En progreso</option>
+                                <option value="2" @(item.estadoDesarrollo == 2 ? "selected" : "")>Finalizado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Estado Cliente</label>
+                            <select name="ListaDetalleRequerimiento[@i].estadoCliente" class="form-select">
+                                <option value="1" @(item.estadoCliente == 1 ? "selected" : "")>Aprobado</option>
+                                <option value="2" @(item.estadoCliente == 2 ? "selected" : "")>No Aprobado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Fecha Inicio</label>
+                            <input type="date" name="ListaDetalleRequerimiento[@i].fechaInicio" class="form-control"
+                                   value="@(item.fechaInicio.HasValue ? item.fechaInicio.Value.ToString("yyyy-MM-dd") : "")" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Fecha Fin</label>
+                            <input type="date" name="ListaDetalleRequerimiento[@i].fechaFin" class="form-control"
+                                   value="@(item.fechaFin.HasValue ? item.fechaFin.Value.ToString("yyyy-MM-dd") : "")" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Archivo</label>
+                        @if (!string.IsNullOrEmpty(item.nombreArchivo))
+                        {
+                            <div class="mb-2">
+                                <a href="@Url.Action("DescargarArchivo", "Requerimiento", new { idDetalle = item.idDetalleRequerimiento })"
+                                   class="btn btn-outline-primary btn-sm" target="_blank">
+                                    Descargar archivo actual
+                                </a>
+                            </div>
+                        }
+                        <input type="file" name="archivos[@i]" class="form-control" />
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="criterioAceptacion_@item.idDetalleRequerimiento">Comentario</label>
+                            <textarea id="criterioAceptacion_@item.idDetalleRequerimiento"
+                                      name="ListaDetalleRequerimiento[@i].criterioAceptacion"
+                                      class="summernote form-control"
+                                      rows="10">@item.criterioAceptacion</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="text-end mb-5">
+            <button type="submit" class="btn btn-success">Guardar Todos</button>
+            <a href="@Url.Action("Index", "Requerimiento")" class="btn btn-secondary ms-2">Cancelar</a>
+        </div>
+    </form>
+}
+else
+{
+    <div class="alert alert-info">No hay tareas registradas para este requerimiento.</div>
+}
+
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/library.js?v=5.0")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/metronic/plugins/custom/formrepeater/formrepeater.bundle.js")"></script>
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                height: 300,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['insert', ['picture', 'link', 'video']],
+                    ['view', ['fullscreen', 'codeview']]
+                ],
+                styleTags: ['p', 'h1', 'h2', 'h3', 'blockquote', 'pre']
+            });
+
+            $('.note-toolbar').css({ 'background-color': '#d3d3d3', 'color': '#000' });
+            $('.note-toolbar button, .note-toolbar .note-icon').css('color', '#000');
+            $('.note-editable').css({ 'background-color': '#fff', 'color': '#000' });
+        });
+    </script>
+}
+
+

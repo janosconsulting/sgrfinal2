@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EA5BB2AC-C3C9-4221-9699-FD7DC1AA898D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ControlCombustible.Negocio</RootNamespace>
+    <AssemblyName>ControlCombustible.Negocio</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bien.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BoletaControlPorAnio.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConsultaCombustible.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConsultaVehiculo.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Contratos\Base\IRepositorio.cs" />
+    <Compile Include="Contratos\Base\IUnidadTrabajo.cs" />
+    <Compile Include="Contratos\Repositorios\IBienRepositorio.cs" />
+    <Compile Include="Contratos\Repositorios\IBoletaControlRepositorio.cs" />
+    <Compile Include="Contratos\Repositorios\IEntidadRepositorio.cs" />
+    <Compile Include="Contratos\Repositorios\IPrecioCombustibleRepositorio.cs" />
+    <Compile Include="Contratos\Repositorios\IPresupuestoRepositorio.cs" />
+    <Compile Include="Contratos\Repositorios\IProductoRepositorio.cs" />
+    <Compile Include="Contratos\Repositorios\ISedeRepositorio.cs" />
+    <Compile Include="Contratos\Repositorios\ISubpresupuestoRepositorio.cs" />
+    <Compile Include="Contratos\Repositorios\ITipoCombustibleRepositorio.cs" />
+    <Compile Include="Contratos\Repositorios\IVehiculoRepositorio.cs" />
+    <Compile Include="Contratos\Repositorios\IVehiculoSedeRepositorio.cs" />
+    <Compile Include="Contratos\Servicios\IBoletaControlServicio.cs" />
+    <Compile Include="Contratos\Repositorios\IDireccionRepositorio.cs" />
+    <Compile Include="Contratos\Servicios\IDireccionServicio.cs" />
+    <Compile Include="Contratos\Servicios\IEntidadServicio.cs" />
+    <Compile Include="Contratos\Repositorios\IOrdenSalidaRepositorio.cs" />
+    <Compile Include="Contratos\Servicios\IPrecioCombustibleServicio.cs" />
+    <Compile Include="Contratos\Servicios\IPresupuestoServicio.cs" />
+    <Compile Include="Contratos\Servicios\IProductoServicio.cs" />
+    <Compile Include="Contratos\Servicios\ISedeServicio.cs" />
+    <Compile Include="Contratos\Repositorios\ISubdireccionRepositorio.cs" />
+    <Compile Include="Contratos\Servicios\ISubdireccionServicio.cs" />
+    <Compile Include="Contratos\Servicios\ISubpresupuestoServicio.cs" />
+    <Compile Include="Contratos\Repositorios\ITrabajadorRepositorio.cs" />
+    <Compile Include="Contratos\Servicios\IBienServicio.cs" />
+    <Compile Include="Contratos\Servicios\IOrdenSalidaServicio.cs" />
+    <Compile Include="Contratos\Servicios\ITipoCombustibleServicio.cs" />
+    <Compile Include="Contratos\Servicios\ITrabajadorServicio.cs" />
+    <Compile Include="Contratos\Servicios\IVehiculoSedeServicio.cs" />
+    <Compile Include="Contratos\Servicios\IVehiculoServicio.cs" />
+    <Compile Include="Direccion.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EDBDOCCAB216.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EDBDOCCAB234.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="edbMANCOSCOM.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="edbMANDATADIVEH.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="edbMANPOOLAUTO.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidad.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GrupoPresupuesto.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pocos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Poco\BoletaControlPoco.cs" />
+    <Compile Include="Poco\OrdenSalidaPoco.cs" />
+    <Compile Include="Poco\PrecioCombustiblePoco.cs" />
+    <Compile Include="Poco\VehiculoKmPoco.cs" />
+    <Compile Include="Poco\VehiculoPoco.cs" />
+    <Compile Include="Poco\VehiculoSedePoco.cs" />
+    <Compile Include="PoolVehiculo.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Presupuesto.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Producto.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recursos\Mensajes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Mensajes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SedeLaboral.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Servicios\BienServicio.cs" />
+    <Compile Include="Servicios\BoletaControlServicio.cs" />
+    <Compile Include="Servicios\DireccionServicio.cs" />
+    <Compile Include="Servicios\EntidadServicio.cs" />
+    <Compile Include="Servicios\OrdenSalidaServicio.cs" />
+    <Compile Include="Servicios\PrecioCombustibleServicio.cs" />
+    <Compile Include="Servicios\PresupuestoServicio.cs" />
+    <Compile Include="Servicios\ProductoServicio.cs" />
+    <Compile Include="Servicios\SedeServicio.cs" />
+    <Compile Include="Servicios\SubdireccionServicio.cs" />
+    <Compile Include="Servicios\SubpresupuestoServicio.cs" />
+    <Compile Include="Servicios\TipoCombustibleServicio.cs" />
+    <Compile Include="Servicios\TrabajadorServicio.cs" />
+    <Compile Include="Servicios\VehiculoSedeServicio.cs" />
+    <Compile Include="Servicios\VehiculoServicio.cs" />
+    <Compile Include="Subdireccion.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subpresupuesto.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TipoCombustible.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Trabajador.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UltimoTacometroVehiculo.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Pocos.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Pocos.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ControlCombustible.Utilitario\ControlCombustible.Utilitario.csproj">
+      <Project>{DAC5A928-153B-4A7E-A7D3-794F82E4F961}</Project>
+      <Name>ControlCombustible.Utilitario</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Recursos\Mensajes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Mensajes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

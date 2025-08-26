@@ -1,0 +1,501 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!--<< Header Area >>-->
+<!-- Mirrored from gramentheme.com/html/infotek/index-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Jun 2024 13:42:13 GMT -->
+<head>
+    <!-- ========== Meta Tags ========== -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="gramentheme">
+    <meta name="description" content="CODETUS - Tecnologías para Crecer | Sistema de Facturación Electrónica | Sistemas Comerciales | Hosting y Dominio | Diseño de Páginas Web">
+    <!-- ======== Page title ============ -->
+    <title>CODETUS - Tecnologías para Crecer | Sistema de Facturación Electrónica | Sistemas Comerciales | Hosting y Dominio | Diseño de Páginas Web</title>
+    <!--<< Favcion >>-->
+    <link rel="shortcut icon" href="@Url.Content("~/Content/theme/assets/img/favicon.svg")">
+    <!--<< Bootstrap min.css >>-->
+    <link rel="stylesheet" href="@Url.Content("~/Content/theme/assets/css/bootstrap.min.css")">
+    <!--<< All Min Css >>-->
+    <link rel="stylesheet" href="@Url.Content("~/Content/theme/assets/css/all.min.css")">
+    <!--<< Animate.css >>-->
+    <link rel="stylesheet" href="@Url.Content("~/Content/theme/assets/css/animate.css")">
+    <!--<< Magnific Popup.css >>-->
+    <link rel="stylesheet" href="@Url.Content("~/Content/theme/assets/css/magnific-popup.css")">
+    <!--<< MeanMenu.css >>-->
+    <link rel="stylesheet" href="@Url.Content("~/Content/theme/assets/css/meanmenu.css")">
+    <!--<< Swiper Bundle.css >>-->
+    <link rel="stylesheet" href="@Url.Content("~/Content/theme/assets/css/swiper-bundle.min.css")">
+    <!--<< Nice Select.css >>-->
+    <link rel="stylesheet" href="@Url.Content("~/Content/theme/assets/css/nice-select.css")">
+    <!--<< Main.css >>-->
+    <link rel="stylesheet" href="@Url.Content("~/Content/theme/assets/css/main.css?v=1.0")">
+
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
+</head>
+<body>
+
+    <!-- Preloader Start -->
+    <div id="preloader" class="preloader">
+        <div class="animation-preloader">
+            <div class="spinner">
+            </div>
+            <div class="txt-loading">
+                <span data-text-preloader="C" class="letters-loading">
+                    C
+                </span>
+                <span data-text-preloader="O" class="letters-loading">
+                    O
+                </span>
+                <span data-text-preloader="D" class="letters-loading">
+                    D
+                </span>
+                <span data-text-preloader="E" class="letters-loading">
+                    E
+                </span>
+                <span data-text-preloader="T" class="letters-loading">
+                    T
+                </span>
+                <span data-text-preloader="U" class="letters-loading">
+                    U
+                </span>
+                <span data-text-preloader="S" class="letters-loading">
+                    S
+                </span>
+            </div>
+            <p class="text-center">Loading</p>
+        </div>
+        <div class="loader">
+            <div class="row">
+                <div class="col-3 loader-section section-left">
+                    <div class="bg"></div>
+                </div>
+                <div class="col-3 loader-section section-left">
+                    <div class="bg"></div>
+                </div>
+                <div class="col-3 loader-section section-right">
+                    <div class="bg"></div>
+                </div>
+                <div class="col-3 loader-section section-right">
+                    <div class="bg"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<< Mouse Cursor Start >>-->
+    <div class="mouse-cursor cursor-outer"></div>
+    <div class="mouse-cursor cursor-inner"></div>
+
+    <!-- Offcanvas Area Start -->
+    <div class="fix-area">
+        <div class="offcanvas__info">
+            <div class="offcanvas__wrapper">
+                <div class="offcanvas__content">
+                    <div class="offcanvas__top mb-5 d-flex justify-content-between align-items-center">
+                        <div class="offcanvas__logo">
+                            <a href="index.html">
+                                <img src="@Url.Content("~/Content/theme/assets/img/logo/black-logo.svg") alt="logo-img">
+                            </a>
+                        </div>
+                        <div class="offcanvas__close">
+                            <button>
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text d-none d-lg-block">
+                        Nullam dignissim, ante scelerisque the  is euismod fermentum odio sem semper the is erat, a feugiat leo urna eget eros. Duis Aenean a imperdiet risus.
+                    </p>
+                    <div class="mobile-menu fix mb-3"></div>
+                    <div class="offcanvas__contact">
+                        <h4>Contact Info</h4>
+                        <ul>
+                            <li class="d-flex align-items-center">
+                                <div class="offcanvas__contact-icon">
+                                    <i class="fal fa-map-marker-alt"></i>
+                                </div>
+                                <div class="offcanvas__contact-text">
+                                    <a target="_blank" href="#">Main Street, Melbourne, Australia</a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <div class="offcanvas__contact-icon mr-15">
+                                    <i class="fal fa-envelope"></i>
+                                </div>
+                                <div class="offcanvas__contact-text">
+                                    <a href="mailto:info@azent.com"><span class="mailto:info@example.com">info@codetus.com</span></a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <div class="offcanvas__contact-icon mr-15">
+                                    <i class="fal fa-clock"></i>
+                                </div>
+                                <div class="offcanvas__contact-text">
+                                    <a target="_blank" href="#">Mod-friday, 09am -05pm</a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <div class="offcanvas__contact-icon mr-15">
+                                    <i class="far fa-phone"></i>
+                                </div>
+                                <div class="offcanvas__contact-text">
+                                    <a href="tel:+11002345909">+54-989-010-140</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="header-button mt-4">
+                            <a href="contact.html" class="theme-btn text-center">
+                                <span>Contactanos<i class="fa-solid fa-arrow-right-long"></i></span>
+                            </a>
+                        </div>
+                        <div class="social-icon d-flex align-items-center">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="offcanvas__overlay"></div>
+
+    <!-- Header Section Start -->
+    <header>
+        <div class="header-top-section top-style-3">
+            <div class="container">
+                <div class="header-top-wrapper">
+                    <ul class="contact-list">
+                        <li>
+                            <i class="far fa-envelope"></i>
+                            <a href="mailto:info@codetus.com" class="link">info@codetus.com</a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-phone-volume"></i>
+                            <a href="tel:2086660112">+51 989-010-140</a>
+                        </li>
+                    </ul>
+                    <div class="top-right">
+                        <div class="flag-wrap">
+                            <div class="flag">
+                                <img src="@Url.Content("~/Content/theme/assets/img/peru_flag.png")" alt="flag">
+                            </div>
+                            <div class="nice-select" tabindex="0">
+                                <span class="current">
+                                    Español
+                                </span>
+                                <ul class="list">
+                                    <li data-value="1" class="option selected focus">
+                                        Español
+                                    </li>
+                                    @*<li data-value="1" class="option">
+                                            English
+                                        </li>*@
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="social-icon d-flex align-items-center">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="header-sticky" class="header-3">
+            <div class="plane-shape">
+                <img src="@Url.Content("~/Content/theme/assets/img/plane.png")" alt="shape-img">
+            </div>
+            <div class="container">
+                <div class="mega-menu-wrapper">
+                    <div class="header-main">
+                        <div class="header-left">
+                            <div class="logo">
+                                <a href="@Url.Action("Index","Home")" class="header-logo">
+                                    <img src="~/Uploads/Files/iconEmpresa/logohorizontal.jpg" height="30" class="logo-dark-mode" alt="logo-img">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="header-right d-flex justify-content-end align-items-center">
+                            <div class="mean__menu-wrapper">
+                                <div class="main-menu">
+                                    <nav id="mobile-menu">
+                                        <ul>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Home")">
+                                                    INICIO
+                                                    <i class="fas fa-angle-down"></i>
+                                                </a>
+                                                <ul class="submenu">
+                                                    <li><a href="@Url.Action("Nosotros", "Home")">NOSOTROS</a></li>
+                                                    <li><a href="@Url.Action("Organigrama", "Home")">ORGANIGRAMA</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="news.html">
+                                                    SERVICIOS
+                                                    <i class="fas fa-angle-down"></i>
+                                                </a>
+                                                <ul class="submenu">
+                                                    <li><a href="@Url.Action("AsesoriayConsultoria", "Home")">ASESORIA Y CONSULTORIA</a></li>
+                                                    <li><a href="@Url.Action("DesarrollodeSistemas", "Home")">DESARROLLO DE SISTEMAS</a></li>
+                                                    <li><a href="@Url.Action("DiseñoWeb", "Home")">DISEÑO WEB</a></li>
+
+                                                    <li><a href="service-details.html">HOSTING Y DOMINIO</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="has-dropdown">
+                                                <a href="news.html">
+                                                    SOLUCIONES
+                                                    <i class="fas fa-angle-down"></i>
+                                                </a>
+                                                <ul class="submenu">
+                                                    <li><a href="@Url.Action("KedroPro", "Home")">FACTURACION ELECTRONICA</a></li>
+                                                    <li><a href="@Url.Action("KedroPro", "Home")">SISTEMA PARA INMOBILIARIAS</a></li>
+                                                    <li><a href="@Url.Action("KedroPro", "Home")">SISTEMA PARA CLINICAS ODONTOLOGICAS</a></li>
+                                                    <li><a href="@Url.Action("KedroPro", "Home")">GESTIÓN LOGISTICA</a></li>
+                                                    <li><a href="@Url.Action("KedroPro", "Home")">LMS</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#" onclick="event.preventDefault();">
+                                                    CLIENTES
+                                                    <i class="fas fa-angle-down"></i>
+                                                </a>
+                                                <ul class="submenu">
+                                                    <li><a href="@Url.Action("Clientes", "Home")">LISTA DE CLIENTES</a></li>
+                                                    <li><a href="@Url.Action("CasosdeExito", "Home")">CASOS DE ÉXITO </a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="news.html">
+                                                    SOPORTE
+                                                    <i class="fas fa-angle-down"></i>
+                                                </a>
+                                                <ul class="submenu">
+                                                    <li><a href="@Url.Action("AsesoresComerciales", "Home")">ASESORES COMERCIALES </a></li>
+                                                    <li><a href="@Url.Action("FormadePago", "Home")">FORMAS DE PAGO </a></li>
+                                                    <li><a href="@Url.Action("Contacto", "Home")">CONTACTO </a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <a href="#0" class="search-trigger search-icon"><i class="fal fa-search"></i></a>
+                            <div class="header-button">
+                                <a href="contact.html" class="theme-btn bg-white">
+                                    <span>
+                                        obtener una cotización
+                                        <i class="fa-solid fa-arrow-right-long"></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="header__hamburger d-lg-none my-auto">
+                                <div class="sidebar__toggle">
+                                    <i class="fas fa-bars"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Area Start -->
+    <div class="search-wrap">
+        <div class="search-inner">
+            <i class="fas fa-times search-close" id="search-close"></i>
+            <div class="search-cell">
+                <form method="get">
+                    <div class="search-field-holder">
+                        <input type="search" class="main-search-input" placeholder="Buscar...">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Body Container-->
+    <div id="page-content">
+        @RenderBody()
+    </div>
+    <!--End Body Container-->
+    <!-- Botón flotante WhatsApp -->
+    <a href="https://wa.me/51989010140" target="_blank"
+       style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; background-color: #25d366; color: white; padding: 12px 16px; border-radius: 50px; font-weight: bold; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+        💬 WhatsApp
+    </a>
+    <!--<< Footer Section Start >>-->
+    <footer class="footer-section footer-bg">
+        <div class="footer-shape-4">
+            <img src="@Url.Content("~/Content/theme/assets/img/footer-shape-4.png")" alt="shape-img">
+        </div>
+        <div class="shape-2">
+            <img src="@Url.Content("~/Content/theme/assets/img/footer-shape-3.png")" alt="shape-img">
+        </div>
+        <div class="footer-widgets-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".3s">
+                        <div class="single-footer-widget">
+                            <div class="widget-head">
+                                <h3>Sobre Nosotros</h3>
+                            </div>
+                            <div class="footer-content">
+                                <p>
+                                    Bienvenido a Codetus, donde combinamos pasión, innovación
+                                    y dedicación para ofrecer los mejores productos y servicios a nuestros clientes.
+                                </p>
+                                <div class="social-icon d-flex align-items-center">
+                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-md-6 ps-lg-5 wow fadeInUp" data-wow-delay=".5s">
+                        <div class="single-footer-widget">
+                            <div class="widget-head">
+                                <h3>Enlaces Rápidos</h3>
+                            </div>
+                            <ul class="list-area">
+                                <li>
+                                    <a href="about.html">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                        Inicio
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="service.html">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                        Servicios
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="news.html">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                        Soluciones
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="faq.html">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                        Clientes
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="contact.html">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                        Soporte
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 ps-lg-5 wow fadeInUp" data-wow-delay=".5s">
+                        <div class="single-footer-widget style-margin">
+                            <div class="widget-head">
+                                <h3>Solucion</h3>
+                            </div>
+                            <ul class="list-area">
+                                <li>
+                                    <a href="service-details.html">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                        IT Management
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="service-details.html">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                        Web Development
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="service-details.html">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                        Cyber Security
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="service-details.html">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                        SEO Optimization
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="service-details.html">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                        App Development
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".7s">
+                        <div class="single-footer-widget style-margin">
+                            <div class="widget-head">
+                                <h3>Newsletter</h3>
+                            </div>
+                            <div class="footer-content">
+                                <p>
+                                    Sign up to seargin weekly newsletter to get the latest updates.
+                                </p>
+                                <div class="footer-input">
+                                    <input type="email" id="email2" placeholder="Enter Email Address">
+                                    <button class="newsletter-btn" type="submit">
+                                        <i class="fab fa-telegram-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom style-3">
+            <div class="container">
+                <div class="footer-wrapper d-flex align-items-center justify-content-between">
+                    <div class="footer-logo wow fadeInLeft" data-wow-delay=".3s">
+                        <a href="index.html">
+                            <img src="~/Uploads/Files/iconEmpresa/logohorizontal.jpg" height="30" class="logo-dark-mode" alt="logo-img">
+                        </a>
+                    </div>
+                    <p class="wow fadeInRight color-2" data-wow-delay=".5s">
+                        © All Copyright 2024 by <a href="index.html">Codetus</a>
+                    </p>
+                </div>
+            </div>
+            <a href="#" id="scrollUp" class="scroll-icon">
+                <i class="far fa-arrow-up"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!--<< All JS Plugins >>-->
+    <script src="@Url.Content("~/Content/theme/assets/js/jquery-3.7.1.min.js")"></script>
+    <!--<< Viewport Js >>-->
+    <script src="@Url.Content("~/Content/theme/assets/js/viewport.jquery.js")"></script>
+    <!--<< Bootstrap Js >>-->
+    <script src="@Url.Content("~/Content/theme/assets/js/bootstrap.bundle.min.js")"></script>
+    <!--<< Nice Select Js >>-->
+    <script src="@Url.Content("~/Content/theme/assets/js/jquery.nice-select.min.js")"></script>
+    <!--<< Waypoints Js >>-->
+    <script src="@Url.Content("~/Content/theme/assets/js/jquery.waypoints.js")"></script>
+    <!--<< Counterup Js >>-->
+    <script src="@Url.Content("~/Content/theme/assets/js/jquery.counterup.min.js")"></script>
+    <!--<< Swiper Slider Js >>-->
+    <script src="@Url.Content("~/Content/theme/assets/js/swiper-bundle.min.js")"></script>
+    <!--<< MeanMenu Js >>-->
+    <script src="@Url.Content("~/Content/theme/assets/js/jquery.meanmenu.min.js")"></script>
+    <!--<< Magnific Popup Js >>-->
+    <script src="@Url.Content("~/Content/theme/assets/js/jquery.magnific-popup.min.js")"></script>
+    <!--<< Wow Animation Js >>-->
+    <script src="@Url.Content("~/Content/theme/assets/js/wow.min.js")"></script>
+    <!--<< Main.js >>-->
+    <script src="@Url.Content("~/Content/theme/assets/js/main.js")"></script>
+</body>
+
+<!-- Mirrored from gramentheme.com/html/infotek/index-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Jun 2024 13:42:38 GMT -->
+</html>

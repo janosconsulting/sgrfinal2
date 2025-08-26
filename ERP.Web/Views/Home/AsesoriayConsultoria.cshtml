@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!--<< Header Area >>-->
+<body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!--<< Breadcrumb Section Start >>-->
+    <div class="breadcrumb-wrapper bg-cover" style="background-image: url('@Url.Content("~/Content/theme/assets/img/breadcrumb.jpg")');">
+        <div class="border-shape">
+            <img src="@Url.Content("~/Content/theme/assets/img/element.png")" alt="shape-img">
+        </div>
+        <div class="line-shape">
+            <img src="@Url.Content("~/Content/theme/assets/img/line-element.png")" alt="shape-img">
+        </div>
+        <div class="container">
+            <div class="page-heading">
+                <h1 class="wow fadeInUp" data-wow-delay=".3s">Asesoria y Consultoria</h1>
+                <ul class="breadcrumb-items wow fadeInUp" data-wow-delay=".5s">
+                    <li>
+                        <a href="index.html">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-chevron-right"></i>
+                    </li>
+                    <li>
+                        Asesoria y Consultoria
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Asegúrate de tener Bootstrap 5 cargado -->
+    <section class="container py-5">
+        <!-- Encabezado destacado -->
+        <div class="text-center mb-5">
+            <h2 class="fw-bold display-5 text-gradient">🚀 Asesoría y Consultoría Tecnológica</h2>
+            <p class="lead text-muted">
+                Te ayudamos a tomar decisiones estratégicas con soluciones tecnológicas personalizadas.
+            </p>
+        </div>
+
+        <!-- Pasos con íconos y hover animado -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-lg text-center hover-zoom">
+                    <div class="card-body">
+                        <div class="display-4 text-primary mb-3">📋</div>
+                        <h5 class="fw-bold">Diagnóstico</h5>
+                        <p class="text-muted small">Reunión inicial para identificar tu situación actual.</p>
+                        <ul class="custom-list mt-3 text-start">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Entrevistas con stakeholders clave</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Levantamiento de procesos críticos</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Identificación de cuellos de botella</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-lg text-center hover-zoom">
+                    <div class="card-body">
+                        <div class="display-4 text-success mb-3">🔍</div>
+                        <h5 class="fw-bold">Evaluación</h5>
+                        <p class="text-muted small">Revisamos opciones y plataformas aplicables.</p>
+                        <ul class="custom-list mt-3 text-start">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Benchmarking con soluciones del mercado</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Evaluación de recursos internos disponibles</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Proyección de costos y tiempo estimado</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-lg text-center hover-zoom">
+                    <div class="card-body">
+                        <div class="display-4 text-warning mb-3">💡</div>
+                        <h5 class="fw-bold">Propuesta</h5>
+                        <p class="text-muted small">Recibes un plan estratégico adaptado a tu empresa.</p>
+                        <ul class="custom-list mt-3 text-start">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Mapa de soluciones con etapas claras</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Recomendación de herramientas y tecnologías</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Plan de acción escalonado</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-lg text-center hover-zoom">
+                    <div class="card-body">
+                        <div class="display-4 text-danger mb-3">🚀</div>
+                        <h5 class="fw-bold">Implementación</h5>
+                        <p class="text-muted small">Te acompañamos durante toda la ejecución.</p>
+                        <ul class ="custom-list mt-3 text-start">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Despliegue de sistemas y capacitaciones</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Monitoreo post-implementación</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Mejora continua y soporte técnico</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carrusel con overlay -->
+        <div id="carouselConsultoria" class="carousel slide carousel-fade mb-5" data-bs-ride="carousel">
+            <div class="carousel-inner rounded shadow">
+                <div class="carousel-item active">
+                    <img src="img/asesoria1.jpg" class="d-block w-100" alt="Diagnóstico">
+                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3">
+                        <h5>Sesión de diagnóstico inicial</h5>
+                        <p>Escuchamos tus necesidades desde el primer momento.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="img/asesoria2.jpg" class="d-block w-100" alt="Evaluación">
+                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3">
+                        <h5>Evaluación técnica de procesos</h5>
+                        <p>Identificamos mejoras e innovaciones reales.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="img/asesoria3.jpg" class="d-block w-100" alt="Implementación">
+                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3">
+                        <h5>Implementación estratégica</h5>
+                        <p>Resultados tangibles en corto plazo.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselConsultoria" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bg-dark rounded-circle"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselConsultoria" data-bs-slide="next">
+                <span class="carousel-control-next-icon bg-dark rounded-circle"></span>
+            </button>
+        </div>
+
+        <!-- Beneficios -->
+        <div class="row text-center mb-5">
+            <div class="col-md-4">
+                <div class="card p-4 border-0 shadow-sm h-100 hover-zoom">
+                    <h6 class="fw-bold text-info">🎯 Enfoque Estratégico</h6>
+                    <p class="text-muted small">Propuestas 100% alineadas a tus objetivos empresariales.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-4 border-0 shadow-sm h-100 hover-zoom">
+                    <h6 class="fw-bold text-success">💼 Consultores Expertos</h6>
+                    <p class="text-muted small">Equipo técnico con experiencia en múltiples sectores.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-4 border-0 shadow-sm h-100 hover-zoom">
+                    <h6 class="fw-bold text-warning">📊 Soporte Continuo</h6>
+                    <p class="text-muted small">Estaremos contigo antes, durante y después del proceso.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA con fondo atractivo -->
+        <div class="text-center text-white rounded p-5 shadow-lg" style="background: linear-gradient(135deg, #0d6efd, #6610f2);">
+            <h4 class="fw-bold mb-3">¿Listo para dar el siguiente paso tecnológico?</h4>
+            <a href="/contacto" class="btn btn-light btn-lg px-4 fw-bold shadow">💬 Solicita Asesoría Gratuita</a>
+        </div>
+    </section>
+
+    <!-- Estilos extra -->
+    <style>
+        .hover-zoom:hover {
+            transform: scale(1.03);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, #0d6efd, #6610f2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .custom-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+            .custom-list li {
+                margin-bottom: 0.5rem;
+                display: flex;
+                align-items: flex-start;
+                font-size: 0.9rem;
+                color: #6c757d;
+            }
+
+            .custom-list i {
+                font-size: 1rem;
+                flex-shrink: 0;
+            }
+    </style>
+
+
+</body>
+</html>

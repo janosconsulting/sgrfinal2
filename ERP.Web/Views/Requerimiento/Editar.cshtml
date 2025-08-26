@@ -1,0 +1,1289 @@
+﻿@model Mantenimiento.Negocio.Poco.GestionarRequerimientoPoco
+
+@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<!--begin::Content wrapper-->
+<div class="d-flex flex-column flex-column-fluid">
+    <!--begin::Toolbar-->
+    <div id="kt_app_toolbar" class="app-toolbar pt-7 pt-lg-10">
+        <!--begin::Toolbar container-->
+        <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+            <!--begin::Toolbar wrapper-->
+            <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                <!--begin::Page title-->
+                <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+                    <!--begin::Title-->
+                    <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bold fs-3 m-0">
+                        Editar
+                        Requerimiento
+                    </h1>
+                    <!--end::Title-->
+                    <!--begin::Breadcrumb-->
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-muted">
+                            <a href="@Url.Action("Index","Cliente")" class="text-muted text-hover-primary">Home</a>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item">
+                            <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                        </li>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-muted">Proceso</li>
+                        <!--end::Item-->
+                    </ul>
+                    <!--end::Breadcrumb-->
+                </div>
+                <!--end::Page title-->
+            </div>
+            <!--end::Toolbar wrapper-->
+        </div>
+        <!--end::Toolbar container-->
+    </div>
+    <!--end::Toolbar-->
+    <!--begin::Content-->
+    <div id="kt_app_content" class="app-content flex-column-fluid">
+        <!--begin::Content container-->
+        <div id="kt_app_content_container" class="app-container container-fluid">
+            <!--begin::Form-->
+            <form id="kt_add_cliente_form" class="form d-flex flex-column flex-lg-row">
+                <!--begin::Main column-->
+                <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+                    <div class="d-flex flex-column gap-7 gap-lg-10">
+                        <!--begin::General options-->
+                        <div class="card card-flush py-4">
+                            <!--begin::Card header-->
+                            <div class="card-header card-header-tabs-line">
+                                <!--begin::Card title-->
+                                <div class="card-title">
+                                    <h3 class="fw-bold m-0">Datos de Requerimiento</h3>
+                                </div>
+                                <!--end::Card title-->
+                            </div>
+                            <!--end::Card header-->
+                            <!--begin::Card body-->
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Input group-->
+                                            <!--begin::Label-->
+                                            <label class="fs-5 fw-semibold mb-2"
+                                                   for="txtCodigo">CÓDIGO:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text" id="txtCodigo"
+                                                   class="form-control"
+                                                   placeholder="Codigo"
+                                                   value="@Model.Requerimiento.codigo"
+                                                   disabled />
+                                            <!--end::Input-->
+                                            <!--end::Input group-->
+                                        </div>
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Label-->
+                                            <label class="required fs-5 fw-semibold mb-2">CLIENTE:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select id="kt_cliente_select" class="form-select" data-control="select2">
+                                                <!-- Opción por defecto -->
+                                                <option value="">Seleccione cliente</option>
+                                                @if (!Model.ListarClientes.Any())
+                                                {
+                                                    // Si no hay clientes disponibles, mostrar una opción por defecto
+                                                    <option value="">No existen clientes</option>
+                                                }
+                                                else
+                                                {
+                                                    // Si hay clientes disponibles, mostrarlas
+                                                    foreach (var item in Model.ListarClientes)
+                                                    {
+                                                        if (item.idPersona == Model.Requerimiento.idPersona)
+                                                        {
+
+                                                            <option selected value="@item.idPersona">@item.nombreCli</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.idPersona">@item.nombreCli</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Label-->
+                                            <label class="fs-5 fw-semibold mb-2">PROYECTO:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select id="kt_proyecto_cliente_select" class="form-select" data-control="select2">
+                                                <!-- Opción por defecto -->
+                                                <option value="">Seleccione Proyecto</option>
+                                                @if (!Model.ListarProyectos.Any())
+                                                {
+                                                    // Si no hay proyectos, mostrar la opción por defecto
+                                                    <option value="">No existen proyectos</option>
+                                                }
+                                                else
+                                                {
+                                                    // Si hay proyectos disponibles, mostrarlas
+                                                    foreach (var item in Model.ListarProyectos)
+                                                    {
+                                                        if (item.idProyecto == Model.Requerimiento.idProyecto)
+                                                        {
+                                                            <option selected value="@item.idProyecto">@item.nombre</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.idProyecto">@item.nombre</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Input group-->
+                                            <!--begin::Label-->
+                                            <label class="required fs-5 fw-semibold mb-2"
+                                                   for="txtSolicitante">SOLICITANTE:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text" id="txtSolicitante"
+                                                   class="form-control"
+                                                   placeholder="Ingrese nombre del solicitante"
+                                                   value="@Model.Requerimiento.solicitante" />
+                                            <!--end::Input-->
+                                            <!--end::Input group-->
+                                        </div>
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Label-->
+                                            <label class="required fs-5 fw-semibold mb-2">TIPO DE REQUERIMIENTO:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select id="kt_tipo_req_select" class="form-select" data-control="select2">
+                                                <!-- Opción por defecto -->
+                                                <option value="">Seleccione Tipo de Requerimiento</option>
+                                                @if (!Model.ListarTipoRequerimientos.Any())
+                                                {
+                                                    // Si no hay tipos de requerimiento disponibles, mostrar una opción por defecto
+                                                    <option value="">No existen tipos de requerimientos</option>
+                                                }
+                                                else
+                                                {
+                                                    // Si hay tipo requerimiento disponibles, mostrarlas
+                                                    foreach (var item in Model.ListarTipoRequerimientos)
+                                                    {
+                                                        if (item.idTipoRequerimiento == Model.Requerimiento.idTipoRequerimiento)
+                                                        {
+                                                            <option selected value="@item.idTipoRequerimiento">@item.nombre</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.idTipoRequerimiento">@item.nombre</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Label-->
+                                            <label class="required fs-5 fw-semibold mb-2">PRIORIDAD:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select id="kt_prioridad_select" class="form-select" data-control="select2">
+                                                <option value="-1">Seleccione</option>
+                                                <option value="1" @(Model.Requerimiento.prioridad == 1 ? "selected" : "")>BAJA</option>
+                                                <option value="2" @(Model.Requerimiento.prioridad == 2 ? "selected" : "")>MEDIA</option>
+                                                <option value="3" @(Model.Requerimiento.prioridad == 3 ? "selected" : "")>ALTA</option>
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Label-->
+                                            <label class="required fs-5 fw-semibold mb-2">ESTADO:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select id="kt_estado_select" class="form-select" data-control="select2">
+                                                <option value="-1">Seleccione</option>
+                                                <option value="1" @(Model.Requerimiento.estadoReq == 1 ? "selected" : "")>REGISTRADO</option>
+                                                <option value="2" @(Model.Requerimiento.estadoReq == 2 ? "selected" : "")>EN PROCESO</option>
+                                                <option value="3" @(Model.Requerimiento.estadoReq == 3 ? "selected" : "")>FINALIZADO</option>
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Input group-->
+                                            <!--begin::Label-->
+                                            <label class="fs-5 fw-semibold mb-2"
+                                                   for="txtCodigo">FECHA:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text"
+                                                   id="kt_datepicker_fecha"
+                                                   class="form-control"
+                                                   placeholder="Fecha"
+                                                   disabled
+                                                   value="@Model.Requerimiento.fechaRegistro" />
+                                            <!--end::Input-->
+                                        </div>
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Input group-->
+                                            <!--begin::Label-->
+                                            <label class="fs-5 fw-semibold mb-2"
+                                                   for="kt_datepicker_fecha_ini">FECHA INICIO:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text"
+                                                   id="kt_datepicker_fecha_ini"
+                                                   class="form-control"
+                                                   placeholder="Fecha"
+                                                   value="@Model.Requerimiento.fechaInicio" />
+                                            <!--end::Input-->
+                                        </div>
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Input group-->
+                                            <!--begin::Label-->
+                                            <label class="fs-5 fw-semibold mb-2"
+                                                   for="kt_datepicker_fecha_fin">FECHA FIN:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text"
+                                                   id="kt_datepicker_fecha_fin"
+                                                   class="form-control"
+                                                   placeholder="Fecha"
+                                                   value="@Model.Requerimiento.fechaFin" />
+                                            <!--end::Input
+                                            <!--end::Input group-->
+                                        </div>
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Input group-->
+                                            <label class="required fs-5 fw-semibold mb-2" for="txtTiempo">TIEMPO:</label>
+                                            <input type="text" id="txtTiempo"
+                                                   class="form-control"
+                                                   placeholder="Ingrese el tiempo"
+                                                   value="@Model.Requerimiento.tiempo"
+                                                   oninput="filtrarNumerosYPuntuacion(this)">
+                                            <!--end::Input group-->
+                                        </div>
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Input group-->
+                                            <!--begin::Label-->
+                                            <label class="required fs-5 fw-semibold mb-2"
+                                                   for="txtAvanceDesa">% AVANCE DESARROLLO:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text" id="txtAvanceDesa"
+                                                   class="form-control"
+                                                   placeholder="0"
+                                                   disabled
+                                                   value="@Model.Requerimiento.avanceDesarrollo" />
+                                            <!--end::Input-->
+                                            <!--end::Input group-->
+                                        </div>
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Input group-->
+                                            <!--begin::Label-->
+                                            <label class="required fs-5 fw-semibold mb-2"
+                                                   for="txtAprobacion">% APROBACIÓN:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text" id="txtAprobacion"
+                                                   class="form-control"
+                                                   placeholder="0"
+                                                   disabled
+                                                   value="@Model.Requerimiento.aprobacion" />
+                                            <!--end::Input-->
+                                            <!--end::Input group-->
+                                        </div>
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Input group-->
+                                            <!--begin::Label-->
+                                            <label class="required fs-5 fw-semibold mb-2" for="txtResumen">
+                                                RESUMEN:
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <textarea type="text" id="txtResumen" class="form-control" placeholder="Ingrese resúmen de requerimiento" style="height: 130px;" maxlength="300">
+                                            @if (Model.Requerimiento != null && !string.IsNullOrEmpty(Model.Requerimiento.resumen))
+                                            {
+                                                @Model.Requerimiento.resumen
+                                            }</textarea>
+                                            <!--end::Input group-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Card header-->
+                            </div>
+                        </div>
+                        <!--end::General options-->
+                        <div class="card card-flush py-4">
+                            <!--begin::Card header-->
+                            <div class="card-header card-header-tabs-line">
+                                <!--begin::Card title-->
+                                <div class="card-title">
+                                    <h3 class="fw-bold m-0">Detalle de Requerimiento</h3>
+                                </div>
+                                <!--end::Card title-->
+                            </div>
+                            <!--end::Card header-->
+                            <!--begin::Card body-->
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <!--begin::Repeater-->
+                                    <div id="kt_docs_repeater_basic" data-repeater-list="kt_docs_repeater_basic">
+                                        <!-- Datos Dinámicos -->
+                                        @foreach (var itemLista in Model.ListaDetalleRequerimiento)
+                                        {
+                                            <div data-repeater-item data-id="@itemLista.idDetalleRequerimiento" data-accion="M">
+                                                <!--begin::Form group-->
+                                                <div class="form-group mb-4">
+                                                    <div class="row mb-5 gx-1">
+                                                        <label class="form-label required">DESCRIPCIÓN:</label>
+                                                        <textarea type="text" class="form-control" id="txtDescripcion_@itemLista.idDetalleRequerimiento" placeholder="Ingrese descripción" style="height: 70px;"
+                                                                  maxlength="300">@itemLista.descripcion</textarea>
+                                                    </div>
+                                                    <div class="row mb-5 gx-1">
+                                                        <label class="form-label required">MODULO:</label>
+                                                        <textarea type="text" class="form-control" id="txtModulo_@itemLista.idDetalleRequerimiento" placeholder="Ingrese modulo" style="height: 70px;"
+                                                                  maxlength="300">@itemLista.modulo</textarea>
+                                                    </div>
+
+                                                    <div class="row mb-5 gx-1">
+                                                        <div class="col-md-4 mb-4">
+                                                            <label class="form-label">ESTADO DESARROLLO:</label>
+                                                            <!--begin::Select-->
+                                                            <select class="form-select original-select2" data-kt-repeater="select2" id="kt_estado_desa_select_@itemLista.idDetalleRequerimiento" style="font-size: 11px;">
+                                                                <option value="-1">Seleccione estado desarrollo</option>
+                                                                <option value="1" @(itemLista.estadoDesarrollo == 1 ? "selected" : "")>PENDIENTE</option>
+                                                                <option value="2" @(itemLista.estadoDesarrollo == 2 ? "selected" : "")>EN PROCESO</option>
+                                                                <option value="3" @(itemLista.estadoDesarrollo == 3 ? "selected" : "")>FINALIZADO</option>
+                                                            </select>
+                                                            <!--end::Select-->
+                                                        </div>
+                                                        <div class="col-md-4 mb-4 gx-md-10">
+                                                            <label class="form-label">ESTADO CLIENTE:</label>
+                                                            <select class="form-select original-select2" data-kt-repeater="select2" id="kt_estado_cliente_select_@itemLista.idDetalleRequerimiento" style="font-size: 11px;">
+                                                                <option value="-1">Seleccione estado cliente</option>
+                                                                <option value="1" @(itemLista.estadoCliente == 1 ? "selected" : "")>APROBADO</option>
+                                                                <option value="2" @(itemLista.estadoCliente == 2 ? "selected" : "")>NO APROBADO</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="form-label">ASIGNADO A:</label>
+                                                            <select class="form-select original-select2" data-kt-repeater="select2" id="kt_trabajador_select_@itemLista.idDetalleRequerimiento" style="font-size: 11px;">
+                                                                <!-- Opción por defecto -->
+                                                                <option value="">Seleccione Trabajador</option>
+                                                                @if (!Model.ListarTrabajadores.Any())
+                                                                {
+                                                                    // Si no hay tipos de requerimiento disponibles, mostrar una opción por defecto
+                                                                    <option value="">No existen trabajadores</option>
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    // Si hay tipo requerimiento disponibles, mostrarlas
+                                                                    foreach (var item in Model.ListarTrabajadores)
+                                                                    {
+                                                                        if (item.idPersona == itemLista.idPersona)
+                                                                        {
+                                                                            <option selected value="@item.idPersona">@item.nombreCli</option>
+
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@item.idPersona">@item.nombreCli</option>
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-5 gx-5">
+                                                        <div class="col-md-6 mb-4">
+                                                            <!--begin::Input group-->
+                                                            <!--begin::Label-->
+                                                            <label class="form-label"
+                                                                   for="kt_datepicker_fecha_ini_detalle_@itemLista.idDetalleRequerimiento">FECHA INICIO:</label>
+                                                            <!--end::Label-->
+                                                            <!--begin::Input-->
+                                                            <input type="text"
+                                                                   id="kt_datepicker_fecha_ini_detalle_@itemLista.idDetalleRequerimiento"
+                                                                   class="form-control original"
+                                                                   data-kt-repeater="datepicker"
+                                                                   placeholder="Fecha incio detalle"
+                                                                   value="@itemLista.fechaInicio" />
+                                                            <!--end::Input-->
+                                                            <!--end::Input group-->
+                                                        </div>
+                                                        <div class="col-md-6 mb-4">
+                                                            <!--begin::Input group-->
+                                                            <!--begin::Label-->
+                                                            <label class="form-label"
+                                                                   for="kt_datepicker_fecha_fin_detalle_@itemLista.idDetalleRequerimiento">FECHA FIN:</label>
+                                                            <!--end::Label-->
+                                                            <!--begin::Input-->
+                                                            <input type="text"
+                                                                   id="kt_datepicker_fecha_fin_detalle_@itemLista.idDetalleRequerimiento"
+                                                                   class="form-control original"
+                                                                   data-kt-repeater="datepicker"
+                                                                   placeholder="Fecha fin detalle"
+                                                                   value="@itemLista.fechaFin" />
+                                                            <!--end::Input-->
+                                                            <!--end::Input group-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-5 gx-1">
+                                                        <!--begin::Input group-->
+                                                        <div class="mb-10 fv-row">
+                                                            <!--begin::Dropzone-->
+                                                            <div class="dropzone" id="kt_dropzonejs_banner_@itemLista.idDetalleRequerimiento">
+                                                                <!--begin::Message-->
+                                                                <div class="dz-message needsclick">
+                                                                    <i class="ki-duotone ki-file-up fs-3x text-primary"><span class="path1"></span><span class="path2"></span></i>
+                                                                    <!--begin::Info-->
+                                                                    <div class="ms-4">
+                                                                        <h3 class="fs-5 fw-bold text-gray-900 mb-1 ">Suelte los documentos aquí o haga clic para subirlo.</h3>
+                                                                    </div>
+                                                                    <!--end::Info-->
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Dropzone-->
+                                                            @if (!string.IsNullOrEmpty(itemLista.nombreArchivo))
+                                                            {
+                                                                <!-- Campo oculto con la ruta del archivo -->
+                                                                // Encuentra el folder correspondiente a la extensión del archivo
+                                                                var folderMapping = Model.ListaFoldersMapping.FirstOrDefault(m => m.extension.Equals(itemLista.extension, StringComparison.OrdinalIgnoreCase));
+
+                                                                // Verifica si se encontró un folder para esa extensión
+                                                                if (folderMapping != null)
+                                                                {
+                                                                    <input type="hidden" id="hiddenFilePath_@itemLista.idDetalleRequerimiento"
+                                                                           value="@Url.Content("~/Uploads/Files/"+folderMapping.folder+"/"+itemLista.nombreArchivo)" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <text>Error: No se encontró un folder para la extensión "@itemLista.extension"</text>
+                                                                }
+                                                            }
+                                                        </div>
+                                                        <!--end::Input group-->
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="txtCriterioAceptacion_@itemLista.idDetalleRequerimiento">Criterio de Aceptación</label>
+                                                            <textarea id="txtCriterioAceptacion_@itemLista.idDetalleRequerimiento"
+                                                                      name="criterioAceptacion_@itemLista.idDetalleRequerimiento"
+                                                                      class="summernote form-control"
+                                                                      rows="10">@Html.Raw(itemLista.criterioAceptacion)</textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-5 gx-1 mt-5">
+                                                        <!-- Botón de descarga -->
+                                                        <div class="col text-center">
+                                                            <button class="btn btn-primary btn-lg" type="button" onclick="downloadFile('@itemLista.idDetalleRequerimiento')">
+                                                                <i class="fas fa-download"></i> Descargar Archivo
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-5 gx-1">
+                                                        <label class="form-label">SCRIPTS:</label>
+                                                        <textarea type="text" class="form-control" id="txtComentario_@itemLista.idDetalleRequerimiento" placeholder="Ingrese comentario" style="height: 70px;"
+                                                                  maxlength="50000">@itemLista.comentarioCliente</textarea>
+                                                    </div>
+                                                    <div class="col-md-12 d-flex justify-content-end">
+                                                        <a href="javascript:;" data-repeater-delete="@itemLista.idDetalleRequerimiento" class="btn btn-light-danger mt-3 mt-md-8">
+                                                            <i class="las la-trash fs-5"></i>
+                                                            Eliminar
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        <!-- Datos Dinámicos -->
+                                    </div>
+                                    <!--end::Repeater-->
+                                    <!--begin::Form group-->
+                                    <div class="form-group">
+                                        <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
+                                            <i class="las la-plus fs-5"></i>
+                                            Agregar
+                                        </a>
+                                    </div>
+                                    <!--end::Form group-->
+                                    @{
+                                        int counter = 0; // Inicializa el contador
+                                    }
+                                    <!--begin::Template -->
+                                    <div id="template-row" style="display: none;">
+                                        <div data-repeater-item data-id="0" data-accion="N">
+                                            <div class="form-group mb-4">
+                                                <div class="row mb-5 gx-1">
+                                                    <label class="form-label required">DESCRIPCIÓN:</label>
+                                                    <textarea type="text" class="form-control" id="txtDescripcion_{{counter}}" placeholder="Ingrese descripción" style="height: 70px;" maxlength="300"></textarea>
+                                                </div>
+                                                <div class="row mb-5 gx-1">
+                                                    <label class="form-label required" for="txtModulo_{{counter}}">MODULO:</label>
+                                                    <textarea type="text" class="form-control" id="txtModulo_{{counter}}" placeholder="Ingrese modulo" style="height: 70px;" maxlength="300"></textarea>
+                                                </div>
+
+                                                <div class="row mb-5 gx-1">
+                                                    <div class="col-md-4 mb-4">
+                                                        <label class="form-label">ESTADO DESARROLLO:</label>
+                                                        <!--begin::Select-->
+                                                        <select class="form-select" data-kt-repeater="select2" id="kt_estado_desa_select_{{counter}}" style="font-size: 11px;">
+                                                            <option value="-1">Seleccione estado desarrollo</option>
+                                                            <option value="1" selected>PENDIENTE</option>
+                                                            <option value="2">EN PROCESO</option>
+                                                            <option value="3">FINALIZADO</option>
+                                                        </select>
+                                                        <!--end::Select-->
+                                                    </div>
+                                                    <div class="col-md-4 mb-4 gx-md-10">
+                                                        <label class="form-label">ESTADO CLIENTE:</label>
+                                                        <select class="form-select" data-kt-repeater="select2" id="kt_estado_cliente_select_{{counter}}" style="font-size: 11px;">
+                                                            <option value="-1">Seleccione estado cliente</option>
+                                                            <option value="1">APROBADO</option>
+                                                            <option value="2" selected>NO APROBADO</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">ASIGNADO A:</label>
+                                                        <select class="form-select" data-kt-repeater="select2" id="kt_trabajador_select_{{counter}}" style="font-size: 11px;">
+                                                            <!-- Opción por defecto -->
+                                                            <option value="">Seleccione Trabajador</option>
+                                                            @if (Model.ListarTrabajadores.Any())
+                                                            {
+                                                                foreach (var item in Model.ListarTrabajadores)
+                                                                {
+                                                                    <option value="@item.idPersona">@item.nombreCli</option>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                // Si no hay trabajadores disponibles, mostrar una opción por defecto
+                                                                <option value="">No existen trabajadores</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-5 gx-5">
+                                                    <div class="col-md-6 mb-4">
+                                                        <!--begin::Input group-->
+                                                        <!--begin::Label-->
+                                                        <label class="form-label"
+                                                               for="kt_datepicker_fecha_ini_detalle_{{counter}}">FECHA INICIO:</label>
+                                                        <!--end::Label-->
+                                                        <!--begin::Input-->
+                                                        <input type="text"
+                                                               id="kt_datepicker_fecha_ini_detalle_{{counter}}"
+                                                               class="form-control"
+                                                               data-kt-repeater="datepicker"
+                                                               placeholder="Fecha incio detalle" />
+                                                        <!--end::Input-->
+                                                        <!--end::Input group-->
+                                                    </div>
+                                                    <div class="col-md-6 mb-4">
+                                                        <!--begin::Input group-->
+                                                        <!--begin::Label-->
+                                                        <label class="form-label"
+                                                               for="kt_datepicker_fecha_fin_detalle_{{counter}}">FECHA FIN:</label>
+                                                        <!--end::Label-->
+                                                        <!--begin::Input-->
+                                                        <input type="text"
+                                                               id="kt_datepicker_fecha_fin_detalle_{{counter}}"
+                                                               class="form-control"
+                                                               data-kt-repeater="datepicker"
+                                                               placeholder="Fecha fin detalle" />
+                                                        <!--end::Input-->
+                                                        <!--end::Input group-->
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-5 gx-1">
+                                                    <!--begin::Input group-->
+                                                    <div class="mb-10 fv-row">
+                                                        <!--begin::Dropzone-->
+                                                        <div class="dropzone" id="kt_dropzonejs_banner_{{counter}}">
+                                                            <!--begin::Message-->
+                                                            <div class="dz-message needsclick">
+                                                                <i class="ki-duotone ki-file-up fs-3x text-primary"><span class="path1"></span><span class="path2"></span></i>
+                                                                <!--begin::Info-->
+                                                                <div class="ms-4">
+                                                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1 ">Suelte los documentos aquí o haga clic para subirlo.</h3>
+                                                                </div>
+                                                                <!--end::Info-->
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Dropzone-->
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="criterioAceptacion">Criterio de Aceptación</label>
+                                                        <textarea id="criterioAceptacion_{{counter}}"
+                                                                  name="criterioAceptacion_{{counter}}"
+                                                                  class="summernote form-control"
+                                                                  rows="10"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-5 gx-1">
+                                                    <label class="form-label">COMENTARIO CLIENTE:</label>
+                                                    <textarea type="text" class="form-control" id="txtComentario_{{counter}}" placeholder="Ingrese comentario" style="height: 70px;" maxlength="50000"></textarea>
+                                                </div>
+                                                <div class="col-md-12 d-flex justify-content-end">
+                                                    <a href="javascript:;" data-repeater-delete class="btn btn-light-danger mt-3 mt-md-8">
+                                                        <i class="las la-trash fs-5"></i>
+                                                        Eliminar
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end::Template-->
+                                </div>
+                            </div>
+                            <!--end::Card body-->
+                            <div class="d-flex justify-content-end">
+                                <!--begin::Button-->
+                                <a href="@Url.Action("Index","Requerimiento")" id="kt_ecommerce_add_product_cancel"
+                                   class="btn btn-light me-5">
+                                    Cancelar
+                                </a>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="button" id="btnGuardar" onclick="Guardar();" class="btn btn-primary">
+                                    <span class="indicator-label">Guardar</span>
+                                    <span class="indicator-progress">
+                                        Espere un momento...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                        </div>
+                        <!--end::General options-->
+                    </div>
+                </div>
+                <!--end::Main column-->
+            </form>
+            <!--end::Form-->
+        </div>
+        <!--end::Content container-->
+    </div>
+    <!--end::Content-->
+</div>
+<!--end::Content wrapper-->
+
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/library.js?v=5.0")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/metronic/plugins/custom/formrepeater/formrepeater.bundle.js")"></script>
+
+    <script>
+
+        let botonDesactivado = false;
+        // Variable global para almacenar los datos eliminados
+        var deletedData = [];
+        var repeaterCounter = 0;
+        var counter = 0;
+        var idDetalleRequerimiento = 0;
+        var ListaDocumentosFile = [];
+
+        function Validar() {
+
+            // Verificar si se ha seleccionado un cliente
+            if ($("#kt_cliente_select").val() == "") {
+                ShowMessage(0, "Debe seleccionar un cliente");
+                return false;
+            }
+            // Verificar si se ha ingresado un solicitante
+            if ($("#txtSolicitante").val() == "") {
+                ShowMessage(0, "Debe ingresar nombre de solicitante");
+                return false;
+            }
+            // Verificar si se ha seleccionado un tipo de requerimiento
+            if ($("#kt_tipo_req_select").val() == "") {
+                ShowMessage(0, "Debe seleccionar un tipo de requerimiento");
+                return false;
+            }
+            // Verificar si se ha seleccionado un tipo de requerimiento
+            if ($("#kt_prioridad_select").val() == "") {
+                ShowMessage(0, "Debe seleccionar una prioridad");
+                return false;
+            }
+            // Verificar si se ha seleccionado un tipo de requerimiento
+            if ($("#kt_estado_select").val() == "") {
+                ShowMessage(0, "Debe seleccionar un estado de requerimiento");
+                return false;
+            }
+            // Verificar si se ha ingresado un resumen
+            if ($("#txtResumen").val() == "") {
+                ShowMessage(0, "Debe ingresar un resumen");
+                return false;
+            }
+            if ($("#txtTiempo").val() == "") {
+                ShowMessage(0, "Debe ingresar el Tiempo");
+                return false;
+            }
+            if ($("#txtDescripcion").val() == "") {
+                ShowMessage(0, "Debe ingresar Descripcion");
+                return false;
+            }
+            if ($("#txtModulo").val() == "") {
+                ShowMessage(0, "Debe ingresar modulo");
+                return false;
+            }
+
+            //DETALLE REQUERIMIENTO
+            // Verificar si se ha ingresado al menos una descripción
+            var descripciones = $("[id^='txtDescripcion_']");
+            var alMenosUnaDescripcion = false;
+            descripciones.each(function () {
+                if ($(this).val() !== "") {
+                    alMenosUnaDescripcion = true;
+                    return false; // Salir del bucle each si al menos una descripción no está vacía
+                }
+            });
+
+            if (!alMenosUnaDescripcion) {
+                ShowMessage(0, "Debe ingresar una descripción");
+                return false;
+            }
+
+            return true;
+        }
+
+        function Guardar() {
+
+            if (!Validar()) {
+                return false;
+            }
+
+            var formData = new FormData();
+
+            // Datos de requerimiento
+            formData.append('Requerimiento.idRequerimiento', @Model.Requerimiento.idRequerimiento);
+            formData.append('Requerimiento.idPersona', $("#kt_cliente_select").val());
+            formData.append('Requerimiento.idProyecto', $("#kt_proyecto_cliente_select").val());
+            formData.append('Requerimiento.idTipoRequerimiento', $("#kt_tipo_req_select").val());
+            formData.append('Requerimiento.codigo', $("#txtCodigo").val());
+            formData.append('Requerimiento.solicitante', $("#txtSolicitante").val());
+            formData.append('Requerimiento.resumen', $("#txtResumen").val());
+            formData.append('Requerimiento.prioridad', $("#kt_prioridad_select").val());
+            formData.append('Requerimiento.fechaInicio', $("#kt_datepicker_fecha_ini").val());
+            formData.append('Requerimiento.fechaFin', $("#kt_datepicker_fecha_fin").val());
+            formData.append('Requerimiento.avanceDesarrollo', $("#txtAvanceDesa").val());
+            formData.append('Requerimiento.tiempo', $("#txtTiempo").val());
+            formData.append('Requerimiento.aprobacion', $("#txtAprobacion").val());
+            formData.append('Requerimiento.fechaRegistro', $("#kt_datepicker_fecha").val());
+            formData.append('Requerimiento.estadoReq', $("#kt_estado_select").val());
+
+            formData.append('DetalleRequerimiento.idRequerimiento', @Model.Requerimiento.idRequerimiento);
+
+            // Obtener el número total de elementos en el repeater
+            var totalItems = $('#kt_docs_repeater_basic [data-repeater-item]').length;
+
+            // Iterar sobre cada fila del repeater
+            $('#kt_docs_repeater_basic [data-repeater-item]').each(function (index) {
+
+                // Obtener el div actual que contiene el repeater item
+                var repeaterItem = $(this);
+
+                // Obtener los datos de la fila actual
+                idDetalleRequerimiento = repeaterItem.data('id');
+
+                var idPersona = $(this).find('.form-select[id^="kt_trabajador_select"]').val();
+                var descrip = $(this).find('.form-control[id^="txtDescripcion"]').val();
+                var coment = $(this).find('.form-control[id^="txtComentario"]').val();
+                var estDesa = $(this).find('.form-select[id^="kt_estado_desa_select"]').val();
+                var estCli = $(this).find('.form-select[id^="kt_estado_cliente_select"]').val();
+                var fecIni = $(this).find('.form-control[id^="kt_datepicker_fecha_ini_detalle"]').val();
+                var fecFin = $(this).find('.form-control[id^="kt_datepicker_fecha_fin_detalle"]').val();
+                var modulo = $(this).find('.form-control[id^="txtModulo"]').val();
+                var criterioAceptacion = $(this).find('textarea.summernote').summernote('code');
+
+                // Obtener el ID del elemento Dropzone de esta fila
+                var dropzoneId = $(this).find('.dropzone').attr('id');
+
+                // Obtener el nombre del archivo en Dropzone de esta fila
+                var dropzone = Dropzone.forElement("#" + dropzoneId);
+                var files = dropzone.files;
+
+                // Obtener el primer archivo de Dropzone
+                var archivo = null;
+                if (files.length > 0) {
+                    var file = files[0];
+                    archivo = new File([file], file.name);
+                }
+
+                // Agregar el archivo a la formData
+                if (archivo !== null) {
+                    formData.append('ListaDetalleRequerimiento[' + index + '].archivo', archivo);
+                }
+
+                // Obtener el valor de data-accion del padre (data-repeater-list)
+                var accion = $(this).closest('[data-repeater-item]').data('accion');
+
+                // LISTA DETALLE REQUERIMIENTO
+                formData.append('ListaDetalleRequerimiento[' + index + '].idDetalleRequerimiento', idDetalleRequerimiento);
+                formData.append('ListaDetalleRequerimiento[' + index + '].idPersona', idPersona);
+                formData.append('ListaDetalleRequerimiento[' + index + '].descripcion', descrip);
+                formData.append('ListaDetalleRequerimiento[' + index + '].comentarioCliente', coment);
+                formData.append('ListaDetalleRequerimiento[' + index + '].estadoDesarrollo', estDesa);
+                formData.append('ListaDetalleRequerimiento[' + index + '].estadoCliente', estCli);
+                formData.append('ListaDetalleRequerimiento[' + index + '].fechaInicio', fecIni);
+                formData.append('ListaDetalleRequerimiento[' + index + '].fechaFin', fecFin);
+                formData.append('ListaDetalleRequerimiento[' + index + '].modulo', modulo);
+                formData.append('ListaDetalleRequerimiento[' + index + '].criterioAceptacion', criterioAceptacion);
+                formData.append('ListaDetalleRequerimiento[' + index + '].operacion', accion);
+         
+            });
+
+            // Calcular el índice inicial para los datos eliminados
+            var deletedDataIndex = totalItems;
+
+            // Si deletedData tiene elementos, agregarlos a ListaOfertaCliente
+            if (deletedData.length > 0) {
+                deletedData.forEach(function (data) {
+                    formData.append('ListaDetalleRequerimiento[' + deletedDataIndex + '].idDetalleRequerimiento', data.idDetalleRequerimiento);
+                    formData.append('ListaDetalleRequerimiento[' + deletedDataIndex + '].idPersona', data.idPersona);
+                    formData.append('ListaDetalleRequerimiento[' + deletedDataIndex + '].descripcion', data.descripcion);
+                    formData.append('ListaDetalleRequerimiento[' + deletedDataIndex + '].comentarios', data.comentarios);
+                    formData.append('ListaDetalleRequerimiento[' + deletedDataIndex + '].estadoDesarrollo', data.estadoDesarrollo);
+                    formData.append('ListaDetalleRequerimiento[' + deletedDataIndex + '].estadoCliente', data.estadoCliente);
+                    formData.append('ListaDetalleRequerimiento[' + deletedDataIndex + '].fechaInicio', data.fecIni);
+                    formData.append('ListaDetalleRequerimiento[' + deletedDataIndex + '].fechaFin', data.fecFin);                    
+                    formData.append('ListaDetalleRequerimiento[' + deletedDataIndex + '].operacion', data.operacion);
+                    deletedDataIndex++;
+                });
+            }
+
+            //console.log("Contenido de formData:");
+
+            //for (let pair of formData.entries()) {
+            //    console.log(pair[0] + ": " + pair[1]);
+            //}
+
+            $.ajax({
+                url: "@Url.Action("Guardar", "Requerimiento")",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    let message = "¡El Requerimiento se ha Editado correctamente!";
+                    Swal.fire({
+                        text: message,
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Listo",
+                        customClass: { confirmButton: "btn btn-primary" },
+                    }).then(function () {
+                        window.location.href = '@Url.Action("Index", "Requerimiento")';
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                    // Mostrar mensaje de error
+                    Swal.fire({
+                        text: "Se produjo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok",
+                        customClass: { confirmButton: "btn btn-primary" },
+                    });
+                },
+            });
+        }
+
+        // Función para validar si la tecla presionada es un número
+        function validarNumero(event) {
+            // Obtener el código de la tecla presionada
+            var codigoTecla = event.keyCode || event.which;
+
+            // Permitir los números del 0 al 9 y las teclas de navegación
+            if ((codigoTecla >= 48 && codigoTecla <= 57) ||  // Números del teclado alfanumérico
+                (codigoTecla >= 96 && codigoTecla <= 105) || // Números del teclado numérico
+                codigoTecla == 8 ||  // Tecla de retroceso
+                codigoTecla == 9 ||  // Tecla de tabulación
+                codigoTecla == 37 || // Flecha izquierda
+                codigoTecla == 39 || // Flecha derecha
+                codigoTecla == 46 || // Tecla de suprimir
+                codigoTecla == 13 || // Tecla de enter
+                (event.ctrlKey && (codigoTecla == 67 || codigoTecla == 86))) { // Permitir copiar (Ctrl+C) y pegar (Ctrl+V)
+                return true; // Permitir la tecla
+            } else {
+                event.preventDefault(); // Bloquear la tecla
+                return false; // Evitar la entrada de caracteres no deseados
+            }
+        }
+
+        function downloadFile(idDetalleRequerimiento) {
+            var hiddenFilePath = $("#hiddenFilePath_" + idDetalleRequerimiento).val();
+            if (hiddenFilePath) {
+                var link = document.createElement("a");
+                link.href = hiddenFilePath;
+                link.download = hiddenFilePath.split('/').pop();
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                console.error("No se encontró una ruta de archivo para descargar.");
+            }
+        }
+
+        // Función para inicializar Dropzone
+        function initializeDropzoneTemplate(counter) {
+            var dropzoneId = 'kt_dropzonejs_banner_' + counter;
+            var dropzoneElement = document.getElementById(dropzoneId);
+
+            // Asegúrate de que el elemento no se haya inicializado previamente
+            if (dropzoneElement && !dropzoneElement.dropzone) {
+                var myDropzone = new Dropzone(dropzoneElement, {
+                    url: "https://keenthemes.com/scripts/void.php", // Tu URL de carga de imágenes
+                    paramName: "file", // Nombre del parámetro que se usará para transferir el archivo
+                    maxFiles: 1, // Solo permitir una imagen por contenedor
+                    maxFilesize: 10, // Tamaño máximo del archivo en MB
+                    addRemoveLinks: true, // Mostrar enlaces para eliminar archivos
+                    acceptedFiles: '', // Tipos de archivos aceptados
+                    uploadMultiple: false, // No permitir cargar múltiples archivos
+                    autoProcessQueue: false, // No procesar automáticamente la cola
+                    dictRemoveFile: 'Quitar Archivo', // Texto para quitar la imagen
+                    dictMaxFilesExceeded: "No puedes subir más archivos.",
+                    dictFileTooBig: "El archivo es demasiado grande.",
+                    dictInvalidFileType: "No puedes subir archivos de este tipo.",
+                });
+            }
+        }
+
+        function initializeDropzones() {
+            // Recorrer cada item del Repeater para inicializar Dropzone
+            $("#kt_docs_repeater_basic").find("[data-repeater-item]").each(function () {
+                var $item = $(this);
+                var idDetalleRequerimiento = $item.data("id");
+                var hiddenFilePath = $("#hiddenFilePath_" + idDetalleRequerimiento).val();
+                var dropzoneId = "#kt_dropzonejs_banner_" + idDetalleRequerimiento;
+
+                // Configuración de Dropzone
+                var dropzoneConfig = {
+                    url: "https://keenthemes.com/scripts/void.php", // Tu URL de carga de imágenes
+                    paramName: "file", // Nombre del parámetro que se usará para transferir el archivo
+                    maxFiles: 1, // Solo permitir una imagen por contenedor
+                    maxFilesize: 10, // Tamaño máximo del archivo en MB
+                    addRemoveLinks: true, // Mostrar enlaces para eliminar archivos
+                    acceptedFiles: '', // Tipos de archivos aceptados
+                    uploadMultiple: false, // No permitir cargar múltiples archivos
+                    autoProcessQueue: false, // No procesar automáticamente la cola
+                    dictRemoveFile: 'Quitar Archivo', // Texto para quitar la imagen
+                    dictMaxFilesExceeded: "No puedes subir más archivos.",
+                    dictFileTooBig: "El archivo es demasiado grande.",
+                    dictInvalidFileType: "No puedes subir archivos de este tipo.",
+                    init: function () {
+                        // Si hay una imagen previamente cargada, añadirla
+                        var myDropzone = this;
+
+                        if (hiddenFilePath) {
+                            // Comprobar si la extensión corresponde a una imagen
+                            var extension = hiddenFilePath.split('.').pop().toLowerCase();
+                            var isImage = ['jpg', 'jpeg', 'png'].indexOf(extension) !== -1;
+
+                            // Si es una imagen, mostrarla
+                            if (isImage) {
+                                var imageName = hiddenFilePath.split("/").pop(); // Obtener solo el nombre del archivo
+
+                                // Crear una nueva imagen
+                                var img = new Image();
+
+                                img.onload = function () {
+                                    // Escalar la imagen
+                                    var MAX_WIDTH = 120;
+                                    var MAX_HEIGHT = 120;
+                                    var width = img.width;
+                                    var height = img.height;
+
+                                    if (width > height) {
+                                        if (width > MAX_WIDTH) {
+                                            height *= MAX_WIDTH / width;
+                                            width = MAX_WIDTH;
+                                        }
+                                    } else {
+                                        if (height > MAX_HEIGHT) {
+                                            width *= MAX_HEIGHT / height;
+                                            height = MAX_HEIGHT;
+                                        }
+                                    }
+
+                                    // Crear un lienzo temporal
+                                    var canvas = document.createElement("canvas");
+                                    canvas.width = width;
+                                    canvas.height = height;
+                                    var ctx = canvas.getContext("2d");
+
+                                    // Dibujar la imagen en el lienzo
+                                    ctx.drawImage(img, 0, 0, width, height);
+
+                                    // Obtener el archivo de imagen en formato base64
+                                    var dataURL = canvas.toDataURL("image/jpeg");
+
+                                    // Crear un nuevo archivo
+                                    var adjustedFile = dataURLtoFile(dataURL, imageName);
+
+                                    // Emitir eventos para agregar y mostrar el archivo en Dropzone
+                                    myDropzone.emit("addedfile", adjustedFile);
+                                    myDropzone.emit("thumbnail", adjustedFile, dataURL);
+                                    myDropzone.emit("complete", adjustedFile);
+                                    myDropzone.files.push(adjustedFile);
+
+                                    // Mostrar archivos en consola para depuración
+                                    //console.log("Archivos en Dropzone:", myDropzone.files);
+                                };
+
+                                // Establecer la fuente de la imagen
+                                img.src = hiddenFilePath;
+                            } else {
+                                // Crear un objeto de archivo simulado
+                                var mockFile = { name: hiddenFilePath.split('/').pop(), size: 12345 };
+
+                                // Emitir eventos para agregar y mostrar el archivo en Dropzone
+                                this.emit("addedfile", mockFile);
+                                this.emit("thumbnail", mockFile, hiddenFilePath);
+                                this.emit("complete", mockFile);
+                                myDropzone.files.push(mockFile);
+
+                                // Mostrar archivos en consola para depuración
+                                //console.log("Archivos en Dropzone:", myDropzone.files);
+                            }
+                        }
+                    }
+                };
+
+                // Inicializar Dropzone
+                var dropzoneInstance = new Dropzone(dropzoneId, dropzoneConfig);
+
+            });
+        }
+        //Funcion par filtrar numeros y puntos
+        function filtrarNumerosYPuntuacion(input) {
+            let valor = input.value;
+
+            // Permitir solo números, puntos, punto y coma y dos puntos
+            valor = valor.replace(/[^0-9.;:]/g, '');
+
+            input.value = valor;
+        }
+
+
+        // Función para convertir datos de URL en un archivo
+        function dataURLtoFile(dataURL, fileName) {
+            var arr = dataURL.split(",");
+            var mime = arr[0].match(/:(.*?);/)[1];
+            var bstr = atob(arr[1]);
+            var n = bstr.length;
+            var u8arr = new Uint8Array(n);
+
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+
+            return new File([u8arr], fileName, { type: mime });
+        }
+        function initializeSummernote(scope = document) {
+            $(scope).find('.summernote').each(function () {
+                const $el = $(this);
+
+                // Destruir si ya está inicializado
+                if ($el.next().hasClass('note-editor')) {
+                    $el.summernote('destroy');
+                }
+
+                // Inicializar
+                $el.summernote({
+                    height: 300,
+                    toolbar: [
+                        ['custom', ['indentBtn', 'outdentBtn']],
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['strikethrough', 'superscript']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']], // Sangría aquí
+                        ['height', ['height']],
+                        ['insert', ['picture', 'link', 'video']],
+                        ['view', ['fullscreen', 'codeview']]
+                    ],
+                    buttons: {
+                        indentBtn: function (context) {
+                            var ui = $.summernote.ui;
+                            return ui.button({
+                                contents: '<i class="note-icon-indent"></i>',
+                                tooltip: 'Aumentar sangría',
+                                click: function () {
+                                    document.execCommand('indent');
+                                }
+                            }).render();
+                        },
+                        outdentBtn: function (context) {
+                            var ui = $.summernote.ui;
+                            return ui.button({
+                                contents: '<i class="note-icon-outdent"></i>',
+                                tooltip: 'Disminuir sangría',
+                                click: function () {
+                                    document.execCommand('outdent');
+                                }
+                            }).render();
+                        }
+                    }
+                });
+
+                const $editor = $el.next('.note-editor');
+                $editor.find('.note-toolbar').css({ 'background-color': '#d3d3d3', 'color': '#000' });
+                $editor.find('.note-toolbar button, .note-toolbar .note-icon').css({ 'color': '#000' });
+                $editor.find('.note-editable').css({ 'background-color': '#fff', 'color': '#000' });
+            });
+        }
+
+        $(document).ready(function () {
+            let counter = $('[data-repeater-item]').length;
+
+            $('#kt_docs_repeater_basic').repeater({
+                initEmpty: false,
+
+                show: function () {
+                    const row = this;
+                    counter++;
+
+                    // Reemplazar {{counter}} por el valor actual
+                    $(row).html($(row).html().replace(/{{counter}}/g, counter));
+
+                    $(row).slideDown(() => {
+                        setTimeout(() => {
+                            $(row).find('[data-kt-repeater="select2"]:not(.original-select2)').select2();
+
+                            $(row).find('[data-kt-repeater="datepicker"]').flatpickr({
+                                dateFormat: 'd/m/Y',
+                                locale: spanishLocale
+                            });
+
+                            initializeDropzones();
+                            initializeSummernote(row);
+                        }, 150);
+                    });
+                },
+
+                hide: function (deleteElement) {
+                    $(this).slideUp(deleteElement);
+                },
+
+                ready: function () {
+                    // Inicializa campos ya existentes
+                    $('[data-kt-repeater="select2"].original-select2').select2();
+                    $('[data-kt-repeater="datepicker"].original').flatpickr({
+                        dateFormat: 'd/m/Y',
+                        locale: spanishLocale
+                    });
+
+                    initializeDropzones();
+                    initializeSummernote(); // Inicializar summernote para todos los campos cargados
+                }
+            });
+
+            // Inicializar datepickers globales con fechas ya existentes (no forzar new Date())
+            $("#kt_datepicker_fecha").flatpickr({
+                dateFormat: 'd/m/Y',
+                locale: spanishLocale,
+                defaultDate: $("#kt_datepicker_fecha").val() || new Date()
+            });
+
+            $("#kt_datepicker_fecha_ini").flatpickr({
+                dateFormat: 'd/m/Y',
+                locale: spanishLocale,
+                defaultDate: $("#kt_datepicker_fecha_ini").val() || new Date()
+            });
+
+            $("#kt_datepicker_fecha_fin").flatpickr({
+                dateFormat: 'd/m/Y',
+                locale: spanishLocale,
+                minDate: "today",
+                defaultDate: $("#kt_datepicker_fecha_fin").val() || new Date()
+            });
+
+            // Crear nuevo ítem con plantilla manual
+            $(document).on('click', '[data-repeater-create]', function () {
+                const $template = $('#template-row').html();
+                const $newRow = $($template).hide();
+                counter++;
+
+                $newRow.html($newRow.html().replace(/{{counter}}/g, counter));
+                $('#kt_docs_repeater_basic').append($newRow);
+
+                $newRow.slideDown();
+
+                $newRow.find('[data-kt-repeater="select2"]:not(.original-select2)').select2();
+                $newRow.find('[data-kt-repeater="datepicker"]').flatpickr({
+                    dateFormat: 'd/m/Y',
+                    locale: spanishLocale
+                });
+
+                initializeDropzoneTemplate(counter);
+                $newRow.find('.note-editor').remove();
+                initializeSummernote($newRow);
+            });
+        });
+
+
+        // Eliminar fila al hacer clic en el botón Eliminar
+        $(document).on('click', '[data-repeater-delete]', function () {
+            var $deletedRow = $(this).closest('[data-repeater-item]');
+            var idDetalleRequerimiento = $deletedRow.data('id');
+            var idPersona = $deletedRow.find('#kt_trabajador_select_' + idDetalleRequerimiento).val();
+            var descripcion = $deletedRow.find('#txtDescripcion_' + idDetalleRequerimiento).val();
+            var comentarios = $deletedRow.find('#txtComentario_' + idDetalleRequerimiento).val();
+            var estadoDesarrollo = $deletedRow.find('#kt_estado_desa_select_' + idDetalleRequerimiento).val();
+            var estadoCliente = $deletedRow.find('#kt_estado_cliente_select_' + idDetalleRequerimiento).val();
+            var fecIni = $deletedRow.find('#kt_datepicker_fecha_ini_detalle_' + idDetalleRequerimiento).val();
+            var fecFin = $deletedRow.find('#kt_datepicker_fecha_fin_detalle_' + idDetalleRequerimiento).val();
+            var modulo = $deletedRow.find('#txtModulo_' + idDetalleRequerimiento).val();
+
+            // Asegúrate de usar summernote correctamente
+            var criterioAceptacion = $deletedRow.find('#criterioAceptacion_' + idDetalleRequerimiento).summernote('code');
+
+
+            // Crear un objeto con los datos eliminados
+            var deletedItem = {
+                idDetalleRequerimiento: idDetalleRequerimiento,
+                idPersona: idPersona,
+                descripcion: descripcion,
+                comentarios: comentarios,
+                estadoDesarrollo: estadoDesarrollo,
+                estadoCliente: estadoCliente,
+                fecIni: fecIni,
+                fecFin: fecFin,
+                modulo: modulo,
+                criterioAceptacion: criterioAceptacion,
+                operacion: 'E'
+            };
+
+            // Agregar el objeto a la lista de datos eliminados
+            deletedData.push(deletedItem);
+
+            //// Mostrar los datos eliminados en la consola
+            //console.log('Datos eliminados:', deletedItem);
+
+            // Animación para eliminar la fila
+            $deletedRow.slideUp(400, function () {
+                // Eliminar la fila del repeater después de la animación
+                $(this).remove();
+            });
+
+        });
+
+    </script>
+}

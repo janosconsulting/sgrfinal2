@@ -1,0 +1,192 @@
+﻿@model Mantenimiento.Datos.Entidades.sp_ObtenerCasosExito
+@using Mantenimiento.Datos.Entidades
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!--<< Header Area >>-->
+<!-- Mirrored from gramentheme.com/html/infotek/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Jun 2024 13:43:11 GMT -->
+
+<body>
+    <div class="breadcrumb-wrapper bg-cover" style="background-image: url('@Url.Content("~/Content/theme/assets/img/breadcrumb.jpg")');">
+        <div class="border-shape">
+            <img src="@Url.Content("~/Content/theme/assets/img/element.png")" alt="shape-img">
+        </div>
+        <div class="line-shape">
+            <img src="@Url.Content("~/Content/theme/assets/img/line-element.png")" alt="shape-img">
+        </div>
+        <div class="container">
+            <div class="page-heading">
+                <h1 class="wow fadeInUp" data-wow-delay=".3s">Proyecto Detalle</h1>
+                <ul class="breadcrumb-items wow fadeInUp" data-wow-delay=".5s">
+                    <li>
+                        <a href="index.html">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-chevron-right"></i>
+                    </li>
+                    <li>
+                        Proyecto Detalle
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Asegúrate de tener Font Awesome cargado -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/assets/css/styleCodetus.css")" />
+    <div class="container bg-white rounded shadow-sm px-4 py-4 mb-5 mx-auto">
+        <div class="position-relative" style="height: 900px; padding-top: 150px; padding-bottom: 150px; overflow: hidden;">
+            <!-- Imagen de fondo -->
+            <img src="~/Uploads/Files/imagenindex/trabajoenequipo.jpg"
+                 class="background-img"
+                 alt="Fondo" />
+
+            <!-- Tarjeta de contenido -->
+            <div class="project-info-container">
+                <h3 class="fw-bold text-uppercase text-primary mb-3 text-center">
+                    @Model.Titulo
+                </h3>
+
+                <div class="text-center mb-4">
+                    <img src="@Url.Content("~/Uploads/Files/CasosExito/" + Model.nombreArchivo)"
+                         class="img-fluid rounded-4 shadow-sm"
+                         style="max-height: 140px; object-fit: cover; width: 40%;"
+                         alt="@Model.Titulo" />
+                </div>
+                <h5 class="fw-bold mt-4 mb-3">Información del proyecto:</h5>
+                <div class="border-top py-2 d-flex justify-content-between align-items-center">
+                    <span class="fw-semibold">Cliente:</span>
+                    <span>@Html.Raw(Model.NombreCliente)</span>
+                </div>
+                <div class="border-top py-2 d-flex justify-content-between align-items-center">
+                    <span class="fw-semibold">País:</span>
+                    <span>@Html.Raw(Model.NombrePais)</span>
+                </div>               
+            </div>
+        </div>
+        <h4 class="fw-bold text-dark mb-3" style="font-size: 1.75rem;">Descripción</h4>
+        <div class="parrafo-justificado">
+            @Html.Raw(Model.Descripcion)
+        </div>
+
+        <h4 class="fw-bold text-dark mt-4 mb-3" style="font-size: 1.75rem;">Cambios</h4>
+        <div class="parrafo-justificado">
+            @Html.Raw(Model.cambio)
+        </div>
+
+        <h4 class="fw-bold text-dark mt-4 mb-3" style="font-size: 1.75rem;">Resultados</h4>
+        <div class="parrafo-justificado">
+            @Html.Raw(Model.resultados)
+        </div>
+                    
+        <div class="container my-5">
+            <div class="row justify-content-center g-4">
+                <div class="col-md-6 text-center">
+                    <img src="~/Uploads/Files/imagenindex/Designer (1).jpeg" alt="Imagen 1" class="img-fluid rounded shadow" style="max-height: 500px; object-fit: cover;">
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="~/Uploads/Files/imagenindex/Designer (16).jpeg" alt="Imagen 2" class="img-fluid rounded shadow" style="max-height: 500px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .parrafo-justificado {
+                text-align: justify;
+                margin-bottom: 1rem;
+                font-size: 1rem;
+               
+            }
+
+                .parrafo-justificado ul {
+                    padding-left: 1.5rem;
+                }
+
+                .parrafo-justificado li::marker {
+                    content: "• ";
+                    color: #4c6ef5;
+                }
+
+            .background-img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: contain; /* <-- Ajustado para que la imagen se vea completa */
+                z-index: 1;
+            }
+
+            .project-info-container {
+                position: absolute;
+                top: 75%;
+                right: 0%; /* Más a la derecha (menos espacio desde el borde derecho) */
+                transform: translateY(-50%);
+                width: 320px; /* Más angosto que 700px */
+                background-color: white;
+                border-radius: 1rem;
+                padding: 2rem;
+                border-top: 5px solid #4c6ef5;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+                z-index: 2;
+            }
+
+
+
+                .project-info-container h3 {
+                    font-weight: 700;
+                    color: #4c6ef5;
+                    text-align: center;
+                    margin-bottom: 1.5rem;
+                    font-size: 1.4rem;
+                }
+
+                .project-info-container img {
+                    max-height: 140px;
+                    width: 100%;
+                    object-fit: cover;
+                    border-radius: 0.75rem;
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                    display: block;
+                    margin: 0 auto 1.5rem;
+                }
+
+                .project-info-container p {
+                    font-size: 0.95rem;
+                    color: #555;
+                    text-align: justify;
+                }
+
+                .project-info-container h5 {
+                    font-weight: 700;
+                    margin-top: 2rem;
+                    margin-bottom: 1rem;
+                    color: #222;
+                }
+
+            .project-info-item {
+                border-top: 1px solid #eee;
+                padding: 0.75rem 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .project-info-social a {
+                color: #333;
+                font-size: 1.2rem;
+                margin-right: 0.5rem;
+                transition: color 0.2s ease;
+            }
+
+                .project-info-social a:hover {
+                    color: #4c6ef5;
+                }
+        </style>
+    </div>
+</body>
+<!-- Mirrored from gramentheme.com/html/infotek/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Jun 2024 13:43:11 GMT -->
+</html>

@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FB876CDD-0223-4C80-8BE9-545FB0531BB9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mantenimiento.Datos</RootNamespace>
+    <AssemblyName>Mantenimiento.Datos</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.6\lib\net45\CommonServiceLocator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper.Contrib, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.Contrib.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\..\..\CLINICA_AUREAV2\ERPWeb 2020\ErpWeb2020\FacturadorCliente\packages\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpZipLib">
+      <HintPath>..\..\..\CLINICA_AUREAV2\ERPWeb 2020\ErpWeb2020\FacturadorCliente\packages\SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ThoughtWorks.QRCode">
+      <HintPath>..\..\..\CLINICA_AUREAV2\ERPWeb 2020\ErpWeb2020\FacturadorCliente\packages\ThoughtWorks.QRCode.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Abstractions">
+      <HintPath>..\packages\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Configuration">
+      <HintPath>..\packages\Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container">
+      <HintPath>..\..\..\CLINICA_AUREAV2\ERPWeb 2020\ErpWeb2020\FacturadorCliente\packages\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Interception">
+      <HintPath>..\packages\Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Interception.Configuration">
+      <HintPath>..\packages\Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ServiceLocation">
+      <HintPath>..\packages\Unity.ServiceLocation.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Articulo.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ArticuloAdjunto.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ArticuloAutor.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ArticuloConclusion.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ArticuloReferencia.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Autor.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Base\IRepositorio.cs" />
+    <Compile Include="Base\IUnidadTrabajo.cs" />
+    <Compile Include="Base\Repositorio.cs" />
+    <Compile Include="Contratos\IArticuloAdjuntoRepositorio.cs" />
+    <Compile Include="Contratos\IArticuloAutorRepositorio.cs" />
+    <Compile Include="Contratos\IArticuloConclusionRepositorio.cs" />
+    <Compile Include="Contratos\IArticuloReferenciaRepositorio.cs" />
+    <Compile Include="Contratos\IArticuloRepositorio.cs" />
+    <Compile Include="Contratos\IAutorRepositorio.cs" />
+    <Compile Include="Contratos\IDocumentoIdentidadRepositorio.cs" />
+    <Compile Include="Contratos\IUsuarioRepositorio.cs" />
+    <Compile Include="DocumentoIdentidad.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\CasosExito.cs" />
+    <Compile Include="Entidades\CategoriaCliente.cs" />
+    <Compile Include="Entidades\sp_ListarCategoriaCliente.cs" />
+    <Compile Include="Entidades\sp_ListarPaises.cs" />
+    <Compile Include="Entidades\sp_listarRequerimientosporTrabajador.cs" />
+    <Compile Include="Entidades\sp_ObtenerCasosExito.cs" />
+    <Compile Include="Entidades\sp_ObtenerDetallesPorRequerimiento.cs" />
+    <Compile Include="Entidades\Color.cs" />
+    <Compile Include="Entidades\DetalleRequerimiento.cs" />
+    <Compile Include="Entidades\Proyecto.cs" />
+    <Compile Include="Entidades\Requerimiento.cs" />
+    <Compile Include="Entidades\sp_ListarProyectos.cs" />
+    <Compile Include="Entidades\Persona.cs" />
+    <Compile Include="Entidades\sp_ListarClientes.cs" />
+    <Compile Include="Entidades\sp_ListarRequerimientosxFiltro.cs" />
+    <Compile Include="Entidades\sp_ListarTareas.cs" />
+    <Compile Include="Entidades\sp_ListarTrabajadores.cs" />
+    <Compile Include="Entidades\sp_ValidarNdocumento.cs" />
+    <Compile Include="Entidades\Tarea.cs" />
+    <Compile Include="Entidades\TipoRequerimiento.cs" />
+    <Compile Include="Modelo\Contexto.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Modelo\Contexto.Extensions.cs">
+      <DependentUpon>Contexto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Modelo\IContexto.cs">
+      <DependentUpon>IContexto.tt</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Modelo\Mantenimiento.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Mantenimiento.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Pocos.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recursos\Mensaje.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Mensaje.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Recursos\Utilitario.cs" />
+    <Compile Include="Recursos\UtilitarioComun.cs" />
+    <Compile Include="Repositorios\ArticuloAdjuntoRepositorio.cs" />
+    <Compile Include="Repositorios\ArticuloAutorRepositorio.cs" />
+    <Compile Include="Repositorios\ArticuloConclusionRepositorio.cs" />
+    <Compile Include="Repositorios\ArticuloReferenciaRepositorio.cs" />
+    <Compile Include="Repositorios\ArticuloRepositorio.cs" />
+    <Compile Include="Repositorios\AutorRepositorio.cs" />
+    <Compile Include="Repositorios\DocumentoIdentidadRepositorio.cs" />
+    <Compile Include="Repositorios\UsuarioRepositorio.cs" />
+    <Compile Include="Slider.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_BuscarPorPalabraClave_Result.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_ListarArticulosxAutor_Result.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_ListarPerfiles_Result.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_ListarPersonas_Result.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_ListarPublicaciones_Result.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Usuario.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Video.cs">
+      <DependentUpon>Pocos.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Contenedor\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Modelo\Mantenimiento.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Mantenimiento.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="bin\Debug\Mantenimiento.Datos.dll.config" />
+    <None Include="bin\Debug\Mantenimiento.Negocio.dll.config" />
+    <None Include="Modelo\Contexto.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Contexto.cs</LastGenOutput>
+    </None>
+    <None Include="Modelo\IContexto.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IContexto.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ControlCombustible.Utilitario\Mantenimiento.Utilitario.csproj">
+      <Project>{DAC5A928-153B-4A7E-A7D3-794F82E4F961}</Project>
+      <Name>Mantenimiento.Utilitario</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Recursos\Mensaje.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Mensaje.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Pocos.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Pocos.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\Dapper.Contrib.dll" />
+    <Content Include="bin\Debug\Dapper.Contrib.xml" />
+    <Content Include="bin\Debug\Dapper.dll" />
+    <Content Include="bin\Debug\Dapper.xml" />
+    <Content Include="bin\Debug\EntityFramework.dll" />
+    <Content Include="bin\Debug\EntityFramework.xml" />
+    <Content Include="bin\Debug\itextsharp.dll" />
+    <Content Include="bin\Debug\Mantenimiento.Datos.dll" />
+    <Content Include="bin\Debug\Mantenimiento.Datos.pdb" />
+    <Content Include="bin\Debug\Mantenimiento.Negocio.dll" />
+    <Content Include="bin\Debug\Mantenimiento.Negocio.pdb" />
+    <Content Include="bin\Debug\Mantenimiento.Utilitario.dll" />
+    <Content Include="bin\Debug\Mantenimiento.Utilitario.pdb" />
+    <Content Include="bin\Debug\SharpZipLib.dll" />
+    <Content Include="bin\Debug\Sunat.dll" />
+    <Content Include="bin\Debug\Sunat.pdb" />
+    <Content Include="bin\Debug\ThoughtWorks.QRCode.dll" />
+    <Content Include="bin\Debug\Unity.Abstractions.dll" />
+    <Content Include="bin\Debug\Unity.Abstractions.pdb" />
+    <Content Include="bin\Debug\Unity.Configuration.dll" />
+    <Content Include="bin\Debug\Unity.Configuration.pdb" />
+    <Content Include="bin\Debug\Unity.Container.dll" />
+    <Content Include="bin\Debug\Unity.Container.pdb" />
+    <Content Include="bin\Debug\Unity.Interception.dll" />
+    <Content Include="bin\Debug\Unity.Interception.pdb" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

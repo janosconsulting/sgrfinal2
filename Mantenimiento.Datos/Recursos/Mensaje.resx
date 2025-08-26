@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Constante_Inicio" xml:space="preserve">
+    <value>INICIAR</value>
+  </data>
+  <data name="Constante_Parar" xml:space="preserve">
+    <value>PARAR</value>
+  </data>
+  <data name="excepcion_AdministracionTiempoVidaPorEjecucionContexto_PrincipalNoPuedeSerNull" xml:space="preserve">
+    <value>Principal no puede ser null en AdministracionTiempoVidaPorEjecucionContexto</value>
+  </data>
+  <data name="excepcion_AdministradorDeSeguimientoNoPuedeSerNull" xml:space="preserve">
+    <value>Administrador de seguimiento no puede ser nulo</value>
+  </data>
+  <data name="excepcion_ArgumentoElementoInvalido" xml:space="preserve">
+    <value>Elemento es nulo</value>
+  </data>
+  <data name="excepcion_CantidadPaginaInvalida" xml:space="preserve">
+    <value>CantidadPagina es menor a cero</value>
+  </data>
+  <data name="excepcion_CantidadPaginaInvalida1" xml:space="preserve">
+    <value>Numero de página no es válido</value>
+  </data>
+  <data name="excepcion_ContenedorNoPuedeSerNull" xml:space="preserve">
+    <value>Contenedor no puede ser nulo</value>
+  </data>
+  <data name="excepcion_CuentaNoValidaParaLaTransferencia" xml:space="preserve">
+    <value>No se puede realizar la transferencia, número de cuenta no válido o una cuenta está bloqueada</value>
+  </data>
+  <data name="excepcion_DenominadorInvalido" xml:space="preserve">
+    <value>Denominador Inválido</value>
+  </data>
+  <data name="excepcion_DescripcionProductoInvalido" xml:space="preserve">
+    <value>Descripción del Producto Inválido</value>
+  </data>
+  <data name="excepcion_ElementosNoValidosEnLaPagina" xml:space="preserve">
+    <value>IndicePagina * CantidadPagina producen excepción de desbordamiento</value>
+  </data>
+  <data name="excepcion_EspecificacionEsNull" xml:space="preserve">
+    <value>Especificación no puede ser nulo</value>
+  </data>
+  <data name="excepcion_ExpresiondeRutaNoValida" xml:space="preserve">
+    <value>Ruta de expresión es nulo o no es una función de expresión válida</value>
+  </data>
+  <data name="excepcion_FilTroNoPuedeSerNull" xml:space="preserve">
+    <value>Expresión de filtro no puede ser nulo</value>
+  </data>
+  <data name="excepcion_GrupoInvalido" xml:space="preserve">
+    <value>Grupo Inválido</value>
+  </data>
+  <data name="excepcion_IndicePaginaInvalida" xml:space="preserve">
+    <value>IndicePagina es menor a cero</value>
+  </data>
+  <data name="excepcion_IndicePaginaInvalida1" xml:space="preserve">
+    <value>Indice de página inválida</value>
+  </data>
+  <data name="excepcion_laRutaAbarcadaNoPuedeSerNull" xml:space="preserve">
+    <value>La ruta de inclusion no puede ser una cadena nula o vacía</value>
+  </data>
+  <data name="excepcion_LasDependenciasNoEstanInicializadas" xml:space="preserve">
+    <value>La dependencia de este objeto es una referencia nula</value>
+  </data>
+  <data name="excepcion_MensajeInvalidoSeguimiento" xml:space="preserve">
+    <value>Mensaje Inválido de Seguimiento </value>
+  </data>
+  <data name="excepcion_ModeloInvalido" xml:space="preserve">
+    <value>Modelo Inválido</value>
+  </data>
+  <data name="excepcion_OrdenarPorExpresionNoPuedeSerNull" xml:space="preserve">
+    <value>OrdenarPorExpresion no puede ser nulo</value>
+  </data>
+  <data name="excepcion_ProductoInvalido" xml:space="preserve">
+    <value>Producto Inválido</value>
+  </data>
+  <data name="excepcion_seguidordeCambio_esNulooEstadoNoEsCorrecto" xml:space="preserve">
+    <value>No se puede realizar esta operation.ChangeTracker es nulo o ObjectState no es válido para esta operación</value>
+  </data>
+  <data name="excepcion_UnidadInvalido" xml:space="preserve">
+    <value>Unidad Inválida</value>
+  </data>
+  <data name="traza_ActualizarElementoaRepositorio" xml:space="preserve">
+    <value>Elemento actualizado de tipo {0}</value>
+  </data>
+  <data name="traza_AgregarElementoRepositorio" xml:space="preserve">
+    <value>Objejo agregado de tipo {0} en el repositorio</value>
+  </data>
+  <data name="traza_AplicarCambiosElementoRepositorio" xml:space="preserve">
+    <value>Aplicado Cambios de tipo {0} en el repositorio</value>
+  </data>
+  <data name="traza_BuscarPorEspecificacion" xml:space="preserve">
+    <value>Buscar elemento del tipo {0}</value>
+  </data>
+  <data name="traza_ConstruirRepositorio" xml:space="preserve">
+    <value>Repositorio creado para tipo {0}</value>
+  </data>
+  <data name="traza_EliminarElementoRepositorio" xml:space="preserve">
+    <value>Objeto eliminado de tipo {0} en el repositorio</value>
+  </data>
+  <data name="traza_TraerElementoFiltradoPaginadoRepositorio" xml:space="preserve">
+    <value>TraerElementosFiltrados  llamdo en el repositorio de tipo {0} con filtror:{1} IndicePagina:{2} CantidadPagina:{3} OrdenarPor:{4}</value>
+  </data>
+  <data name="traza_TraerFiltradoElementoRepositorio" xml:space="preserve">
+    <value>TraerElementosFiltrados llamado en el repositorio de tipo {0} con filtro :{1}</value>
+  </data>
+  <data name="traza_TraerPaginadoElementoRepositorio" xml:space="preserve">
+    <value>TraerElementosPaginados llamado en el repositorio de tipo  {0} with IndicePagina:{1},CantidadPaginat:{2},OrdenadoPor:{3}</value>
+  </data>
+  <data name="traza_TraerPorEspecificacion" xml:space="preserve">
+    <value>Traer elementos del repositorio de tipo {0}</value>
+  </data>
+  <data name="traza_TraerTodosRepositorio" xml:space="preserve">
+    <value>Traer todos llamado en el repositorio de tipo {0}</value>
+  </data>
+</root>

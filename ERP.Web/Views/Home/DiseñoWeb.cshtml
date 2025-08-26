@@ -1,0 +1,314 @@
+﻿
+<style>
+
+    .blockquote-footer {
+        margin-top: 1rem !important;
+    }
+    .hero-section {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: 4rem 2rem;
+        background: radial-gradient(circle at top left, #e0f0ff 0%, white 60%);
+    }
+
+    .hero-content {
+        flex: 1 1 45%;
+    }
+
+        .hero-content h1 {
+            font-weight: 800;
+            font-size: 2.8rem;
+            color: #1a1a1a;
+        }
+
+        .hero-content p {
+            color: #555;
+            margin-top: 1rem;
+        }
+
+    .hero-buttons a {
+        margin-top: 1.5rem;
+        display: inline-block;
+        padding: 0.7rem 1.5rem;
+        border-radius: 30px;
+        text-decoration: none;
+        background: #3366ff;
+        color: white;
+        font-weight: bold;
+        transition: all 0.3s;
+    }
+
+        .hero-buttons a:hover {
+            background: #254eda;
+        }
+
+    .hero-image {
+        flex: 1 1 50%;
+        text-align: center;
+    }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 1rem;
+        }
+
+    .contact-form-section {
+        background: #003cff;
+        color: white;
+        padding: 4rem 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .contact-form-section .form-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contact-form-section img {
+            max-height: 400px;
+        }
+
+    .form-box {
+        flex: 1 1 50%;
+        padding: 2rem;
+        background: rgba(255,255,255,0.05);
+        border-radius: 1rem;
+        backdrop-filter: blur(10px);
+    }
+
+        .form-box h2 {
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+    .form-control, .btn-send {
+        margin-top: 1rem;
+        border-radius: 0.5rem;
+    }
+
+    .btn-send {
+        background: white;
+        color: #003cff;
+        font-weight: 600;
+        border: none;
+    }
+
+        .btn-send:hover {
+            background: #e0e0e0;
+        }
+
+    .explanation-section {
+        padding: 4rem 2rem;
+        background: url('https://www.transparenttextures.com/patterns/cubes.png');
+        background-color: #f9f9f9;
+    }
+
+        .explanation-section h3 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .explanation-section p {
+            color: #444;
+            max-width: 800px;
+        }
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<!--<< Header Area >>-->
+<body>
+
+    <!-- Hero Section Start -->
+    <section class="hero-section hero-4 bg-cover" style="background-image: url('@Url.Content("~/Content/theme/assets/img/section-bg.jpg")');">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h6 class="wow fadeInUp">páginas web profesionales</h6>
+                        <h1 class="wow fadeInUp" data-wow-delay=".3s">Diseño de Páginas web.</h1>
+                        <p class="wow fadeInUp" data-wow-delay=".5s">
+                            Lleva tu negocio al siguiente nivel con una presencia web profesional! Contáctanos hoy para una consulta gratuita y descubre cómo podemos ayudarte a destacar en línea.
+                        </p>
+                        <div class="hero-button">
+                            <a href="about.html" class="theme-btn wow fadeInUp" data-wow-delay=".7s">
+                                Explorar Más
+                                <i class="fa-solid fa-arrow-right-long"></i>
+                            </a>
+                            <span class="button-text wow fadeInUp" data-wow-delay=".9s">
+                                <a href="https://www.youtube.com/watch?v=Cn4G2lZ_g2I" class="video-btn ripple video-popup">
+                                    <i class="fa-solid fa-play"></i>
+                                </a>
+                                <span class="ms-4 d-line">Mira el Video</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section class="py-5 bg-light text-center">
+        <div class="container">
+            <!-- Por qué tener una página web -->
+            <h2 class="fw-bold mb-4 text-dark">¿Por qué tener una página web?</h2>
+            <div class="row g-4 mb-5">
+                <div class="col-md-4">
+                    <div class="feature-box p-4 rounded shadow-sm h-100">
+                        <div class="mb-3 fs-2">🌐</div>
+                        <h5 class="fw-semibold">Presencia global</h5>
+                        <p class="text-muted small">Llega a más personas, sin importar el lugar o la hora.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box p-4 rounded shadow-sm h-100">
+                        <div class="mb-3 fs-2">⚡</div>
+                        <h5 class="fw-semibold">Atención 24/7</h5>
+                        <p class="text-muted small">Tu sitio trabaja incluso cuando tú duermes. ¡Nunca cierras!</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box p-4 rounded shadow-sm h-100">
+                        <div class="mb-3 fs-2">✅</div>
+                        <h5 class="fw-semibold">Credibilidad y confianza</h5>
+                        <p class="text-muted small">Una web profesional mejora tu imagen y genera más ventas.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section class="py-5 back-bg-4 text-center">
+        <div class="container">
+
+            <!-- Nuestro Proceso de Trabajo -->
+            <h2 class="fw-bold mb-4 text-dark">Nuestro Proceso de Trabajo</h2>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="step-box p-4 rounded shadow-sm h-100 bg-white">
+                        <div class="mb-2 fs-3">🔍</div>
+                        <h6 class="fw-semibold text-primary">Paso 1</h6>
+                        <p class="text-muted small">Entendemos tus necesidades y objetivos.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="step-box p-4 rounded shadow-sm h-100 bg-white">
+                        <div class="mb-2 fs-3">✏️</div>
+                        <h6 class="fw-semibold text-primary">Paso 2</h6>
+                        <p class="text-muted small">Diseñamos el layout visual según tu marca.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="step-box p-4 rounded shadow-sm h-100 bg-white">
+                        <div class="mb-2 fs-3">💻</div>
+                        <h6 class="fw-semibold text-primary">Paso 3</h6>
+                        <p class="text-muted small">Desarrollamos el sitio web con tecnologías modernas.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="step-box p-4 rounded shadow-sm h-100 bg-white">
+                        <div class="mb-2 fs-3">🚀</div>
+                        <h6 class="fw-semibold text-primary">Paso 4</h6>
+                        <p class="text-muted small">Publicamos y te capacitamos para su gestión.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <style>
+        .feature-box, .step-box {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .feature-box:hover, .step-box:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+    </style>
+
+    <!-- Testimonios -->
+    <section class="py-5 bg-light text-center">
+        <div class="container">
+            <h3 class="fw-bold mb-4">Lo que dicen nuestros clientes</h3>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <blockquote class="blockquote">
+                        <p>"Gracias a Codetus ahora tengo más clientes y me contactan desde mi página web directamente."</p>
+                        <footer class="blockquote-footer">Lucía M. - Odontóloga</footer>
+                    </blockquote>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <blockquote class="blockquote">
+                        <p>"El diseño es profesional, moderno y fácil de administrar. ¡Los recomiendo al 100%!"</p>
+                        <footer class="blockquote-footer">Carlos P. - Consultor Legal</footer>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tecnologías utilizadas -->
+    <section class="py-5 bg-white text-center">
+        <div class="container">
+            <h3 class="fw-bold mb-4">Tecnologías que utilizamos</h3>
+            <div class="d-flex justify-content-center flex-wrap gap-4">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/HTML5_logo_and_wordmark.svg" height="50" alt="HTML5">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/CSS3_logo.svg" height="50" alt="CSS3">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" height="50" alt="JS">
+                <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo-shadow.png" height="50" alt="Bootstrap">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" height="50" alt="React" />
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Cotizador de precios -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="fw-bold text-center text-primary mb-4">Cotiza tu Página Web</h2>
+            <form class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Nombre completo</label>
+                    <input type="text" class="form-control" placeholder="Ej. Ana Fernández">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" placeholder="correo@ejemplo.com">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Tipo de página web</label>
+                    <select class="form-select">
+                        <option value="">Seleccionar...</option>
+                        <option>Sitio informativo</option>
+                        <option>Sitio corporativo</option>
+                        <option>Tienda virtual</option>
+                        <option>Blog o Portafolio</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">¿Incluye dominio y hosting?</label>
+                    <select class="form-select">
+                        <option>Sí, deseo hosting y dominio</option>
+                        <option>No, ya cuento con eso</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Describe brevemente tu proyecto</label>
+                    <textarea class="form-control" rows="3" placeholder="Ej. Necesito una web para mi clínica odontológica..."></textarea>
+                </div>
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg mt-3">💬 Enviar solicitud de cotización</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+
+</body>
+</html>

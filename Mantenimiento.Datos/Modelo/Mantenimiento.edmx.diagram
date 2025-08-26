@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <edmx:Designer>
+    <edmx:Diagrams>
+      <edmx:Diagram Name="Mantenimiento" ZoomLevel="71">
+        <edmx:EntityTypeShape EntityType="EDBCORAHModel.Articulo" Width="1.5" PointX="5.25" PointY="3.375" />
+        <edmx:EntityTypeShape EntityType="EDBCORAHModel.ArticuloAutor" Width="1.5" PointX="7.5" PointY="4.125" />
+        <edmx:EntityTypeShape EntityType="EDBCORAHModel.ArticuloConclusion" Width="1.5" PointX="7.5" PointY="7" />
+        <edmx:EntityTypeShape EntityType="EDBCORAHModel.ArticuloReferencia" Width="1.5" PointX="7.5" PointY="1.375" />
+        <edmx:EntityTypeShape EntityType="EDBCORAHModel.Autor" Width="1.5" PointX="3" PointY="5.125" />
+        <edmx:EntityTypeShape EntityType="EDBCORAHModel.DocumentoIdentidad" Width="1.5" PointX="0.75" PointY="5.75" />
+        <edmx:EntityTypeShape EntityType="EDBCORAHModel.Usuario" Width="1.5" PointX="5.25" PointY="9.75" />
+        <edmx:AssociationConnector Association="EDBCORAHModel.FK_Articulo_Autor" />
+        <edmx:AssociationConnector Association="EDBCORAHModel.FK_ArticuloAutor_Articulo" />
+        <edmx:AssociationConnector Association="EDBCORAHModel.FK_ArticuloConclusion_Articulo" />
+        <edmx:AssociationConnector Association="EDBCORAHModel.FK_ArticuloReferencia_Articulo" />
+        <edmx:AssociationConnector Association="EDBCORAHModel.FK_Autor_DocumentoIdentidad" />
+        <edmx:AssociationConnector Association="EDBCORAHModel.FK_Usuario_Autor" />
+        <edmx:EntityTypeShape EntityType="EDBCORAHModel.ArticuloAdjunto" Width="1.5" PointX="7.5" PointY="10.5" />
+        <edmx:AssociationConnector Association="EDBCORAHModel.idArticulo" />
+        <edmx:EntityTypeShape EntityType="EDBCORAHModel.Slider" Width="1.5" PointX="0.75" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="EDBCORAHModel.Video" Width="1.5" PointX="0.75" PointY="9.75" />
+      </edmx:Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

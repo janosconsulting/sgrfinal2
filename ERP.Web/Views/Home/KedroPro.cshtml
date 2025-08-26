@@ -1,0 +1,988 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!--<< Header Area >>-->
+<body>
+
+    <style>
+        .sectores-container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 2rem 1rem;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .sectores-title {
+            text-align: center;
+            color: #0b2b61;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .sectores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .sector-card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid #0056d6;
+        }
+
+            .sector-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+            }
+
+        .sector-icon {
+            font-size: 2rem;
+            color: #0056d6;
+            margin-bottom: 0.5rem;
+        }
+
+        .sector-title {
+            font-weight: bold;
+            color: #0056d6;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .sector-desc {
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .modulos-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .modulos-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 3rem 1rem;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .modulos-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #0b2b61;
+        }
+
+        .modulos-subtext {
+            text-align: center;
+            max-width: 750px;
+            margin: 0.5rem auto 2.5rem;
+            color: #444;
+            font-size: 1rem;
+        }
+
+        .modulos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .modulo-card {
+            background: #fff;
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+            .modulo-card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 14px 25px rgba(0, 0, 0, 0.12);
+            }
+
+        .modulo-icon {
+            font-size: 2.2rem;
+            color: #0d6efd;
+            margin-bottom: 0.8rem;
+        }
+
+        .modulo-title {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #0d47a1;
+            margin-bottom: 0.5rem;
+        }
+
+        .modulo-desc {
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .modulo-list {
+            margin-top: 0.8rem;
+            color: #222;
+            padding-left: 1.2rem;
+        }
+
+            .modulo-list li {
+                margin-bottom: 0.4rem;
+            }
+
+        .modulo-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #0d6efd;
+            color: #fff;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
+        .modulo-button {
+            margin-top: 1rem;
+            padding: 0.4rem 1rem;
+            background-color: #0d6efd;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            align-self: start;
+        }
+
+            .modulo-button:hover {
+                background-color: #084dc2;
+            }
+
+        .btn-mas {
+            margin-top: 1rem;
+            align-self: flex-start;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            .btn-mas:hover {
+                background: #0056b3;
+            }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 700px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .modal h3 {
+            margin-top: 0;
+            color: #003366;
+        }
+
+        .modal ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+            .modal ul li::before {
+                content: "✅ ";
+                margin-right: 5px;
+            }
+
+        iframe, video {
+            width: 100%;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        body {
+            background-attachment: fixed;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #003366;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .module-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .module-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+            }
+
+        .module-icon {
+            font-size: 2.5rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+        }
+
+        .module-title {
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: #0d6efd;
+            margin-bottom: 0.5rem;
+        }
+
+        .intro-paragraph {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .list-group-item strong {
+            color: #0d6efd;
+        }
+
+        .screenshot-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .screenshot {
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+            .screenshot:hover {
+                transform: scale(1.05);
+            }
+
+        .section-wrapper {
+            padding: 4rem 1rem;
+            border-top: 1px solid #ddd;
+        }
+
+            .section-wrapper:nth-child(even) {
+                background-color: #f7f9fc; /* Fondo suave alternado */
+            }
+
+        .section-title {
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 2rem;
+            color: #003366;
+        }
+
+            .section-title::before {
+                content: '';
+                display: block;
+                width: 80px;
+                height: 4px;
+                margin: 0 auto 1rem;
+                background: linear-gradient(to right, #0d6efd, #00bcd4);
+                border-radius: 2px;
+            }
+
+        .section-header {
+            background: linear-gradient(to right, #0d6efd, #00bcd4);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+            .section-header h2 {
+                margin: 0;
+                font-size: 2.5rem;
+            }
+
+        .plans-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .plan-card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 2rem;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+            .plan-card:hover {
+                transform: translateY(-5px);
+            }
+
+        .plan-title {
+            font-size: 1.5rem;
+            color: #003366;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #222;
+        }
+
+        .plan-features {
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+            .plan-features li {
+                list-style: disc;
+            }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #0d6efd;
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+            .cta-button:hover {
+                background-color: #084298;
+            }
+
+            @@media (max-width: 768px) {
+      .plans-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    </style>
+
+    <!-- soluciones Start -->
+    <section class="service-section fix section-padding">
+        <div class="container">
+
+            <div class="service-wrapper mb-0">
+                <div class="container my-5">
+                    <h1 class="text-center mb-4">Sistema de Facturación Electrónica</h1>
+
+                    <!-- RESUMEN GENERAL -->
+                    <div>
+                        <h2 class="section-title">Resumen General</h2>
+                        <p class="intro-paragraph">
+                            Transforma tu forma de emitir comprobantes con nuestro sistema de facturación electrónica, intuitivo, rápido y 100% compatible con SUNAT. Diseñado para empresas de todos los tamaños, permite automatizar ventas, generar reportes, controlar tus ingresos y mantenerte siempre al día con la normativa peruana. con la normativa peruana.
+                        </p>
+                    </div>
+
+                    <!-- SECTORES ATENDIDOS -->
+                    <div class="sectores-container">
+                        <h2 class="sectores-title">Sectores que Atendemos</h2>
+                        <div class="sectores-grid">
+                            <div class="sector-card">
+                                <div class="sector-icon">🏨</div>
+                                <div class="sector-title">Hoteles y hospedajes</div>
+                                <div class="sector-desc">Check-in/out, boletas electrónicas, reportes SUNAT.</div>
+                            </div>
+                            <div class="sector-card">
+                                <div class="sector-icon">🛠️</div>
+                                <div class="sector-title">Ferreterías</div>
+                                <div class="sector-desc">Control de inventario y ventas por unidad o paquete.</div>
+                            </div>
+                            <div class="sector-card">
+                                <div class="sector-icon">🍽️</div>
+                                <div class="sector-title">Restaurantes</div>
+                                <div class="sector-desc">Gestión de pedidos, mesas y comandas de cocina.</div>
+                            </div>
+                            <div class="sector-card">
+                                <div class="sector-icon">💊</div>
+                                <div class="sector-title">Boticas y farmacias</div>
+                                <div class="sector-desc">Control por lote, fecha de vencimiento y receta.</div>
+                            </div>
+                            <div class="sector-card">
+                                <div class="sector-icon">🏢</div>
+                                <div class="sector-title">Inmobiliarias</div>
+                                <div class="sector-desc">Cuotas, contratos y facturación por proyecto.</div>
+                            </div>
+                            <div class="sector-card">
+                                <div class="sector-icon">🛍️</div>
+                                <div class="sector-title">Comercios generales</div>
+                                <div class="sector-desc">Punto de venta, control de stock y reportes.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="section-title">Módulos Generales</h2>
+                        <p class="modulos-subtext">
+                            Nuestro sistema está compuesto por módulos clave que se adaptan a las necesidades de todo tipo de empresa.
+                            Conoce las funcionalidades que te ayudarán a optimizar tu operación diaria.
+                        </p>
+                        <div class="modulos-grid">
+
+                            <div class="modulo-card">
+                                <div class="modulo-icon">🛡️</div>
+                                <div class="modulo-title">Seguridad</div>
+                                <div class="modulo-desc">
+                                    Gestión de usuarios, control de accesos por roles, historial de sesiones y respaldo seguro de datos.
+                                </div>
+                            </div>
+
+                            <div class="modulo-card">
+                                <div class="modulo-icon">🛒</div>
+                                <div class="modulo-title">Compras</div>
+                                <div class="modulo-desc">
+                                    Registro de órdenes, validación de productos y actualización de stock.
+                                    <ul class="modulo-list">
+                                        <li>✔ Registro de proveedores</li>
+                                        <li>✔ Órdenes de compra</li>
+                                        <li>✔ Comparación de cotizaciones</li>
+                                        <li>✔ Historial por proveedor</li>
+                                    </ul>
+                                    <button class="modulo-button">Ver Más</button>
+                                </div>
+                            </div>
+
+                            <div class="modulo-card">
+                                <div class="modulo-icon">💼</div>
+                                <div class="modulo-title">Tesorería</div>
+                                <div class="modulo-desc">
+                                    Control de ingresos, egresos, caja diaria y conciliación bancaria.
+                                </div>
+                            </div>
+
+                            <div class="modulo-card">
+                                <div class="modulo-icon">🧾</div>
+                                <div class="modulo-title">Facturación Electrónica</div>
+                                <div class="modulo-desc">
+                                    Emisión de facturas, boletas y notas, validadas automáticamente en SUNAT. PDF y CDR incluidos.
+                                </div>
+                            </div>
+
+                            <div class="modulo-card">
+                                <div class="modulo-icon">💲</div>
+                                <div class="modulo-title">Gastos</div>
+                                <div class="modulo-desc">
+                                    Registro de gastos por proveedor, centro de costo y categoría. Integrado con compras y tesorería.
+                                </div>
+                            </div>
+
+                            <div class="modulo-card">
+                                <div class="modulo-icon">🧮</div>
+                                <div class="modulo-title">Ventas</div>
+                                <div class="modulo-desc">
+                                    Punto de venta (POS), emisión rápida de comprobantes, control de stock y reportes de ingresos.
+                                </div>
+                            </div>
+
+                            <div class="modulo-card">
+                                <span class="modulo-tag">🆕 Nuevo</span>
+                                <div class="modulo-icon">📦</div>
+                                <div class="modulo-title">Inventario</div>
+                                <div class="modulo-desc">
+                                    Control de stock, lotes, ubicaciones, movimientos de almacén y alertas de reposición.
+                                </div>
+                            </div>
+
+                            <div class="modulo-card">
+                                <div class="modulo-icon">👥</div>
+                                <div class="modulo-title">Clientes y CRM</div>
+                                <div class="modulo-desc">
+                                    Registro de clientes, seguimiento de interacciones y historial de ventas.
+                                </div>
+                            </div>
+
+                            <div class="modulo-card">
+                                <div class="modulo-icon">📊</div>
+                                <div class="modulo-title">Reportes</div>
+                                <div class="modulo-desc">
+                                    Generación de reportes financieros, operativos y exportables en Excel, PDF y paneles gráficos.
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                  
+                    <!-- Modal Compras -->
+                    <div id="modalCompras" class="modal">
+                        <div class="modal-content modal-lg">
+                            <span class="close" onclick="cerrarModal('modalFacturacion')">&times;</span>
+                            <h3>Módulo de Facturación Electrónica</h3>
+                            <p>
+                                Este módulo permite emitir comprobantes electrónicos válidos ante SUNAT, facilitando el cumplimiento tributario y la automatización del proceso de ventas.
+                            </p>
+
+                            <h4>🧾 Comprobantes</h4>
+                            <ul>
+                                <li>Emisión de facturas, boletas, notas de crédito y débito</li>
+                                <li>Generación automática de QR y código hash</li>
+                                <li>Formato digital: XML, PDF y CDR</li>
+                            </ul>
+
+                            <h4>📤 Envío a SUNAT</h4>
+                            <ul>
+                                <li>Integración directa con SUNAT a través de API</li>
+                                <li>Envío automático al momento de guardar</li>
+                                <li>Validación del estado de los comprobantes (Aceptado, Observado, Rechazado)</li>
+                            </ul>
+
+                            <h4>📈 Reportes y Consultas</h4>
+                            <ul>
+                                <li>Listado por fechas, cliente, tipo de comprobante</li>
+                                <li>Resumen de ventas diarias y mensuales</li>
+                                <li>Exportación a Excel y PDF</li>
+                            </ul>
+
+                            <h4>👥 Clientes y Series</h4>
+                            <ul>
+                                <li>Registro y búsqueda rápida de clientes</li>
+                                <li>Asignación de series por tipo de documento</li>
+                                <li>Control de correlativos automáticos</li>
+                            </ul>
+
+                            <h4>🎥 Video Demo</h4>
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" height="300" allowfullscreen></iframe>
+                        </div>
+
+
+                    </div>
+
+                    <!-- Modal Facturación -->
+                    <div id="modalFacturacion" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="cerrarModal('modalFacturacion')">&times;</span>
+                            <h3>Demo del Módulo de Facturación</h3>
+                            <p>Automatiza tu facturación electrónica cumpliendo con SUNAT.</p>
+                            <ul>
+                                <li>Generación de comprobantes con QR</li>
+                                <li>Conexión con SUNAT vía API</li>
+                                <li>Descarga de PDF y XML</li>
+                                <li>Reportes por fecha y cliente</li>
+                            </ul>
+                            <video controls height="300">
+                                <source src="demo-facturacion.mp4" type="video/mp4">
+                                Tu navegador no soporta video.
+                            </video>
+                        </div>
+                    </div>
+
+                    <script>
+                        function abrirModal(id) {
+                            document.getElementById(id).style.display = 'flex';
+                        }
+
+                        function cerrarModal(id) {
+                            document.getElementById(id).style.display = 'none';
+                        }
+
+                        // Cerrar con tecla ESC
+                        window.addEventListener('keydown', function (e) {
+                            if (e.key === 'Escape') {
+                                document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+                            }
+                        });
+                    </script>
+
+                    <!-- EJEMPLO RESTAURANTES -->
+                    <div id="restaurantes">
+                        <h2 class="section-title">Restaurantes</h2>
+                        <p class="intro-paragraph">Flujo completo desde la toma de pedidos, cocina, hasta facturación electrónica.</p>
+
+                        <div class="module-grid">
+                            <div class="module-card">
+                                <i class="fas fa-utensils module-icon"></i>
+                                <div class="module-title">Gestión de Pedidos</div>
+                                <p>Registro por mesa, envío automático a cocina/bar, con comandas digitales.</p>
+                            </div>
+                            <div class="module-card">
+                                <i class="fas fa-table module-icon"></i>
+                                <div class="module-title">Control de Mesas</div>
+                                <p>Mapa de mesas interactivo, gestión de ocupación y reserva de espacios.</p>
+                            </div>
+                            <div class="module-card">
+                                <i class="fas fa-file-invoice-dollar module-icon"></i>
+                                <div class="module-title">Facturación SUNAT</div>
+                                <p>Boletas y facturas electrónicas generadas al instante desde el POS.</p>
+                            </div>
+                        </div>
+
+                        <div class="screenshot-gallery">
+                            <img src="img/screenshots/rest_pedidos.png" alt="Pedidos restaurante" class="screenshot">
+                            <img src="img/screenshots/rest_factura.png" alt="Factura restaurante" class="screenshot">
+                        </div>
+                    </div>
+
+                    <!-- EJEMPLO HOTELES -->
+                    <div id="hoteles" class="mt-5">
+                        <h2 class="section-title">Hoteles</h2>
+                        <p class="intro-paragraph">Solución integral para reservas, check-in/out, facturación y control de habitaciones.</p>
+
+                        <div class="module-grid">
+                            <div class="module-card">
+                                <i class="fas fa-door-open module-icon"></i>
+                                <div class="module-title">Check-In/Out</div>
+                                <p>Gestión de entradas y salidas con historial por habitación y cliente.</p>
+                            </div>
+                            <div class="module-card">
+                                <i class="fas fa-calendar-check module-icon"></i>
+                                <div class="module-title">Reservas</div>
+                                <p>Agenda visual de reservas con integración web y confirmaciones por WhatsApp.</p>
+                            </div>
+                            <div class="module-card">
+                                <i class="fas fa-receipt module-icon"></i>
+                                <div class="module-title">Facturación Electrónica</div>
+                                <p>Documentos SUNAT por noches, servicios y consumos.</p>
+                            </div>
+                        </div>
+
+                        <div class="screenshot-gallery">
+                            <img src="img/screenshots/hotel_reservas.png" alt="Reservas hotel" class="screenshot">
+                            <img src="img/screenshots/hotel_checkin.png" alt="Check-in hotel" class="screenshot">
+                        </div>
+                    </div>
+
+                    <!-- Beneficios -->
+                    <section class="mt-5">
+                        <h2 class="section-title">¿Por qué elegir nuestro sistema?</h2>
+                        <div class="row text-center mt-4">
+                            <div class="col-md-4 mb-4">
+                                <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                                <h5>Compatible con SUNAT</h5>
+                                <p>Cumple con todos los requisitos para emisión de comprobantes electrónicos.</p>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <i class="fas fa-cloud-upload-alt fa-2x text-primary mb-2"></i>
+                                <h5>En la nube</h5>
+                                <p>Funciona desde internet y desde cualquier dispositivo.</p>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <i class="fas fa-headset fa-2x text-danger mb-2"></i>
+                                <h5>Soporte personalizado</h5>
+                                <p>Asistencia por WhatsApp, remoto o presencial según tu ciudad.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Testimonios en forma de slider -->
+                    <section class="mt-5">
+                        <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+                        <div id="testimonialCarousel" class="carousel slide mt-4" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+
+                                <div class="carousel-item active">
+                                    <div class="testimonial-card text-center mx-auto" style="max-width: 700px;">
+                                        <i class="fas fa-quote-left"></i>
+                                        <p class="mt-3">Con el sistema de Casa Hogar, mi restaurante ahora trabaja más rápido y sin errores. Las boletas salen al instante y tengo control total del inventario.</p>
+                                        <div class="testimonial-name">Luis Gómez</div>
+                                        <div class="testimonial-job">Restaurante El Buen Sabor</div>
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <div class="testimonial-card text-center mx-auto" style="max-width: 700px;">
+                                        <i class="fas fa-quote-left"></i>
+                                        <p class="mt-3">Lo usamos en nuestro hotel desde hace un año, y todo está automatizado: reservas, facturas y reportes al día. Excelente soporte técnico.</p>
+                                        <div class="testimonial-name">Sandra Torres</div>
+                                        <div class="testimonial-job">Hotel La Posada</div>
+                                    </div>
+                                </div>
+
+                                <!-- Puedes agregar más testimonios aquí -->
+                            </div>
+
+                            <!-- Controles -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+                        </div>
+                    </section>
+
+                    <div class="pricing-wrapper">
+                        <div class="section-title-area">
+                            <div class="section-title center">
+                                <span class="wow fadeInUp">PLAN DE PRECIOS FLEXIBLE</span>
+                                <h2 class="wow fadeInUp" data-wow-delay=".3s">
+                                    Te ofrecemos la mejor <br> Tarifa para ti
+                                </h2>
+                            </div>
+
+                        </div>
+                        <div class="tab-content">
+                            <div id="monthly" class="tab-pane fade show active" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".3s">
+                                        <div class="pricing-items">
+                                            <div class="tag">
+                                                <h6>WEB ECONÓMICA</h6>
+                                            </div>
+                                            <div class="pricing-header">
+                                                <h2>S/ 500.00</h2>
+                                                <span>Único Pago</span>
+                                                <p>
+                                                    Diseño 100% Administrable
+                                                </p>
+                                            </div>
+                                            <ul class="pricing-list">
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Redes Sociales
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Adaptable a dispositivos móviles
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Diseño Web al gusto del Cliente
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Galería Multimedia
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Slider de Fotos
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Mapa de Ubicación
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Formulario de contacto
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Soporte Hosting
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Soporte Web
+                                                </li>
+                                            </ul>
+                                            <div class="pricing-button">
+                                                <a href="contact.html" class="pricing-btn mt-4">
+                                                    Elegir Plan
+                                                    <i class="fa-solid fa-arrow-right-long"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".5s">
+                                        <div class="pricing-items active">
+                                            <div class="tag">
+                                                <h6>WEB EMPRESA</h6>
+                                            </div>
+                                            <div class="pricing-header">
+                                                <h2>S/800</h2>
+                                                <span>Único Pago</span>
+                                                <p>
+                                                    Diseño 100% Administrable
+                                                </p>
+                                            </div>
+                                            <ul class="pricing-list">
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Diseño web al gusto del Cliente
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Adaptable a dispositivos móviles
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Galería Multimedia
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Slider de Fotos
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Redes sociales
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Hasta 8 páginas Interiores
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Blog de Noticias
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Soporte Hosting
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Soporte Web
+                                                </li>
+                                            </ul>
+                                            <div class="pricing-button">
+                                                <a href="contact.html" class="pricing-btn mt-4">
+                                                    Elegir Plan
+                                                    <i class="fa-solid fa-arrow-right-long"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".7s">
+                                        <div class="pricing-items">
+                                            <div class="tag">
+                                                <h6>WEB CORPORATIVO</h6>
+                                            </div>
+                                            <div class="pricing-header">
+                                                <h2>S/1000</h2>
+                                                <span>Único Pago</span>
+                                                <p>
+                                                    Diseño 100% Administrable
+                                                </p>
+                                            </div>
+                                            <ul class="pricing-list">
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Diseño al gusto del Cliente
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Adaptable a dispositivos móviles
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Galeria Multimedia
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Slider de Fotos
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Redes Sociales
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Hata 12 Páginas Interiores
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Blog de Noticias
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Optimización para SEO
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Soporte Hosting
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Soporte Web
+                                                </li>
+                                                <li>
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Manejo web
+                                                </li>
+                                            </ul>
+                                            <div class="pricing-button">
+                                                <a href="contact.html" class="pricing-btn mt-4">
+                                                    Elegir Plan
+                                                    <i class="fa-solid fa-arrow-right-long"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA final -->
+                    <section class="mt-5 text-center">
+                        <h2 class="section-title">¿Listo para modernizar tu negocio?</h2>
+                        <p class="mb-4">Empieza hoy con nuestro sistema de facturación electrónica y lleva tu empresa al siguiente nivel.</p>
+                        <a href="https://wa.me/519XXXXXXXX" class="btn btn-success btn-lg">
+                            <i class="fab fa-whatsapp"></i> Cotiza por WhatsApp
+                        </a>
+                    </section>
+
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+ 
+</body>
+</html>

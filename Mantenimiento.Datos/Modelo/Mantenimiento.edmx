@@ -1,0 +1,2450 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EDBCORAHModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Articulo">
+          <Key>
+            <PropertyRef Name="idArticulo" />
+          </Key>
+          <Property Name="idArticulo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idAutor" Type="int" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="resumen" Type="text" Nullable="false" />
+          <Property Name="introduccion" Type="text" Nullable="false" />
+          <Property Name="metodologia" Type="text" />
+          <Property Name="desarrollo" Type="text" />
+          <Property Name="experimentacion" Type="text" />
+          <Property Name="idEstado" Type="int" Nullable="false" />
+          <Property Name="fechaPublicacion" Type="datetime" />
+          <Property Name="fechaRegistro" Type="datetime" />
+          <Property Name="nombreArchivo" Type="varchar" MaxLength="250" />
+          <Property Name="extensionArchivo" Type="varchar" MaxLength="10" />
+          <Property Name="rutaArchivo" Type="varchar" MaxLength="250" />
+          <Property Name="palabrasClave" Type="text" />
+        </EntityType>
+        <EntityType Name="ArticuloAdjunto">
+          <Key>
+            <PropertyRef Name="idArticuloAdjunto" />
+          </Key>
+          <Property Name="idArticuloAdjunto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idArticulo" Type="int" Nullable="false" />
+          <Property Name="nombreArchivo" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="extensionArchivo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="rutaArchivo" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="idEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticuloAutor">
+          <Key>
+            <PropertyRef Name="idArticuloAutor" />
+          </Key>
+          <Property Name="idArticuloAutor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idArticulo" Type="int" Nullable="false" />
+          <Property Name="nombres" Type="varchar" MaxLength="400" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="idEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticuloConclusion">
+          <Key>
+            <PropertyRef Name="idArticuloConclusion" />
+          </Key>
+          <Property Name="idArticuloConclusion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idArticulo" Type="int" Nullable="false" />
+          <Property Name="descripcion" Type="text" Nullable="false" />
+          <Property Name="idEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticuloReferencia">
+          <Key>
+            <PropertyRef Name="idArticuloReferencia" />
+          </Key>
+          <Property Name="idArticuloReferencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idArticulo" Type="int" Nullable="false" />
+          <Property Name="referencia" Type="text" Nullable="false" />
+          <Property Name="idEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Autor">
+          <Key>
+            <PropertyRef Name="idAutor" />
+          </Key>
+          <Property Name="idAutor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="esAlumno" Type="int" />
+          <Property Name="idTipoIdentidad" Type="int" Nullable="false" />
+          <Property Name="fechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="nroIdentidad" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nombres" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="apellidoPaterno" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="apellidoMaterno" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="idEstado" Type="int" />
+          <Property Name="biografia" Type="text" />
+        </EntityType>
+        <EntityType Name="DocumentoIdentidad">
+          <Key>
+            <PropertyRef Name="idDocumentoIdentidad" />
+          </Key>
+          <Property Name="idDocumentoIdentidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="idEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="idSlider" />
+          </Key>
+          <Property Name="idSlider" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="subTitulo" Type="varchar" MaxLength="500" />
+          <Property Name="nombreBoton" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="imagen" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="nombreArchivo" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="extension" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="orden" Type="int" Nullable="false" />
+          <Property Name="idEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idAlumno" Type="int" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="contrasenia" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="idEstado" Type="int" Nullable="false" />
+          <Property Name="esAdmin" Type="int" />
+        </EntityType>
+        <EntityType Name="Video">
+          <Key>
+            <PropertyRef Name="idVideo" />
+          </Key>
+          <Property Name="idVideo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipo" Type="int" Nullable="false" />
+          <Property Name="link" Type="text" Nullable="false" />
+          <Property Name="idEstado" Type="int" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Articulo_Autor">
+          <End Role="Autor" Type="Self.Autor" Multiplicity="1" />
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Autor">
+              <PropertyRef Name="idAutor" />
+            </Principal>
+            <Dependent Role="Articulo">
+              <PropertyRef Name="idAutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticuloAutor_Articulo">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="1" />
+          <End Role="ArticuloAutor" Type="Self.ArticuloAutor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="idArticulo" />
+            </Principal>
+            <Dependent Role="ArticuloAutor">
+              <PropertyRef Name="idArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticuloConclusion_Articulo">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="1" />
+          <End Role="ArticuloConclusion" Type="Self.ArticuloConclusion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="idArticulo" />
+            </Principal>
+            <Dependent Role="ArticuloConclusion">
+              <PropertyRef Name="idArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticuloReferencia_Articulo">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="1" />
+          <End Role="ArticuloReferencia" Type="Self.ArticuloReferencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="idArticulo" />
+            </Principal>
+            <Dependent Role="ArticuloReferencia">
+              <PropertyRef Name="idArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Autor_DocumentoIdentidad">
+          <End Role="DocumentoIdentidad" Type="Self.DocumentoIdentidad" Multiplicity="1" />
+          <End Role="Autor" Type="Self.Autor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentoIdentidad">
+              <PropertyRef Name="idDocumentoIdentidad" />
+            </Principal>
+            <Dependent Role="Autor">
+              <PropertyRef Name="idTipoIdentidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Autor">
+          <End Role="Autor" Type="Self.Autor" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Autor">
+              <PropertyRef Name="idAutor" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="idAlumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="idArticulo">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="1" />
+          <End Role="ArticuloAdjunto" Type="Self.ArticuloAdjunto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="idArticulo" />
+            </Principal>
+            <Dependent Role="ArticuloAdjunto">
+              <PropertyRef Name="idArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_BuscarPorPalabraClave" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="palabraBusqueda" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ListarArticulosxAutor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ListarPerfiles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_ListarPersonas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_ListarPublicaciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="EDBCORAHModelStoreContainer">
+          <EntitySet Name="Articulo" EntityType="Self.Articulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticuloAdjunto" EntityType="Self.ArticuloAdjunto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticuloAutor" EntityType="Self.ArticuloAutor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticuloConclusion" EntityType="Self.ArticuloConclusion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticuloReferencia" EntityType="Self.ArticuloReferencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Autor" EntityType="Self.Autor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentoIdentidad" EntityType="Self.DocumentoIdentidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Video" EntityType="Self.Video" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Articulo_Autor" Association="Self.FK_Articulo_Autor">
+            <End Role="Autor" EntitySet="Autor" />
+            <End Role="Articulo" EntitySet="Articulo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticuloAutor_Articulo" Association="Self.FK_ArticuloAutor_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="ArticuloAutor" EntitySet="ArticuloAutor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticuloConclusion_Articulo" Association="Self.FK_ArticuloConclusion_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="ArticuloConclusion" EntitySet="ArticuloConclusion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticuloReferencia_Articulo" Association="Self.FK_ArticuloReferencia_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="ArticuloReferencia" EntitySet="ArticuloReferencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Autor_DocumentoIdentidad" Association="Self.FK_Autor_DocumentoIdentidad">
+            <End Role="DocumentoIdentidad" EntitySet="DocumentoIdentidad" />
+            <End Role="Autor" EntitySet="Autor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Autor" Association="Self.FK_Usuario_Autor">
+            <End Role="Autor" EntitySet="Autor" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="idArticulo" Association="Self.idArticulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="ArticuloAdjunto" EntitySet="ArticuloAdjunto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EDBCORAHModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="EDBCORAHEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <FunctionImport Name="ListarSolicitudServicio">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaDiagnosticoNoRutinario">
+          <Parameter Name="dcid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaMaterialNoRutinario">
+          <Parameter Name="dcid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaServicioNoRutinario">
+          <Parameter Name="dcid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListarHojaServicio">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="pEstado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaOcurrenciaNoRutinario">
+          <Parameter Name="dcid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaReparacionNoRutinario">
+          <Parameter Name="dcid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerSolicitudServicio">
+          <Parameter Name="idSolicitud" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaCajaEjecucion">
+            <Parameter Name="recidenti" Mode="In" Type="String" />
+            <Parameter Name="redsecuen" Mode="In" Type="String" />
+            <Parameter Name="forma" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ListaCajaEjecucion_Busqueda">
+            <Parameter Name="codpatrimonial" Mode="In" Type="String" />
+            <Parameter Name="tipo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ListaCajaEjecucion_Material">
+            <Parameter Name="recidenti" Mode="In" Type="String" />
+            <Parameter Name="forma" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ListaCajaEjecucion_Servicio">
+            <Parameter Name="recidenti" Mode="In" Type="String" />
+            <Parameter Name="forma" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ListaForebisEjecucion">
+          <Parameter Name="forebis" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ListaForebisEjecucion_Busqueda">
+          <Parameter Name="codpatrimonial" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ListaForesesEjecucion">
+          <Parameter Name="foreses" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ListaForesesEjecucion_Busqueda">
+          <Parameter Name="codpatrimonial" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ListaSituacion" />
+          <FunctionImport Name="ActualizarFecha">
+            <Parameter Name="idPlanMant" Mode="In" Type="Int32" />
+            <Parameter Name="idFechaSemana" Mode="In" Type="Int32" />
+            <Parameter Name="fechaIni" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ListaFechasSemanas">
+          <Parameter Name="idEjecucion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="traeTipBienGrpxPlanxTip">
+            <Parameter Name="idTipoBienMant" Mode="In" Type="Int32" />
+            <Parameter Name="idPlanMant" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ReporteOperatividad" />
+          <FunctionImport Name="ListaOcurrencias">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="HojaServicioTecnico_General_Correctivo">
+          <Parameter Name="DCID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaRepuestosIncidencias">
+            <Parameter Name="tipo" Mode="In" Type="Int32" />
+            <Parameter Name="p_Placa" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ListaOtrosxos">
+            <Parameter Name="tipo" Mode="In" Type="Int32" />
+            <Parameter Name="idSolicitud" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaPartesVehicularesxos">
+            <Parameter Name="tipo" Mode="In" Type="Int32" />
+            <Parameter Name="idSolicitud" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaProgramadosxBien">
+            <Parameter Name="idBien" Mode="In" Type="Int32" />
+            <Parameter Name="idPlanMant" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaProgramacionBienesxPlan">
+          <Parameter Name="idPlan" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaMntosPendientexBien">
+          <Parameter Name="idBien" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaActivDireccionMensual">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaActivTipoMensual">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaResumenMensual">
+          <Parameter Name="idPlanMnto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ReporteProgramadovsRealizadoMensual">
+            <Parameter Name="idPlanMnto" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListarFallasComparativoAnual">
+          <Parameter Name="anio" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListarFallasMensual">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="traeGrpxPlanxTipNoAgreg">
+            <Parameter Name="idTipoBienMant" Mode="In" Type="Int32" />
+            <Parameter Name="idPlanMant" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaTiposBienes" />
+          <FunctionImport Name="GenerarFechasPlanMnto">
+            <Parameter Name="idPlan" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListaSolicitudesxEstado">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ReporteAlertaVerificacion" />
+          <FunctionImport Name="ListarReporteDiario">
+          <Parameter Name="fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ListaMantenimientoMensual">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListarMantenimientos">
+            <Parameter Name="pTipo" Mode="In" Type="Int32" />
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListarSaldosProductosxAlmacen">
+          <Parameter Name="pIdAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ListarDocumentosxTipo">
+            <Parameter Name="pTipoDocumento" Mode="In" Type="Int32" />
+            <Parameter Name="pIdPersona" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaDocumentoReferenciado">
+          <Parameter Name="idDocumentoComercial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleDocumento">
+          <Parameter Name="idDocumentoComercial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerDocumento">
+          <Parameter Name="idDocumentoComercial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarComprobantesxProducto">
+            <Parameter Name="idProducto" Mode="In" Type="Int32" />
+            <Parameter Name="idTipoDocumento" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarMovimientosProducto">
+            <Parameter Name="idProducto" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarTipoMovimientoCajaxTipo">
+            <Parameter Name="idTipoCaja" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDocPendientesxPersona">
+          <Parameter Name="idPersona" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaVentasDetalladaCondicionPago">
+            <Parameter Name="idTipoDoc" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarComprobantexCobrar">
+            <Parameter Name="idTipoDoc" Mode="In" Type="Int32" />
+            <Parameter Name="esResumido" Mode="In" Type="Int32" />
+            <Parameter Name="idPersona" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarComprobantesPendientesPago">
+            <Parameter Name="idTipoDocumento" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaPersonaDeudaPendiente">
+          <Parameter Name="idTipoPersona" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentasAnual">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="tipo" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarModulosxRol">
+          <Parameter Name="idRol" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarTabsxOpcionMenu">
+            <Parameter Name="idRol" Mode="In" Type="Int32" />
+            <Parameter Name="idOpcionMenu" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarOpcionesMenuxRol">
+          <Parameter Name="idRol" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarAccionesxRol">
+          <Parameter Name="idRol" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarSeccionesxOpcionMenu">
+            <Parameter Name="idRol" Mode="In" Type="Int32" />
+            <Parameter Name="idOpcionMenuTab" Mode="In" Type="Int32" />
+            <Parameter Name="idOpcionMenu" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarOpcionesMenu" >
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarModulosEmpresa">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarHabitaciones">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="estado" Mode="In" Type="String" />
+            <Parameter Name="idReserva" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaTipoTarifaxTipoHabitacion">
+          <Parameter Name="idTipoHabitacion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPersonasxTipo">
+            <Parameter Name="idTipo" Mode="In" Type="Int32" />
+            <Parameter Name="esCompra" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarCargosxHabitacion">
+            <Parameter Name="idReservaDetalle" Mode="In" Type="Int32" />
+            <Parameter Name="esFacturado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ListarMesas" />
+          <FunctionImport Name="sp_ListarPedidosxMesa">
+            <Parameter Name="idMesa" Mode="In" Type="Int32" />
+            <Parameter Name="idPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaIndicadoresxEmpresa">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentasxServicio">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarHabitacionesxEstado">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerReserva">
+          <Parameter Name="idReserva" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarReservasComandas">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarTiposTarifasxHabitacion">
+            <Parameter Name="idTipoHabitacion" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarServicios">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaHistoricoHabitacion">
+          <Parameter Name="idHabitacion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarTipoProductoxEmpresa">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarEquivalenciasUnidadMedida">
+          <Parameter Name="idUnidadMedida" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarFormulasRecetasProducto">
+          <Parameter Name="idProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarStockEquivalenteProductoAlmacen">
+            <Parameter Name="idProducto" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarStockMinimo">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarTipoDocumentoEmpresa">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarCajasMovimiento">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarReservasComandas_Editar">
+          <Parameter Name="idDocumento" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaReservas">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarUsuarios">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPagosxReserva">
+          <Parameter Name="idReserva" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaCajas">
+            <Parameter Name="idTipoCaja" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idEstado" Mode="In" Type="Int32" />
+            <Parameter Name="idUsuario" Mode="In" Type="Int32" />
+            <Parameter Name="idPersona" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarHabitacionesxReserva">
+          <Parameter Name="idReserva" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarEntradasxTipo">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="tipo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ListaDocumentos">
+            <Parameter Name="pTipoDocumento" Mode="In" Type="Int32" />
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductosPendientesxCompra">
+          <Parameter Name="idDocumentoComercial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaPagosDeudaInicialPersona">
+          <Parameter Name="idPersona" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarComparativoVCG">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDocumentosFechaVcto">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ActualizarTotalImporteReserva">
+          <Parameter Name="idReserva" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarReservasPendientesPago">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarMesasPendientesCobro" />
+          <FunctionImport Name="sp_ListaIndicadoresFortalezaSol" />
+          <FunctionImport Name="sp_ListaIndicadoresMultiServiciosJen" />
+          <FunctionImport Name="sp_ListarTipoxEmpresa">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarOpcionMenuWeb">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarIngresosxCategoria">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarAnticipoReservaDetalle">
+          <Parameter Name="idReservaDetalle" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarComandasxReserva">
+          <Parameter Name="idReserva" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarFacturacionesxReserva">
+          <Parameter Name="idReserva" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarAdelantosxReserva">
+          <Parameter Name="idReserva" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ActualizarIngresoNIAlmacen">
+          <Parameter Name="idDocumentoComercial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AutenticarUsuario">
+            <Parameter Name="p_usuariologin" Mode="In" Type="String" />
+            <Parameter Name="p_password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarTicketAtencion">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_listarResumenEjecutivoMensual">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerTicketAtencion">
+          <Parameter Name="idTicketAtencion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarComprobantesxPersona">
+          <Parameter Name="idPersona" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPagosxPersona">
+          <Parameter Name="idPersona" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDocumentosIncobrables">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarIncobrables">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarNotificaciones">
+            <Parameter Name="usuario" Mode="In" Type="String" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="estado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPrestamos">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarComandasxHabitacion">
+            <Parameter Name="idReservaDetalle" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarReservasHabitaciones">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_listarWidgetxEntrada">
+          <Parameter Name="idEntrada" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_listarSeccionxEntrada">
+          <Parameter Name="idEntrada" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarNormativas">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="idTipoNormativa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarTallas" />
+          <FunctionImport Name="sp_ListarPersonaDireccion">
+          <Parameter Name="idPersona" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarCategoriasTiendaVirtual">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarColorTiendaVirtual">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarStockDetallexEmpresa">
+          <Parameter Name="idProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerProductoTiendaVirtual">
+          <Parameter Name="idProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerPreCargaOrdenProduccion">
+            <Parameter Name="idOrdenProduccion" Mode="In" Type="Int32" />
+            <Parameter Name="idProductoAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductosPendientesDespacho">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductosMasVendidos">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductosNovedades">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarNotasIngresoPendienteVenta">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarValidacionDetallePedido">
+          <Parameter Name="idPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductosColoresTiendaVirtual">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleDocumentoTalla">
+          <Parameter Name="idDocumentoComercial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerProductoMasVendido">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPromociones">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPedidos">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerNotaIngreso">
+          <Parameter Name="idNotaIngreso" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleNotaIngreso">
+          <Parameter Name="idNotaIngreso" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarAvisoDisponibilidad">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductosxPromocion">
+          <Parameter Name="idPromocion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaPreCargaOrdenProduccion">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductosTiendaVirtual">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idCategoria" Mode="In" Type="Int32" />
+            <Parameter Name="idColor" Mode="In" Type="Int32" />
+            <Parameter Name="idTalla" Mode="In" Type="Int32" />
+            <Parameter Name="idMaterial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleNotaSalida">
+          <Parameter Name="idNotaSalida" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerNotaSalida">
+          <Parameter Name="idNotaSalida" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductosTop">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="orden" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaComprobantes">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarBajaFacturacion">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarResumenFacturacion">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaNotaCreditoVenta">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaNotaDebitoVenta">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaProductosBajoStock">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerClienteMes">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerIncrementoClientes" ReturnType="Collection(Decimal)">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerMejorVenta">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerPorcentajeIncremento" ReturnType="Collection(Decimal)">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarTallasxDetalleNotaSalida">
+          <Parameter Name="idNotaSalida" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarTipoDocumentoSerie" />
+          <FunctionImport Name="sp_ListaCompras">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleCompra">
+          <Parameter Name="idDocumentoComercial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerCompra">
+          <Parameter Name="idCompra" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaGasto">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleGasto">
+          <Parameter Name="idDocumentoComercial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerGasto">
+          <Parameter Name="idCompra" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleTransferencias">
+          <Parameter Name="idTransferencia" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerTransferencia">
+          <Parameter Name="idTransferencia" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleAjuste">
+          <Parameter Name="idDocumentoComercial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerAjuste">
+          <Parameter Name="idAjusteAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleNotaIngresoRpt">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleNotaSalidaRpt">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleAjusteRpt">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleTransferenciasRpt">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarIngresosEgresos">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+            <Parameter Name="indicador" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPrestamosProveedores">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleCompraRpt">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleGastoRpt">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarSimulacionCuotas">
+            <Parameter Name="p_Meses" Mode="In" Type="Int32" />
+            <Parameter Name="pPago" Mode="In" Type="Decimal" />
+            <Parameter Name="pInteres" Mode="In" Type="Decimal" />
+            <Parameter Name="pFechaInicio" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarCuotasxPedido">
+          <Parameter Name="idPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaCobroPagoDocumento">
+            <Parameter Name="idDocumentoComercial" Mode="In" Type="Int32" />
+            <Parameter Name="idTipoOrigen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaReservaRestaurant">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarHorasDiaDisponible">
+            <Parameter Name="nroPersonas" Mode="In" Type="Int32" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_listarMesasDisponiblesxHoraDia">
+            <Parameter Name="nroPersonas" Mode="In" Type="Int32" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="hora" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetallePedido">
+          <Parameter Name="idPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaProforma">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleProforma">
+          <Parameter Name="idProforma" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerProforma">
+          <Parameter Name="idProforma" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPuntosAtencionUsuario">
+          <Parameter Name="idUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerPuntoAtencion">
+          <Parameter Name="idPuntoAtencion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPuntosAtencion">
+          <Parameter Name="idPuntoAtencion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaSucursal">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaTipoDocumentoSerie">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarSeriesPuntoAtencion">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarEquivalentesPrecios">
+            <Parameter Name="idProducto" Mode="In" Type="Int32" />
+            <Parameter Name="idTipoVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaPuntoAtencion">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarServicioProducto">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaVentasxResumen">
+            <Parameter Name="idResumen" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentasxCondicionPago">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="idTipoDoc" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarClientesTop">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarResumenComprobantes">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaVentasCobranza">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarMovimientosCaja">
+            <Parameter Name="idCaja" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarGuiasRemision">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarGuiaRemisionTransportista">
+          <Parameter Name="idGuiaRemision" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductosGuiaRemision">
+          <Parameter Name="idGuiaRemision" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarCotizacion">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+            <Parameter Name="idSucursal" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleCotizacion">
+          <Parameter Name="idCotizacion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerCotizacion">
+          <Parameter Name="idCotizacion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentasPivot">
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_buscarProductoxCodBarras">
+            <Parameter Name="codigo" Mode="In" Type="String" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_buscarProductoxSerie">
+            <Parameter Name="codigo" Mode="In" Type="String" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVehiculos">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarBienes">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idTipoBien" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarBienesxNI">
+          <Parameter Name="idDetalleNotaIngreso" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProcesarNI">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDepartamentos" />
+          <FunctionImport Name="sp_ListarDistritos">
+          <Parameter Name="provincia" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProvincias">
+          <Parameter Name="departamento" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_buscarVehiculosProducto">
+            <Parameter Name="idProducto" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleNotaIngresoPendientexPedido">
+          <Parameter Name="idPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EnviarInformeVentasDiarias">
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarUsuariosNotificacion" />
+          <FunctionImport Name="sp_ListarServicioTaller">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarServicioTallerDetalle">
+          <Parameter Name="idServicioTaller" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerServicioTaller">
+          <Parameter Name="idServicioTaller" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPreciosxCantidad">
+            <Parameter Name="cantidad" Mode="In" Type="Decimal" />
+            <Parameter Name="idProducto" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarLiquidacionxProducto">
+          <Parameter Name="idCaja" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_listarHistoricoDetalleVenta">
+          <Parameter Name="idDetalleVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleCobros">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarResumenCobros">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="idCliente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_BuscarVentasPendientesxChasis">
+            <Parameter Name="chasis" Mode="In" Type="String" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPrestamosCliente">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPrestamosxResponsable">
+          <Parameter Name="idResponsable" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GenerarCronogramaCuotaDiaria">
+            <Parameter Name="pPago" Mode="In" Type="Decimal" />
+            <Parameter Name="pInteres" Mode="In" Type="Decimal" />
+            <Parameter Name="pFechaInicio" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPrestamoClienteCronogramaxTrabajador">
+            <Parameter Name="idTrabajador" Mode="In" Type="Int32" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPrestamoClienteCronogramaxCliente">
+          <Parameter Name="idCliente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleNotaIngresoImprimir">
+          <Parameter Name="idNotaIngreso" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarHistoricoPreciosxProducto">
+          <Parameter Name="idProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentaVehiculos">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarCronogramaxVenta">
+          <Parameter Name="idVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GenerarCronogramaCuotaDiariaVehiculos">
+            <Parameter Name="incluyeDomingos" Mode="In" Type="Int32" />
+            <Parameter Name="pPago" Mode="In" Type="Decimal" />
+            <Parameter Name="pInteres" Mode="In" Type="Decimal" />
+            <Parameter Name="pFechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="cuotasPagadas" Mode="In" Type="Int32" />
+            <Parameter Name="plazo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarUbigeo" />
+          <FunctionImport Name="sp_ListarOpcionMenuFlotantexRol">
+          <Parameter Name="idRol" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarCobrosxCliente">
+            <Parameter Name="idCliente" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleNotaIngresoAdicional">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPersonasxFechaRegistro">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fechaRegistro" Mode="In" Type="DateTime" />
+            <Parameter Name="tipo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarClienteOrdenxTrabajador">
+          <Parameter Name="idTrabajador" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarKardexAlmacen">
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleCobrosDia">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarGastosDia">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fechaPago" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarResumenCobrosDia">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentaVehiculosDia">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarLiquidaciones">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerEstadisticoDiario">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarLiquidacionesDiariasxCaja">
+            <Parameter Name="idCaja" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarLiquidacionesMensuales">
+          <Parameter Name="idCaja" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentaVehiculosPagados">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarCobrosPrestamoxDiaTrabajador">
+            <Parameter Name="idTrabajador" Mode="In" Type="Int32" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarGastosPrestamosDia">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fechaPago" Mode="In" Type="DateTime" />
+            <Parameter Name="idTrabajador" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPrestamosDia">
+            <Parameter Name="idTrabajador" Mode="In" Type="Int32" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVehiculosTransportexPersona">
+          <Parameter Name="idPersona" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaCajaDiariaLiquidar">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarGuiasRemisionxFecha">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="idCliente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPrestamoClientexDiaTrabajador">
+            <Parameter Name="idTrabajador" Mode="In" Type="Int32" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarFacturarGuias">
+          <Parameter Name="guias" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentaCuotas">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductoFormaPago">
+          <Parameter Name="idProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ActualizarKardexAlmacenProducto">
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+            <Parameter Name="idProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerSaldoxCaja">
+            <Parameter Name="idCaja" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="mes" Mode="In" Type="Int32" />
+            <Parameter Name="dia" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentasAnticipos">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idCliente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleVentaAnticipos">
+          <Parameter Name="ventas" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarGuiasSinVenta">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentaCronogramaPendiente">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarCobrosxCronograma">
+          <Parameter Name="idVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarCobroxMovimientoCaja">
+          <Parameter Name="idVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarCobrosDetalladosxCliente">
+            <Parameter Name="idCliente" Mode="In" Type="Int32" />
+            <Parameter Name="formaPago" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPagosDetalladosxCompra">
+            <Parameter Name="idProveedor" Mode="In" Type="Int32" />
+            <Parameter Name="formaPago" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPagosDetalladosxGasto">
+            <Parameter Name="idProveedor" Mode="In" Type="Int32" />
+            <Parameter Name="formaPago" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaComprobantesDiarios">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="pDia" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarItinerarios">
+          <Parameter Name="fechaRegistro" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CondicionPagoxCaja">
+          <Parameter Name="idCaja" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_FormaPagoVentaxCaja">
+          <Parameter Name="idCaja" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_MovimientosxCaja">
+          <Parameter Name="idCaja" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ResumenVentasxCaja">
+          <Parameter Name="idCaja" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleNotaCredito">
+          <Parameter Name="idNotaCredito" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerNotaCreditoVenta">
+          <Parameter Name="idNotaCredito" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentasAnualxCatProducto">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentasAnualxCliente">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentasAnualxSucursal">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaVentasEnEspera">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="usuarioRegistra" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_buscarProductoxLote">
+            <Parameter Name="codigo" Mode="In" Type="String" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarStockxLoteSerie">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="tipo" Mode="In" Type="Int32" />
+            <Parameter Name="idProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaComprasPendientes">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="estado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarNotasIngresoxCompra">
+          <Parameter Name="idCompra" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarKardexAlmacenCorteFecha">
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerGuiaRemision">
+          <Parameter Name="idGuiaRemision" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarMovimientosxProducto">
+            <Parameter Name="idProducto" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+            <Parameter Name="fechaDesde" Mode="In" Type="DateTime" />
+            <Parameter Name="inicioTiempos" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleNotaDebito">
+          <Parameter Name="idNotaDebito" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerNotaDebitoVenta">
+          <Parameter Name="idNotaDebito" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarCuentaBancaria">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarReservas">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idEstado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerAdelantoReservaMesa">
+          <Parameter Name="idMesa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductosLotes">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idProyecto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProyectosLotes">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarManzanas">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerProductosLotes">
+          <Parameter Name="idProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarEntregas">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarRenuncias">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarTransferencia">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerUbigeo">
+          <Parameter Name="codigo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerCosto" ReturnType="Collection(Decimal)">
+          <Parameter Name="idVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_listarMesasTablero">
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="hora" Mode="In" Type="String" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idEstado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentasDetallado">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="idResponsable" Mode="In" Type="Int32" />
+            <Parameter Name="idProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDocRelxVenta">
+          <Parameter Name="idVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerMovimientoCaja">
+          <Parameter Name="idMovCaja" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AnalisisVentaxFechaDetallado">
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AnalisisVentaxFechaDetalladoProducto">
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ListarStockValorizado">
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarActividadesxProyecto">
+          <Parameter Name="idProyecto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProyectos">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerProyecto">
+          <Parameter Name="idProyecto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarActividadesxUsuario">
+            <Parameter Name="idPersona" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarTareasxActividad">
+          <Parameter Name="idActividad" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarFechaVctoLote">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarAlertaCambioPrecios">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaAjuste">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarNotaSalida">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarNotasIngreso">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaTransferencias">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarSaldosxProducto">
+          <Parameter Name="idProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarGanancias">
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DetalleCondicionPagoxCaja">
+          <Parameter Name="idCaja" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleOrdenTrabajo">
+          <Parameter Name="idOrdenTrabajo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarOrdenTrabajo">
+            <Parameter Name="pFechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="pFechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerOrdenTrabajo">
+          <Parameter Name="idOrdenTrabajo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleTransferenciaPendiente">
+          <Parameter Name="idTranferenciaAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerTransferenciaPendiente">
+          <Parameter Name="idTranferenciaAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerTotalProductos" ReturnType="Collection(Int32)">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="tipo" Mode="In" Type="Int32" />
+            <Parameter Name="idCategoria" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+            <Parameter Name="idFormaPago" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarOrdenTrabajoPendiente">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarTransferenciaPendientes">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPedidosPendientes">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleOTSalida">
+          <Parameter Name="idOrdenTrabajo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarOrdenTrabajoPendienteSalida">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPedidosSinVenta">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarPedidosxCliente">
+            <Parameter Name="idCliente" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarCotizacionSinVenta">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idSucursal" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarComprasPendientesIngreso">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentasRpt">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AnalisisVentaxFecha">
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="idModena" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerPedido">
+          <Parameter Name="idPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductosRelacionados">
+          <Parameter Name="idProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarSubscripcionEmpresa">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDevolucion">
+            <Parameter Name="pFechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="pFechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleDevolucion">
+          <Parameter Name="idDevolucion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerDevolucion">
+          <Parameter Name="idDevolucion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductosParaVenta">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="tipo" Mode="In" Type="Int32" />
+            <Parameter Name="idCategoria" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+            <Parameter Name="idFormaPago" Mode="In" Type="Int32" />
+            <Parameter Name="bq1" Mode="In" Type="String" />
+            <Parameter Name="bq2" Mode="In" Type="String" />
+            <Parameter Name="bq3" Mode="In" Type="String" />
+            <Parameter Name="bq4" Mode="In" Type="String" />
+            <Parameter Name="bq5" Mode="In" Type="String" />
+            <Parameter Name="bq6" Mode="In" Type="String" />
+            <Parameter Name="bq7" Mode="In" Type="String" />
+            <Parameter Name="bq8" Mode="In" Type="String" />
+            <Parameter Name="page" Mode="In" Type="Int32" />
+            <Parameter Name="sizePage" Mode="In" Type="Int32" />
+            <Parameter Name="tipoCampo" Mode="In" Type="Int32" />
+            <Parameter Name="campo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaVentas">
+            <Parameter Name="pAnio" Mode="In" Type="Int32" />
+            <Parameter Name="pMes" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="usuarioRegistra" Mode="In" Type="String" />
+            <Parameter Name="esAvanzada" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="idCliente" Mode="In" Type="Int32" />
+            <Parameter Name="idProducto" Mode="In" Type="Int32" />
+            <Parameter Name="idFormaPago" Mode="In" Type="Int32" />
+            <Parameter Name="idCondicionPago" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarVentasxCliente">
+            <Parameter Name="idCliente" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ObtenerVenta">
+          <Parameter Name="idVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductos">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="tipo" Mode="In" Type="Int32" />
+            <Parameter Name="idCategoria" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+            <Parameter Name="idFormaPago" Mode="In" Type="Int32" />
+            <Parameter Name="bq1" Mode="In" Type="String" />
+            <Parameter Name="bq2" Mode="In" Type="String" />
+            <Parameter Name="bq3" Mode="In" Type="String" />
+            <Parameter Name="bq4" Mode="In" Type="String" />
+            <Parameter Name="bq5" Mode="In" Type="String" />
+            <Parameter Name="bq6" Mode="In" Type="String" />
+            <Parameter Name="bq7" Mode="In" Type="String" />
+            <Parameter Name="bq8" Mode="In" Type="String" />
+            <Parameter Name="page" Mode="In" Type="Int32" />
+            <Parameter Name="sizePage" Mode="In" Type="Int32" />
+            <Parameter Name="tipoCampo" Mode="In" Type="Int32" />
+            <Parameter Name="campo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarDetalleVenta">
+          <Parameter Name="idDocumentoComercial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListaVentaxCliente">
+            <Parameter Name="idCliente" Mode="In" Type="Int32" />
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarProductosConStock">
+            <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="tipo" Mode="In" Type="Int32" />
+            <Parameter Name="idCategoria" Mode="In" Type="Int32" />
+            <Parameter Name="idAlmacen" Mode="In" Type="Int32" />
+            <Parameter Name="idFormaPago" Mode="In" Type="Int32" />
+            <Parameter Name="tipoCampo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ComprobarDisponibilidadHabitacion">
+            <Parameter Name="idHabitacion" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="cantidadAReservar" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ListarHabitacionesReservadas">
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="Articulo" EntityType="EDBCORAHModel.Articulo" />
+          <EntitySet Name="ArticuloAutor" EntityType="EDBCORAHModel.ArticuloAutor" />
+          <EntitySet Name="ArticuloConclusion" EntityType="EDBCORAHModel.ArticuloConclusion" />
+          <EntitySet Name="ArticuloReferencia" EntityType="EDBCORAHModel.ArticuloReferencia" />
+          <EntitySet Name="Autor" EntityType="EDBCORAHModel.Autor" />
+          <EntitySet Name="DocumentoIdentidad" EntityType="EDBCORAHModel.DocumentoIdentidad" />
+          <EntitySet Name="Usuario" EntityType="EDBCORAHModel.Usuario" />
+          <AssociationSet Name="FK_Articulo_Autor" Association="EDBCORAHModel.FK_Articulo_Autor">
+            <End Role="Autor" EntitySet="Autor" />
+            <End Role="Articulo" EntitySet="Articulo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticuloAutor_Articulo" Association="EDBCORAHModel.FK_ArticuloAutor_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="ArticuloAutor" EntitySet="ArticuloAutor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticuloConclusion_Articulo" Association="EDBCORAHModel.FK_ArticuloConclusion_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="ArticuloConclusion" EntitySet="ArticuloConclusion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticuloReferencia_Articulo" Association="EDBCORAHModel.FK_ArticuloReferencia_Articulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="ArticuloReferencia" EntitySet="ArticuloReferencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Autor_DocumentoIdentidad" Association="EDBCORAHModel.FK_Autor_DocumentoIdentidad">
+            <End Role="DocumentoIdentidad" EntitySet="DocumentoIdentidad" />
+            <End Role="Autor" EntitySet="Autor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Autor" Association="EDBCORAHModel.FK_Usuario_Autor">
+            <End Role="Autor" EntitySet="Autor" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <FunctionImport Name="sp_ListarPersonas" ReturnType="Collection(EDBCORAHModel.sp_ListarPersonas_Result)" />
+          <FunctionImport Name="sp_ListarPublicaciones" ReturnType="Collection(EDBCORAHModel.sp_ListarPublicaciones_Result)" />
+          <FunctionImport Name="sp_ListarArticulosxAutor" ReturnType="Collection(EDBCORAHModel.sp_ListarArticulosxAutor_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="ArticuloAdjunto" EntityType="EDBCORAHModel.ArticuloAdjunto" />
+          <AssociationSet Name="idArticulo" Association="EDBCORAHModel.idArticulo">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="ArticuloAdjunto" EntitySet="ArticuloAdjunto" />
+          </AssociationSet>
+          <FunctionImport Name="sp_ListarPerfiles" ReturnType="Collection(EDBCORAHModel.sp_ListarPerfiles_Result)" />
+          <FunctionImport Name="sp_BuscarPorPalabraClave" ReturnType="Collection(EDBCORAHModel.sp_BuscarPorPalabraClave_Result)">
+          <Parameter Name="palabraBusqueda" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Slider" EntityType="EDBCORAHModel.Slider" />
+          <EntitySet Name="Video" EntityType="EDBCORAHModel.Video" />
+          </EntityContainer>
+        <EntityType Name="Articulo">
+          <Key>
+            <PropertyRef Name="idArticulo" />
+          </Key>
+          <Property Name="idArticulo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idAutor" Type="Int32" Nullable="false" />
+          <Property Name="titulo" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="resumen" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="introduccion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="metodologia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="desarrollo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="experimentacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="idEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Autor" Relationship="EDBCORAHModel.FK_Articulo_Autor" FromRole="Articulo" ToRole="Autor" />
+          <NavigationProperty Name="ArticuloAutor" Relationship="EDBCORAHModel.FK_ArticuloAutor_Articulo" FromRole="Articulo" ToRole="ArticuloAutor" />
+          <NavigationProperty Name="ArticuloConclusion" Relationship="EDBCORAHModel.FK_ArticuloConclusion_Articulo" FromRole="Articulo" ToRole="ArticuloConclusion" />
+          <NavigationProperty Name="ArticuloReferencia" Relationship="EDBCORAHModel.FK_ArticuloReferencia_Articulo" FromRole="Articulo" ToRole="ArticuloReferencia" />
+          <Property Name="fechaPublicacion" Type="DateTime" Precision="3" />
+          <Property Name="fechaRegistro" Type="DateTime" Precision="3" />
+          <Property Name="nombreArchivo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="extensionArchivo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="rutaArchivo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ArticuloAdjunto" Relationship="EDBCORAHModel.idArticulo" FromRole="Articulo" ToRole="ArticuloAdjunto" />
+          <Property Name="palabrasClave" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ArticuloAutor">
+          <Key>
+            <PropertyRef Name="idArticuloAutor" />
+          </Key>
+          <Property Name="idArticuloAutor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idArticulo" Type="Int32" Nullable="false" />
+          <Property Name="nombres" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="idEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Articulo" Relationship="EDBCORAHModel.FK_ArticuloAutor_Articulo" FromRole="ArticuloAutor" ToRole="Articulo" />
+        </EntityType>
+        <EntityType Name="ArticuloConclusion">
+          <Key>
+            <PropertyRef Name="idArticuloConclusion" />
+          </Key>
+          <Property Name="idArticuloConclusion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idArticulo" Type="Int32" Nullable="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="idEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Articulo" Relationship="EDBCORAHModel.FK_ArticuloConclusion_Articulo" FromRole="ArticuloConclusion" ToRole="Articulo" />
+        </EntityType>
+        <EntityType Name="ArticuloReferencia">
+          <Key>
+            <PropertyRef Name="idArticuloReferencia" />
+          </Key>
+          <Property Name="idArticuloReferencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idArticulo" Type="Int32" Nullable="false" />
+          <Property Name="referencia" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="idEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Articulo" Relationship="EDBCORAHModel.FK_ArticuloReferencia_Articulo" FromRole="ArticuloReferencia" ToRole="Articulo" />
+        </EntityType>
+        <EntityType Name="Autor">
+          <Key>
+            <PropertyRef Name="idAutor" />
+          </Key>
+          <Property Name="idAutor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="esAlumno" Type="Int32" />
+          <Property Name="idTipoIdentidad" Type="Int32" Nullable="false" />
+          <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="nroIdentidad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nombres" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="apellidoPaterno" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="apellidoMaterno" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Articulo" Relationship="EDBCORAHModel.FK_Articulo_Autor" FromRole="Autor" ToRole="Articulo" />
+          <NavigationProperty Name="DocumentoIdentidad" Relationship="EDBCORAHModel.FK_Autor_DocumentoIdentidad" FromRole="Autor" ToRole="DocumentoIdentidad" />
+          <NavigationProperty Name="Usuario" Relationship="EDBCORAHModel.FK_Usuario_Autor" FromRole="Autor" ToRole="Usuario" />
+          <Property Name="idEstado" Type="Int32" />
+          <Property Name="biografia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DocumentoIdentidad">
+          <Key>
+            <PropertyRef Name="idDocumentoIdentidad" />
+          </Key>
+          <Property Name="idDocumentoIdentidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Autor" Relationship="EDBCORAHModel.FK_Autor_DocumentoIdentidad" FromRole="DocumentoIdentidad" ToRole="Autor" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idAlumno" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contrasenia" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Autor" Relationship="EDBCORAHModel.FK_Usuario_Autor" FromRole="Usuario" ToRole="Autor" />
+          <Property Name="esAdmin" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_Articulo_Autor">
+          <End Type="EDBCORAHModel.Autor" Role="Autor" Multiplicity="1" />
+          <End Type="EDBCORAHModel.Articulo" Role="Articulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Autor">
+              <PropertyRef Name="idAutor" />
+            </Principal>
+            <Dependent Role="Articulo">
+              <PropertyRef Name="idAutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticuloAutor_Articulo">
+          <End Type="EDBCORAHModel.Articulo" Role="Articulo" Multiplicity="1" />
+          <End Type="EDBCORAHModel.ArticuloAutor" Role="ArticuloAutor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="idArticulo" />
+            </Principal>
+            <Dependent Role="ArticuloAutor">
+              <PropertyRef Name="idArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticuloConclusion_Articulo">
+          <End Type="EDBCORAHModel.Articulo" Role="Articulo" Multiplicity="1" />
+          <End Type="EDBCORAHModel.ArticuloConclusion" Role="ArticuloConclusion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="idArticulo" />
+            </Principal>
+            <Dependent Role="ArticuloConclusion">
+              <PropertyRef Name="idArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticuloReferencia_Articulo">
+          <End Type="EDBCORAHModel.Articulo" Role="Articulo" Multiplicity="1" />
+          <End Type="EDBCORAHModel.ArticuloReferencia" Role="ArticuloReferencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="idArticulo" />
+            </Principal>
+            <Dependent Role="ArticuloReferencia">
+              <PropertyRef Name="idArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Autor_DocumentoIdentidad">
+          <End Type="EDBCORAHModel.DocumentoIdentidad" Role="DocumentoIdentidad" Multiplicity="1" />
+          <End Type="EDBCORAHModel.Autor" Role="Autor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentoIdentidad">
+              <PropertyRef Name="idDocumentoIdentidad" />
+            </Principal>
+            <Dependent Role="Autor">
+              <PropertyRef Name="idTipoIdentidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Autor">
+          <End Type="EDBCORAHModel.Autor" Role="Autor" Multiplicity="1" />
+          <End Type="EDBCORAHModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Autor">
+              <PropertyRef Name="idAutor" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="idAlumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_ListarPersonas_Result">
+          <Property Type="Int32" Name="idAutor" Nullable="false" />
+          <Property Type="Int32" Name="idTipoIdentidad" Nullable="false" />
+          <Property Type="String" Name="documentoIdentidad" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="nroIdentidad" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="nombres" Nullable="false" MaxLength="300" />
+          <Property Type="String" Name="apellidoPaterno" Nullable="false" MaxLength="300" />
+          <Property Type="String" Name="apellidoMaterno" Nullable="false" MaxLength="300" />
+          <Property Type="String" Name="fechaRegistroStr" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="esAlumno" Nullable="false" />
+          <Property Type="String" Name="esAlumnoStr" Nullable="true" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="sp_ListarArticulosxAutor_Result">
+          <Property Type="Int32" Name="idArticulo" Nullable="false" />
+          <Property Type="String" Name="titulo" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="fechaRegistroStr" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="fechaPublicacionStr" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="estado" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="sp_ListarPublicaciones_Result">
+          <Property Type="Int32" Name="idArticulo" Nullable="false" />
+          <Property Type="String" Name="titulo" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="resumen" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="autor" Nullable="false" MaxLength="902" />
+          <Property Type="String" Name="fechaPublicacionStr" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <EntityType Name="ArticuloAdjunto">
+          <Key>
+            <PropertyRef Name="idArticuloAdjunto" />
+          </Key>
+          <Property Name="idArticuloAdjunto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idArticulo" Type="Int32" Nullable="false" />
+          <Property Name="nombreArchivo" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="extensionArchivo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="rutaArchivo" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="idEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Articulo" Relationship="EDBCORAHModel.idArticulo" FromRole="ArticuloAdjunto" ToRole="Articulo" />
+        </EntityType>
+        <Association Name="idArticulo">
+          <End Type="EDBCORAHModel.Articulo" Role="Articulo" Multiplicity="1" />
+          <End Type="EDBCORAHModel.ArticuloAdjunto" Role="ArticuloAdjunto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="idArticulo" />
+            </Principal>
+            <Dependent Role="ArticuloAdjunto">
+              <PropertyRef Name="idArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_ListarPerfiles_Result">
+          <Property Type="Int32" Name="idAutor" Nullable="false" />
+          <Property Type="String" Name="autor" Nullable="false" MaxLength="902" />
+          <Property Type="Int32" Name="cantidadPublicaciones" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_BuscarPorPalabraClave_Result">
+          <Property Type="Int32" Name="idArticulo" Nullable="false" />
+          <Property Type="String" Name="titulo" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="resumen" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="autor" Nullable="false" MaxLength="902" />
+          <Property Type="String" Name="fechaPublicacionStr" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="idSlider" />
+          </Key>
+          <Property Name="idSlider" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titulo" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="subTitulo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="nombreBoton" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="imagen" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="nombreArchivo" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="extension" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="url" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="orden" Type="Int32" Nullable="false" />
+          <Property Name="idEstado" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Video">
+          <Key>
+            <PropertyRef Name="idVideo" />
+          </Key>
+          <Property Name="idVideo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipo" Type="Int32" Nullable="false" />
+          <Property Name="link" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="idEstado" Type="Int32" Nullable="false" />
+          <Property Name="titulo" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EDBCORAHModelStoreContainer" CdmEntityContainer="EDBCORAHEntities">
+          <EntitySetMapping Name="Articulo">
+            <EntityTypeMapping TypeName="EDBCORAHModel.Articulo">
+              <MappingFragment StoreEntitySet="Articulo">
+                <ScalarProperty Name="palabrasClave" ColumnName="palabrasClave" />
+                <ScalarProperty Name="rutaArchivo" ColumnName="rutaArchivo" />
+                <ScalarProperty Name="extensionArchivo" ColumnName="extensionArchivo" />
+                <ScalarProperty Name="nombreArchivo" ColumnName="nombreArchivo" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+                <ScalarProperty Name="fechaPublicacion" ColumnName="fechaPublicacion" />
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+                <ScalarProperty Name="experimentacion" ColumnName="experimentacion" />
+                <ScalarProperty Name="desarrollo" ColumnName="desarrollo" />
+                <ScalarProperty Name="metodologia" ColumnName="metodologia" />
+                <ScalarProperty Name="introduccion" ColumnName="introduccion" />
+                <ScalarProperty Name="resumen" ColumnName="resumen" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="idAutor" ColumnName="idAutor" />
+                <ScalarProperty Name="idArticulo" ColumnName="idArticulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticuloAutor">
+            <EntityTypeMapping TypeName="EDBCORAHModel.ArticuloAutor">
+              <MappingFragment StoreEntitySet="ArticuloAutor">
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="idArticulo" ColumnName="idArticulo" />
+                <ScalarProperty Name="idArticuloAutor" ColumnName="idArticuloAutor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticuloConclusion">
+            <EntityTypeMapping TypeName="EDBCORAHModel.ArticuloConclusion">
+              <MappingFragment StoreEntitySet="ArticuloConclusion">
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="idArticulo" ColumnName="idArticulo" />
+                <ScalarProperty Name="idArticuloConclusion" ColumnName="idArticuloConclusion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticuloReferencia">
+            <EntityTypeMapping TypeName="EDBCORAHModel.ArticuloReferencia">
+              <MappingFragment StoreEntitySet="ArticuloReferencia">
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+                <ScalarProperty Name="referencia" ColumnName="referencia" />
+                <ScalarProperty Name="idArticulo" ColumnName="idArticulo" />
+                <ScalarProperty Name="idArticuloReferencia" ColumnName="idArticuloReferencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Autor">
+            <EntityTypeMapping TypeName="EDBCORAHModel.Autor">
+              <MappingFragment StoreEntitySet="Autor">
+                <ScalarProperty Name="biografia" ColumnName="biografia" />
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+                <ScalarProperty Name="apellidoMaterno" ColumnName="apellidoMaterno" />
+                <ScalarProperty Name="apellidoPaterno" ColumnName="apellidoPaterno" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="nroIdentidad" ColumnName="nroIdentidad" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+                <ScalarProperty Name="idTipoIdentidad" ColumnName="idTipoIdentidad" />
+                <ScalarProperty Name="esAlumno" ColumnName="esAlumno" />
+                <ScalarProperty Name="idAutor" ColumnName="idAutor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentoIdentidad">
+            <EntityTypeMapping TypeName="EDBCORAHModel.DocumentoIdentidad">
+              <MappingFragment StoreEntitySet="DocumentoIdentidad">
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idDocumentoIdentidad" ColumnName="idDocumentoIdentidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="EDBCORAHModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="esAdmin" ColumnName="esAdmin" />
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+                <ScalarProperty Name="contrasenia" ColumnName="contrasenia" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="idAlumno" ColumnName="idAlumno" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_ListarPersonas" FunctionName="EDBCORAHModel.Store.sp_ListarPersonas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EDBCORAHModel.sp_ListarPersonas_Result">
+                <ScalarProperty Name="idAutor" ColumnName="idAutor" />
+                <ScalarProperty Name="idTipoIdentidad" ColumnName="idTipoIdentidad" />
+                <ScalarProperty Name="documentoIdentidad" ColumnName="documentoIdentidad" />
+                <ScalarProperty Name="nroIdentidad" ColumnName="nroIdentidad" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="apellidoPaterno" ColumnName="apellidoPaterno" />
+                <ScalarProperty Name="apellidoMaterno" ColumnName="apellidoMaterno" />
+                <ScalarProperty Name="fechaRegistroStr" ColumnName="fechaRegistroStr" />
+                <ScalarProperty Name="esAlumno" ColumnName="esAlumno" />
+                <ScalarProperty Name="esAlumnoStr" ColumnName="esAlumnoStr" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ListarPublicaciones" FunctionName="EDBCORAHModel.Store.sp_ListarPublicaciones">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EDBCORAHModel.sp_ListarPublicaciones_Result">
+                <ScalarProperty Name="idArticulo" ColumnName="idArticulo" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="resumen" ColumnName="resumen" />
+                <ScalarProperty Name="autor" ColumnName="autor" />
+                <ScalarProperty Name="fechaPublicacionStr" ColumnName="fechaPublicacionStr" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ListarArticulosxAutor" FunctionName="EDBCORAHModel.Store.sp_ListarArticulosxAutor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EDBCORAHModel.sp_ListarArticulosxAutor_Result">
+                <ScalarProperty Name="idArticulo" ColumnName="idArticulo" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="fechaRegistroStr" ColumnName="fechaRegistroStr" />
+                <ScalarProperty Name="fechaPublicacionStr" ColumnName="fechaPublicacionStr" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="ArticuloAdjunto">
+            <EntityTypeMapping TypeName="EDBCORAHModel.ArticuloAdjunto">
+              <MappingFragment StoreEntitySet="ArticuloAdjunto">
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+                <ScalarProperty Name="rutaArchivo" ColumnName="rutaArchivo" />
+                <ScalarProperty Name="extensionArchivo" ColumnName="extensionArchivo" />
+                <ScalarProperty Name="nombreArchivo" ColumnName="nombreArchivo" />
+                <ScalarProperty Name="idArticulo" ColumnName="idArticulo" />
+                <ScalarProperty Name="idArticuloAdjunto" ColumnName="idArticuloAdjunto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_ListarPerfiles" FunctionName="EDBCORAHModel.Store.sp_ListarPerfiles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EDBCORAHModel.sp_ListarPerfiles_Result">
+                <ScalarProperty Name="idAutor" ColumnName="idAutor" />
+                <ScalarProperty Name="autor" ColumnName="autor" />
+                <ScalarProperty Name="cantidadPublicaciones" ColumnName="cantidadPublicaciones" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_BuscarPorPalabraClave" FunctionName="EDBCORAHModel.Store.sp_BuscarPorPalabraClave">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EDBCORAHModel.sp_BuscarPorPalabraClave_Result">
+                <ScalarProperty Name="idArticulo" ColumnName="idArticulo" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="resumen" ColumnName="resumen" />
+                <ScalarProperty Name="autor" ColumnName="autor" />
+                <ScalarProperty Name="fechaPublicacionStr" ColumnName="fechaPublicacionStr" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Slider">
+            <EntityTypeMapping TypeName="EDBCORAHModel.Slider">
+              <MappingFragment StoreEntitySet="Slider">
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="extension" ColumnName="extension" />
+                <ScalarProperty Name="nombreArchivo" ColumnName="nombreArchivo" />
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
+                <ScalarProperty Name="nombreBoton" ColumnName="nombreBoton" />
+                <ScalarProperty Name="subTitulo" ColumnName="subTitulo" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="idSlider" ColumnName="idSlider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Video">
+            <EntityTypeMapping TypeName="EDBCORAHModel.Video">
+              <MappingFragment StoreEntitySet="Video">
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="idVideo" ColumnName="idVideo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Mantenimiento" ZoomLevel="83">
+        <EntityTypeShape EntityType="EDBCORAHModel.Testing" Width="1.5" PointX="4.875" PointY="2.5" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Almacen" Width="1.5" PointX="0.5" PointY="2.375" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Banco" Width="1.5" PointX="7.75" PointY="8.875" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Categoria" Width="1.5" PointX="12.75" PointY="12.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.CondicionPago" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Constante" Width="1.5" PointX="14.75" PointY="3.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DocumentoIdentidad" Width="1.5" PointX="7.75" PointY="15" />
+        <EntityTypeShape EntityType="EDBCORAHModel.FormaPago" Width="1.5" PointX="14.75" PointY="7.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Moneda" Width="1.5" PointX="14.75" PointY="10.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Producto" Width="1.5" PointX="10" PointY="1.125" />
+        <EntityTypeShape EntityType="EDBCORAHModel.ProductoPrecio" Width="1.5" PointX="12.25" PointY="1.125" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Saldo" Width="1.5" PointX="12.25" PointY="4.125" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoCaja" Width="1.5" PointX="3.75" PointY="4.5" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoDocumento" Width="1.5" PointX="0.75" PointY="9.25" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoDocumentoSerie" Width="1.5" PointX="0.5" PointY="14.375" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoImpuesto" Width="1.5" PointX="14.75" PointY="13.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoMovimiento" Width="1.5" PointX="0.75" PointY="5.25" />
+        <EntityTypeShape EntityType="EDBCORAHModel.UnidadMedida" Width="1.5" PointX="7.75" PointY="2.375" />
+        <AssociationConnector Association="EDBCORAHModel.FK_producto_unidadmedida" />
+        <AssociationConnector Association="EDBCORAHModel.FK_productoprecio_producto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_saldo_producto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_tipodocumentoserie_tipodocumento" />
+        <EntityTypeShape EntityType="EDBCORAHModel.ConfiguracionDocumento" Width="1.5" PointX="12.375" PointY="15.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.CondicionPagoTipoCaja" Width="1.5" PointX="19" PointY="1.625" />
+        <AssociationConnector Association="EDBCORAHModel.FK_CondicionPagoTipoCaja_CondicionPago" />
+        <AssociationConnector Association="EDBCORAHModel.FK_CondicionPagoTipoCaja_TipoCaja" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Formulario" Width="1.5" PointX="15.375" PointY="16.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.BancoTarjeta" Width="1.5" PointX="5.375" PointY="11.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DocumentoComercialPago" Width="2.5" PointX="5.25" PointY="19.375" />
+        <EntityTypeShape EntityType="EDBCORAHModel.ConfiguracionReporte" Width="1.5" PointX="0.75" PointY="17.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Producto_View" Width="1.5" PointX="17.375" PointY="6.25" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoCajaMovimiento" Width="1.5" PointX="22" PointY="1.875" />
+        <AssociationConnector Association="EDBCORAHModel.FK_tipocajamovimiento_tipocaja" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Accion" Width="1.5" PointX="19.375" PointY="29.5" />
+        <EntityTypeShape EntityType="EDBCORAHModel.EmpresaOpcionMenu" Width="1.5" PointX="21.625" PointY="8.125" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Modulo" Width="1.5" PointX="15.25" PointY="22.625" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Permiso" Width="1.5" PointX="23.875" PointY="8.875" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Rol" Width="1.5" PointX="21.625" PointY="11.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.UsuarioRol" Width="1.5" PointX="23.875" PointY="11.875" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Modulo_Modulo" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Permiso_Rol" />
+        <AssociationConnector Association="EDBCORAHModel.FK_UsuarioRol_Rol" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Periodo" Width="1.5" PointX="17.375" PointY="18" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Usuario" Width="1.5" PointX="8.375" PointY="20.25" />
+        <AssociationConnector Association="EDBCORAHModel.FK_UsuarioRol_Usuario" />
+        <EntityTypeShape EntityType="EDBCORAHModel.OpcionMenu" Width="1.5" PointX="19.375" PointY="22.875" />
+        <AssociationConnector Association="EDBCORAHModel.FK_EmpresaOpcionMenu_OpcionMenu" />
+        <AssociationConnector Association="EDBCORAHModel.FK_OpcionMenu_Modulo" />
+        <EntityTypeShape EntityType="EDBCORAHModel.OpcionMenuTab" Width="1.5" PointX="16.25" PointY="26.25" />
+        <AssociationConnector Association="EDBCORAHModel.FK_OpcionMenuTab_OpcionMenu" />
+        <EntityTypeShape EntityType="EDBCORAHModel.OpcionMenuTabSeccion" Width="1.5" PointX="21.625" PointY="27.25" />
+        <AssociationConnector Association="EDBCORAHModel.FK_OpcionMenuTabSeccion_Accion" />
+        <AssociationConnector Association="EDBCORAHModel.FK_OpcionMenuTabSeccion_OpcionMenuTab" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Permiso_OpcionMenuTabSeccion" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Habitacion" Width="1.5" PointX="10" PointY="25" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoHabitacion" Width="1.5" PointX="7.75" PointY="25.25" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Habitacion_TipoHabitacion" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Canal" Width="1.5" PointX="19.375" PointY="5.875" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Mesa" Width="1.5" PointX="19.375" PointY="18.875" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoHabitacionTarifa" Width="1.5" PointX="10" PointY="28.375" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoTarifa" Width="1.5" PointX="7.75" PointY="28.5" />
+        <AssociationConnector Association="EDBCORAHModel.FK_TipoHabitacionTarifa_TipoHabitacion" />
+        <AssociationConnector Association="EDBCORAHModel.FK_TipoHabitacionTarifa_TipoTarifa" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Proyecto" Width="1.5" PointX="0.75" PointY="21.875" />
+        <EntityTypeShape EntityType="EDBCORAHModel.ReservaDetalleComanda" Width="2.5" PointX="22.875" PointY="21.625" />
+        <EntityTypeShape EntityType="EDBCORAHModel.ReservaDetalleDocumentoPago" Width="2.875" PointX="22.875" PointY="18.625" />
+        <EntityTypeShape EntityType="EDBCORAHModel.ReservaDetallePersona" Width="1.5" PointX="18.875" PointY="26.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.MesaDetalleDocumento" Width="1.5" PointX="24.625" PointY="14.75" />
+        <AssociationConnector Association="EDBCORAHModel.FK_MesaDetalleDocumento_Mesa" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoGasto" Width="1.5" PointX="19.375" PointY="15.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.ProductoFormulaReceta" Width="1.5" PointX="12.25" PointY="7" />
+        <EntityTypeShape EntityType="EDBCORAHModel.UnidadEquivalencia" Width="1.5" PointX="10" PointY="36.25" />
+        <AssociationConnector Association="EDBCORAHModel.FK_ProductoFormulaReceta_Producto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_ProductoFormulaReceta_Producto1" />
+        <AssociationConnector Association="EDBCORAHModel.FK_UnidadEquivalencia_UnidadMedida" />
+        <AssociationConnector Association="EDBCORAHModel.FK_UnidadEquivalencia_UnidadMedida1" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Caja" Width="1.5" PointX="4.875" PointY="24.25" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Caja_TipoCaja" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Persona" Width="1.5" PointX="10" PointY="13" />
+        <AssociationConnector Association="EDBCORAHModel.FK_persona_documentoidentidad" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DetalleDocumento" Width="1.5" PointX="5.25" PointY="30.375" />
+        <AssociationConnector Association="EDBCORAHModel.FK_ReservaDetalleComanda_DetalleDocumento" />
+        <AssociationConnector Association="EDBCORAHModel.FK_ReservaDetallePersona_Persona" />
+        <AssociationConnector Association="EDBCORAHModel.FK_MesaDetalleDocumento_DetalleDocumento" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoProducto" Width="1.5" PointX="17.375" PointY="12.875" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Producto_TipoProducto" />
+        <EntityTypeShape EntityType="EDBCORAHModel.OpcionMenuWeb" Width="1.5" PointX="0.75" PointY="24.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.PaginaPrincipal" Width="1.5" PointX="21.75" PointY="15.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoEntrada" Width="1.5" PointX="27.625" PointY="26.375" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Dashboard" Width="1.5" PointX="21.625" PointY="32.375" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DashboardFila" Width="1.5" PointX="23.875" PointY="32.375" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DashboardFilaColumna" Width="1.5" PointX="26.125" PointY="35.125" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DashboardSeccion" Width="1.5" PointX="23.875" PointY="35.5" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DashboardFila_Dashboard" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DashboardFilaColumna_DashboardFila" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DashboardFilaColumna_DashboardSeccion" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoMovimientoCaja" Width="1.5" PointX="24.375" PointY="26" />
+        <AssociationConnector Association="EDBCORAHModel.FK_tipocajamovimiento_tipomovimientocaja" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Meta" Width="1.5" PointX="26.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Producto2_View" Width="1.5" PointX="26.375" PointY="3.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DatosEstaticosEmpresa" Width="1.5" PointX="21.625" PointY="35.375" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DocumentoIncobrable" Width="1.5" PointX="5.25" PointY="8" />
+        <EntityTypeShape EntityType="EDBCORAHModel.ReservaDetalle" Width="1.5" PointX="23.875" PointY="38.375" />
+        <AssociationConnector Association="EDBCORAHModel.FK_ReservaDetalle_Habitacion" />
+        <AssociationConnector Association="EDBCORAHModel.FK_ReservaDetalleComanda_ReservaDetalle" />
+        <AssociationConnector Association="EDBCORAHModel.FK_ReservaDetalleDocumentoPago_ReservaDetalle" />
+        <AssociationConnector Association="EDBCORAHModel.FK_ReservaDetallePersona_ReservaDetalle" />
+        <EntityTypeShape EntityType="EDBCORAHModel.ReservaHabitacion" Width="1.5" PointX="21.625" PointY="39" />
+        <AssociationConnector Association="EDBCORAHModel.FK_ReservaHabitacion_Canal" />
+        <AssociationConnector Association="EDBCORAHModel.FK_ReservaDetalle_ReservaHabitacion1" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoEntradaConfiguracion" Width="1.5" PointX="29" PointY="29.625" />
+        <AssociationConnector Association="EDBCORAHModel.FK_TipoEntradaConfiguracion_TipoEntrada" />
+        <EntityTypeShape EntityType="EDBCORAHModel.CategoriaEntrada" Width="1.5" PointX="30.5" PointY="26.125" />
+        <AssociationConnector Association="EDBCORAHModel.FK_CategoriaEntrada_TipoEntrada" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoAfectacion" Width="1.5" PointX="26.375" PointY="8.875" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Producto_TipoAfectacion" />
+        <EntityTypeShape EntityType="EDBCORAHModel.PrioridadTicket" Width="1.5" PointX="27.375" PointY="16" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TicketAtencion" Width="1.5" PointX="29.625" PointY="12" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoTicket" Width="1.5" PointX="27.375" PointY="13" />
+        <AssociationConnector Association="EDBCORAHModel.FK_TicketAtencion_PrioridadTicket" />
+        <AssociationConnector Association="EDBCORAHModel.FK_TicketAtencion_TipoTicket" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Notificacion" Width="1.5" PointX="30.625" PointY="1" />
+        <EntityTypeShape EntityType="EDBCORAHModel.NotificacionUsuario" Width="1.5" PointX="32.875" PointY="1" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoNotificacion" Width="1.5" PointX="28.375" PointY="1.375" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Notificacion_TipoNotificacion" />
+        <AssociationConnector Association="EDBCORAHModel.FK_NotificacionUsuario_Notificacion" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Prestamo" Width="1.5" PointX="12.25" PointY="29.875" />
+        <EntityTypeShape EntityType="EDBCORAHModel.PrestamoCuota" Width="1.5" PointX="14.5" PointY="30" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Prestamo_Persona" />
+        <AssociationConnector Association="EDBCORAHModel.FK_PrestamoCuota_Prestamo" />
+        <EntityTypeShape EntityType="EDBCORAHModel.EntradaWidget" Width="1.5" PointX="29.125" PointY="21.25" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoWidget" Width="1.5" PointX="26.875" PointY="38.625" />
+        <AssociationConnector Association="EDBCORAHModel.FK_EntradaWidget_TipoWidget" />
+        <EntityTypeShape EntityType="EDBCORAHModel.EntradaSeccion" Width="1.5" PointX="29.125" PointY="34.625" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Entrada" Width="1.5" PointX="29.875" PointY="38.25" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Entrada_TipoEntrada" />
+        <AssociationConnector Association="EDBCORAHModel.FK_EntradaSeccion_Entrada" />
+        <AssociationConnector Association="EDBCORAHModel.FK_EntradaWidget_Entrada" />
+        <AssociationConnector Association="EDBCORAHModel.FK_EntradaWidget_Entrada1" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TipoNormativa" Width="1.5" PointX="28.375" PointY="5.25" />
+        <EntityTypeShape EntityType="EDBCORAHModel.FormularioMunicipal" Width="1.5" PointX="26.375" PointY="18.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Normativas" Width="1.5" PointX="30.625" PointY="5" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Normativas_TipoNormativa1" />
+        <EntityTypeShape EntityType="EDBCORAHModel.PersonaCuponDescuento" Width="1.5" PointX="12.25" PointY="25.375" />
+        <AssociationConnector Association="EDBCORAHModel.FK_PersonaCuponDescuento_Persona" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Empresa" Width="1.5" PointX="19.375" PointY="33" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Dashboard_Empresa" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DatosEstaticosEmpresa_Empresa" />
+        <AssociationConnector Association="EDBCORAHModel.FK_EmpresaOpcionMenu_Empresa" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Rol_Empresa" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Tienda" Width="1.5" PointX="1.25" PointY="29" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Almacen_Tienda" />
+        <EntityTypeShape EntityType="EDBCORAHModel.EntradaComentario" Width="1.5" PointX="32.125" PointY="39.625" />
+        <AssociationConnector Association="EDBCORAHModel.FK_EntradaComentario_Entrada" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Coleccion" Width="1.5" PointX="31.375" PointY="21.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.EmpresaTipoProducto" Width="1.5" PointX="19.625" PointY="46.125" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Promocion" Width="1.5" PointX="31.375" PointY="18" />
+        <EntityTypeShape EntityType="EDBCORAHModel.PromocionProducto" Width="1.5" PointX="33.625" PointY="18.375" />
+        <AssociationConnector Association="EDBCORAHModel.FK_EmpresaTipoProducto_TipoProducto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_PromocionProducto_Promocion" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Departamento" Width="1.5" PointX="32.375" PointY="12.5" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Distrito" Width="1.5" PointX="36.875" PointY="14.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Provincia" Width="1.5" PointX="34.625" PointY="14.625" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Provincia_Departamento" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Distrito_Provincia" />
+        <EntityTypeShape EntityType="EDBCORAHModel.PersonaDireccion" Width="1.5" PointX="39.125" PointY="14.75" />
+        <AssociationConnector Association="EDBCORAHModel.FK_PersonaDireccion_Departamento" />
+        <AssociationConnector Association="EDBCORAHModel.FK_PersonaDireccion_Distrito" />
+        <AssociationConnector Association="EDBCORAHModel.FK_PersonaDireccion_Persona" />
+        <AssociationConnector Association="EDBCORAHModel.FK_PersonaDireccion_Provincia" />
+        <EntityTypeShape EntityType="EDBCORAHModel.ProductoFoto" Width="1.5" PointX="31.375" PointY="29.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DetalleDocumentoAdicional" Width="1.5" PointX="7.5" PointY="34.625" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleDocumentoTalla_DetalleDocumento1" />
+        <AssociationConnector Association="EDBCORAHModel.FK_ProductoFoto_Producto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_PromocionProducto_Producto" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Talla" Width="1.5" PointX="33.375" PointY="4.875" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DocumentoComercialCajaMovimiento" Width="1.5" PointX="5.25" PointY="15" />
+        <EntityTypeShape EntityType="EDBCORAHModel.CajaMovimiento" Width="1.5" PointX="16.375" PointY="33.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DireccionTarifario" Width="1.5" PointX="35" PointY="11.5" />
+        <EntityTypeShape EntityType="EDBCORAHModel.AvisoDisponibilidad" Width="1.5" PointX="36" PointY="3.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.PreCargaOrdenProduccion" Width="1.5" PointX="0.75" PointY="33.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Talla_View" Width="1.5" PointX="21.75" PointY="5.75" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DireccionTarifario_Departamento" />
+        <AssociationConnector Association="EDBCORAHModel.FK_AvisoDisponibilidad_Producto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_AvisoDisponibilidad_Talla" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Subscripcion" Width="1.5" PointX="7.375" PointY="31.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DocumentoComercial" Width="1.5" PointX="3" PointY="8.125" />
+        <AssociationConnector Association="EDBCORAHModel.FK_documentocomercial_tipodocumento" />
+        <AssociationConnector Association="EDBCORAHModel.FK_documentocomercial_tipomovimiento" />
+        <AssociationConnector Association="EDBCORAHModel.FK_detalledocumento_documentocomercial" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DocumentoComercialCajaMovimiento_DocumentoComercial" />
+        <AssociationConnector Association="EDBCORAHModel.FK_documentocomercialpago_documentocomercial" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DocumentoIncobrable_DocumentoComercial" />
+        <AssociationConnector Association="EDBCORAHModel.FK_ReservaDetalleDocumentoPago_DocumentoComercial" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Material" Width="1.5" PointX="33.375" PointY="7.875" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Producto_Material" />
+        <EntityTypeShape EntityType="EDBCORAHModel.AjusteAlmacen" Width="1.5" PointX="17.25" PointY="0.75" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DetalleAjusteAlmacen" Width="1.5" PointX="19.5" PointY="1.375" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DetalleNotaIngreso" Width="1.5" PointX="41.5" PointY="7.5" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DetalleNotaSalida" Width="1.5" PointX="38.5" PointY="13.5" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DetalleTransferenciaAlmacen" Width="1.5" PointX="12.25" PointY="37.875" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DetalleVenta" Width="1.5" PointX="41.25" PointY="14.25" />
+        <EntityTypeShape EntityType="EDBCORAHModel.HistDetalleSalida" Width="1.5" PointX="43.75" PointY="14.125" />
+        <EntityTypeShape EntityType="EDBCORAHModel.NotaIngreso" Width="1.5" PointX="39.25" PointY="6.625" />
+        <EntityTypeShape EntityType="EDBCORAHModel.NotaSalida" Width="1.5" PointX="36.25" PointY="21.625" />
+        <EntityTypeShape EntityType="EDBCORAHModel.TransferenciaAlmacen" Width="1.5" PointX="2.75" PointY="42" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Venta" Width="1.5" PointX="34" PointY="25.375" />
+        <EntityTypeShape EntityType="EDBCORAHModel.HistDetalleSalidaTransferencia" Width="1.5" PointX="9.375" PointY="35.75" />
+        <AssociationConnector Association="EDBCORAHModel.FK_AjusteAlmacen_Almacen" />
+        <AssociationConnector Association="EDBCORAHModel.FK_NotaIngreso_Almacen" />
+        <AssociationConnector Association="EDBCORAHModel.FK_NotaSalida_Almacen" />
+        <AssociationConnector Association="EDBCORAHModel.FK_TransferenciaAlmacen_Almacen" />
+        <AssociationConnector Association="EDBCORAHModel.FK_TransferenciaAlmacen_Almacen1" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Venta_Almacen" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Venta_Caja" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Venta_CondicionPago" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Venta_FormaPago" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Venta_Moneda" />
+        <AssociationConnector Association="EDBCORAHModel.FK_AjusteAlmacen_Persona" />
+        <AssociationConnector Association="EDBCORAHModel.FK_NotaIngreso_Persona" />
+        <AssociationConnector Association="EDBCORAHModel.FK_NotaSalida_Persona" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Venta_Persona" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleAjusteAlmacen_Producto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleNotaIngreso_Producto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleNotaSalida_Producto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleTransferenciaAlmacen_Producto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleVenta_Producto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_NotaSalida_TipoDocumento" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Venta_TipoDocumento" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Venta_TipoImpuesto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_NotaIngreso_TipoMovimiento" />
+        <AssociationConnector Association="EDBCORAHModel.FK_NotaSalida_TipoMovimiento" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleAjusteAlmacen_UnidadMedida" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleNotaIngreso_UnidadMedida" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleNotaSalida_UnidadMedida" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleTransferenciaAlmacen_UnidadMedida" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleVenta_UnidadMedida" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleAjusteAlmacen_AjusteAlmacen" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleNotaIngreso_NotaIngreso" />
+        <AssociationConnector Association="EDBCORAHModel.FK_HistDetalleSalida_DetalleNotaIngreso" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleNotaSalida_NotaSalida" />
+        <AssociationConnector Association="EDBCORAHModel.FK_HistDetalleSalida_DetalleNotaSalida" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleTransferenciaAlmacen_TransferenciaAlmacen" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleVenta_Venta" />
+        <AssociationConnector Association="EDBCORAHModel.FK_NotaSalida_Venta" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DetallePedido" Width="1.5" PointX="48.625" PointY="8.375" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DetallePedidoAdicional" Width="1.5" PointX="50.875" PointY="5" />
+        <EntityTypeShape EntityType="EDBCORAHModel.Pedido" Width="1.5" PointX="46.375" PointY="11.625" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Pedido_Caja" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Pedido_CondicionPago" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Pedido_FormaPago" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Pedido_Moneda" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Pedido_Persona" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Pedido_PersonaCuponDescuento" />
+        <AssociationConnector Association="EDBCORAHModel.FK_Pedido_PersonaDireccion" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetallePedido_Producto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetallePedidoAdicional_Producto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetallePedidoAdicional_Talla" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetallePedido_UnidadMedida" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetallePedido_Pedido" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetallePedidoAdicional_DetallePedido" />
+        <EntityTypeShape EntityType="EDBCORAHModel.DetalleNotaIngresoAdicional" Width="1.5" PointX="43.75" PointY="5.5" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleNotaIngresoAdicional_Producto" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleNotaIngresoAdicional_Producto1" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleNotaIngresoAdicional_Talla" />
+        <AssociationConnector Association="EDBCORAHModel.FK_DetalleNotaIngresoAdicional_DetalleNotaIngreso" />
+        </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

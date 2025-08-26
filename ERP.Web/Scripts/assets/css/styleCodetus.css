@@ -1,0 +1,97 @@
+﻿
+.acordeon-rubros {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 20px;
+}
+
+.titulo-dentro {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.accordion-item {
+    margin-bottom: 12px;
+    border: none;
+}
+
+.accordion-button {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    font-size: 16px;
+    transition: border-radius 0.3s ease;
+    border-radius: 10px; /* ahora siempre tiene borde redondeado */
+    margin-bottom: 5px;
+    border: 1px solid #dee2e6;
+}
+
+    .accordion-button:not(.collapsed) {
+        background-color: #d4edda; /* Verde pastel */
+        color: #155724;
+        border-radius: 10px 10px 0 0; /* redondeado arriba cuando abierto */
+    }
+
+.accordion-body {
+    border: 1px solid #dee2e6;
+    border-top: none;
+    border-radius: 0 0 10px 10px; /* redondeado abajo cuando abierto */
+    padding: 15px;
+}
+
+.logo-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: start;
+    margin-top: 10px;
+}
+
+.logo-cliente {
+    width: 120px;
+    height: 80px;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    padding: 8px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+/*style para la vista de casos de éxito*/
+.filter-btn.active {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.card-text {
+    font-size: 0.95rem;
+}
+
+.badge {
+    font-size: 0.8rem;
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+@media (max-width: 576px) {
+    .card-body {
+        padding: 1rem 0.8rem;
+    }
+}

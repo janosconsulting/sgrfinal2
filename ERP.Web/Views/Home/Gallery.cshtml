@@ -1,0 +1,521 @@
+﻿<style>
+    #gallery img {
+        height: 75vw;
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+
+    @@media (min-width: 576px) {
+        #gallery img {
+            height: 35vw;
+        }
+    }
+
+    @@media (min-width: 992px) {
+        #gallery img {
+            height: 18vw;
+        }
+    }
+
+    .carousel-item img {
+        height: 60vw;
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+
+    @@media (min-width: 576px) {
+        .carousel-item img {
+            height: 350px;
+        }
+    }
+
+    * {
+        transition: 0.3s;
+    }
+
+    #gallery.custom {
+        padding: 0 15px;
+    }
+
+        #gallery.custom img {
+            display: block;
+            margin: 15px 0;
+            border-radius: 300px 30px 300px 300px;
+        }
+
+            #gallery.custom img:hover {
+                border-radius: 30px 90px 30px 30px;
+            }
+
+    #exampleModal.custom .modal-content {
+        background: none;
+        border: none;
+    }
+
+    #exampleModal.custom .modal-header {
+        border: none;
+    }
+
+        #exampleModal.custom .modal-header button {
+            background: none;
+            border-radius: 100px 100px 0 0;
+            padding: 5px 10px;
+            opacity: 1;
+            position: relative;
+            top: 3px;
+            border: solid 2px white;
+        }
+
+    @@media (min-width: 992px) {
+        #exampleModal.custom .modal-header button {
+            top: 15px;
+        }
+    }
+
+    #exampleModal.custom .modal-header button:hover {
+        top: 3px;
+    }
+
+    #exampleModal.custom .modal-header span {
+        color: white;
+    }
+
+    #exampleModal.custom .modal-body {
+        padding: 0;
+        border: none;
+        position: relative;
+    }
+
+        #exampleModal.custom .modal-body::before, #exampleModal.custom .modal-body::after {
+            content: "";
+            height: 50px;
+            width: 50px;
+            display: block;
+            position: absolute;
+            background: white;
+            border-radius: 3px 10px;
+        }
+
+    @@media (min-width: 768px) {
+        #exampleModal.custom .modal-body::before, #exampleModal.custom .modal-body::after {
+            border-radius: 3px 30px;
+            height: 100px;
+            width: 100px;
+        }
+    }
+
+    #exampleModal.custom .modal-body::before {
+        top: -5px;
+        left: -5px;
+    }
+
+    @@media (min-width: 768px) {
+        #exampleModal.custom .modal-body::before {
+            top: -15px;
+            left: -15px;
+        }
+    }
+
+    #exampleModal.custom .modal-body::after {
+        bottom: -5px;
+        right: -5px;
+        z-index: -1;
+    }
+
+    @@media (min-width: 768px) {
+        #exampleModal.custom .modal-body::after {
+            bottom: -15px;
+            right: -15px;
+        }
+    }
+
+    #exampleModal.custom .modal-footer {
+        border: none;
+        margin-top: 60px;
+    }
+
+    @@media (min-width: 992px) {
+        #exampleModal.custom .modal-footer {
+            margin-top: 40px;
+        }
+    }
+
+    #exampleModal.custom .modal-footer .btn {
+        margin: auto;
+        border: solid 2px white;
+        background: none;
+        text-transform: uppercase;
+        font-size: 0.8em;
+        letter-spacing: 0.1em;
+        font-weight: bold;
+        padding: 0.2em 0.7em;
+    }
+
+        #exampleModal.custom .modal-footer .btn:hover {
+            background: white;
+            color: black;
+        }
+
+    #exampleModal.custom .carousel-control-prev, #exampleModal.custom .carousel-control-next {
+        font-size: 2em;
+        top: auto;
+        opacity: 1;
+        bottom: -52px;
+    }
+
+    @@media (min-width: 768px) {
+        #exampleModal.custom .carousel-control-prev, #exampleModal.custom .carousel-control-next {
+            top: 0;
+            opacity: 0.5;
+            bottom: 0;
+        }
+    }
+
+    #exampleModal.custom .carousel-control-next-icon, #exampleModal.custom .carousel-control-prev-icon {
+        height: 30px;
+        width: 30px;
+    }
+
+    @@media (min-width: 768px) {
+        #exampleModal.custom .carousel-control-prev {
+            left: -90px;
+        }
+    }
+
+    @@media (min-width: 768px) {
+        #exampleModal.custom .carousel-control-next {
+            right: -90px;
+        }
+    }
+
+    #exampleModal.custom .carousel-indicators {
+        bottom: -60px;
+    }
+
+    @@media (min-width: 992px) {
+        #exampleModal.custom .carousel-indicators {
+            bottom: -30px;
+        }
+    }
+
+    #exampleModal.custom .carousel-indicators li {
+        height: 30px;
+        border-radius: 100px;
+        background: none;
+        border: solid 2px white;
+    }
+
+    @@media (min-width: 992px) {
+        #exampleModal.custom .carousel-indicators li {
+            height: 10px;
+        }
+    }
+
+    #exampleModal.custom .carousel-indicators li:hover {
+        background: white;
+    }
+
+    #exampleModal.custom .carousel-indicators li.active {
+        background: white;
+    }
+
+    /* The switch - the box around the slider */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    @@media (min-width: 576px) {
+        .switch {
+            margin: 0;
+        }
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+    .switch-wrap {
+        text-align: center;
+        background-color: #b1fbc1;
+        padding: 30px;
+        border-radius: 3px;
+        margin: 30px 0 0;
+    }
+
+    @@media (min-width: 576px) {
+        .switch-wrap {
+            position: fixed;
+            bottom: 0;
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            width: 100%;
+            justify-content: center;
+            padding: 10px;
+        }
+    }
+
+    .switch-text {
+        display: block;
+        margin: 0.5em;
+    }
+
+    @@media (min-width: 576px) {
+        .switch-text {
+            margin: 0 1em 0 0;
+        }
+    }
+
+    #gallery > .col-lg-3 {
+        margin-bottom: 30px;
+    }
+
+    .gallery {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .gallery img {
+           
+            height: auto;
+            cursor: pointer;
+        }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        padding-top: 50px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.9);
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 800px;
+        height: auto;
+    }
+
+    .close {
+        color: #fff;
+        position: absolute;
+        top: 10px;
+        right: 25px;
+        font-size: 35px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+</style>
+
+<!--Start Page Header-->
+<section class="page-header">
+    <div class="page-header__bg" style="background-image: url(@Url.Content("~/Scripts/assets/images/backgrounds/page-header-img1.jpg"));">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="page-header__wrapper">
+                    <div class="page-header__content">
+                        <h2>GALLERY</h2>
+                        <div class="page-header__menu">
+                            <ul>
+                                <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                                <li>Gallery</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--End Page Header-->
+<!-- Gallery -->
+<!--
+Gallery is linked to lightbox using data attributes.
+
+To open lightbox, this is added to the gallery element: {data-toggle="modal" data-target="#exampleModal"}.
+
+To open carousel on correct image, this is added to each image element: {data-target="#carouselExample" data-slide-to="0"}.
+Replace '0' with corresponding slide number.
+-->
+
+<section class="my-4">
+    <div class="row gallery" id="gallery" data-toggle="modal" data-target="#exampleModal">
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/1.jpg")" alt="First slide" data-slide-to="" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/2.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="1" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/2.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/3.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="2" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/3.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/4.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/4.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/5.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="4" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/5.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/6.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="5" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/6.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/7.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="6" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/7.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/8.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/8.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/9.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/9.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/10.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/10.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/11.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/11.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/12.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/12.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/13.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/13.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/14.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/14.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/15.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/15.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/16.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/17.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/18.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/19.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/20.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/21.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/22.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/23.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/24.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/25.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/26.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/27.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/28.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/29.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/30.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/31.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <img class="w-100" src="@Url.Content("~/Scripts/assets/images/gallery/32.jpg")" alt="First slide" data-target="#carouselExample" data-slide-to="3" onclick="openModal('@Url.Content("~/Scripts/assets/images/gallery/1.jpg")')">
+        </div>
+    </div>
+</section>
+
+
+<div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+
+<script>
+  
+    function openModal(imagePath) {
+        var modal = document.getElementById("myModal");
+        var modalImg = document.getElementById("modalImage");
+
+        modal.style.display = "block";
+        modalImg.src = imagePath;
+    }
+
+    function closeModal() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    }
+
+</script>
