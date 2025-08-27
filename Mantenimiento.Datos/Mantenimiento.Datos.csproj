@@ -43,10 +43,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.dll</HintPath>
+      <HintPath>..\..\..\ProyectoSaludOcupacional3\packages\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="Dapper.Contrib, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.Contrib.dll</HintPath>
+      <HintPath>..\..\..\ProyectoSaludOcupacional3\packages\Dapper.Contrib.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
@@ -134,9 +134,14 @@
     </Compile>
     <Compile Include="Entidades\CasosExito.cs" />
     <Compile Include="Entidades\CategoriaCliente.cs" />
+    <Compile Include="Entidades\Frecuencia.cs" />
+    <Compile Include="Entidades\Moneda.cs" />
+    <Compile Include="Entidades\Rol.cs" />
+    <Compile Include="Entidades\Servicio.cs" />
     <Compile Include="Entidades\sp_ListarCategoriaCliente.cs" />
     <Compile Include="Entidades\sp_ListarPaises.cs" />
     <Compile Include="Entidades\sp_listarRequerimientosporTrabajador.cs" />
+    <Compile Include="Entidades\sp_ListarSubscripcion.cs" />
     <Compile Include="Entidades\sp_ObtenerCasosExito.cs" />
     <Compile Include="Entidades\sp_ObtenerDetallesPorRequerimiento.cs" />
     <Compile Include="Entidades\Color.cs" />
@@ -150,6 +155,7 @@
     <Compile Include="Entidades\sp_ListarTareas.cs" />
     <Compile Include="Entidades\sp_ListarTrabajadores.cs" />
     <Compile Include="Entidades\sp_ValidarNdocumento.cs" />
+    <Compile Include="Entidades\Subscripcion.cs" />
     <Compile Include="Entidades\Tarea.cs" />
     <Compile Include="Entidades\TipoRequerimiento.cs" />
     <Compile Include="Modelo\Contexto.cs">

@@ -39,10 +39,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.dll</HintPath>
+      <HintPath>..\..\..\ProyectoSaludOcupacional3\packages\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="Dapper.Contrib, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.Contrib.dll</HintPath>
+      <HintPath>..\..\..\ProyectoSaludOcupacional3\packages\Dapper.Contrib.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Data.v17.1, Version=17.1.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.ExpressApp.v17.1, Version=17.1.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -74,22 +74,22 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Unity.Abstractions">
-      <HintPath>..\packages\Unity.Abstractions.dll</HintPath>
+      <HintPath>..\..\..\ProyectoSaludOcupacional3\packages\Unity.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Configuration">
-      <HintPath>..\packages\Unity.Configuration.dll</HintPath>
+      <HintPath>..\..\..\ProyectoSaludOcupacional3\packages\Unity.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Container">
-      <HintPath>..\packages\Unity.Container.dll</HintPath>
+      <HintPath>..\..\..\ProyectoSaludOcupacional3\packages\Unity.Container.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Interception">
-      <HintPath>..\packages\Unity.Interception.dll</HintPath>
+      <HintPath>..\..\..\DARO\buenpastor3\FacturadorCliente\packages\Unity.5.8.6\lib\net46\Unity.Interception.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Interception.Configuration">
-      <HintPath>..\packages\Unity.Interception.Configuration.dll</HintPath>
+      <HintPath>..\..\..\ProyectoSaludOcupacional3\packages\Unity.Interception.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RegistrationByConvention">
-      <HintPath>..\packages\Unity.RegistrationByConvention.dll</HintPath>
+      <HintPath>..\..\..\DARO\buenpastor3\FacturadorCliente\packages\Unity.5.8.6\lib\net46\Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ServiceLocation">
       <HintPath>..\packages\Unity.ServiceLocation.dll</HintPath>
@@ -111,6 +111,7 @@
     <Compile Include="Contratos\Servicios\IProyectoServicio.cs" />
     <Compile Include="Contratos\Servicios\IRequerimientoServicio.cs" />
     <Compile Include="Contratos\Servicios\IRequerimientosporTrabajadorServicio.cs" />
+    <Compile Include="Contratos\Servicios\ISubscripcionServicio.cs" />
     <Compile Include="Contratos\Servicios\ITareaServicio.cs" />
     <Compile Include="Contratos\Servicios\ITipoRequerimientoServicio.cs" />
     <Compile Include="Contratos\Servicios\IUsuarioServicio.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Servicios\ProyectoServicio.cs" />
     <Compile Include="Servicios\RequerimientoServicio.cs" />
     <Compile Include="Servicios\RequerimientosporTrabajadorServicio.cs" />
+    <Compile Include="Servicios\SubscripcionServicio.cs" />
     <Compile Include="Servicios\TareaServicio.cs" />
     <Compile Include="Servicios\TipoRequerimientoServicio.cs" />
     <Compile Include="Servicios\UsuarioServicio.cs" />

@@ -236,6 +236,7 @@
     <Compile Include="Controllers\ProyectoController.cs" />
     <Compile Include="Controllers\RequerimientoController.cs" />
     <Compile Include="Controllers\RequerimientosporTrabajadorController.cs" />
+    <Compile Include="Controllers\SubscripcionController.cs" />
     <Compile Include="Controllers\TareasController.cs" />
     <Compile Include="Controllers\TipoRequerimientoController.cs" />
     <Compile Include="Controllers\TrabajadorController.cs" />
@@ -6482,6 +6483,8 @@
     <Content Include="Views\RequerimientosporTrabajador\Editar.cshtml" />
     <Content Include="Views\RequerimientosporTrabajador\index.cshtml" />
     <Content Include="Views\Home\ProyectoDetalle.cshtml" />
+    <Content Include="Views\Subscripcion\Index.cshtml" />
+    <Content Include="Views\Subscripcion\Nuevo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ControlCombustible.Utilitario\Mantenimiento.Utilitario.csproj">
