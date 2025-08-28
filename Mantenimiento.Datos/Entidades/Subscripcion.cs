@@ -27,6 +27,11 @@ namespace Mantenimiento.Datos.Entidades
         public int idMoneda { get; set; }
         public string observacion { get; set; }
         public int idEstado { get; set; }
+        public DateTime? fechaCobro { get; set; }
+        public string referencia { get; set; }
+        public string idCondicionPago { get; set; }
+        [Write(false)]
+        public int estadoFormulario { get; set; }
 
     }
 }

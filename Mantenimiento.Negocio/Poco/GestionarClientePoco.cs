@@ -14,6 +14,7 @@ namespace Mantenimiento.Negocio.Poco
         public List<Moneda> ListarMoneda { get; set; }
         public List<Frecuencia> ListarFrecuencia { get; set; }
         public List<Servicio> ListarServicio { get; set; }
+        public Subscripcion ObtenerSubscripcion { get; set; }
         public List<sp_ListarCategoriaCliente> listarCategoriaClientes { get; set; }
     }
 }

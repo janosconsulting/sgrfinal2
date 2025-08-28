@@ -15,6 +15,7 @@ namespace Mantenimiento.Datos.Entidades
         public string frecuencia { get; set; }
         public string moneda { get; set; }
         public int importe { get; set; }
-        public DateTime fechaInicio { get; set; }
+        public string fechaInicio { get; set; }
+        public string fechaVcto { get; set; }
     }
 }

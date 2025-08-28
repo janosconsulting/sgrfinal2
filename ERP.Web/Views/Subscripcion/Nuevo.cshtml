@@ -28,9 +28,9 @@
                 <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bold fs-3 m-0">
-                        REGISTRAR
-                        SUBSCRIPCION
+                        @(ViewBag.esEditar > 0 ? (ViewBag.esRenovacion == 2 ? "RENOVAR SUBSCRIPCION" : "EDITAR SUBSCRIPCION"  ) : "REGISTRAR SUBSCRIPCION")
                         
+
                     </h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
@@ -75,14 +75,14 @@
                                     <div class="col-md-12">
                                         <div class="row mb-5 gx-1">
                                             <label class="required fs-6 fw-semibold mb-2">
-                                               Cliente:
+                                                Cliente:
                                             </label>
-                                            <select class="form-select">
+                                            <select class="form-select" id="cboClientes" @(ViewBag.esRenovacion == 2 ? "disabled" : "")>
+                                                <option value="-1">Seleccione..</option>
+
                                                 @foreach (var I in Model.listarClientes)
                                                 {
                                                     <option value="@I.idPersona">@I.nombreCli</option>
-                                                }else{
-                                                    <option>No hay datos disponibles</option>
                                                 }
                                             </select>
                                         </div>
@@ -92,14 +92,13 @@
                                             <label class="required fs-6 fw-semibold mb-2">
                                                 Servicio:
                                             </label>
-                                            <select class="form-select">
+                                            <select class="form-select" id="cboServicios" @(ViewBag.esRenovacion == 2 ? "disabled" : "")>
+                                                <option value="-1">Seleccione..</option>
                                                 @foreach (var I in Model.ListarServicio)
                                                 {
                                                     <option value="@I.idServicio">@I.nombre</option>
-                                                }else{
-                                                <option>No hay datos disponibles</option>
                                                 }
-                                            </select>
+                                            </select> 
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -107,111 +106,89 @@
                                             <label class="required fs-6 fw-semibold mb-2">
                                                 Frecuencia:
                                             </label>
-                                            <select class="form-select">
+                                            <select class="form-select" id="cboFrecuencia" onchange="CambioFrecuencia()">
+                                                <option value="-1">Seleccione..</option>
                                                 @foreach (var I in Model.ListarFrecuencia)
                                                 {
-                                                    <option value="@I.idFrecuencia">@I.nombre</option>
-                                                }else{
-                                                <option>No hay datos disponibles</option>
+                                                    <option value="@I.idFrecuencia" data-numdias="@I.numDias" data-aviso1="@I.aviso1" data-aviso2="@I.aviso2">
+                                                        @I.nombre
+                                                    </option>
                                                 }
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="row mb-5 gx-1">
-                                            <!--begin::Input group-->
-                                            <label class="required fs-6 fw-semibold mb-2"
-                                                   for="txtCelular">Celular:</label>
-                                            <!--begin::Input-->
-                                            <div class="position-relative d-flex align-items-center">
-                                                <!--begin::Input-->
-                                                <input type="text" id="txtCelular"
-                                                       class="form-control mb-3 mb-lg-0"
-                                                       placeholder="Ingrese número de celular"
-                                                       maxlength="9" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
+                                            <label class="fs-5 fw-semibold mb-2"
+                                                   for="kt_datepicker_fecha_ini">Fecha Inicio:</label>
+                                            <input type="text"id="kt_datepicker_fecha_ini" class="form-control" onchange="CambioFrecuencia()"
+                                                   placeholder="Fecha" />
                                         </div>
+                                    </div>
+                                    <div class="col-md-4">
                                         <div class="row mb-5 gx-1">
-                                            <!--begin::Input group-->
-                                            <!--begin::Label-->
-                                            <label class="fs-5 fw-semibold mb-2" for="txtTelefono">Teléfono:</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="text" id="txtTelefono" class="form-control"
-                                                   placeholder="Ingrese número de teléfono:"
-                                                   maxlength="9" />
-                                            <!--end::Input group-->
+                                            <label class="fs-5 fw-semibold mb-2"
+                                                   for="kt_datepicker_fecha_fin">Fecha Vencimiento:</label>
+                                            <input type="text"
+                                                   id="kt_datepicker_fecha_fin" class="form-control" disabled />
                                         </div>
+                                    </div>
+                                    <div class="col-md-2">
                                         <div class="row mb-5 gx-1">
-                                            <!--begin::Input group-->
-                                            <!--begin::Label-->
-                                            <label class="fs-5 fw-semibold mb-2" for="txtDireccion">Dirección:</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="text" id="txtDireccion" class="form-control"
-                                                   placeholder="Ingrese dirección:" />
-                                            <!--end::Input group-->
+                                            <label class="fs-5 fw-semibold mb-2"
+                                                   for="txtImporte">Importe:</label>
+                                            <input type="text" id="txtImporte" class="form-control" placeholder="Importe" />
                                         </div>
+                                    </div>
+                                    <div class="col-md-2">
                                         <div class="row mb-5 gx-1">
-                                            <!--begin::Input group-->
-                                            <!--begin::Label-->
-                                            <label class="fs-5 fw-semibold mb-2" for="txtDetalleContacto">
-                                                Detalles de
-                                                contacto:
-                                            </label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <textarea type="text" id="txtDetalleContacto"
-                                                      class="form-control"
-                                                      placeholder="Ingrese detalles de contacto:"
-                                                      style="height: 130px;"
-                                                      maxlength="300">
-                                            </textarea>
-                                            <!--end::Input group-->
-                                        </div>
-                                        <div class="row mb-5 gx-1">
-                                            <label for="selectRubroLogo" class="form-label">Selecciona el Rubro del Logo</label>
-                                            <select id="selectRubroLogo" class="form-select">
-                                                <option value="">-- Seleccionar Rubro --</option>
-                                                <option value="INDUSTRIA">INDUSTRIA</option>
-                                                <option value="SALUD & BELLEZA">SALUD & BELLEZA</option>
-                                                <option value="FERRETERÍAS">FERRETERÍAS</option>
-                                                <option value="BARES Y RESTAURANTES">BARES Y RESTAURANTES</option>
-                                                <option value="AGRO Y VETERINARIAS">AGRO Y VETERINARIAS</option>
-                                                <option value="EDUCACIÓN">EDUCACIÓN</option>
-                                                <option value="MODA Y CALZADOS">MODA Y CALZADOS</option>
-                                                <option value="TRANSPORTES">TRANSPORTES</option>
-                                                <option value="INMOBILIARIA">INMOBILIARIA</option>
-                                                <option value="REPUESTOS">REPUESTOS</option>
-                                                <option value="SERVICIOS">SERVICIOS</option>
-                                                <option value="GENERAL">GENERAL</option>
+                                            <label class="fs-5 fw-semibold mb-2" for="cboMoneda">Moneda:</label>
+                                            <select class="form-select" id="cboMoneda">
+                                                <option value="-1">Seleccione..</option>
+                                                @foreach (var I in Model.ListarMoneda)
+                                                {
+                                                    <option value="@I.idMoneda">@I.nombre</option>
+                                                }
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row mb-5 gx-1">
-                                        <!--begin::Input group-->
-                                        <div class="mb-10 fv-row">
-                                            <!--begin::Dropzone-->
-                                            <div class="dropzone" id="kt_dropzonejs_banner">
-                                                <!--begin::Message-->
-                                                <div class="dz-message needsclick">
-                                                    <i class="ki-duotone ki-file-up fs-3x text-primary">
-                                                        <span class="path1"></span><span class="path2"></span>
-                                                    </i>
-                                                    <!--begin::Info-->
-                                                    <div class="ms-4">
-                                                        <h3 class="fs-5 fw-bold text-gray-900 mb-1">
-                                                            Suelte la imagen aquí o haga clic para subirla.
-                                                        </h3>
-                                                    </div>
-                                                    <!--end::Info-->
-                                                </div>
-                                            </div>
-                                            <!--end::Dropzone-->
+
+                                    <div class="col-md-4">
+                                        <div class="row mb-5 gx-1">
+                                            <label class="fs-5 fw-semibold mb-2"
+                                                   for="txtAviso">Días Aviso:</label>
+                                            <input type="text" id="txtAviso" class="form-control" disabled />
                                         </div>
-                                        <!--end::Input group-->
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-5 gx-1">
+                                            <label class="fs-5 fw-semibold mb-2" for="cboEstados">Estado Suscripción:</label>
+                                            <select class="form-select" id="cboEstados">
+                                                @if (ViewBag.esRenovacion == 2)
+                                                {
+                                                    <option value="1">Activo</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="1">Activo</option>
+                                                    <option value="2">Suspendido</option>
+                                                }
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row mb-5 gx-1">
+                                            <label class="fs-5 fw-semibold mb-2"
+                                                   for="txtObservacion">Observacion:</label>
+                                            <input type="text" id="txtObservacion" class="form-control" placeholder="observacion" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 d-none" id="campo-hidden">
+                                        <div class="row mb-5 gx-1">
+                                            <span id="xCampo"></span>
+
+                                        </div>
                                     </div>
 
                                 </div>
@@ -262,10 +239,192 @@
 
 
     <script>
+        var idEditar = 0;
+        var isEditing = "";
+
+        function Validar() {
+            if ($("#cboClientes").val() == -1) {
+                ShowMessage(0, "Debe seleccionar el Cliente");
+                return false;
+            }
+            // Verificar si se ha ingresado un número de documento
+            if ($("#cboServicios").val() == -1) {
+                ShowMessage(0, "Debe seleccionar Servicio");
+                return false;
+            }
+            if ($("#cboFrecuencia").val() == -1) {
+                ShowMessage(0, "Debe seleccionar la Frecuencia");
+                return false;
+            }
+            if ($("#kt_datepicker_fecha_ini").val() == "") {
+                ShowMessage(0, "Debe ingresar la Fecha de Inicio");
+                return false;
+            }
+            if ($("#kt_datepicker_fecha_fin").val() == "") {
+                ShowMessage(0, "Debe ingresar la Fecha Vencimiento");
+                return false;
+            }
+            if ($("#txtImporte").val() == "") {
+                ShowMessage(0, "Debe ingresar el Importe");
+                return false;
+            }
+            if ($("#cboMoneda").val() == -1) {
+                ShowMessage(0, "Debe seleccionar la Moneda");
+                return false;
+            }
+            if ($("#txtAviso").val() == "") {
+                ShowMessage(0, "Debe ingresar el Nro de Días de Aviso");
+                return false;
+            }
+            if ($("#cboEstados").val() == -1) {
+                ShowMessage(0, "Debe seleccionar el Estado");
+                return false;
+            }
+            return true;
+        }
+        function Guardar() {
+             if (!Validar()) {
+                 return false;
+             }
+
+
+             var formData = new FormData();
+
+            formData.append('idSubscripcion', idEditar);
+            formData.append('idCliente', $("#cboClientes").val());
+            formData.append('idFrecuencia', $("#cboFrecuencia").val());
+            formData.append('idServicio', $("#cboServicios").val());
+            formData.append('fechaInicio', $("#kt_datepicker_fecha_ini").val());
+            formData.append('fechaVcto', $("#kt_datepicker_fecha_fin").val());
+            formData.append('importe', $("#txtImporte").val());
+            formData.append('idMoneda', $("#cboMoneda").val());
+            formData.append('estadoFormulario', @(ViewBag.esRenovacion == 2 ? 4 : 0));
+            formData.append('idEstado', $("#cboEstados").val());
+            formData.append('observacion', $("#txtObservacion").val());
+
+             $.ajax({
+                 url: "@Url.Action("Guardar", "Subscripcion")",
+                 type: "POST",
+                 data: formData,
+                 processData: false,
+                 contentType: false,
+                 success: function (response) {
+                     let message = idEditar > 0 ? "@( ViewBag.esRenovacion == 2 ? "Se relaizo la Renovacion de la Subscripcion" : "¡La Subscripcion se ha actualizado correctamente!" )" : "¡La Subscripcion se ha registrado correctamente!";
+                     Swal.fire({
+                         text: message,
+                         icon: "success",
+                         buttonsStyling: false,
+                         confirmButtonText: "Listo",
+                         customClass: { confirmButton: "btn btn-primary" },
+                     }).then(function () {
+                         window.location.href = '@Url.Action("Index", "Subscripcion")';
+                     });
+                 },
+                 error: function (error) {
+                     //console.error("Error al enviar el formulario");
+                     // Mostrar mensaje de error
+                     Swal.fire({
+                         text: "Se produjo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
+                         icon: "error",
+                         buttonsStyling: false,
+                         confirmButtonText: "Ok",
+                         customClass: { confirmButton: "btn btn-primary" },
+                     });
+                 },
+             });
+        }
+        function convertirDDMMYYYYaDate(fechaStr) {
+            const partes = fechaStr.split('/');
+            const dia = parseInt(partes[0], 10);
+            const mes = parseInt(partes[1], 10) - 1; // Los meses en JS van de 0 a 11
+            const anio = parseInt(partes[2], 10);
+            return new Date(anio, mes, dia);
+        }
+        function fechas(dias) {
+            const fechaStr = "27/08/2025"; // <- asegúrate de este formato
+            const partes = fechaStr.split('/');
+            const dia = parseInt(partes[0], 10);
+            const mes = parseInt(partes[1], 10) - 1;
+            const anio = parseInt(partes[2], 10);
+
+            const fecha = new Date(anio, mes, dia);
+            fecha.setDate(fecha.getDate() + dias);
+
+            console.log(fecha.toDateString());
+        }
+        function CambioFrecuencia() {
+            var t = "#cboFrecuencia";
+            var frecuencia = $(t).val();
+            var nroTotal = $(t).find("option:selected").attr("data-numdias");
+            var aviso1 = $(t).find("option:selected").attr("data-aviso1");
+            var aviso2 = $(t).find("option:selected").attr("data-aviso2");
+            var txtAviso = "";
+
+
+            //AGREGAR INFORMACION DE FECHA VENCIMIENTO
+            const fechaInicioStr = $("#kt_datepicker_fecha_ini").val();
+            const fechaInicio = convertirDDMMYYYYaDate(fechaInicioStr);
+            if (!isNaN(fechaInicio)) {
+                // Calcular el máximo posible desde fecha de inicio (si deseas limitar a 30 días desde inicio)
+                const maxDesdeInicio =fechaInicio;
+                maxDesdeInicio.setDate(fechaInicio.getDate() + parseInt(nroTotal));
+                initializeFlatpickr("#kt_datepicker_fecha_fin", maxDesdeInicio)
+            } else {
+                console.error("La fecha de inicio no es válida.");
+            }
+
+
+            if (frecuencia != -1) {
+                $("#campo-hidden").removeClass("d-none")
+                $("#txtAviso").val(aviso1)
+                txtAviso = `Sugerencia aplicada: aviso ${aviso1} día(s) y segundo aviso ${aviso2} día(s) antes.`
+            } else {
+                $("#campo-hidden").addClass("d-none")
+            }
+            $("#xCampo").text(txtAviso)
+        }
 
         $(document).ready(function () {
-
-
+            $('#cboServicios').select2({
+                width: '100%'
+            });
+            $('#cboClientes').select2({
+                width: '100%'
+            });
+            $('#cboFrecuencia').select2({
+                width: '100%'
+            });
+            $('#cboMoneda').select2({
+                width: '100%'
+            });
+            $('#cboEstados').select2({
+                width: '100%'
+            });
+            var hoy = new Date();
+            initializeFlatpickr("#kt_datepicker_fecha_fin", null)
+            @if (ViewBag.esEditar > 0) {
+            var info = Model.ObtenerSubscripcion;
+            <text>
+            var informacion = @Html.Raw(JsonConvert.SerializeObject(info));
+            idEditar = @ViewBag.esEditar;
+            var fechaInicio = @ViewBag.esRenovacion == 2 ? informacion.fechaVcto : informacion.fechaInicio;
+            var dataFecha = new Date(fechaInicio)
+            $("#cboClientes").val(informacion.idCliente).trigger("change")
+            initializeFlatpickr("#kt_datepicker_fecha_ini", dataFecha)
+            $("#cboFrecuencia").val(informacion.idFrecuencia).trigger("change")
+            $("#cboServicios").val(informacion.idServicio).trigger("change")
+            $("#cboMoneda").val(informacion.idMoneda).trigger("change")
+            $("#cboEstados").val(informacion.idEstado).trigger("change")
+            $("#txtImporte").val(informacion.importe);
+            $("#txtObservacion").val(informacion.observacion)
+            </text>
+            }
+            else
+            {
+            <text>
+            initializeFlatpickr("#kt_datepicker_fecha_ini", hoy)
+            </text>
+            }
         });
 
 

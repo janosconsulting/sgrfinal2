@@ -3,6 +3,28 @@
 @{
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
+<style>
+    .kpi {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 14px;
+        background: #fff
+    }
+
+        .kpi .label {
+            color: var(--muted);
+            font-size: .85rem
+        }
+
+        .kpi .value {
+            font-size: 1.4rem;
+            font-weight: 800
+        }
+
+        .kpi .delta {
+            font-size: .85rem
+        }
+</style>
 <!--begin::Content wrapper-->
 <div class="d-flex flex-column flex-column-fluid">
     <!--begin::Toolbar-->
@@ -60,6 +82,96 @@
         <!--begin::Content container-->
         <div id="kt_app_content_container" class="app-container container-fluid">
             <!--begin::Products-->
+            <!-- KPIs -->
+            <div class="row g-3 mb-3">
+                <div class="col-6 col-md-3">
+                    <div class="kpi">
+                        <div class="label">Ingresos cobrados (mes)</div>
+                        <div class="value" id="kpiCobrados">S/ <span id="txCobrado"></span></div>
+                        <div class="delta text-success" id="kpiCobradosDelta"><i class="bi bi-arrow-up"></i> vs. mes previo</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="kpi">
+                        <div class="label">Ingresos planificados (mes)</div>
+                        <div class="value" id="kpiPlan">S/ <span id="txActivo"></span></div>
+                        <div class="delta text-muted">Incluye vencidos por cobrar</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="kpi">
+                        <div class="label">Vencidos</div>
+                        <div class="value" id="kpiVencidos">0</div>
+                        <div class="delta text-danger">por cobrar</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="kpi">
+                        <div class="label">Por vencer (≤7 días)</div>
+                        <div class="value" id="kpiPorVencer">0</div>
+                        <div class="delta text-warning">alertas</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row g-3 toolbar align-items-end">
+                        <div class="col-sm-6 col-lg-2">
+                            <div class="row mb-5 gx-1">
+                                <label class="required fs-6 fw-semibold mb-2">
+                                    Servicio:
+                                </label>
+                                <select class="form-select" id="cboServicios">
+                                    <option value="0">Todos</option>
+                                    @foreach (var I in Model.ListarServicio)
+                                    {
+                                        <option value="@I.idServicio">@I.nombre</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-2">
+                            <div class="row mb-5 gx-1">
+                                <label class="required fs-6 fw-semibold mb-2">
+                                    Frecuencia:
+                                </label>
+                                <select class="form-select" id="cboFrecuencia">
+                                    <option value="0">Todos</option>
+                                    @foreach (var I in Model.ListarFrecuencia)
+                                    {
+                                        <option value="@I.idFrecuencia" data-numdias="@I.numDias" data-aviso1="@I.aviso1" data-aviso2="@I.aviso2">
+                                            @I.nombre
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-2">
+                            <div class="row mb-5 gx-1">
+                                <label class="fs-5 fw-semibold mb-2" for="cboEstados">Estado Suscripción:</label>
+                                <select class="form-select" id="cboEstados">
+                                    <option value="0">Todos</option>
+                                    <option value="1">Activo</option>
+                                    <option value="2">Suspendido</option>
+                                    <option value="3">Pagado</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="row mb-5 gx-1">
+                                <label class="form-label">Mes</label>
+                                <input type="month" id="fMes" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-2 d-grid">
+                            <div class="row mb-5 gx-1">
+                                <button id="btnFiltrar" class="btn btn-dark"><i class="bi bi-funnel"></i> Filtrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="card card-flush">
                 <!--begin::Card header-->
                 <div class="card-header align-items-center py-5 gap-2 gap-md-5">
@@ -88,6 +200,12 @@
                     <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                         <!--begin::Add product-->
                         <a href="@Url.Action("Nuevo","Subscripcion")" class="btn btn-primary">Nuevo</a>
+                        <button type="button" class="btn btn-success d-flex align-items-center" id="btnActualizar">
+                            <i class="ki-duotone ki-arrows-circle fs-2 me-1">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i> Actualizar
+                        </button>
                         <!--end::Add product-->
                     </div>
                     <!--end::Card toolbar-->
@@ -99,11 +217,14 @@
                     <table id="kt_datatable_video" class="table align-middle table-row-dashed fs-6 gy-5">
                         <thead>
                             <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                <th>id</th>
-                                <th>Tipo.Doc</th>
-                                <th>N° Identidad</th>
-                                <th>Nombre Cliente</th>
-                                <th>Categoria Cliente</th>
+                                <th>Id</th>
+                                <th>Cliente</th>
+                                <th>Servicio</th>
+                                <th>Frecuencia</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Inicio</th>
+                                <th>Celular</th>
+                                <th>Celular</th>
                                 <th>Celular</th>
                                 <th class="text-end min-w-100px">Acciones</th>
                             </tr>
@@ -122,15 +243,99 @@
     <!--end::Content-->
 </div>
 <!--end::Content wrapper-->
-
+<!-- Modal -->
+<div class="modal fade" id="modalCobrbar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Cobrar</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input id="txtIdSubscripcion" type="hidden" value="0" />
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="row mb-5 gx-1">
+                            <label class="fs-5 fw-semibold mb-2"
+                                   for="fechaCobro">Fecha de Cobro:</label>
+                            <input type="text"
+                                   id="fechaCobro" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row mb-5 gx-1">
+                            <label class="fs-5 fw-semibold mb-2" for="cboCondicionPago">Condicion de Pago:</label>
+                            <select class="form-select" id="cboCondicionPago">
+                                <option value="1">Efectivo</option>
+                                <option value="2">YAPE</option>
+                                <option value="3">Plin</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="Cobrar()">Cobrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts {
     <script src="@Url.Content("~/Scripts/library.js?v=5.0")" type="text/javascript"></script>
     <script>
+        var table;
+        var dt;
+        const now = new Date();
+        $('#fMes').val(`${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`);
+         function Cobrar() {
+              var formData = new FormData();
+
+             formData.append('idSubscripcion', $("#txtIdSubscripcion").val());
+             formData.append('estadoFormulario', 3);
+             formData.append('idCondicionPago', $("#cboCondicionPago").val());
+             formData.append('fechaCobro', $("#fechaCobro").val());
+
+                 $.ajax({
+                     url: "@Url.Action("Guardar", "Subscripcion")",
+                     type: "POST",
+                     data: formData,
+                     processData: false,
+                     contentType: false,
+                     success: function (response) {
+                         let message = "¡Se realizo el Cobro de la Subscripcion!"
+                         Swal.fire({
+                             text: message,
+                             icon: "success",
+                             buttonsStyling: false,
+                             confirmButtonText: "Listo",
+                             customClass: { confirmButton: "btn btn-primary" },
+                         }).then(function () {
+                             dt.ajax.reload();
+                             $("#modalCobrbar").modal("hide")
+                         });
+                     },
+                     error: function (error) {
+                         //console.error("Error al enviar el formulario");
+                         // Mostrar mensaje de error
+                         Swal.fire({
+                             text: "Se produjo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
+                             icon: "error",
+                             buttonsStyling: false,
+                             confirmButtonText: "Ok",
+                             customClass: { confirmButton: "btn btn-primary" },
+                         });
+                     },
+                 });
+        }
+        function AbrirModalCobrar(id) {
+            $("#modalCobrbar").modal("show")
+            $("#txtIdSubscripcion").val(id)
+        }
+        // Public methods
 
         var KTDatatablesServerSide = function () {
 
-            var table;
-            var dt;
 
             var initDatatable = function () {
                 dt = $('#kt_datatable_video').DataTable({
@@ -148,9 +353,26 @@
                         url: '@Url.Action("Listar", "Subscripcion")', // Ruta del método de acción que obtiene los datos
                         type: 'GET',
                         dataType: 'json',
+                        data: function (d) {
+                            var fecha = $("#fMes").val();
+                            var partes = fecha.split('-'); // ['2025', '08']
+
+                            var anio = parseInt(partes[0], 10);  // 2025 (number)
+                            var mes = parseInt(partes[1], 10); 
+
+                            d.idServicio = $("#cboServicios").val();
+                            d.idFrecuencia = $("#cboFrecuencia").val();
+                            d.idEstado = $("#cboEstados").val();
+                            d.anio = anio;
+                            d.mes = mes;
+                        },        
                         dataSrc: function (response) {
+                            if (response.infoExtra) {
+                                $('#txCobrado').text(response.infoExtra.totalImportePagado);
+                                $('#txActivo').text(response.infoActios.totalImportePagado);
+                            }
                             // Manipula los datos si es necesario antes de mostrarlos en el DataTable
-                            return response;
+                            return response.data;
                         }
                     },
                     columns: [
@@ -158,8 +380,26 @@
                         { data: 'cliente', title: "Cliente" },
                         { data: 'servicio', title: "Servicio" },
                         { data: 'frecuencia', title: "Frecuencia" },
-                        { data: 'importe', title: "Importe" },
+                        { data: 'fechaInicio', title: "Fecha Inicio" },
+                        { data: 'fechaVcto', title: "Fecha Vencimiento" },
                         { data: 'moneda', title: "Moneda" },
+                        { data: 'importe', title: "Importe" },
+                        {
+                            data: 'idEstado', title: "Estado", render: function (data, type, row) {
+                                var badge = '';
+                                switch (data) {
+                                    case 1:
+                                        badge = '<span class="badge badge-light-primary">Activo</span>';
+                                        break;
+                                    case 2:
+                                        badge = '<span class="badge badge-light-danger">Suspendido</span>';
+                                        break;
+                                    case 3:
+                                        badge = '<span class="badge badge-light-success">Pagado</span>';
+                                        break;
+                                }
+                                return badge;
+                            } },
                         { data: null },
                     ],
                     // Ordenar la tabla por el ID en orden descendente
@@ -187,17 +427,29 @@
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                             <!--begin::Menu item-->
                             <div class="menu-item px-3">
-                            <a href="@Url.Action("Editar", "Subscripcion")?id=${row.idSubscripcion}" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
-                            Editar
-                            </a>
+                                <a href="@Url.Action("Editar", "Subscripcion")?id=${row.idSubscripcion}" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
+                                Editar
+                                </a>
                             </div>
                             <!--end::Menu item-->
+                            <div class="menu-item px-3">
+                                <a href="#" onclick="AbrirModalCobrar(${row.idSubscripcion})" class="menu-link px-3" data-kt-docs-table-filter="edit_cobrar">
+                                 Cobrar
+                                </a>
+                             </div>
+                             <!--begin::Menu item-->
+                             <div class="menu-item px-3">
+                                 <a href="@Url.Action("Renovacion", "Subscripcion")?id=${row.idSubscripcion}" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
+                                 Renovar
+                                 </a>
+                             </div>
+                             <!--end::Menu item-->
 
                             <!--begin::Menu item-->
                             <div class="menu-item px-3">
-                            <a href="#" class="menu-link px-3" data-kt-docs-table-filter="delete_row">
-                            Eliminar
-                            </a>
+                                <a href="#" class="menu-link px-3" data-kt-docs-table-filter="delete_row">
+                                Eliminar
+                                </a>
                             </div>
                             <!--end::Menu item-->
                             </div>
@@ -215,6 +467,12 @@
 
                     handleDeleteRows();
                     KTMenu.createInstances();
+                });
+                $('#btnActualizar').on('click', function () {
+                    dt.ajax.reload();
+                });
+                $("#btnFiltrar").on('click', function () {
+                    dt.ajax.reload();
                 });
             }
 
@@ -239,12 +497,12 @@
                         const parent = e.target.closest('tr');
 
                         // Get customer name
-                        const customerName = parent.querySelectorAll('td')[3].innerText;
+                        const customerName = parent.querySelectorAll('td')[1].innerText;
                         const id = parent.querySelectorAll('td')[0].innerText;
                         //console.log(id);
                         // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                         Swal.fire({
-                            text: "Esta seguro que desea eliminar al cliente: " + customerName + "?",
+                            text: "Esta seguro que desea eliminar la Subscripcion del cliente : " + customerName + "?",
                             icon: "warning",
                             showCancelButton: true,
                             buttonsStyling: false,
@@ -260,7 +518,7 @@
                                 $.ajax
                                     ({
                                         type: "POST",
-                                        url: "@Url.Action("Eliminar", "Cliente")",
+                                        url: "@Url.Action("Eliminar", "Subscripcion")",
                                         data: {
                                             id: id
                                         },
@@ -296,7 +554,8 @@
                 });
             }
 
-            // Public methods
+
+
             return {
                 init: function () {
                     initDatatable();
@@ -307,10 +566,26 @@
         }();
 
         $(document).ready(function () {
-
+            var hoy = new Date();
             KTUtil.onDOMContentLoaded(function () {
             KTDatatablesServerSide.init();
             });
+            $("#cboCondicionPago").select2({
+                width: '100%'
+            });
+
+            $('#cboServicios').select2({
+                width: '100%'
+            });
+            $('#cboFrecuencia').select2({
+                width: '100%'
+            });
+            $('#cboEstados').select2({
+                width: '100%'
+            });
+
+            
+            initializeFlatpickr("#fechaCobro", hoy)
         });
     </script>
 

@@ -748,7 +748,44 @@ License: For each use you must have a valid license purchased only from above li
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
     @RenderSection("scripts", required: false)
+    <script>
+        function initializeFlatpickr(selector, defaultDate, fechaMinima, fechaMaxima) {
+            $(selector).flatpickr({
+                minDate: fechaMinima ? fechaMinima : null, // Fecha mínima permitida
+                maxDate: fechaMaxima ? fechaMaxima : null, // Fecha máxima permitida
+                dateFormat: 'd/m/Y',
+                defaultDate: defaultDate,
+                locale: spanishLocale,
+                onReady: function (selectedDates, dateStr, instance) {
+                    // Crear el botón "Hoy" con estilo de Metronic
+                    var todayButton = $('<button/>', {
+                        type: 'button',
+                        class: 'btn btn-primary flatpickr-today-button', // Clases de Metronic
+                        text: 'Hoy',
+                        click: function () {
+                            var today = new Date();
+                            instance.setDate(today);
+                            instance.close(); // Opcional: Cierra el calendario después de seleccionar la fecha
+                            $(selector).trigger('change');
+                        }
+                    });
 
+                    // Estilos personalizados
+                    todayButton.css({
+                        'font-size': '16px', // Tamaño de fuente
+                        'padding': '10px 20px', // Espaciado interno
+                        'margin': '5px', // Margen alrededor del botón
+                        'border-radius': '5px', // Bordes redondeados
+                    });
+
+                    // Insertar el botón "Hoy" en el contenedor de flatpickr
+                    $(instance.calendarContainer).append(todayButton);
+                }
+            })
+        }
+
+
+    </script>
     <script>
         "use strict";
         var KTUsersAddUser = (function () {

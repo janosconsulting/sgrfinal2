@@ -18,4 +18,15 @@ namespace Mantenimiento.Negocio.Poco
         public Persona Persona { get; set; }
 
     }
+    public class GestionarSubscripcion
+    {
+        public ResumenDetallSubscripcion resumenDetallSubscripcionCobrados { get; set; }
+        public ResumenDetallSubscripcion resumenDetallSubscripcionActivos { get; set; }
+        public List<sp_ListarSubscripcion> listaSuscripcion1 { get; set; }
+    }
+    public class ResumenDetallSubscripcion
+    {
+        public decimal totalImportePagado {  get; set; }
+        public decimal totalGenerado { get; set; }
+    }
 }
