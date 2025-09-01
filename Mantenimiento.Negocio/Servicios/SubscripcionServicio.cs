@@ -46,6 +46,16 @@ namespace Mantenimiento.Negocio.Servicios
                 return connection.GetAll<Servicio>().Where(t => t.idEstado != 2).ToList();
             }
         }
+        public List<sp_ListarSubscripcionReporte> ListarSubscripcionReporte(int anio)
+        {
+            using (var connection = new SqlConnection(ConnectionConfig.ConnectionString))
+            {
+                var parameters = new DynamicParameters();
+                // Parámetros opcionales
+                parameters.Add("@anio", anio, DbType.Int32);
+                return connection.Query<sp_ListarSubscripcionReporte>("sp_ListarSubscripcionReporte", parameters, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
         public GestionarSubscripcion ListarSubscripcion(int idServicio, int idFrecuencia, int idEstado, int anio, int mes)
         {
             using (var connection = new SqlConnection(ConnectionConfig.ConnectionString))
@@ -201,6 +211,7 @@ namespace Mantenimiento.Negocio.Servicios
                         {
                             sub.idEstado = 3;
                             sub.fechaCobro = obj.fechaCobro;
+                            sub.observacion = obj.observacion;
                             sub.idCondicionPago = obj.idCondicionPago;
 
                             connection.Update(sub, transaction);

@@ -95,6 +95,14 @@ namespace ERP.Web.Controllers
                 infoActios= oLista.resumenDetallSubscripcionActivos
             }, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult ListarReporte(int anio)
+        {
+            List<sp_ListarSubscripcionReporte> oLista = this.servicio.ListarSubscripcionReporte(anio);
+            return Json(new
+            {
+                data = oLista 
+            }, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Guardar(Subscripcion oRegistro)
         {
             Resultado objResultado = new Resultado();

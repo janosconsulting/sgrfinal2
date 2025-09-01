@@ -20,5 +20,6 @@ namespace Mantenimiento.Negocio.Contratos.Servicios
         bool Eliminar(int id);
         ResultadoTransaccion CobrarSuscripcion(Subscripcion obj);
         ResultadoTransaccion RenovarSuscripcion(Subscripcion obj);
+        List<sp_ListarSubscripcionReporte> ListarSubscripcionReporte(int anio);
     }
 }

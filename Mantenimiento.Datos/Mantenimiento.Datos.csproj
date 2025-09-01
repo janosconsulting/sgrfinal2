@@ -142,6 +142,7 @@
     <Compile Include="Entidades\sp_ListarPaises.cs" />
     <Compile Include="Entidades\sp_listarRequerimientosporTrabajador.cs" />
     <Compile Include="Entidades\sp_ListarSubscripcion.cs" />
+    <Compile Include="Entidades\sp_ListarSubscripcionReporte.cs" />
     <Compile Include="Entidades\sp_ObtenerCasosExito.cs" />
     <Compile Include="Entidades\sp_ObtenerDetallesPorRequerimiento.cs" />
     <Compile Include="Entidades\Color.cs" />
