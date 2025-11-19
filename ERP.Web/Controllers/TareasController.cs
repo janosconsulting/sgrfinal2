@@ -56,11 +56,15 @@ namespace ReyDavid.Web.Controllers
                 return RedirectToAction("Index", "Login");
             }
             GestionarTareaPoco oGestionar = new GestionarTareaPoco();
-            oGestionar.ListarSeguimientoTareas = this.tareaServicio.ListarSeguimientoTareas();
-
+            oGestionar.ListarProyectos = proyectoServicio.ListarProyectos();
+            oGestionar.ListarPersonaResponsable = personaServicio.ListarPersonaResponsable();
             return View(oGestionar);
         }
-
+        public JsonResult ListarSeguimientoTareas(int idProyecto,int idEstado, int idResponsable)
+        {
+            List<sp_ListarSeguimientoTareas> oLista = this.tareaServicio.ListarSeguimientoTareas(idProyecto, idEstado, idResponsable);
+            return Json(oLista, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult Listar()
         {
             List<sp_ListarTareas> oLista = this.tareaServicio.ListarTareas();

@@ -120,11 +120,16 @@ namespace Mantenimiento.Negocio.Servicios
             // Pero se implementa para cumplir la interfaz.
         }
 
-        public List<sp_ListarSeguimientoTareas> ListarSeguimientoTareas()
+        public List<sp_ListarSeguimientoTareas> ListarSeguimientoTareas(int idProyecto, int idEstadoDesarrollo, int idResponsable)
         {
             using (var connection = new SqlConnection(ConnectionConfig.ConnectionString))
             {
-                return connection.Query<sp_ListarSeguimientoTareas>("sp_ListarSeguimientoTareas", commandType: CommandType.StoredProcedure).ToList();
+                var paramt = new {
+                    idProyecto = idProyecto,
+                    idEstadoDesarrollo = idEstadoDesarrollo,
+                    idResponsable = idResponsable
+                } ;
+                return connection.Query<sp_ListarSeguimientoTareas>("sp_ListarSeguimientoTareas", paramt, commandType: CommandType.StoredProcedure).ToList();
             }
         }
     }

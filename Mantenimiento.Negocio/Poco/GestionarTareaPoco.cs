@@ -20,5 +20,6 @@ namespace Mantenimiento.Negocio.Poco
         public Persona Persona { get; set; }      
         public Tarea tarea { get; set; }
         public bool TrEditing { get; set; }
+        public List<Persona> ListarPersonaResponsable { get; set; }
     }
 }

@@ -16,5 +16,11 @@ namespace Mantenimiento.Datos.Entidades
         public string fechaFin {  get; set; }
         public string estado {  get; set; }
         public string responsable {  get; set; }
+        public int estadoDesarrollo { get; set; }
+        public int idDetalleRequerimiento { get; set; }
+        public string tipoRequerimiento { get; set; }
+        public int? idResponsable { get; set; }
+        public int idProyecto { get; set; }
+        public int idRequerimiento { get; set; }
     }
 }

@@ -160,6 +160,14 @@ namespace Mantenimiento.Negocio.Servicios
                 return connection.Update(oPersona);
             }
         }
+        public List<Persona> ListarPersonaResponsable()
+        {
+            using (var connection = new SqlConnection(ConnectionConfig.ConnectionString))
+            {
+                var query = "SELECT * FROM persona WHERE  idTipoPersona = 2 and idEstado != 2";
+                return connection.Query<Persona>(query).ToList();
+            }
+        }
         public Persona obtenerPersona(int id)
         {
             using (var connection = new SqlConnection(ConnectionConfig.ConnectionString))

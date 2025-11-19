@@ -17,5 +17,6 @@ namespace Mantenimiento.Negocio.Contratos.Servicios
         bool Actualizar(Persona oPersona);
         bool Eliminar(int id);
         Persona obtenerPersona(int id);
+        List<Persona> ListarPersonaResponsable();
     }
 }
