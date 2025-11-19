@@ -1,0 +1,424 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f7fb;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h2 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .panel-filtros {
+        background: #ffffff;
+        border: 1px solid #dcdfe6;
+        border-radius: 6px;
+        padding: 10px 12px;
+        margin-bottom: 10px;
+    }
+
+        .panel-filtros label {
+            font-size: 13px;
+            color: #555;
+            margin-right: 4px;
+        }
+
+        .panel-filtros input,
+        .panel-filtros select {
+            font-size: 13px;
+            padding: 4px 6px;
+            margin-right: 8px;
+        }
+
+    .btn {
+        font-size: 13px;
+        padding: 5px 10px;
+        border-radius: 4px;
+        border: 1px solid #409eff;
+        background: #409eff;
+        color: #fff;
+        cursor: pointer;
+    }
+
+        .btn:hover {
+            background: #66b1ff;
+        }
+
+    .resumen-global {
+        background: #ffffff;
+        border: 1px solid #dcdfe6;
+        border-radius: 6px;
+        padding: 8px 12px;
+        margin-bottom: 10px;
+        font-size: 13px;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 10px;
+        font-size: 11px;
+        color: #fff;
+    }
+
+    .badge-total {
+        background: #909399;
+    }
+
+    .badge-pendiente {
+        background: #f56c6c;
+    }
+
+    .badge-proceso {
+        background: #e6a23c;
+    }
+
+    .badge-ok {
+        background: #67c23a;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        background: #ffffff;
+        border-radius: 6px;
+        overflow: hidden;
+        font-size: 13px;
+    }
+
+    thead {
+        background: #f2f6fc;
+    }
+
+        thead th {
+            border-bottom: 1px solid #dcdfe6;
+            padding: 6px 8px;
+            text-align: left;
+            color: #606266;
+            white-space: nowrap;
+        }
+
+    tbody td {
+        border-bottom: 1px solid #ebeef5;
+        padding: 5px 8px;
+        color: #606266;
+    }
+
+    tbody tr:nth-child(even) {
+        background: #fafafa;
+    }
+
+    tbody tr:hover {
+        background: #f5f7fa;
+    }
+
+    .fila-grupo {
+        background: #e9f3ff !important;
+        font-weight: bold;
+    }
+
+        .fila-grupo td {
+            border-bottom: 1px solid #c6e2ff;
+        }
+
+    .estado-pill {
+        padding: 2px 6px;
+        border-radius: 10px;
+        font-size: 11px;
+        color: #fff;
+    }
+
+    .estado-pendiente {
+        background: #f56c6c;
+    }
+
+    .estado-proceso {
+        background: #e6a23c;
+    }
+
+    .estado-completada {
+        background: #67c23a;
+    }
+
+    .sin-datos {
+        text-align: center;
+        color: #999;
+        padding: 10px 0;
+    }
+</style>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Actividades agrupadas por proyecto</title>
+    
+</head>
+<body>
+
+    <h2>Actividades agrupadas por proyecto</h2>
+
+    <!-- ================= FILTROS ================= -->
+    <div class="panel-filtros">
+        <label>Buscar:</label>
+        <input type="text" id="filtroTexto" placeholder="Cliente, Req, Actividad..." onkeyup="render()" />
+
+        <label>Proyecto:</label>
+        <select id="filtroProyecto" onchange="render()">
+            <option value="">-- Todos --</option>
+        </select>
+
+        <label>Estado:</label>
+        <select id="filtroEstado" onchange="render()">
+            <option value="">-- Todos --</option>
+            <option>Pendiente</option>
+            <option>En proceso</option>
+            <option>Completada</option>
+        </select>
+
+        <label>Responsable:</label>
+        <select id="filtroResponsable" onchange="render()">
+            <option value="">-- Todos --</option>
+        </select>
+
+        <button class="btn" onclick="actualizar()">🔄 Actualizar</button>
+    </div>
+
+    <!-- =============== TOTALIZADORES GLOBALES =============== -->
+    <div class="resumen-global" id="resumenGlobal">
+        <!-- Se llena desde JS -->
+    </div>
+
+    <!-- ================= TABLA GENERAL ================= -->
+    <table>
+        <thead>
+            <tr>
+                <th>Proyecto</th>
+                <th>Requerimiento</th>
+                <th>Cliente</th>
+                <th>Actividad</th>
+                <th>Responsable</th>
+                <th>Fecha inicio</th>
+                <th>Fecha fin</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody id="tbodyGeneral"></tbody>
+    </table>
+
+
+    <script>
+        // =========================================
+        // DATOS DE EJEMPLO (reemplázalo por tu backend)
+        // =========================================
+        let actividades = [
+            {
+                proyecto: "KEDROPRO - FACTURACION ELECTRONICA",
+                requerimiento: "REQ-0065",
+                cliente: "Convertidora Continental Sac",
+                actividad: "Agregar opción Carreta en guías",
+                inicio: "11/11/2025",
+                fin: "12/11/2025",
+                estado: "En proceso",
+                responsable: "Luis"
+            },
+            {
+                proyecto: "KEDROPRO - FACTURACION ELECTRONICA",
+                requerimiento: "REQ-0064",
+                cliente: "Bendición Por Misericordia Srl",
+                actividad: "Implementar facturación en dólares",
+                inicio: "10/11/2025",
+                fin: "11/11/2025",
+                estado: "Pendiente",
+                responsable: "Merlyn"
+            },
+            {
+                proyecto: "KEDROPRO - FACTURACION ELECTRONICA",
+                requerimiento: "REQ-0062",
+                cliente: "Corporación Villa Luz Sac",
+                actividad: "Cambios varios módulo recibos",
+                inicio: "10/08/2025",
+                fin: "12/08/2025",
+                estado: "Completada",
+                responsable: "Luis"
+            },
+            {
+                proyecto: "SISTEMA CONTROL PROCESOS",
+                requerimiento: "REQ-0061",
+                cliente: "Daro Sac",
+                actividad: "Correcciones módulo inventario",
+                inicio: "10/08/2025",
+                fin: "11/08/2025",
+                estado: "En proceso",
+                responsable: "Rodrigo"
+            },
+            {
+                proyecto: "SISTEMA DE CONTROL DE REQUERIMIENTOS",
+                requerimiento: "REQ-0060",
+                cliente: "Servicios Comerciales Caotec Eirl",
+                actividad: "Modificaciones varias sistema control",
+                inicio: "10/08/2025",
+                fin: "12/08/2025",
+                estado: "Pendiente",
+                responsable: "Joel"
+            }
+        ];
+
+        // =========================================
+        // CARGA INICIAL COMBOS DE FILTROS
+        // =========================================
+        function cargarFiltros() {
+            const ddlProyecto = document.getElementById("filtroProyecto");
+            const ddlResponsable = document.getElementById("filtroResponsable");
+
+            const proyectosUnicos = [...new Set(actividades.map(a => a.proyecto))];
+            const responsablesUnicos = [...new Set(actividades.map(a => a.responsable))];
+
+            proyectosUnicos.forEach(p => {
+                const opt = document.createElement("option");
+                opt.value = p;
+                opt.textContent = p;
+                ddlProyecto.appendChild(opt);
+            });
+
+            responsablesUnicos.forEach(r => {
+                const opt = document.createElement("option");
+                opt.value = r;
+                opt.textContent = r;
+                ddlResponsable.appendChild(opt);
+            });
+        }
+
+        // =========================================
+        // BOTÓN ACTUALIZAR (simulación)
+        // =========================================
+        function actualizar() {
+            alert("Simulación de actualización.\nAquí puedes recargar datos desde tu API o controlador.");
+            render();
+        }
+
+        // =========================================
+        // RENDERIZAR TABLA AGRUPADA POR PROYECTO
+        // =========================================
+        function render() {
+            const tbody = document.getElementById("tbodyGeneral");
+            const resumen = document.getElementById("resumenGlobal");
+            tbody.innerHTML = "";
+
+            const text = document.getElementById("filtroTexto").value.toLowerCase();
+            const filtroProyecto = document.getElementById("filtroProyecto").value;
+            const filtroEstado = document.getElementById("filtroEstado").value;
+            const filtroResp = document.getElementById("filtroResponsable").value;
+
+            // FILTRADO GENERAL
+            let lista = actividades.filter(a =>
+                (!filtroProyecto || a.proyecto === filtroProyecto) &&
+                (!filtroEstado || a.estado === filtroEstado) &&
+                (!filtroResp || a.responsable === filtroResp) &&
+                (
+                    a.actividad.toLowerCase().includes(text) ||
+                    a.cliente.toLowerCase().includes(text) ||
+                    a.requerimiento.toLowerCase().includes(text)
+                )
+            );
+
+            // TOTALIZADORES GLOBALES
+            const total = lista.length;
+            const pend = lista.filter(a => a.estado.toLowerCase() === "pendiente").length;
+            const proc = lista.filter(a => a.estado.toLowerCase() === "en proceso").length;
+            const comp = lista.filter(a => a.estado.toLowerCase() === "completada").length;
+
+            resumen.innerHTML = `
+            <strong>Resumen filtrado:</strong>
+            &nbsp;
+            <span class="badge badge-total">Total: ${total}</span>
+            &nbsp;
+            <span class="badge badge-pendiente">Pendientes: ${pend}</span>
+            &nbsp;
+            <span class="badge badge-proceso">En proceso: ${proc}</span>
+            &nbsp;
+            <span class="badge badge-ok">Completadas: ${comp}</span>
+        `;
+
+            if (lista.length === 0) {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `<td colspan="8" class="sin-datos">No hay actividades para el filtro seleccionado.</td>`;
+                tbody.appendChild(tr);
+                return;
+            }
+
+            // AGRUPAR POR PROYECTO
+            const grupos = {};
+            lista.forEach(a => {
+                if (!grupos[a.proyecto]) grupos[a.proyecto] = [];
+                grupos[a.proyecto].push(a);
+            });
+
+            // PINTAR EN UNA SOLA TABLA
+            for (const proyecto in grupos) {
+                const actividadesProyecto = grupos[proyecto];
+
+                // Totalizadores por proyecto
+                const tTotal = actividadesProyecto.length;
+                const tPend = actividadesProyecto.filter(a => a.estado.toLowerCase() === "pendiente").length;
+                const tProc = actividadesProyecto.filter(a => a.estado.toLowerCase() === "en proceso").length;
+                const tComp = actividadesProyecto.filter(a => a.estado.toLowerCase() === "completada").length;
+
+                // ROW DE AGRUPACIÓN
+                const trGrupo = document.createElement("tr");
+                trGrupo.className = "fila-grupo";
+                trGrupo.innerHTML = `
+                <td colspan="8">
+                    📁 <strong>${proyecto}</strong>
+                    &nbsp;&nbsp;
+                    <span class="badge badge-total">Total: ${tTotal}</span>
+                    &nbsp;
+                    <span class="badge badge-pendiente">Pend: ${tPend}</span>
+                    &nbsp;
+                    <span class="badge badge-proceso">Proc: ${tProc}</span>
+                    &nbsp;
+                    <span class="badge badge-ok">Comp: ${tComp}</span>
+                </td>
+            `;
+                tbody.appendChild(trGrupo);
+
+                // LISTA DE ACTIVIDADES DE ESE PROYECTO
+                actividadesProyecto.forEach(a => {
+                    const tr = document.createElement("tr");
+
+                    let claseEstado = "";
+                    const estLower = a.estado.toLowerCase();
+                    if (estLower === "pendiente") claseEstado = "estado-pendiente";
+                    else if (estLower === "en proceso") claseEstado = "estado-proceso";
+                    else if (estLower === "completada") claseEstado = "estado-completada";
+
+                    tr.innerHTML = `
+                    <td>${a.proyecto}</td>
+                    <td>${a.requerimiento}</td>
+                    <td>${a.cliente}</td>
+                    <td>${a.actividad}</td>
+                    <td>${a.responsable}</td>
+                    <td>${a.inicio}</td>
+                    <td>${a.fin}</td>
+                    <td><span class="estado-pill ${claseEstado}">${a.estado}</span></td>
+                `;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        // =====================
+        // CARGAR TODO AL INICIO
+        // =====================
+        cargarFiltros();
+        render();
+
+    </script>
+
+</body>
+</html>

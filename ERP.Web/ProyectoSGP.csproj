@@ -6485,6 +6485,7 @@
     <Content Include="Views\Home\ProyectoDetalle.cshtml" />
     <Content Include="Views\Subscripcion\Index.cshtml" />
     <Content Include="Views\Subscripcion\Nuevo.cshtml" />
+    <Content Include="Views\Tareas\Seguimiento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ControlCombustible.Utilitario\Mantenimiento.Utilitario.csproj">

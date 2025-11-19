@@ -48,6 +48,17 @@ namespace ReyDavid.Web.Controllers
 
             return View(oGestionar);
         }
+
+        public ActionResult Seguimiento()
+        {
+            if (Session["usuario"] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            return View();
+        }
+
         public JsonResult Listar()
         {
             List<sp_ListarTareas> oLista = this.tareaServicio.ListarTareas();
