@@ -236,6 +236,7 @@
             border-radius: 8px;
             margin-top: 1rem;
         }
+
         body {
             background-attachment: fixed;
             font-family: 'Segoe UI', sans-serif;
@@ -263,7 +264,6 @@
             padding: 2rem;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
             overflow: hidden;
         }
 
@@ -418,21 +418,764 @@
                 background-color: #084298;
             }
 
-            @@media (max-width: 768px) {
-      .plans-container {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
-    </style>
+        @@media (max-width: 768px) {
+            .plans-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
 
+        :root {
+            --brand: #2563eb;
+            --brand-600: #1d4ed8;
+            --ink: #0f172a;
+            --muted: #475569;
+            --bg: #f8fafc;
+            --card: #fff;
+            --line: #e2e8f0;
+            --ok: #16a34a;
+            --warn: #eab308;
+            --danger: #ef4444;
+            --shadow: 0 6px 18px rgba(2,6,23,.08);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto;
+            color: var(--ink);
+            background: var(--bg)
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: auto;
+            padding: 28px
+        }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 800
+        }
+
+        .grid {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: repeat(12,1fr)
+        }
+
+        .col-3 {
+            grid-column: span 3
+        }
+
+        @@media (max-width:1024px) {
+            .col-3 {
+                grid-column: span 6
+            }
+        }
+
+        @@media (max-width:640px) {
+            .col-3 {
+                grid-column: span 12
+            }
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            box-shadow: var(--shadow);
+            transition: transform .18s, box-shadow .18s,border-color .18s
+        }
+
+            .card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 22px rgba(2,6,23,.12)
+            }
+
+        .card-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: space-between
+        }
+
+        .left {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            background: rgba(37,99,235,.08);
+            color: var(--brand);
+            border: 1px solid rgba(37,99,235,.18)
+        }
+
+        .name {
+            font-weight: 800
+        }
+
+        .desc {
+            color: var(--muted);
+            line-height: 1.55
+        }
+
+        .foot {
+            margin-top: auto;
+            display: flex;
+            gap: 10px
+        }
+
+        .btn {
+            appearance: none;
+            border: 1px solid var(--brand);
+            background: var(--brand);
+            color: #fff;
+            font-weight: 700;
+            padding: 10px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: filter .15s,transform .02s
+        }
+
+            .btn:hover {
+                filter: brightness(1.03)
+            }
+
+            .btn:active {
+                transform: translateY(1px)
+            }
+
+        .btn--ghost {
+            background: transparent;
+            color: var(--brand)
+        }
+
+        /* Overlay & Drawer */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15,23,42,.45);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s ease
+        }
+
+            .overlay.show {
+                opacity: 1;
+                pointer-events: auto
+            }
+
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: min(600px,100%);
+            background: var(--card);
+            border-left: 1px solid var(--line);
+            box-shadow: -12px 0 24px rgba(2,6,23,.18);
+            transform: translateX(100%);
+            transition: transform .28s cubic-bezier(.4,0,.2,1);
+            display: flex;
+            flex-direction: column
+        }
+
+            .drawer.show {
+                transform: translateX(0);
+                z-index: 10000 !important
+            }
+
+        .drawer-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: space-between;
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .drawer-title {
+            font-size: 18px;
+            font-weight: 800
+        }
+
+        .drawer-body {
+            display: flex;
+            flex-direction: column;
+            height: 100%
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 6px;
+            padding: 10px 10px 0;
+            border-bottom: 1px solid var(--line);
+            overflow: auto
+        }
+
+        .tab {
+            padding: 10px 12px;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            font-weight: 700;
+            color: #334155;
+            white-space: nowrap
+        }
+
+            .tab.active {
+                background: #eef2ff;
+                color: #1e3a8a
+            }
+
+        .panel {
+            display: none;
+            padding: 14px 18px;
+            overflow: auto
+        }
+
+            .panel.active {
+                display: block
+            }
+
+        /* Common components */
+        .chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 6px 0 10px
+        }
+
+        .chip {
+            display: inline-flex;
+            gap: 6px;
+            align-items: center;
+            border: 1px solid var(--line);
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            background: #f1f5f9
+        }
+
+        .kpis {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 10px;
+            margin: 8px 0
+        }
+
+        .kpi {
+            background: #f8fafc;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 10px
+        }
+
+            .kpi .n {
+                font-size: 20px;
+                font-weight: 800
+            }
+
+        .list {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+            .list th, .list td {
+                padding: 8px 10px;
+                border-bottom: 1px solid var(--line);
+                text-align: left;
+                font-size: 14px
+            }
+
+        .status {
+            font-weight: 700;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            display: inline-block
+        }
+
+        .s-open {
+            background: #fef9c3;
+            color: #854d0e
+        }
+
+        .s-sent {
+            background: #dbeafe;
+            color: #1e40af
+        }
+
+        .s-partial {
+            background: #fce7f3;
+            color: #9d174d
+        }
+
+        .s-closed {
+            background: #dcfce7;
+            color: #14532d
+        }
+
+        .alerts {
+            display: grid;
+            gap: 8px
+        }
+
+        .alert {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            border: 1px solid var(--line);
+            border-left: 4px solid var(--danger);
+            border-radius: 10px;
+            background: #fff1f2;
+            padding: 10px
+        }
+
+        .providers {
+            display: grid;
+            gap: 8px
+        }
+
+        .prov {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 10px
+        }
+
+        .badge {
+            font-size: 12px;
+            background: #e2e8f0;
+            border-radius: 999px;
+            padding: 4px 8px
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px
+        }
+
+            .actions .btn {
+                border-radius: 10px;
+                padding: 8px 12px
+            }
+
+        .close {
+            background: transparent;
+            border: 0;
+            font-size: 22px;
+            cursor: pointer;
+            line-height: 1
+        }
+
+        /* Videos */
+        .player {
+            display: none;
+            aspect-ratio: 16/9;
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            margin-bottom: 12px
+        }
+
+            .player.show {
+                display: block
+            }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px
+        }
+
+        @@media (max-width:520px) {
+            .video-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .vcard {
+            display: flex;
+            gap: 10px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff
+        }
+
+        .vthumb {
+            width: 120px;
+            height: 72px;
+            object-fit: cover;
+            background: #cbd5e1
+        }
+
+        .vmeta {
+            padding: 8px 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px
+        }
+
+        .vtitle {
+            font-size: 14px;
+            font-weight: 700
+        }
+
+        .vdesc {
+            font-size: 12px;
+            color: #475569;
+            line-height: 1.4
+        }
+
+        .vbtn {
+            align-self: flex-start
+        }
+
+        .section h4 {
+            margin: 0 0 8px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            color: #334155;
+        }
+
+        .section {
+            margin: 14px 0;
+        }
+
+        /* Características numeradas */
+        .featuresN {
+            display: grid;
+            gap: 18px
+        }
+
+        .featN {
+            display: grid;
+            grid-template-columns: 32px 36px 1fr;
+            gap: 12px;
+            align-items: start
+        }
+
+        .num {
+            color: var(--accent);
+            font-weight: 700;
+            line-height: 1;
+            margin-top: 6px
+        }
+
+        .ficon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid #fecaca;
+            background: #ffe4e6;
+            display: grid;
+            place-items: center;
+            color: var(--accent);
+            font-size: 18px
+        }
+
+        .ftitle {
+            font-size: 18px;
+            font-weight: 800;
+            margin: 0
+        }
+
+        .fdesc {
+            margin: .25rem 0 0;
+            color: var(--muted);
+            line-height: 1.55
+        }
+
+        @@media(max-width:520px) {
+            .featN {
+                grid-template-columns: 24px 32px 1fr
+            }
+
+            .ftitle {
+                font-size: 16px
+            }
+        }
+
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            color: var(--azul)
+        }
+
+            .brand img {
+                height: 34px
+            }
+
+        /* HERO layout */
+        .hero {
+            max-width: 1200px;
+            margin: 24px auto;
+            padding: 0 16px;
+            position: relative;
+        }
+            /* decor suave */
+            .hero::before {
+                content: "";
+                position: absolute;
+                inset: -80px -40px auto auto;
+                z-index: -1;
+                width: 720px;
+                height: 720px;
+                border-radius: 50%;
+                background: radial-gradient(closest-side, #e8f0ff, transparent 66%);
+                filter: blur(6px);
+            }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 28px;
+            align-items: center;
+        }
+
+        /* Columna izquierda */
+        .left h1 {
+            font-size: clamp(30px, 5vw, 56px);
+            line-height: 1.05;
+            margin: 0 0 8px;
+        }
+
+            .left h1 .accent {
+                color: #0b62ff
+            }
+
+        .left p {
+            color: var(--muted);
+            margin: 4px 0 18px;
+            max-width: 56ch
+        }
+
+        .hero-media {
+            margin-top: 8px;
+            position: relative;
+        }
+
+            .hero-media img {
+                width: 100%;
+                height: auto;
+                display: block;
+                border-radius: 18px;
+                box-shadow: var(--shadow);
+                background: #fff;
+            }
+
+        /* Columna derecha: formulario tarjeta */
+        .form-card {
+            background: var(--card);
+            border: 1px solid var(--borda);
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+        }
+
+            .form-card h3 {
+                margin: 0 0 6px;
+                font-size: clamp(20px,2.2vw,28px);
+            }
+
+        .form-sub {
+            color: var(--muted);
+            margin: 0 0 16px;
+            font-size: 14px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .field {
+            position: relative;
+        }
+
+            .field i {
+                position: absolute;
+                left: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #8a94a7;
+            }
+
+        input, textarea, select {
+            width: 100%;
+            border: 1px solid #cfd6e6;
+            background: #fff;
+            color: var(--ink);
+            border-radius: 12px;
+            padding: 12px 12px 12px 36px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        textarea {
+            padding-left: 12px;
+        }
+
+            input:focus, textarea:focus, select:focus {
+                border-color: var(--azul2);
+                box-shadow: 0 0 0 4px rgba(37,99,235,.12);
+            }
+
+        .trust {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: #0f4b8a;
+            background: #eaf3ff;
+            border: 1px solid #d7e7ff;
+            border-radius: 12px;
+            padding: 10px 12px;
+        }
+
+            .trust i {
+                color: #22c55e;
+            }
+
+        /* Responsive */
+        @@media (max-width: 992px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-card {
+                order: -1;
+            }
+        }
+
+        :root {
+            --azul: #1e40af; /* titulo */
+            --azul2: #2563eb; /* CTA */
+            --naranja: #ff6a00; /* acento */
+            --ink: #0f172a; /* texto principal */
+            --muted: #475569; /* texto suave */
+            --card: #f5f7ff; /* fondo tarjeta */
+            --borda: #e6e9f2;
+            --radius: 16px;
+            --shadow: 0 18px 60px rgba(2,6,23,.12);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: var(--ink);
+            background: #ffffff;
+        }
+
+        input:focus{
+            color:#000 !important;
+        }
+    </style>
+   
     <!-- soluciones Start -->
     <section class="service-section fix section-padding">
         <div class="container">
 
             <div class="service-wrapper mb-0">
-                <div class="container my-5">
-                    <h1 class="text-center mb-4">Sistema de Facturación Electrónica</h1>
+                <div class="container ">
+                    <h1 class="text-center mb-4">SISTEMA DE FACTURACIÓN ELECTRÓNICA</h1>
+                    <!-- HERO -->
+                    <section class="hero">
+                        <div class="grid">
+
+                            <!-- Izquierda: título + imagen -->
+                            <div class="left">
+
+                                <div class="hero-media">
+                                    <!-- Usa la imagen que generamos (fondo blanco) -->
+                                    <img src="@Url.Content("~/Content/banner5.png")" alt="Sistema de Facturación Electrónica POS — CODETUS">
+                                </div>
+                            </div>
+
+                            <!-- Derecha: formulario -->
+                            <aside class="form-card">
+                                <h3>Solicita tu demostración <b>GRATIS</b></h3>
+                                <p class="form-sub">Contáctanos y agenda una demo personalizada de nuestro POS integrado con SUNAT.</p>
+
+                                <form>
+                                    <div class="row">
+                                        <div class="field">
+                                            <i class="fa fa-user" style="margin-left:10px;"></i>
+                                            <input type="text" placeholder="Nombre" required>
+                                        </div>
+                                        <div class="field">
+                                            <i class="fa fa-envelope"  style="margin-left: 10px;"></i>
+                                            <input type="email" placeholder="Correo electrónico" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-top:12px;">
+                                        <div class="field">
+                                            <i class="fa fa-id-card"  style="margin-left: 10px;"></i>
+                                            <input type="text" placeholder="RUC">
+                                        </div>
+                                        <div class="field">
+                                            <i class="fa fa-phone"  style="margin-left: 10px;"> </i>
+                                            <input type="text" placeholder="Teléfono">
+                                        </div>
+                                    </div>
+
+                                    <div class="field" style="margin-top:12px;">
+                                        <textarea rows="4" placeholder="Cuéntanos el rubro de tu empresa y cuántos comprobantes emites al mes."></textarea>
+                                    </div>
+
+                                    <button type="submit" class="btn">
+                                        <i class="fa fa-paper-plane"></i> Solicitar demo
+                                    </button>
+
+                                </form>
+                            </aside>
+
+                        </div>
+                    </section>
 
                     <!-- RESUMEN GENERAL -->
                     <div>
@@ -484,171 +1227,25 @@
                             Nuestro sistema está compuesto por módulos clave que se adaptan a las necesidades de todo tipo de empresa.
                             Conoce las funcionalidades que te ayudarán a optimizar tu operación diaria.
                         </p>
-                        <div class="modulos-grid">
-
-                            <div class="modulo-card">
-                                <div class="modulo-icon">🛡️</div>
-                                <div class="modulo-title">Seguridad</div>
-                                <div class="modulo-desc">
-                                    Gestión de usuarios, control de accesos por roles, historial de sesiones y respaldo seguro de datos.
-                                </div>
-                            </div>
-
-                            <div class="modulo-card">
-                                <div class="modulo-icon">🛒</div>
-                                <div class="modulo-title">Compras</div>
-                                <div class="modulo-desc">
-                                    Registro de órdenes, validación de productos y actualización de stock.
-                                    <ul class="modulo-list">
-                                        <li>✔ Registro de proveedores</li>
-                                        <li>✔ Órdenes de compra</li>
-                                        <li>✔ Comparación de cotizaciones</li>
-                                        <li>✔ Historial por proveedor</li>
-                                    </ul>
-                                    <button class="modulo-button">Ver Más</button>
-                                </div>
-                            </div>
-
-                            <div class="modulo-card">
-                                <div class="modulo-icon">💼</div>
-                                <div class="modulo-title">Tesorería</div>
-                                <div class="modulo-desc">
-                                    Control de ingresos, egresos, caja diaria y conciliación bancaria.
-                                </div>
-                            </div>
-
-                            <div class="modulo-card">
-                                <div class="modulo-icon">🧾</div>
-                                <div class="modulo-title">Facturación Electrónica</div>
-                                <div class="modulo-desc">
-                                    Emisión de facturas, boletas y notas, validadas automáticamente en SUNAT. PDF y CDR incluidos.
-                                </div>
-                            </div>
-
-                            <div class="modulo-card">
-                                <div class="modulo-icon">💲</div>
-                                <div class="modulo-title">Gastos</div>
-                                <div class="modulo-desc">
-                                    Registro de gastos por proveedor, centro de costo y categoría. Integrado con compras y tesorería.
-                                </div>
-                            </div>
-
-                            <div class="modulo-card">
-                                <div class="modulo-icon">🧮</div>
-                                <div class="modulo-title">Ventas</div>
-                                <div class="modulo-desc">
-                                    Punto de venta (POS), emisión rápida de comprobantes, control de stock y reportes de ingresos.
-                                </div>
-                            </div>
-
-                            <div class="modulo-card">
-                                <span class="modulo-tag">🆕 Nuevo</span>
-                                <div class="modulo-icon">📦</div>
-                                <div class="modulo-title">Inventario</div>
-                                <div class="modulo-desc">
-                                    Control de stock, lotes, ubicaciones, movimientos de almacén y alertas de reposición.
-                                </div>
-                            </div>
-
-                            <div class="modulo-card">
-                                <div class="modulo-icon">👥</div>
-                                <div class="modulo-title">Clientes y CRM</div>
-                                <div class="modulo-desc">
-                                    Registro de clientes, seguimiento de interacciones y historial de ventas.
-                                </div>
-                            </div>
-
-                            <div class="modulo-card">
-                                <div class="modulo-icon">📊</div>
-                                <div class="modulo-title">Reportes</div>
-                                <div class="modulo-desc">
-                                    Generación de reportes financieros, operativos y exportables en Excel, PDF y paneles gráficos.
-                                </div>
-                            </div>
-
+                        <div class=" modulos-grid" id="cards">
+                            <!-- Las tarjetas se renderizan desde JS para mantener consistencia -->
                         </div>
-                    </div>
+                        <!-- Overlay + Drawer -->
+                        <div class="overlay" id="overlay" aria-hidden="true"></div>
+                        <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+                            <div class="drawer-header">
+                                <div class="drawer-title" id="drawerTitle">Detalle</div>
+                                <div><button class="close" id="btnClose" aria-label="Cerrar">✕</button></div>
+                            </div>
+                            <div class="drawer-body">
+                                <div class="tabs" role="tablist" id="tabs"></div>
+                                <section class="panel active" id="panel-info"></section>
 
-                  
-                    <!-- Modal Compras -->
-                    <div id="modalCompras" class="modal">
-                        <div class="modal-content modal-lg">
-                            <span class="close" onclick="cerrarModal('modalFacturacion')">&times;</span>
-                            <h3>Módulo de Facturación Electrónica</h3>
-                            <p>
-                                Este módulo permite emitir comprobantes electrónicos válidos ante SUNAT, facilitando el cumplimiento tributario y la automatización del proceso de ventas.
-                            </p>
-
-                            <h4>🧾 Comprobantes</h4>
-                            <ul>
-                                <li>Emisión de facturas, boletas, notas de crédito y débito</li>
-                                <li>Generación automática de QR y código hash</li>
-                                <li>Formato digital: XML, PDF y CDR</li>
-                            </ul>
-
-                            <h4>📤 Envío a SUNAT</h4>
-                            <ul>
-                                <li>Integración directa con SUNAT a través de API</li>
-                                <li>Envío automático al momento de guardar</li>
-                                <li>Validación del estado de los comprobantes (Aceptado, Observado, Rechazado)</li>
-                            </ul>
-
-                            <h4>📈 Reportes y Consultas</h4>
-                            <ul>
-                                <li>Listado por fechas, cliente, tipo de comprobante</li>
-                                <li>Resumen de ventas diarias y mensuales</li>
-                                <li>Exportación a Excel y PDF</li>
-                            </ul>
-
-                            <h4>👥 Clientes y Series</h4>
-                            <ul>
-                                <li>Registro y búsqueda rápida de clientes</li>
-                                <li>Asignación de series por tipo de documento</li>
-                                <li>Control de correlativos automáticos</li>
-                            </ul>
-
-                            <h4>🎥 Video Demo</h4>
-                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" height="300" allowfullscreen></iframe>
-                        </div>
-
+                                <section class="panel" id="panel-videos"></section>
+                            </div>
+                        </aside>
 
                     </div>
-
-                    <!-- Modal Facturación -->
-                    <div id="modalFacturacion" class="modal">
-                        <div class="modal-content">
-                            <span class="close" onclick="cerrarModal('modalFacturacion')">&times;</span>
-                            <h3>Demo del Módulo de Facturación</h3>
-                            <p>Automatiza tu facturación electrónica cumpliendo con SUNAT.</p>
-                            <ul>
-                                <li>Generación de comprobantes con QR</li>
-                                <li>Conexión con SUNAT vía API</li>
-                                <li>Descarga de PDF y XML</li>
-                                <li>Reportes por fecha y cliente</li>
-                            </ul>
-                            <video controls height="300">
-                                <source src="demo-facturacion.mp4" type="video/mp4">
-                                Tu navegador no soporta video.
-                            </video>
-                        </div>
-                    </div>
-
-                    <script>
-                        function abrirModal(id) {
-                            document.getElementById(id).style.display = 'flex';
-                        }
-
-                        function cerrarModal(id) {
-                            document.getElementById(id).style.display = 'none';
-                        }
-
-                        // Cerrar con tecla ESC
-                        window.addEventListener('keydown', function (e) {
-                            if (e.key === 'Escape') {
-                                document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-                            }
-                        });
-                    </script>
 
                     <!-- EJEMPLO RESTAURANTES -->
                     <div id="restaurantes">
@@ -983,6 +1580,518 @@
             </div>
         </div>
     </section>
- 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script>
+        /* ======== DATA: Contenido por módulo ========= */
+        const modules = [
+            {
+                key: 'seguridad', icon: '🛡️', name: 'Seguridad',
+                desc: 'Gestión de usuarios, roles y control de accesos por roles, trabajadores, sucursales, puntos de atención y series',
+                info: {
+                    featuresN: [
+                        {
+                            icon: '👤',
+                            title: 'Administración de usuarios',
+                            desc: 'Crea, edita y desactiva usuarios; restablece contraseñas y define datos de contacto.'
+                        },
+                        {
+                            icon: '🧩',
+                            title: 'Roles y perfiles',
+                            desc: 'Configura roles reutilizables (perfil cajero, supervisor, admin) para asignarlos rápidamente.'
+                        },
+                        {
+                            icon: '🔑',
+                            title: 'Permisos granulares',
+                            desc: 'Control por módulo y acción (ver, crear, editar, aprobar, anular) e incluso por campos sensibles como costos.'
+                        },
+                        {
+                            icon: '🏢',
+                            title: 'Sucursales',
+                            desc: 'Restringe el acceso por sede/organización y separa la visibilidad de información entre sucursales.'
+                        },
+                        {
+                            icon: '📍',
+                            title: 'Puntos de atención',
+                            desc: 'Delimita permisos por punto de venta/caja, asigna responsables y turnos.'
+                        },
+                        {
+                            icon: '🔢',
+                            title: 'Control de series',
+                            desc: 'Gestiona series y correlativos por documento, sede y punto de atención, evitando duplicados.'
+                        }
+                    ],
+                    text: 'Administra Usuarios, roles, permisos, sucursales, puntos de atención y control de series.',
+                    kpis: [{ n: '48', l: 'Roles definidos' }, { n: '1,246', l: 'Usuarios activos' }, { n: '0', l: 'Incidentes críticos' }],
+                    chart: { labels: ['Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'], data: [2, 3, 1, 4, 2, 1], label: 'Incidencias' }
+                },
+
+                videos: [
+                    ['Habilitar 2FA', 'Cómo activar doble factor de autenticación', 'https://www.youtube.com/embed/dQw4w9WgXcQ']
+                ]
+            },
+            {
+                key: 'compras', icon: '🛒', name: 'Compras',
+                desc: 'Registro de Proveedores, Compras a Crédito y al Contado',
+                info: {
+                    featuresN: [
+                        { icon: '🧾', title: 'Registra tus proveedores', desc: 'Podrás registrar a tus proveedores fácilmente, actualizar sus datos o exportarlos a Excel.' },
+                        { icon: '🧾', title: 'Registra tus compras', desc: 'Ingresa mercadería a tus almacenes y controla el costo promedio por producto.' },
+                        { icon: '🧮', title: 'Estado de pago de los comprobantes', desc: 'Visualiza pagados, pendientes, parciales o anulados.' },
+                        { icon: '📅', title: 'Gestión de cuentas por cobrar', desc: 'Calendario mensual de vencimientos y seguimiento.' },
+                        { icon: '💳', title: 'Registro de pagos', desc: 'Registra transferencias, yape/plin, efectivo, VISA, banco, etc.' }
+                    ],
+                    features: [
+                        'Mantenimiento de Proveedores',
+                        'Registro de Compras a Crédito y Contado',
+                        'Notas de Crédito para Compras'
+                    ],
+                    chips: ['Integrado con Inventario', 'Integrado con Tesorería', 'Aprobaciones por rol'],
+                    text: 'Gestiona el Proceso de Compra desde el registro de proveedores, ingreso de facturas, control de pagos a crédito',
+                    kpis: [{ n: 'S/ 128,450', l: 'Monto del mes' }, { n: '23', l: 'OC abiertas' }, { n: '7.8%', l: 'Ahorro por negociación' }],
+                    chart: { labels: ['Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'], data: [68, 74, 59, 92, 81, 128], label: 'Monto (S/ miles)' }
+                },
+
+                videos: [
+                    ['Flujo: Solicitud ➜ OC ➜ Recepción', 'Recorrido completo del proceso de compras.', 'https://www.youtube.com/embed/ysz5S6PUM-U'],
+                    ['Comparación de cotizaciones', 'Cómo cargar y comparar cotizaciones.', 'https://www.youtube.com/embed/jNQXAC9IVRw']
+                ]
+            },
+            {
+                key: 'tesoreria', icon: '💼', name: 'Tesorería',
+                desc: 'Control de ingresos, egresos, caja diaria y conciliación bancaria.',
+                info: {
+                    featuresN: [
+                        {
+                            icon: '💵',
+                            title: 'Registro de caja diaria',
+                            desc: 'Controla ingresos y egresos del día por punto de atención y turno, con saldos visibles en tiempo real.'
+                        },
+                        {
+                            icon: '🪙',
+                            title: 'Caja chica',
+                            desc: 'Maneja tope, reposición y rendiciones con adjuntos (PDF/imagen) y trazabilidad por responsable.'
+                        },
+                        {
+                            icon: '🏦',
+                            title: 'Cuentas bancarias',
+                            desc: 'Registra bancos, cuentas/CCI y saldos; centraliza movimientos asociados a cada cuenta.'
+                        },
+                        {
+                            icon: '🔓',
+                            title: 'Apertura de caja',
+                            desc: 'Define saldo inicial por usuario y punto de atención; valida faltantes o sobrantes previos.'
+                        },
+                        {
+                            icon: '🔒',
+                            title: 'Cierre de caja',
+                            desc: 'Arqueo automático, cálculo de diferencias, acta de cierre y bloqueo de edición posterior.'
+                        },
+                        {
+                            icon: '📤',
+                            title: 'Pago de comprobantes (CxP)',
+                            desc: 'Liquida facturas de proveedores con pagos totales o parciales, aplicación de notas de crédito y referencias.'
+                        },
+                        {
+                            icon: '📥',
+                            title: 'Cobro de comprobantes (CxC)',
+                            desc: 'Registra cobros por factura/boleta, anticipos y abonos parciales con conciliación al documento.'
+                        },
+                        {
+                            icon: '🧾',
+                            title: 'Emisión de recibos de ingreso',
+                            desc: 'Genera recibos numerados por serie, imprime/descarga PDF y vincula al comprobante cobrado.'
+                        },
+                        {
+                            icon: '🧾',
+                            title: 'Emisión de recibos de egreso',
+                            desc: 'Emite recibos de egreso para salidas de caja, con motivo, beneficiario y soporte adjunto.'
+                        },
+                        {
+                            icon: '💳',
+                            title: 'Medios de pago',
+                            desc: 'Efectivo, tarjeta, transferencia y Yape/Plin; registra referencia, banco y comisiones.'
+                        }
+                    ],
+
+                    chips: ['Integración bancaria', 'Conciliación automática', 'Múltiples cajas'],
+                    text: 'Registra movimientos, programa pagos y concilia extractos bancarios con comprobantes.',
+                    kpis: [{ n: 'S/ 82,900', l: 'Ingresos del mes' }, { n: 'S/ 61,450', l: 'Egresos del mes' }, { n: 'S/ 21,450', l: 'Flujo neto' }],
+                    chart: { labels: ['Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'], data: [60, 72, 65, 58, 75, 83], label: 'Ingresos (S/ miles)' }
+                },
+
+                videos: [['Conciliar extractos', 'Proceso de conciliación bancaria.', 'https://www.youtube.com/embed/tAGnKpE4NCI']]
+            },
+            {
+                key: 'facturacion', icon: '🧾', name: 'Facturación Electrónica',
+                desc: 'Emisión de facturas, boletas y notas validadas automáticamente en SUNAT. PDF y CDR incluidos.',
+                info: {
+                    featuresN: [
+                        {
+                            icon: '🧾',
+                            title: 'Emisión de facturas y boletas',
+                            desc: 'Genera facturas y boletas electrónicas con series por sucursal, ítems con IGV/ISC y descuentos.'
+                        },
+                        {
+                            icon: '📝',
+                            title: 'Notas de crédito',
+                            desc: 'Emite notas de crédito por devolución, anulación, descuento o bonificación y referencia el comprobante original.'
+                        },
+                        {
+                            icon: '🧮',
+                            title: 'Notas de débito',
+                            desc: 'Registra cargos adicionales (intereses, diferencias de precio, penalidades) sobre un comprobante previo.'
+                        },
+                        {
+                            icon: '📦',
+                            title: 'Guía de remisión – Remitente',
+                            desc: 'Crea guías desde ventas/almacén con origen, destino, motivo de traslado, transporte y detalle de bienes.'
+                        },
+                        {
+                            icon: '🚚',
+                            title: 'Guía de remisión – Transportista',
+                            desc: 'Emite guías como transportista con datos del remitente/destinatario, vehículo, conductor y placas.'
+                        },
+                        {
+                            icon: '🔎',
+                            title: 'Consulta SUNAT/Reniec',
+                            desc: 'Búsqueda de RUC en SUNAT y DNI en RENIEC para completar razón social, dirección y estado automáticamente.'
+                        },
+                        {
+                            icon: '✅',
+                            title: 'Validación y CDR',
+                            desc: 'Envía a SUNAT, recibe CDR (aceptado/observado/rechazado) y muestra el estado en tiempo real.'
+                        },
+                        {
+                            icon: '📄',
+                            title: 'PDF y envío al cliente',
+                            desc: 'Genera PDF con tu plantilla y logo; envía por correo/WhatsApp y comparte enlace de descarga.'
+                        },
+
+                        {
+                            icon: '🧬',
+                            title: 'Estándar UBL 2.1',
+                            desc: 'Construcción de XML UBL 2.1 con firma digital; soporte de catálogos SUNAT vigentes.'
+                        },
+                        {
+                            icon: '🔢',
+                            title: 'Series y numeración',
+                            desc: 'Control de series por documento, sede y punto de emisión; evita duplicados y permite contingencia.'
+                        },
+                        {
+                            icon: '📊',
+                            title: 'Reportes y auditoría',
+                            desc: 'Listado de comprobantes con filtros, exportación Excel/PDF y bitácora de envíos y reintentos.'
+                        }
+                    ],
+                    chips: ['UBL 2.1', 'Validación SUNAT', 'CDR automático'],
+                    text: 'Emisión de facturas, boletas y notas validadas automáticamente en SUNAT. PDF y CDR incluidos.',
+                    kpis: [{ n: '1,124', l: 'Comprobantes/mes' }, { n: '98.6%', l: 'Aceptación SUNAT' }, { n: '<1 min', l: 'Tiempo de emisión' }],
+                    chart: { labels: ['Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'], data: [900, 980, 1040, 1100, 1150, 1124], label: '# Comprobantes' }
+                },
+
+                videos: [['Emisión de factura', 'Paso a paso de emisión', 'https://www.youtube.com/embed/2vjPBrBU-TM']]
+            },
+            {
+                key: 'gastos', icon: '💲', name: 'Gastos',
+                desc: 'Registro de gastos por proveedor, centro de costo y categoría. Integrado con compras y tesorería.',
+                info: {
+                    featuresN: [
+                        {
+                            icon: '🏷️',
+                            title: 'Tipos y categorías de gasto',
+                            desc: 'Define tipos y subcategorías (servicios, suministros, viáticos), con códigos y reglas contables.'
+                        },
+                        {
+                            icon: '🧾',
+                            title: 'Registro de gastos',
+                            desc: 'Carga gastos con comprobante (factura/boleta/recibo), fecha, proveedor, moneda e impuestos.'
+                        },
+                        {
+                            icon: '🧑‍💼',
+                            title: 'Proveedores',
+                            desc: 'Alta y edición de proveedores con consulta a SUNAT/RUC; condiciones de pago y método preferido.'
+                        },
+                        {
+                            icon: '📎',
+                            title: 'Adjuntos y evidencias',
+                            desc: 'Anexa PDF/foto del comprobante, contratos y órdenes de compra; vista previa y descarga.'
+                        },
+
+
+                        {
+                            icon: '📆',
+                            title: 'Vencimientos y calendario',
+                            desc: 'Fechas de pago, recordatorios y vista mensual de compromisos por proveedor/categoría.'
+                        },
+                        {
+                            icon: '🏦',
+                            title: 'Integración con Tesorería',
+                            desc: 'Genera cuentas por pagar y concilia pagos (transferencia, tarjeta, Yape/Plin, efectivo).'
+                        },
+
+                        {
+                            icon: '📤',
+                            title: 'Exportaciones y reportes',
+                            desc: 'Reportes por proveedor/categoría/centro de costo; exporta a Excel/PDF con filtros avanzados.'
+                        }
+                    ],
+                    chips: ['Centro de costo', 'Aprobaciones', 'Adjuntos'],
+                    text: 'Registro de gastos por proveedor, centro de costo y categoría. Integrado con compras y tesorería.',
+                    kpis: [{ n: 'S/ 43,210', l: 'Gasto del mes' }, { n: '12', l: 'Pendientes de aprobar' }, { n: 'S/ 5,430', l: 'Ahorrado (presupuesto)' }],
+                    chart: { labels: ['Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'], data: [30, 35, 28, 40, 39, 43], label: 'Gastos (S/ miles)' }
+                },
+
+                videos: [['Registrar gasto', 'Carga de comprobantes y categorización', 'https://www.youtube.com/embed/LsoLEjrDogU']]
+            },
+            {
+                key: 'ventas', icon: '🧮', name: 'Ventas',
+                desc: 'Punto de venta (POS), emisión rápida de comprobantes, control de stock y reportes de ingresos.',
+                info: {
+                    featuresN: [
+                        {
+                            icon: '🧾',
+                            title: 'Registro de ventas (Factura/Boleta/Nota de venta)',
+                            desc: 'Emite ventas con series por punto de atención, múltiples ítems, impuestos y descuentos por línea.'
+                        },
+                        {
+                            icon: '🔄',
+                            title: 'Notas de crédito y débito',
+                            desc: 'Gestiona devoluciones, anulaciones y cargos adicionales con referencia al documento original.'
+                        },
+                        {
+                            icon: '📝',
+                            title: 'Cotizaciones',
+                            desc: 'Crea, duplica y envía cotizaciones por email/WhatsApp; fecha de vigencia y seguimiento de estado.'
+                        },
+                        {
+                            icon: '📦',
+                            title: 'Pedidos',
+                            desc: 'Convierte cotizaciones a pedidos; define fechas de entrega, pagos a cuenta y generación de comprobantes a partir de un Pedido'
+                        },
+
+                        {
+                            icon: '💳',
+                            title: 'Medios de pago',
+                            desc: 'Efectivo, tarjeta, transferencia, Yape/Plin; soporta pagos mixtos y notas de crédito como medio.'
+                        },
+                        {
+                            icon: '🧮',
+                            title: 'Listas de precios y descuentos',
+                            desc: 'Control de Precios al Contado, Mayor y Crédito'
+                        },
+                        {
+                            icon: '👤',
+                            title: 'Clientes y crédito',
+                            desc: 'Ficha de cliente,  días de pago, dirección de entrega y historial de compras.'
+                        },
+                        {
+                            icon: '🏷️',
+                            title: 'Productos y variantes',
+                            desc: 'SKU, códigos de barras, unidades de medida,  precios por unidad/contenido.'
+                        },
+                        {
+                            icon: '📊',
+                            title: 'POS y caja',
+                            desc: 'Venta rápida con lector de códigos, apertura/cierre de caja, arqueo y roles de cajero/supervisor.'
+                        },
+                        {
+                            icon: '🔗',
+                            title: 'Integración con Inventario y Facturación',
+                            desc: 'Descarga stock en la venta y genera comprobante electrónico (si aplica) con envío de PDF/CDR.'
+                        },
+
+                        {
+                            icon: '📈',
+                            title: 'Reportes y dashboard',
+                            desc: 'Ventas por día/vendedor, ticket promedio, top productos y márgenes; exportación a Excel/PDF.'
+                        },
+                        {
+                            icon: '🧾',
+                            title: 'Notas de venta',
+                            desc: 'Genera documentos no fiscales (nota de venta) con posterior conversión a factura/boleta.'
+                        },
+                        {
+                            icon: '🔍',
+                            title: 'Auditoría y trazabilidad',
+                            desc: 'Bitácora de cambios, usuario y hora; control de anulaciones con motivo y autorización.'
+                        }
+                    ],
+                    chips: ['POS online/offline', 'Caja rápida', 'Clientes frecuentes'],
+                    text: 'Registra ventas con lector de código de barras, descuentos y combos; integra stock y facturación.',
+                    kpis: [{ n: 'S/ 156,900', l: 'Ventas del mes' }, { n: '1,320', l: 'Tickets emitidos' }, { n: 'S/ 118', l: 'Ticket promedio' }],
+                    chart: { labels: ['Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'], data: [120, 132, 110, 150, 148, 157], label: 'Ventas (S/ miles)' }
+                },
+
+                videos: [['Uso de POS', 'Flujo de venta con lector', 'https://www.youtube.com/embed/3JZ_D3ELwOQ']]
+            },
+            {
+                key: 'inventario', icon: '📦', name: 'Inventario',
+                desc: 'Control de stock, lotes, ubicaciones, movimientos de almacén y alertas de reposición.',
+                info: {
+                    chips: ['Lotes & Vencimientos', 'Ubicaciones', 'Kardex'],
+                    text: 'Administra existencias por almacén/ubicación; controla lotes, series, mínimos y máximos.',
+                    kpis: [{ n: '12,430', l: 'Unidades en stock' }, { n: '74', l: 'Alertas de reposición' }, { n: '98.1%', l: 'Exactitud inventario' }],
+                    chart: { labels: ['Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'], data: [10, 12, 11, 14, 13, 16], label: 'Movimientos (miles)' }
+                },
+
+                videos: [['Conteo cíclico', 'Cómo ejecutar un conteo cíclico', 'https://www.youtube.com/embed/9bZkp7q19f0']]
+            },
+            {
+                key: 'crm', icon: '👥', name: 'Clientes y CRM',
+                desc: 'Registro de clientes, seguimiento de interacciones e historial de ventas.',
+                info: {
+                    chips: ['Embudo de ventas', 'Agenda/recordatorios', 'Integración WhatsApp/email'],
+                    text: 'Centraliza contactos, oportunidades y actividades. Automatiza recordatorios y campañas.',
+                    kpis: [{ n: '420', l: 'Leads del mes' }, { n: '31%', l: 'Tasa de cierre' }, { n: 'S/ 210k', l: 'Pipeline activo' }],
+                    chart: { labels: ['Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'], data: [280, 310, 290, 360, 390, 420], label: 'Leads' }
+                },
+
+                videos: [['Gestionar oportunidades', 'Embudo y etapas', 'https://www.youtube.com/embed/2vjPBrBU-TM']]
+            },
+            {
+                key: 'reportes', icon: '📊', name: 'Reportes',
+                desc: 'Generación de reportes financieros, operativos y exportables en Excel, PDF y paneles gráficos.',
+                info: {
+                    chips: ['Exportar a Excel/PDF', 'Tableros', 'Programación automática'],
+                    text: 'Crea reportes personalizados y agenda envíos automáticos por correo.',
+                    kpis: [{ n: '34', l: 'Reportes activos' }, { n: '12', l: 'Programados' }, { n: '5', l: 'Dashboards' }],
+                    chart: { labels: ['Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'], data: [20, 24, 26, 30, 32, 34], label: '# Reportes' }
+                },
+
+                videos: [['Crear reporte', 'Definir columnas y filtros', 'https://www.youtube.com/embed/ysz5S6PUM-U']]
+            }
+        ];
+
+        /* ======== Render de tarjetas ======== */
+        const cards = document.getElementById('cards');
+        modules.forEach(m => {
+            const el = document.createElement('article');
+            el.className = 'modulo-card';
+            el.innerHTML = `
+                <div class="card-head"><div class="left"><div class="icon">${m.icon}</div><div class="name">${m.name}</div></div></div>
+                <p class="desc">${m.desc}</p>
+                <div class="foot">
+
+                  <button class="btn btn--ghost btn-more" data-module="${m.key}">Ver más</button>
+                </div>`;
+            cards.appendChild(el);
+        });
+
+        /* ======== Drawer + Tabs ======== */
+        const overlay = document.getElementById('overlay');
+        const drawer = document.getElementById('drawer');
+        const btnClose = document.getElementById('btnClose');
+        const tabsEl = document.getElementById('tabs');
+        const panels = {
+            info: document.getElementById('panel-info'),
+            kpis: document.getElementById('panel-kpis'),
+
+            videos: document.getElementById('panel-videos'),
+        };
+        let chartRef = null;
+        const CHECK = '<svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M9 16.2l-3.5-3.5 1.4-1.4L9 13.4l7.1-7.1 1.4 1.4z"/></svg>';
+
+        const openDrawer = (modKey) => {
+            const m = modules.find(x => x.key === modKey) || modules[0];
+            document.getElementById('drawerTitle').textContent = `${m.name} – Detalle`;
+            overlay.classList.add('show'); drawer.classList.add('show'); btnClose.focus();
+
+
+            // Tabs render
+            const tabs = [
+                ['Información', 'info'], ['Videos', 'videos']
+            ];
+            tabsEl.innerHTML = '';
+            tabs.forEach(([label, key], i) => {
+                const t = document.createElement('div');
+                t.className = 'tab' + (i === 0 ? ' active' : '');
+                t.setAttribute('role', 'tab');
+                t.dataset.panel = key;
+                t.textContent = label;
+                t.onclick = () => activateTab(key);
+                tabsEl.appendChild(t);
+            });
+
+            const list = (m.info.featuresN || []).map((f, i) => `
+          <div class="featN">
+            <div class="num">${i + 1}</div>
+            <div class="ficon">${f.icon || '📌'}</div>
+            <div>
+              <h4 class="ftitle">${f.title}</h4>
+              <p class="fdesc">${f.desc || ''}</p>
+            </div>
+          </div>`).join('');
+
+
+            // Info
+            panels.info.innerHTML = `
+                <div class="section">
+                    <h4>Descripción</h4>
+                    <p>${m.info.text}</p>
+                </div>
+
+                <div class="section">
+                    <h4>Caracteristicas</h4>
+                    <p> ${list}
+                    </p>
+                </div>
+
+                <div class="actions">
+                  <button class="btn">Acción principal</button>
+                  <button class="btn btn--ghost">Acción secundaria</button>
+                </div>`;
+
+
+            // Videos
+            panels.videos.innerHTML = `
+                <div id="videoPlayer" class="player"><iframe id="videoIframe" width="100%" height="100%" src="" title="Video" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+                <div class="video-grid">
+                  ${m.videos.map(v => `
+                    <div class="vcard">
+                      <img class="vthumb" src="https://i.ytimg.com/vi/${(v[2].split('/').pop() || '').slice(0, 11)}/hqdefault.jpg" alt="Miniatura">
+                      <div class="vmeta">
+                        <div class="vtitle">${v[0]}</div>
+                        <div class="vdesc">${v[1]}</div>
+                        <button class="btn btn--ghost vbtn" data-yt="${v[2]}">▶ Ver</button>
+                      </div>
+                    </div>`).join('')}
+                </div>`;
+
+            // Activar primera pestaña
+            activateTab('info');
+
+            // Bind videos
+            const player = document.getElementById('videoPlayer');
+            const iframe = document.getElementById('videoIframe');
+            function stopVideo() { if (iframe) { iframe.src = ''; player.classList.remove('show'); } }
+            panels.videos.querySelectorAll('.vbtn').forEach(btn => {
+                btn.onclick = () => { const url = btn.dataset.yt; iframe.src = url + (url.includes('?') ? '&' : '?') + 'autoplay=1'; player.classList.add('show'); player.scrollIntoView({ behavior: 'smooth' }); };
+            });
+            // Guardar para cierre
+            drawer._stopVideo = stopVideo;
+        };
+
+        function activateTab(key) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.panel === key));
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            const panel = document.getElementById('panel-' + key);
+            if (panel) panel.classList.add('active');
+            if (key !== 'videos' && drawer._stopVideo) drawer._stopVideo();
+        }
+
+        function closeDrawer() {
+            overlay.classList.remove('show'); drawer.classList.remove('show');
+            if (drawer._stopVideo) drawer._stopVideo();
+        }
+
+        document.addEventListener('click', e => {
+            const more = e.target.closest('.btn-more');
+            if (more) { openDrawer(more.dataset.module); }
+        });
+        overlay.addEventListener('click', closeDrawer);
+        btnClose.addEventListener('click', closeDrawer);
+        window.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+    </script>
 </body>
 </html>

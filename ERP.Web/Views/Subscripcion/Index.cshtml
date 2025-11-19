@@ -523,7 +523,7 @@
                         dataSrc: function (response) {
                             if (response.infoExtra) {
                                 $('#txCobrado').text(response.infoExtra.totalImportePagado);
-                                $('#txActivo').text(response.infoExtra.totalImportePagado);
+                                $('#txActivo').text(response.infoActios.totalImportePagado);
                             }
                             // Manipula los datos si es necesario antes de mostrarlos en el DataTable
                             return response.data;
