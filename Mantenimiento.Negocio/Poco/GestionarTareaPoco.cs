@@ -16,6 +16,7 @@ namespace Mantenimiento.Negocio.Poco
         public List<sp_ListarTrabajadores> listarTrabajadores { get; set; }
         public List<TipoRequerimiento> ListarTipoRequerimientos { get; set; }
         public List<sp_ListarProyectos> ListarProyectos { get; set; }
+        public List<sp_ListarSeguimientoTareas> ListarSeguimientoTareas { get; set; }
         public Persona Persona { get; set; }      
         public Tarea tarea { get; set; }
         public bool TrEditing { get; set; }

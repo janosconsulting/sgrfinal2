@@ -55,8 +55,10 @@ namespace ReyDavid.Web.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
+            GestionarTareaPoco oGestionar = new GestionarTareaPoco();
+            oGestionar.ListarSeguimientoTareas = this.tareaServicio.ListarSeguimientoTareas();
 
-            return View();
+            return View(oGestionar);
         }
 
         public JsonResult Listar()

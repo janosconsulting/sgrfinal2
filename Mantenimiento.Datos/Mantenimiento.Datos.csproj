@@ -141,6 +141,7 @@
     <Compile Include="Entidades\sp_ListarCategoriaCliente.cs" />
     <Compile Include="Entidades\sp_ListarPaises.cs" />
     <Compile Include="Entidades\sp_listarRequerimientosporTrabajador.cs" />
+    <Compile Include="Entidades\sp_ListarSeguimientoTareas.cs" />
     <Compile Include="Entidades\sp_ListarSubscripcion.cs" />
     <Compile Include="Entidades\sp_ListarSubscripcionReporte.cs" />
     <Compile Include="Entidades\sp_ObtenerCasosExito.cs" />

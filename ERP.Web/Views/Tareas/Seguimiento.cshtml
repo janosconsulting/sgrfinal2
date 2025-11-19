@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Mantenimiento.Negocio.Poco.GestionarTareaPoco
+@{
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
@@ -157,7 +158,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Actividades agrupadas por proyecto</title>
-    
+
 </head>
 <body>
 
@@ -216,58 +217,73 @@
         // =========================================
         // DATOS DE EJEMPLO (reemplázalo por tu backend)
         // =========================================
-        let actividades = [
-            {
-                proyecto: "KEDROPRO - FACTURACION ELECTRONICA",
-                requerimiento: "REQ-0065",
-                cliente: "Convertidora Continental Sac",
-                actividad: "Agregar opción Carreta en guías",
-                inicio: "11/11/2025",
-                fin: "12/11/2025",
-                estado: "En proceso",
-                responsable: "Luis"
-            },
-            {
-                proyecto: "KEDROPRO - FACTURACION ELECTRONICA",
-                requerimiento: "REQ-0064",
-                cliente: "Bendición Por Misericordia Srl",
-                actividad: "Implementar facturación en dólares",
-                inicio: "10/11/2025",
-                fin: "11/11/2025",
-                estado: "Pendiente",
-                responsable: "Merlyn"
-            },
-            {
-                proyecto: "KEDROPRO - FACTURACION ELECTRONICA",
-                requerimiento: "REQ-0062",
-                cliente: "Corporación Villa Luz Sac",
-                actividad: "Cambios varios módulo recibos",
-                inicio: "10/08/2025",
-                fin: "12/08/2025",
-                estado: "Completada",
-                responsable: "Luis"
-            },
-            {
-                proyecto: "SISTEMA CONTROL PROCESOS",
-                requerimiento: "REQ-0061",
-                cliente: "Daro Sac",
-                actividad: "Correcciones módulo inventario",
-                inicio: "10/08/2025",
-                fin: "11/08/2025",
-                estado: "En proceso",
-                responsable: "Rodrigo"
-            },
-            {
-                proyecto: "SISTEMA DE CONTROL DE REQUERIMIENTOS",
-                requerimiento: "REQ-0060",
-                cliente: "Servicios Comerciales Caotec Eirl",
-                actividad: "Modificaciones varias sistema control",
-                inicio: "10/08/2025",
-                fin: "12/08/2025",
-                estado: "Pendiente",
-                responsable: "Joel"
-            }
-        ];
+        //let actividades = [
+        //    {
+        //        proyecto: "KEDROPRO - FACTURACION ELECTRONICA",
+        //        requerimiento: "REQ-0065",
+        //        cliente: "Convertidora Continental Sac",
+        //        actividad: "Agregar opción Carreta en guías",
+        //        inicio: "11/11/2025",
+        //        fin: "12/11/2025",
+        //        estado: "En proceso",
+        //        responsable: "Luis"
+        //    },
+        //    {
+        //        proyecto: "KEDROPRO - FACTURACION ELECTRONICA",
+        //        requerimiento: "REQ-0064",
+        //        cliente: "Bendición Por Misericordia Srl",
+        //        actividad: "Implementar facturación en dólares",
+        //        inicio: "10/11/2025",
+        //        fin: "11/11/2025",
+        //        estado: "Pendiente",
+        //        responsable: "Merlyn"
+        //    },
+        //    {
+        //        proyecto: "KEDROPRO - FACTURACION ELECTRONICA",
+        //        requerimiento: "REQ-0062",
+        //        cliente: "Corporación Villa Luz Sac",
+        //        actividad: "Cambios varios módulo recibos",
+        //        inicio: "10/08/2025",
+        //        fin: "12/08/2025",
+        //        estado: "Completada",
+        //        responsable: "Luis"
+        //    },
+        //    {
+        //        proyecto: "SISTEMA CONTROL PROCESOS",
+        //        requerimiento: "REQ-0061",
+        //        cliente: "Daro Sac",
+        //        actividad: "Correcciones módulo inventario",
+        //        inicio: "10/08/2025",
+        //        fin: "11/08/2025",
+        //        estado: "En proceso",
+        //        responsable: "Rodrigo"
+        //    },
+        //    {
+        //        proyecto: "SISTEMA DE CONTROL DE REQUERIMIENTOS",
+        //        requerimiento: "REQ-0060",
+        //        cliente: "Servicios Comerciales Caotec Eirl",
+        //        actividad: "Modificaciones varias sistema control",
+        //        inicio: "10/08/2025",
+        //        fin: "12/08/2025",
+        //        estado: "Pendiente",
+        //        responsable: "Joel"
+        //    }
+        //];
+
+        let actividades = @Html.Raw(
+            Newtonsoft.Json.JsonConvert.SerializeObject(
+                Model.ListarSeguimientoTareas.Select(x => new {
+                    proyecto = x.proyecto,
+                    requerimiento = x.requerimiento,
+                    cliente = x.cliente,
+                    actividad = x.actividad,
+                    inicio = x.fechaInicio,
+                    fin = x.fechaFin,
+                    estado = x.estado,
+                    responsable = x.responsable
+                })
+            )
+        );
 
         // =========================================
         // CARGA INICIAL COMBOS DE FILTROS
@@ -334,16 +350,16 @@
             const comp = lista.filter(a => a.estado.toLowerCase() === "completada").length;
 
             resumen.innerHTML = `
-            <strong>Resumen filtrado:</strong>
-            &nbsp;
-            <span class="badge badge-total">Total: ${total}</span>
-            &nbsp;
-            <span class="badge badge-pendiente">Pendientes: ${pend}</span>
-            &nbsp;
-            <span class="badge badge-proceso">En proceso: ${proc}</span>
-            &nbsp;
-            <span class="badge badge-ok">Completadas: ${comp}</span>
-        `;
+                <strong>Resumen filtrado:</strong>
+                &nbsp;
+                <span class="badge badge-total">Total: ${total}</span>
+                &nbsp;
+                <span class="badge badge-pendiente">Pendientes: ${pend}</span>
+                &nbsp;
+                <span class="badge badge-proceso">En proceso: ${proc}</span>
+                &nbsp;
+                <span class="badge badge-ok">Completadas: ${comp}</span>
+            `;
 
             if (lista.length === 0) {
                 const tr = document.createElement("tr");
@@ -373,18 +389,18 @@
                 const trGrupo = document.createElement("tr");
                 trGrupo.className = "fila-grupo";
                 trGrupo.innerHTML = `
-                <td colspan="8">
-                    📁 <strong>${proyecto}</strong>
-                    &nbsp;&nbsp;
-                    <span class="badge badge-total">Total: ${tTotal}</span>
-                    &nbsp;
-                    <span class="badge badge-pendiente">Pend: ${tPend}</span>
-                    &nbsp;
-                    <span class="badge badge-proceso">Proc: ${tProc}</span>
-                    &nbsp;
-                    <span class="badge badge-ok">Comp: ${tComp}</span>
-                </td>
-            `;
+                    <td colspan="8">
+                        📁 <strong>${proyecto}</strong>
+                        &nbsp;&nbsp;
+                        <span class="badge badge-total">Total: ${tTotal}</span>
+                        &nbsp;
+                        <span class="badge badge-pendiente">Pend: ${tPend}</span>
+                        &nbsp;
+                        <span class="badge badge-proceso">Proc: ${tProc}</span>
+                        &nbsp;
+                        <span class="badge badge-ok">Comp: ${tComp}</span>
+                    </td>
+                `;
                 tbody.appendChild(trGrupo);
 
                 // LISTA DE ACTIVIDADES DE ESE PROYECTO
@@ -398,15 +414,15 @@
                     else if (estLower === "completada") claseEstado = "estado-completada";
 
                     tr.innerHTML = `
-                    <td>${a.proyecto}</td>
-                    <td>${a.requerimiento}</td>
-                    <td>${a.cliente}</td>
-                    <td>${a.actividad}</td>
-                    <td>${a.responsable}</td>
-                    <td>${a.inicio}</td>
-                    <td>${a.fin}</td>
-                    <td><span class="estado-pill ${claseEstado}">${a.estado}</span></td>
-                `;
+                        <td>${a.proyecto}</td>
+                        <td>${a.requerimiento}</td>
+                        <td>${a.cliente}</td>
+                        <td>${a.actividad}</td>
+                        <td>${a.responsable}</td>
+                        <td>${a.inicio}</td>
+                        <td>${a.fin}</td>
+                        <td><span class="estado-pill ${claseEstado}">${a.estado}</span></td>
+                    `;
                     tbody.appendChild(tr);
                 });
             }
