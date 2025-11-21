@@ -114,6 +114,20 @@ namespace Mantenimiento.Negocio.Servicios
                     new { idDetalle });
             }
         }
+        //public ResultadoTransaccion ActualizarRequerimientoDetalle()
+        //{
+
+        //}
+
+        public DetalleRequerimiento ObtenerDetalleRequerimiento(int idDetalleRequerimiento)
+        {
+            using (var connection = new SqlConnection(ConnectionConfig.ConnectionString))
+            {
+                return connection.QueryFirstOrDefault<DetalleRequerimiento>(
+                    "SELECT * FROM DetalleRequerimiento WHERE idDetalleRequerimiento = @idDetalleRequerimiento and idEstado != 2",
+                    new { idDetalleRequerimiento });
+            }
+        }
         public void GuardarCambios()
         {
             // Este método no se usa con Dapper.Contrib ya que Update guarda directamente.

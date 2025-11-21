@@ -18,6 +18,7 @@ namespace Mantenimiento.Negocio.Contratos.Servicios
         // Método opcional para obtener la tarea por detalle requerimiento
         Tarea ObtenerPorRequerimiento(int idRequerimiento);
         Tarea ObtenerPorDetalleRequerimiento(int idDetalle);
+        DetalleRequerimiento ObtenerDetalleRequerimiento(int idDetalleRequerimiento);
         List<sp_ListarSeguimientoTareas> ListarSeguimientoTareas(int idProyecto, int idEstadoDesarrollo, int idResponsable);
         void GuardarCambios();
 

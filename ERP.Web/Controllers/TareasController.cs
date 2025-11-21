@@ -57,6 +57,7 @@ namespace ReyDavid.Web.Controllers
             }
             GestionarTareaPoco oGestionar = new GestionarTareaPoco();
             oGestionar.ListarProyectos = proyectoServicio.ListarProyectos();
+            oGestionar.ListarTrabajadores = personaServicio.ListarTrabajadores();
             oGestionar.ListarPersonaResponsable = personaServicio.ListarPersonaResponsable();
             return View(oGestionar);
         }
@@ -64,6 +65,32 @@ namespace ReyDavid.Web.Controllers
         {
             List<sp_ListarSeguimientoTareas> oLista = this.tareaServicio.ListarSeguimientoTareas(idProyecto, idEstado, idResponsable);
             return Json(oLista, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult EditarDetalle(
+            string Descripcion,
+            int EstadoDesarrollo,
+            int AsignadoA,
+            string FechaInicio,
+            string FechaFin)
+        {
+            try
+            {
+                // ejemplo de lógica
+                // guardar en base de datos…
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        public JsonResult ObtenerRequerimientoDetalle(int idDetalleRequerimiento)
+        {
+            DetalleRequerimiento objeto = this.tareaServicio.ObtenerDetalleRequerimiento(idDetalleRequerimiento);
+            return Json(objeto, JsonRequestBehavior.AllowGet);
         }
         public JsonResult Listar()
         {

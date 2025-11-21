@@ -246,10 +246,100 @@
         </thead>
         <tbody id="tbodyGeneral"></tbody>
     </table>
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">EDITAR REQUERIMIENTO DETALLE</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-5 gx-1">
+                        <label class="form-label required fw-bold">DESCRIPCIÓN:</label>
+                        <textarea type="text" class="form-control" id="txtDescripcion" placeholder="Ingrese descripción" style="height: 70px;"
+                                  maxlength="300"></textarea>
+                    </div>
+                    <div class="row mb-5 gx-1">
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label fw-bold">ESTADO DESARROLLO:</label>
+                            <!--begin::Select-->
+                            <select class="form-select" data-control="select2" id="idDesarrollo" style="font-size: 11px;">
+                                <option value="-1">Seleccione estado desarrollo</option>
+                                <option value="1">PENDIENTE</option>
+                                <option value="2">EN PROCESO</option>
+                                <option value="3">FINALIZADO</option>
+                            </select>
+                            <!--end::Select-->
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label fw-bold">ASIGNADO A:</label>
+                            <select class="form-select" data-control="select2" id="idAsignado" style="font-size: 11px;">
+                                <!-- Opción por defecto -->
+                                <option value="">Seleccione Trabajador</option>
+                                @if (Model.ListarTrabajadores.Any())
+                                {
+                                    foreach (var item in Model.ListarTrabajadores)
+                                    {
+                                        <option value="@item.idPersona">@item.nombreCli</option>
+                                    }
+                                }
+                                else
+                                {
+                                    // Si no hay trabajadores disponibles, mostrar una opción por defecto
+                                    <option value="">No existen trabajadores</option>
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="row mb-5 gx-5">
+                        <div class="col-md-6 mb-4">
+                            <!--begin::Input group-->
+                            <!--begin::Label-->
+                            <label class="form-label fw-bold"
+                                   for="kt_datepicker_fecha_ini_detalle">FECHA INICIO:</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text"
+                                   id="kt_datepicker_fecha_ini_detalle"
+                                   class="form-control"
+                                   data-kt-repeater="datepicker"
+                                   placeholder="Fecha incio detalle" />
+                            <!--end::Input-->
+                            <!--end::Input group-->
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <!--begin::Input group-->
+                            <!--begin::Label-->
+                            <label class="form-label fw-bold"
+                                   for="kt_datepicker_fecha_fin_detalle">FECHA FIN:</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text"
+                                   id="kt_datepicker_fecha_fin_detalle"
+                                   class="form-control"
+                                   data-kt-repeater="datepicker"
+                                   placeholder="Fecha fin detalle" />
+                            <!--end::Input-->
+                            <!--end::Input group-->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" disabled id="btnEditarDetalle">Editar Requerimiento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
     <script>
 
 
@@ -302,6 +392,22 @@
             });
 
         }
+        function abrirModalDetalle(id) {
+            $.ajax({
+                url: "/Tareas/ObtenerRequerimientoDetalle",
+                type: "GET",
+                data: {
+                    idDetalleRequerimiento: id
+                },
+                success: function (data) {
+
+                    $("#exampleModal").modal("show")
+                    
+                }
+            });
+           
+        }
+
         function abrirDetalle(id) {
             window.location.href = "/Requerimiento/Editar?id=" + id;
         }
@@ -435,6 +541,7 @@
             if (e.target.classList.contains("iniciar")) {
                 const id = e.target.dataset.id;
                 console.log("Iniciar tarea:", id);
+                abrirModalDetalle(id);
             }
         });
         document.addEventListener("click", function (e) {
@@ -446,6 +553,48 @@
                 abrirDetalle(id);
             }
 
+        });
+        $(document).ready(() => {
+            $("#kt_datepicker_fecha_fin_detalle").flatpickr({
+                dateFormat: 'd/m/Y',
+                locale: spanishLocale,
+                defaultDate: $("#kt_datepicker_fecha_fin_detalle").val() || new Date()
+            });
+            $("#kt_datepicker_fecha_ini_detalle").flatpickr({
+                dateFormat: 'd/m/Y',
+                locale: spanishLocale,
+                defaultDate: $("#kt_datepicker_fecha_ini_detalle").val() || new Date()
+            });
+        })
+        $("#btnEditarDetalle").on("click", function () {
+
+            var formData = new FormData();
+
+            formData.append("requerimientoDetalle.descripcion", $("#txtDescripcion").val());
+            formData.append("requerimientoDetalle.estadoDesarrollo", $("#idDesarrollo").val());
+            formData.append("requerimientoDetalle.idPersona", $("#idAsignado").val());
+            formData.append("requerimientoDetalle.fechaInicio", $("#kt_datepicker_fecha_ini_detalle").val());
+            formData.append("requerimientoDetalle.fechaFin", $("#kt_datepicker_fecha_fin_detalle").val());
+
+            $.ajax({
+                url: '/Requerimiento/EditarDetalle',   // cambia por tu ruta real
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire("Correcto", "Detalle actualizado", "success");
+                        $("#exampleModal").modal("hide");
+                    }
+                    else {
+                        Swal.fire("Error", response.message, "error");
+                    }
+                },
+                error: function () {
+                    Swal.fire("Error", "Ocurrió un problema con el servidor", "error");
+                }
+            });
         });
 
         // =====================
