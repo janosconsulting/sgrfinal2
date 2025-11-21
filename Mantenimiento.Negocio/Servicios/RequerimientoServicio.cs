@@ -157,8 +157,8 @@ namespace Mantenimiento.Negocio.Servicios
                                             detalleRequerimiento.idRequerimiento = idRequerimiento;
                                             detalleRequerimiento.idPersona = item.idPersona;
                                             detalleRequerimiento.descripcion = item.descripcion;
-                                            detalleRequerimiento.comentarios = item.comentarios;
                                             detalleRequerimiento.estadoDesarrollo = item.estadoDesarrollo;
+                                            detalleRequerimiento.comentarioCliente = item.comentarioCliente;
                                             detalleRequerimiento.estadoCliente = item.estadoCliente;
                                             detalleRequerimiento.fechaRegistro = DateTime.Now;
                                             detalleRequerimiento.idEstado = 1;
@@ -229,8 +229,8 @@ namespace Mantenimiento.Negocio.Servicios
                                             detalleRequerimiento.idRequerimiento = idRequerimiento;
                                             detalleRequerimiento.idPersona = item.idPersona;
                                             detalleRequerimiento.descripcion = item.descripcion;
-                                            detalleRequerimiento.comentarios = item.comentarios;
                                             detalleRequerimiento.estadoDesarrollo = item.estadoDesarrollo;
+                                            detalleRequerimiento.comentarioCliente = item.comentarioCliente;
                                             detalleRequerimiento.estadoCliente = item.estadoCliente;
                                             detalleRequerimiento.fechaRegistro = DateTime.Now;
                                             detalleRequerimiento.idEstado = 1;
@@ -251,7 +251,7 @@ namespace Mantenimiento.Negocio.Servicios
                                             mDetalleRequerimiento.idRequerimiento = idRequerimiento;
                                             mDetalleRequerimiento.idPersona = item.idPersona;
                                             mDetalleRequerimiento.descripcion = item.descripcion;
-                                            mDetalleRequerimiento.comentarios = item.comentarios;
+                                            mDetalleRequerimiento.comentarioCliente = item.comentarioCliente;
                                             mDetalleRequerimiento.estadoDesarrollo = item.estadoDesarrollo;
                                             mDetalleRequerimiento.estadoCliente = item.estadoCliente;
                                             mDetalleRequerimiento.fechaRegistro = DateTime.Now;

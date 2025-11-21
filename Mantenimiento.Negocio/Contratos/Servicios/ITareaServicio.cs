@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mantenimiento.Datos.Entidades;
+using Mantenimiento.Negocio.Poco;
 
 
 namespace Mantenimiento.Negocio.Contratos.Servicios
@@ -21,6 +22,7 @@ namespace Mantenimiento.Negocio.Contratos.Servicios
         DetalleRequerimiento ObtenerDetalleRequerimiento(int idDetalleRequerimiento);
         List<sp_ListarSeguimientoTareas> ListarSeguimientoTareas(int idProyecto, int idEstadoDesarrollo, int idResponsable);
         void GuardarCambios();
+        bool EditarDetalleRequerimiento(GestionarSeguimientoPoco obj);
 
 
     }

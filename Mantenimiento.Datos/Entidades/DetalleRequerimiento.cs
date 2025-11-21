@@ -18,7 +18,6 @@ namespace Mantenimiento.Datos.Entidades
         public int idRequerimiento { get; set; }
         public int? idPersona { get; set; }
         public string descripcion { get; set; }
-        public string comentarios { get; set; }
         public int? estadoDesarrollo { get; set; }
         public int? estadoCliente { get; set; }
         public DateTime fechaRegistro { get; set; }

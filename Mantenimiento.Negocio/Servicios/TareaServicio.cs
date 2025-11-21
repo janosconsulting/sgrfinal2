@@ -81,6 +81,32 @@ namespace Mantenimiento.Negocio.Servicios
                 throw;
             }
         }
+        public bool EditarDetalleRequerimiento(GestionarSeguimientoPoco obj)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(ConnectionConfig.ConnectionString))
+                {
+                    connection.Open();
+                    DetalleRequerimiento dtRequerimiento = connection.Get<DetalleRequerimiento>(obj.requerimientoDetalle.idDetalleRequerimiento);
+                    if(dtRequerimiento != null)
+                    {
+                        dtRequerimiento.fechaInicio = obj.requerimientoDetalle.fechaInicio;
+                        dtRequerimiento.fechaFin = obj.requerimientoDetalle.fechaFin;
+                        dtRequerimiento.descripcion = obj.requerimientoDetalle.descripcion;
+                        dtRequerimiento.estadoDesarrollo = obj.requerimientoDetalle.estadoDesarrollo;
+                        dtRequerimiento.idPersona = obj.requerimientoDetalle.idPersona;
+                        connection.Update(dtRequerimiento);
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public bool Eliminar(int id)
         {
             using (var connection = new SqlConnection(ConnectionConfig.ConnectionString))

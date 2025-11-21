@@ -67,26 +67,6 @@ namespace ReyDavid.Web.Controllers
             return Json(oLista, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult EditarDetalle(
-            string Descripcion,
-            int EstadoDesarrollo,
-            int AsignadoA,
-            string FechaInicio,
-            string FechaFin)
-        {
-            try
-            {
-                // ejemplo de lógica
-                // guardar en base de datos…
-
-                return Json(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = ex.Message });
-            }
-        }
-
         public JsonResult ObtenerRequerimientoDetalle(int idDetalleRequerimiento)
         {
             DetalleRequerimiento objeto = this.tareaServicio.ObtenerDetalleRequerimiento(idDetalleRequerimiento);
@@ -151,6 +131,61 @@ namespace ReyDavid.Web.Controllers
                 {
                     res.idResultado = (int)enumTipoMensaje.exito;
                     res.mensaje = "Éxito al guardar el Registro";
+                    res.codigo = oRes.codigo;
+                }
+                else
+                {
+                    res.idResultado = (int)enumTipoMensaje.error;
+                    res.mensaje = oRes.mensaje.ToString();
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                // Imprime detalles de la excepción SQL en la consola
+                Console.WriteLine("Error SQL: " + sqlEx.Message);
+                Console.WriteLine("Número de error: " + sqlEx.Number);
+                Console.WriteLine("Procedimiento almacenado: " + sqlEx.Procedure);
+                Console.WriteLine("Línea de error: " + sqlEx.LineNumber);
+
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error general: " + ex.Message);
+            }
+
+            return Json(res, JsonRequestBehavior.AllowGet);
+
+        }
+        [HttpPost]
+        public ActionResult EditarDetalle(TareaModel oRegistro)
+        {
+            Resultado objResultado = new Resultado();
+
+            objResultado.mensaje = "";
+
+            Resultado res = new Resultado();
+            try
+            {
+                if (Session["usuario"] == null)
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+
+                bool resp = false;
+                ResultadoTransaccion oRes = new ResultadoTransaccion();
+                GestionarSeguimientoPoco poco = new GestionarSeguimientoPoco();
+                poco.requerimientoDetalle = oRegistro.requerimientoDetalle;
+                resp = this.tareaServicio.EditarDetalleRequerimiento(poco);
+                if (resp)
+                {
+                    oRes.codigo = 1;
+                }
+
+                if (oRes.codigo > 0)
+                {
+                    res.idResultado = (int)enumTipoMensaje.exito;
+                    res.mensaje = "Éxito al Actualizar el Registro";
                     res.codigo = oRes.codigo;
                 }
                 else

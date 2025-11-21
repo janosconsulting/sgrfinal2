@@ -264,6 +264,7 @@
                         <div class="col-md-6 mb-4">
                             <label class="form-label fw-bold">ESTADO DESARROLLO:</label>
                             <!--begin::Select-->
+                            <input type="hidden" id="txtIdDetallerequerimiento" />
                             <select class="form-select" data-control="select2" id="idDesarrollo" style="font-size: 11px;">
                                 <option value="-1">Seleccione estado desarrollo</option>
                                 <option value="1">PENDIENTE</option>
@@ -328,7 +329,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" disabled id="btnEditarDetalle">Editar Requerimiento</button>
+                    <button type="button" class="btn btn-primary" id="btnEditarDetalle">Editar Requerimiento</button>
                 </div>
             </div>
         </div>
@@ -392,6 +393,12 @@
             });
 
         }
+        function convertirFechaNET(fechaNET) {
+            if (!fechaNET) return null;
+            const timestamp = parseInt(fechaNET.replace("/Date(", "").replace(")/", ""));
+            return new Date(timestamp);
+        }
+
         function abrirModalDetalle(id) {
             $.ajax({
                 url: "/Tareas/ObtenerRequerimientoDetalle",
@@ -400,6 +407,28 @@
                     idDetalleRequerimiento: id
                 },
                 success: function (data) {
+                    $("#txtIdDetallerequerimiento").val(id);
+                    $("#txtDescripcion").val(data.descripcion);
+
+                    // Select Estado Desarrollo
+                    $("#idDesarrollo").val(data.estadoDesarrollo).trigger('change');
+
+                    // Select Asignado A
+                    $("#idAsignado").val(data.idPersona).trigger('change');
+
+                    // --- FECHAS ---
+                    const fechaInicio = convertirFechaNET(data.fechaInicio);
+                    const fechaFin = convertirFechaNET(data.fechaFin);
+
+                    if (fechaInicio)
+                        fpInicio.setDate(fechaInicio);
+                    else
+                        fpInicio.clear();
+
+                    if (fechaFin)
+                        fpFin.setDate(fechaFin);
+                    else
+                        fpFin.clear();
 
                     $("#exampleModal").modal("show")
                     
@@ -407,6 +436,7 @@
             });
            
         }
+
 
         function abrirDetalle(id) {
             window.location.href = "/Requerimiento/Editar?id=" + id;
@@ -537,13 +567,25 @@
                 });
             }
         }
+        //document.addEventListener("click", e => {
+        //    if (e.target.classList.contains("iniciar")) {
+        //        const id = e.target.dataset.id;
+        //        console.log("Iniciar tarea:", id);
+        //        abrirModalDetalle(id);
+        //    }
+        //});
         document.addEventListener("click", e => {
-            if (e.target.classList.contains("iniciar")) {
-                const id = e.target.dataset.id;
-                console.log("Iniciar tarea:", id);
+            const boton = e.target.closest(".iniciar");
+            if (boton) {
+                // marcar botón como activo
+                document.querySelectorAll(".iniciar").forEach(b => b.classList.remove("activo"));
+                boton.classList.add("activo");
+
+                const id = boton.dataset.id;
                 abrirModalDetalle(id);
             }
         });
+
         document.addEventListener("click", function (e) {
 
             if (e.target.classList.contains("link-req")) {
@@ -554,22 +596,25 @@
             }
 
         });
+        let fpInicio, fpFin;
         $(document).ready(() => {
-            $("#kt_datepicker_fecha_fin_detalle").flatpickr({
+            fpInicio = $("#kt_datepicker_fecha_ini_detalle").flatpickr({
                 dateFormat: 'd/m/Y',
                 locale: spanishLocale,
-                defaultDate: $("#kt_datepicker_fecha_fin_detalle").val() || new Date()
+                allowInput: true
             });
-            $("#kt_datepicker_fecha_ini_detalle").flatpickr({
+
+            fpFin = $("#kt_datepicker_fecha_fin_detalle").flatpickr({
                 dateFormat: 'd/m/Y',
                 locale: spanishLocale,
-                defaultDate: $("#kt_datepicker_fecha_ini_detalle").val() || new Date()
+                allowInput: true
             });
         })
         $("#btnEditarDetalle").on("click", function () {
 
             var formData = new FormData();
 
+            formData.append("requerimientoDetalle.idDetalleRequerimiento", $("#txtIdDetallerequerimiento").val());
             formData.append("requerimientoDetalle.descripcion", $("#txtDescripcion").val());
             formData.append("requerimientoDetalle.estadoDesarrollo", $("#idDesarrollo").val());
             formData.append("requerimientoDetalle.idPersona", $("#idAsignado").val());
@@ -577,14 +622,23 @@
             formData.append("requerimientoDetalle.fechaFin", $("#kt_datepicker_fecha_fin_detalle").val());
 
             $.ajax({
-                url: '/Requerimiento/EditarDetalle',   // cambia por tu ruta real
+                url: '/Tareas/EditarDetalle',   // cambia por tu ruta real
                 type: 'POST',
                 data: formData,
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    if (response.success) {
-                        Swal.fire("Correcto", "Detalle actualizado", "success");
+                    if (response.idResultado == 1) {
+                        Swal.fire({
+                            title: response.mensaje,
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1200,
+                            text: ""     // evita mostrar texto vacío en pantalla
+                        });
+
+                       //Swal.fire("Correcto", "Detalle actualizado", "success");
+                        actualizar();
                         $("#exampleModal").modal("hide");
                     }
                     else {

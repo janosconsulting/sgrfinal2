@@ -118,6 +118,7 @@
     <Compile Include="Poco\Config.cs" />
     <Compile Include="Poco\DetalleDocumentoView.cs" />
     <Compile Include="Poco\DetalleRepeatablePoco.cs" />
+    <Compile Include="Poco\GestionarSeguimientoPoco.cs" />
     <Compile Include="Poco\GestionarArticuloPoco.cs" />
     <Compile Include="Poco\GestionarCasosExito.cs" />
     <Compile Include="Poco\GestionarCasosExitoPoco.cs" />

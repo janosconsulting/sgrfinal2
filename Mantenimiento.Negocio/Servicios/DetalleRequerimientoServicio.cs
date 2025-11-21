@@ -48,7 +48,6 @@ namespace Mantenimiento.Negocio.Servicios
                         idDetalleRequerimiento = dr.idDetalleRequerimiento,
                         idPersona = dr.idPersona,
                         descripcion = dr.descripcion,
-                        comentarios = dr.comentarios,
                         estadoDesarrollo = dr.estadoDesarrollo,
                         estadoCliente = dr.estadoCliente,
                         fechaInicio = dr.fechaInicio,
