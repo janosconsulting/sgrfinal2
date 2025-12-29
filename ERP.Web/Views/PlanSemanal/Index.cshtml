@@ -817,7 +817,7 @@
                         <label class="form-label fw-bold">Severidad</label>
                         <select class="form-select" id="obs_severidad">
                             <option value="baja">Baja</option>
-                            <option value="media" selected>Media</option>
+                            <option value="media">Media</option>
                             <option value="alta">Alta</option>
                         </select>
                     </div>
@@ -830,7 +830,7 @@
                     <div class="col-md-4">
                         <label class="form-label fw-bold">Observado por</label>
                         <select class="form-select" id="cbo_observadopor">
-                            <option value="1" selected>Interna</option>
+                            <option value="1" >Interna</option>
                             <option value="2">Cliente</option>
                         </select>
                     </div>
@@ -876,11 +876,7 @@
                         <div id="drop-area-obs" class="drop-area border-2 border-dashed border-primary text-center p-3 mb-3" style="cursor: pointer;">
                             <div class="drop-area-content">
                                 <i class="fas fa-cloud-upload-alt fa-2x text-primary mb-2"></i>
-                                <p class="mb-0">Arrastra y suelta un archivo aquí o</p>
-                                <button type="button" class="btn btn-outline-primary btn-sm mt-2" id="select-file-btn-obs">
-                                    <i class="fas fa-folder-open me-2"></i>
-                                    Seleccionar Archivo
-                                </button>
+                                <p class="mb-0">Arrastra y suelta un archivo aquí</p>
                                 <input type="file" id="obs_file" class="d-none">
                             </div>
                         </div>
@@ -900,7 +896,7 @@
                                     </div>
                                     <div class="file-actions">
                                         <button class="btn btn-sm btn-remove" id="remove-file-btn-obs" title="Eliminar archivo">
-                                            <i class="fas fa-trash"></i> Eliminar
+                                            <i class="fas fa-trash" style="color: white"></i> 
                                         </button>
                                     </div>
                                 </div>
@@ -1105,6 +1101,7 @@
             const modal = new bootstrap.Modal(
                 document.getElementById("kt_modal_obs")
             );
+            limpiarCamposArchivo();
             modal.show();
             $("#obs_fechaRegistro").flatpickr({
                  dateFormat: 'd/m/Y',
@@ -1303,15 +1300,22 @@
            // Populate modal
            $("#obs_subreq").val(idSubReq);
            $("#obs_comentario").val(obs.comentario || "");
-           $("#obs_severidad").val(obs.severidad || "media");
+           $("#obs_severidad").val(obs.severidad).trigger("change");
            $("#obs_estado").val(obs.estado || "abierta");
-           $("#cbo_observadopor").val(obs.observadopor || "1");
+           $("#cbo_observadopor").val(obs.ObservadorPor || "1").trigger("change");
            $("#obs_registradoPor").val(obs.registradoPor || "");
            $("#obs_fechaRegistro").val(parseNetDate(obs.fechaRegistro));
            $("#obs_fechaCierre").val(parseNetDate(obs.fechaCierre));
            $("#obs_cerradoPor").val(obs.cerradoPor || "");
            $("#obs_idObservacion").val(idObs);
 
+            // Cargar información del archivo adjunto si existe
+           if (obs.nombreArchivo && obs.extension) {
+               cargarArchivoAdjunto(obs.nombreArchivo, obs.extension);
+           } else {
+               // Limpiar la vista previa si no hay archivo
+               limpiarCamposArchivo();
+           }
            // Change title
            $("#kt_modal_obs .modal-header h2").html(`<i class="bi bi-chat-left-text text-primary me-2"></i>Editar Observación`);
 
@@ -1408,7 +1412,86 @@
           }
         });
     }
+    function limpiarCamposArchivo() {
+        // Limpiar el input de archivo
+        $("#obs_file").val("");
+        
+        // Limpiar campos ocultos de archivo
+        $("#obs_nombreArchivo").val("");
+        $("#obs_extension").val("");
+        $("#obs_fileSize").val("");
+        
+        // Limpiar la vista previa del archivo
+        const filePreview = document.getElementById('file-preview-obs');
+        const noFileMessage = document.getElementById('no-file-message-obs');
+        
+        if (filePreview) {
+            filePreview.style.display = 'none';
+        }
+        if (noFileMessage) {
+            noFileMessage.style.display = 'none';
+        }
+        
+        // Limpiar la variable global de archivo actual
+        if (typeof window.clearObservationFile === 'function') {
+            window.clearObservationFile();
+        }
+    }
+     // Función para cargar archivo adjunto al editar observación
+    function cargarArchivoAdjunto(nombreArchivo, extension) {
+      
+        
+        // Mostrar la vista previa
+        const filePreview = document.getElementById('file-preview-obs');
+        const noFileMessage = document.getElementById('no-file-message-obs');
+        const previewName = document.getElementById('preview-name-obs');
+        const previewSize = document.getElementById('preview-size-obs');
+        const fileIcon = filePreview.querySelector('.file-icon i');
+        
+        // Mostrar toda la sección del adjunto
+        filePreview.style.display = 'block';
+        noFileMessage.style.display = 'none';
+        
+        // Actualizar información del archivo
+        previewName.textContent = nombreArchivo;
+        previewSize.textContent = 'Archivo adjunto'; // No tenemos el tamaño real
+        
+        // Actualizar icono según el tipo de archivo
+        const iconClass = getFileIconClassFromExtension(extension);
+        fileIcon.className = `fas ${iconClass}`;
+        
+        // Actualizar campos ocultos
+        $("#obs_nombreArchivo").val(nombreArchivo);
+        $("#obs_extension").val(extension);
+        $("#obs_fileSize").val('0');
+    }
+    
+   
+    
+    // Función para obtener la clase del icono según la extensión
+    function getFileIconClassFromExtension(extension) {
+        const iconMap = {
+            '.pdf': 'fa-file-pdf text-danger',
+            '.doc': 'fa-file-word text-primary',
+            '.docx': 'fa-file-word text-primary',
+            '.xls': 'fa-file-excel text-success',
+            '.xlsx': 'fa-file-excel text-success',
+            '.ppt': 'fa-file-powerpoint text-warning',
+            '.pptx': 'fa-file-powerpoint text-warning',
+            '.txt': 'fa-file-alt text-secondary',
+            '.jpg': 'fa-file-image text-info',
+            '.jpeg': 'fa-file-image text-info',
+            '.png': 'fa-file-image text-info',
+            '.gif': 'fa-file-image text-info',
+            '.zip': 'fa-file-archive text-warning',
+            '.rar': 'fa-file-archive text-warning',
+            '.mp3': 'fa-file-audio text-warning',
+            '.mp4': 'fa-file-video text-danger',
+            '.avi': 'fa-file-video text-danger'
+        };
 
+        return iconMap[extension.toLowerCase()] || 'fa-file';
+    }
     // helpers
     function fmtDate(d){
       if(!d) return "";
@@ -1927,15 +2010,9 @@
 
                 dropArea.addEventListener('drop', handleDrop, false);
 
-                // Botón de selección de archivo
-                selectFileBtn.addEventListener('click', () => fileInput.click());
-
                 // Evento de click en el área de arrastrar y soltar (solo para el área, no para el botón)
-                dropArea.addEventListener('click', (e) => {
-                    // Verificar que el clic no sea en el botón de selección
-                    if (!e.target.closest('#select-file-btn-obs')) {
-                        fileInput.click();
-                    }
+               dropArea.addEventListener('click', () => {
+                    fileInput.click();
                 });
 
                 // Input de archivo
@@ -1943,6 +2020,15 @@
 
                 // Botón de eliminar archivo
                 removeFileBtn.addEventListener('click', removeFile);
+                // Botón de eliminar archivo
+                removeFileBtn.addEventListener('click', function () {
+                    removeFile();
+
+                    // Limpiar campos específicos
+                    $("#obs_nombreArchivo").val("");
+                    $("#obs_extension").val("");
+                });
+
             }
 
             function preventDefaults(e) {

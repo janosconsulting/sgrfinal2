@@ -1,0 +1,90 @@
+ALTER PROCEDURE [dbo].[sp_ListarFormatoDevolucionImpresion]1
+@idFormatoDevolucion INT = NULL
+AS 
+BEGIN
+
+	-- 1. Encabezado 
+	SELECT 
+	numero				as codigo,
+	proveedorTexto		as proveedor,
+	encargadoNombre		as encargado,
+	encargadoDni		as encargadoDni,
+	observacionGeneral	as observacion,
+	CONVERT(VARCHAR,fechaRegistro, 103)	as fechaEmision,
+	CONVERT(VARCHAR,fechaEntrega , 103) as fechaEntrega
+
+	FROM OPE.FormatoDevolucion 
+	WHERE 
+		idFormatoDevolucion = @idFormatoDevolucion
+	AND idEstado != 2
+
+	-- LISTAR DETALLE FORMATO - DEVOLUCION ASOCIADO
+	SELECT
+	fd.idFormatoDevolucion,
+	fdd.idFormatoDevolucionDetalle,
+	dp.idDevolucionProducto,
+	dp.codigo,
+	dp.codigoMochila,
+	dp.observacion,
+	dp.fechaArribo,
+	dp.idTipoObservacion,
+	tp.nombre as tipoObservacion,
+	CONVERT(VARCHAR,dp.fechaArribo, 103) as fechaArriboString
+	
+	FROM OPE.FormatoDevolucion fd
+	INNER JOIN OPE.FormatoDevolucionDetalle fdd
+	ON fdd.idFormatoDevolucion = fd.idFormatoDevolucion
+	LEFT JOIN OPE.DevolucionProducto dp
+	ON dp.idDevolucionProducto = fdd.idDevolucionMochila
+	LEFT JOIN MAN.TipoObservacion tp
+		ON tp.idTipoObservacion = dp.idTipoObservacion
+	WHERE fdd.idEstado != 2
+	AND fd.idFormatoDevolucion = @idFormatoDevolucion
+ END
+
+USE [bdSparenTest]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ListarDevolucionProducto]    Script Date: 18/12/2025 09:12:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[sp_ListarDevolucionProducto]
+	@fechaInicio DATETIME,      
+	@fechaFin    DATETIME,
+	@idPais INT = NULL,      
+	@idSede INT = NULL,      
+	@idAsesor INT = NULL 
+AS
+BEGIN 
+	SELECT 
+	dp.idDevolucionProducto,
+	dp.codigo,
+	dp.codigoMochila,
+	dp.observacion,
+	dp.fechaArribo,
+	dp.idTipoObservacion,
+	tp.nombre as tipoObservacion,
+	CONVERT(VARCHAR,dp.fechaArribo, 103) as fechaArriboString,
+	dp.evidenciaArchivo as foto,
+	dp.idEstado
+	FROM OPE.DevolucionProducto dp
+	INNER JOIN MAN.TipoObservacion tp
+	ON tp.idTipoObservacion = dp.idTipoObservacion
+	WHERE  CONVERT(DATE, dp.fechaArribo) BETWEEN @fechaInicio AND @fechaFin
+	AND (@idPais IS NULL OR dp.idPais = @idPais)        
+    AND (@idSede IS NULL OR dp.idSede = @idSede)      
+	AND (@idAsesor IS NULL OR dp.idAsesor = @idAsesor)  
+	AND dp.idEstado != 2
+
+END
+
+
+select * from ope.devolucionproducto	
+
+update OPE.DevolucionProducto set idEstado = 2
+
+
+select * from seg.PlanOpcionMenu 
+
+insert into seg.PlanOpcionMenu(idOpcionMenu, idPlan,estado)values(15379,3,1)

@@ -246,12 +246,9 @@ WHERE IdPlanDetalle = @idPlanDetalle;";
             bool resultado = false;
             using (var cn = new SqlConnection(ConnectionConfig.ConnectionString))
             {
-                RequerimientoDetalleObservacion dtT = cn.Get<RequerimientoDetalleObservacion>(oDT.idObservacion);
-                if(dtT != null)
-                {
-                    cn.Update(dtT);
-                    resultado = true;
-                }
+                
+                cn.Update(oDT);
+                resultado = true;
                 return resultado;
             }
         }
@@ -260,12 +257,17 @@ WHERE IdPlanDetalle = @idPlanDetalle;";
         {
             using (var cn = new SqlConnection(ConnectionConfig.ConnectionString))
             {
-                cn.Execute(
-                    "sp_Obs_Cerrar",
-                    new { idObservacion, cerradoPor = usuario },
-                    commandType: CommandType.StoredProcedure
-                );
-                return true;
+                var resul = false;
+                RequerimientoDetalleObservacion rn = cn.Get<RequerimientoDetalleObservacion>(idObservacion);
+                if(rn != null)
+                {
+                    rn.estado = "cerrada";
+                    rn.cerradoPor = usuario;
+                    rn.fechaCierre = DateTime.Now;
+                    cn.Update(rn);
+                    resul = true;
+                }
+                return resul;
             }
         }
         public RequerimientoDetalleObservacion ObtenerObservacion(int idObservacion)

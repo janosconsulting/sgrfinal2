@@ -1,0 +1,1189 @@
+
+<style>
+    :root {
+        --shadow-soft: 0 10px 30px rgba(0,0,0,.08);
+        --shadow-card: 0 6px 18px rgba(0,0,0,.07);
+        --radius-xl: 18px;
+        --radius-lg: 14px;
+    }
+
+    body {
+        background: #f6f8fb;
+    }
+
+    .app-wrap {
+        max-width: 1220px;
+        margin: 0 auto;
+    }
+
+    .hero-card {
+        border: 0;
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-soft);
+        overflow: hidden;
+    }
+
+    .hero-bg {
+        background: radial-gradient(1200px 600px at 10% 10%, rgba(13,110,253,.18), transparent 55%), radial-gradient(900px 500px at 90% 0%, rgba(32,201,151,.16), transparent 50%), linear-gradient(180deg, #ffffff, #fbfcff);
+    }
+
+    .badge-soft {
+        background: rgba(13,110,253,.10);
+        color: #0d6efd;
+        border: 1px solid rgba(13,110,253,.18);
+    }
+
+    .searchbar {
+        border-radius: 999px;
+        box-shadow: 0 10px 24px rgba(0,0,0,.06);
+        border: 1px solid rgba(0,0,0,.06);
+        padding: .35rem .6rem;
+        background: #fff;
+    }
+
+        .searchbar input {
+            border: 0 !important;
+            box-shadow: none !important;
+            height: 44px;
+            font-size: 1rem;
+        }
+
+        .searchbar .btn {
+            border-radius: 999px;
+            height: 44px;
+            padding: 0 .95rem;
+        }
+
+    .sticky-top-soft {
+        position: sticky;
+        top: 14px;
+        z-index: 10;
+    }
+
+    .card-soft {
+        border: 0;
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-card);
+    }
+
+    .result-item {
+        border-radius: 14px;
+        border: 1px solid rgba(0,0,0,.06);
+        transition: .15s ease-in-out;
+        background: #fff;
+    }
+
+        .result-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 22px rgba(0,0,0,.07);
+        }
+
+    .pill-type {
+        font-weight: 700;
+        border-radius: 999px;
+        padding: .25rem .6rem;
+        font-size: .78rem;
+        border: 1px solid rgba(0,0,0,.08);
+        background: #fff;
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        white-space: nowrap;
+    }
+
+    .pill-simple {
+        color: #0d6efd;
+        border-color: rgba(13,110,253,.25);
+        background: rgba(13,110,253,.06);
+    }
+
+    .pill-lote {
+        color: #198754;
+        border-color: rgba(25,135,84,.25);
+        background: rgba(25,135,84,.06);
+    }
+
+    .pill-serie {
+        color: #6f42c1;
+        border-color: rgba(111,66,193,.25);
+        background: rgba(111,66,193,.06);
+    }
+
+    .table thead th {
+        background: #f3f6fb;
+        border-bottom: 1px solid rgba(0,0,0,.06) !important;
+        font-size: .82rem;
+        text-transform: uppercase;
+        letter-spacing: .02em;
+        color: #556;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+
+    .diff-pos {
+        color: #198754;
+        font-weight: 800;
+    }
+
+    .diff-neg {
+        color: #dc3545;
+        font-weight: 800;
+    }
+
+    .diff-zero {
+        color: #6c757d;
+        font-weight: 800;
+    }
+
+    .kbd-hint {
+        border: 1px solid rgba(0,0,0,.12);
+        border-bottom-width: 2px;
+        background: #fff;
+        padding: .1rem .4rem;
+        border-radius: 8px;
+        font-size: .78rem;
+        color: #334;
+    }
+
+    .offcanvas {
+        border-top-left-radius: var(--radius-xl);
+        border-bottom-left-radius: var(--radius-xl);
+    }
+
+    .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        border-radius: 999px;
+        border: 1px solid rgba(0,0,0,.12);
+        padding: .28rem .55rem;
+        background: #fff;
+        margin: .15rem;
+        font-weight: 600;
+        font-size: .88rem;
+    }
+
+        .chip .x {
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(0,0,0,.12);
+            background: #f8f9fa;
+            cursor: pointer;
+        }
+
+    .muted-mini {
+        font-size: .85rem;
+        color: #6c757d;
+    }
+
+    .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+</style>
+
+<div class="app-wrap px-3 py-4">
+    <!-- Header / Hero -->
+    <div class="card hero-card hero-bg mb-4">
+        <div class="card-body p-4 p-lg-5">
+            <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="badge badge-soft rounded-pill px-3 py-2">
+                            <i class="bi bi-clipboard2-check me-1"></i> Módulo Operativo
+                        </span>
+                        <span class="badge text-bg-light rounded-pill px-3 py-2">
+                            <i class="bi bi-shield-check me-1"></i> Auditable
+                        </span>
+                    </div>
+                    <h1 class="h3 mb-2 fw-bold">Toma de Inventario</h1>
+                    <div class="text-secondary">
+                        Busca, agrega al conteo y registra <b>Simple / Lotes / Series</b>. Luego podrás <b>Aplicar</b> para generar el ajuste.
+                    </div>
+                </div>
+
+                <!-- Doc info -->
+                <div class="d-flex flex-column gap-2">
+                    <div class="d-flex gap-2 flex-wrap justify-content-lg-end">
+                        <span class="pill-type"><i class="bi bi-building"></i> Almacén: <b id="lblAlmacen">Principal</b></span>
+                        <span class="pill-type"><i class="bi bi-calendar3"></i> Fecha: <b id="lblFecha"></b></span>
+                        <span class="pill-type"><i class="bi bi-person-badge"></i> Responsable: <b id="lblResponsable">Usuario</b></span>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-lg-end">
+                        <button class="btn btn-light border" onclick="resetConteo()">
+                            <i class="bi bi-arrow-counterclockwise me-1"></i> Nuevo conteo
+                        </button>
+                        <button class="btn btn-primary" onclick="exportPayload()">
+                            <i class="bi bi-cloud-arrow-up me-1"></i> Enviar al backend
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search bar -->
+            <div class="mt-4">
+                <div class="searchbar d-flex align-items-center gap-2">
+                    <button class="btn btn-light border" type="button" onclick="focusSearch()" title="Enfocar buscador">
+                        <i class="bi bi-search"></i>
+                    </button>
+
+                    <input id="txtSearch" class="form-control" placeholder="Buscar por código, código de barras o nombre… (Enter para buscar)"
+                           autocomplete="off" />
+
+                    <div class="d-none d-lg-flex align-items-center gap-2 pe-2 text-secondary">
+                        <span class="muted-mini">Tips:</span>
+                        <span class="kbd-hint">Enter</span>
+                        <span class="muted-mini">buscar</span>
+                        <span class="kbd-hint">Esc</span>
+                        <span class="muted-mini">limpiar</span>
+                    </div>
+
+                    <button class="btn btn-primary" type="button" onclick="doSearch()">
+                        <i class="bi bi-arrow-right-circle me-1"></i> Buscar
+                    </button>
+                </div>
+                <div class="mt-2 text-secondary small">
+                    <i class="bi bi-upc-scan me-1"></i> Si usas lector de código de barras, normalmente “escribe” y presiona Enter automáticamente.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Left: Results -->
+        <div class="col-lg-5">
+            <div class="sticky-top-soft">
+                <div class="card card-soft">
+                    <div class="card-body p-3 p-lg-4">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div>
+                                <div class="fw-bold fs-5">Resultados</div>
+                                <div class="text-secondary small">Selecciona un producto para agregarlo al conteo.</div>
+                            </div>
+                            <span class="badge text-bg-light rounded-pill px-3 py-2">
+                                <i class="bi bi-list-task me-1"></i> <span id="lblCountResults">0</span>
+                            </span>
+                        </div>
+
+                        <div id="resultsWrap" class="d-grid gap-2 mt-3">
+                            <div class="text-secondary small">
+                                Escribe algo y presiona <b>Buscar</b>. Ejemplos: <span class="mono">750105533</span>, <span class="mono">ARROZ</span>, <span class="mono">P001</span>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-soft mt-4">
+                    <div class="card-body p-3 p-lg-4">
+                        <div class="fw-bold">Acciones rápidas</div>
+                        <div class="text-secondary small mb-3">Atajos para el flujo “no encontrado”.</div>
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary" onclick="goNuevoProducto()">
+                                <i class="bi bi-plus-circle me-1"></i> Nuevo producto
+                            </button>
+                            <button class="btn btn-outline-secondary" onclick="seedDemoSearch()">
+                                <i class="bi bi-lightning-charge me-1"></i> Cargar ejemplo de búsqueda
+                            </button>
+                        </div>
+
+                        <hr class="my-4" />
+                        <div class="small text-secondary">
+                            <i class="bi bi-link-45deg me-1"></i>
+                            Recomendación: “Nuevo producto” debe abrir tu formulario real con un <b>returnUrl</b> para volver al conteo.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Conteo -->
+        <div class="col-lg-7">
+            <div class="card card-soft">
+                <div class="card-body p-3 p-lg-4">
+                    <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-md-center mb-3">
+                        <div>
+                            <div class="fw-bold fs-5">Detalle del Conteo</div>
+                            <div class="text-secondary small">Aquí se almacenan los ítems contados (borrador) hasta aplicar.</div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-light border" onclick="closeConteo()">
+                                <i class="bi bi-lock me-1"></i> Cerrar conteo
+                            </button>
+                            <button class="btn btn-success" onclick="applyConteo()">
+                                <i class="bi bi-check2-circle me-1"></i> Aplicar (genera ajuste)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th style="min-width:240px;">Producto</th>
+                                    <th class="text-center" style="width:110px;">Tipo</th>
+                                    <th class="text-end" style="width:120px;">Stock sistema</th>
+                                    <th class="text-end" style="width:120px;">Contado</th>
+                                    <th class="text-end" style="width:120px;">Diferencia</th>
+                                    <th class="text-end" style="width:130px;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyConteo">
+                                <tr>
+                                    <td colspan="6" class="text-center text-secondary py-5">
+                                        <div class="mb-2"><i class="bi bi-inboxes fs-1"></i></div>
+                                        Aún no hay productos en el conteo. Busca y agrega uno desde la izquierda.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between mt-3 gap-2">
+                        <div class="text-secondary small">
+                            <i class="bi bi-info-circle me-1"></i>
+                            El conteo no debe mover stock hasta presionar <b>Aplicar</b>.
+                        </div>
+                        <div class="d-flex gap-2">
+                            <span class="pill-type"><i class="bi bi-basket2"></i> Ítems: <b id="lblConteoItems">0</b></span>
+                            <span class="pill-type"><i class="bi bi-exclamation-triangle"></i> Con diferencia: <b id="lblConteoDiffs">0</b></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payload preview -->
+            <div class="card card-soft mt-4">
+                <div class="card-body p-3 p-lg-4">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <div class="fw-bold">Payload (preview)</div>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="copyPayload()">
+                            <i class="bi bi-clipboard me-1"></i> Copiar JSON
+                        </button>
+                    </div>
+                    <pre id="payloadPreview" class="bg-light border rounded-4 p-3 mb-0" style="max-height:260px; overflow:auto;">{}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Offcanvas: detalle (simple/lote/serie) -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offDetalle">
+    <div class="offcanvas-header">
+        <div>
+            <div class="fw-bold" id="detTitulo">Detalle</div>
+            <div class="text-secondary small" id="detSub">Configura el conteo</div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body pt-0">
+        <div class="card border-0 shadow-sm rounded-4 mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <div class="text-secondary small">Código</div>
+                        <div class="fw-bold mono" id="detCodigo">-</div>
+                    </div>
+                    <div class="text-end">
+                        <div class="text-secondary small">Stock sistema</div>
+                        <div class="fw-bold" id="detStock">0</div>
+                    </div>
+                </div>
+                <hr class="my-3" />
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="text-secondary small">Tipo control</div>
+                    <div id="detTipo" class="pill-type">-</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIMPLE -->
+        <div id="panelSimple" class="d-none">
+            <div class="mb-2 fw-bold">Conteo (simple)</div>
+            <div class="text-secondary small mb-3">Ingresa el stock contado físicamente.</div>
+
+            <label class="form-label">Cantidad contada</label>
+            <input type="number" class="form-control form-control-lg" id="simpleContado" min="0" step="1" />
+            <div class="d-flex justify-content-between mt-2 small text-secondary">
+                <span>Diferencia:</span>
+                <span class="fw-bold" id="simpleDiff">0</span>
+            </div>
+
+            <label class="form-label mt-3">Observación (opcional)</label>
+            <textarea class="form-control" id="simpleObs" rows="3" placeholder="Ej: Se encontró en otra ubicación"></textarea>
+        </div>
+
+        <!-- LOTES -->
+        <div id="panelLotes" class="d-none">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <div>
+                    <div class="fw-bold">Conteo por lotes</div>
+                    <div class="text-secondary small">Edita cantidades por lote o agrega lotes nuevos.</div>
+                </div>
+                <button class="btn btn-sm btn-outline-success" onclick="addLoteRow()">
+                    <i class="bi bi-plus-circle me-1"></i> Agregar lote
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Lote</th>
+                            <th>Vence</th>
+                            <th class="text-end">Stock</th>
+                            <th class="text-end">Contado</th>
+                            <th class="text-end">Dif.</th>
+                            <th class="text-end">Quitar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyLotes"></tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between mt-2 small text-secondary">
+                <span>Total contado:</span>
+                <span class="fw-bold" id="lotesTotal">0</span>
+            </div>
+        </div>
+
+        <!-- SERIES -->
+        <div id="panelSeries" class="d-none">
+            <div class="fw-bold mb-1">Conteo por series</div>
+            <div class="text-secondary small mb-3">Escanea o escribe series. El conteo se calcula por cantidad de series.</div>
+
+            <div class="input-group mb-2">
+                <span class="input-group-text"><i class="bi bi-upc-scan"></i></span>
+                <input id="txtSerie" class="form-control" placeholder="Ingresar serie y Enter…" autocomplete="off" />
+                <button class="btn btn-outline-primary" onclick="addSerieFromInput()">
+                    <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+
+            <div class="d-flex justify-content-between small text-secondary mb-2">
+                <span>Series contadas:</span>
+                <span class="fw-bold" id="seriesCount">0</span>
+            </div>
+
+            <div id="seriesChips" class="mb-2"></div>
+
+            <div class="alert alert-light border rounded-4 mt-3 mb-0">
+                <div class="small text-secondary">
+                    <i class="bi bi-lightbulb me-1"></i>
+                    Tip: puedes marcar “existentes” vs “nuevas” si tu negocio lo requiere (aquí lo dejamos simple).
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-4" />
+        <div class="d-flex gap-2">
+            <button class="btn btn-light border w-50" data-bs-dismiss="offcanvas">
+                <i class="bi bi-x-circle me-1"></i> Cancelar
+            </button>
+            <button class="btn btn-primary w-50" onclick="saveDetalle()">
+                <i class="bi bi-save2 me-1"></i> Guardar detalle
+            </button>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+}
+
+
+@section Scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+        // ======================
+        // DEMO DATA (simula backend)
+        // ======================
+        //const productosDb = [
+        //    { id: 1, codigo: "P001", barcode: "750105533", nombre: "ARROZ EXTRA 5KG", tipo: "SIMPLE", stock: 120, um: "UND" },
+        //    {
+        //        id: 2, codigo: "P002", barcode: "775018900", nombre: "LECHE ENTERA 1L", tipo: "LOTE", stock: 48, um: "UND",
+        //        lotes: [
+        //            { lote: "L-2401", vence: "2026-01-30", stock: 20 },
+        //            { lote: "L-2402", vence: "2026-02-15", stock: 28 }
+        //        ]
+        //    },
+        //    {
+        //        id: 3, codigo: "P003", barcode: "123456789", nombre: "LAPTOP 14\\\" PRO", tipo: "SERIE", stock: 3, um: "UND",
+        //        series: ["SN-AX19", "SN-AX20", "SN-AX21"]
+        //    }
+        //];
+        let productosDb = [];
+
+        // Documento de conteo (borrador)
+        const conteo = {
+            idConteo: 0,
+            almacen: "Principal",
+            fecha: null,
+            responsable: "Usuario",
+            estado: "BORRADOR",
+            items: []
+        };
+
+        // UI refs
+        const elSearch = document.getElementById("txtSearch");
+        const resultsWrap = document.getElementById("resultsWrap");
+        const lblCountResults = document.getElementById("lblCountResults");
+        const tbodyConteo = document.getElementById("tbodyConteo");
+        const payloadPreview = document.getElementById("payloadPreview");
+
+        // Offcanvas refs
+        const offDetalle = new bootstrap.Offcanvas("#offDetalle");
+        let currentItemIndex = -1;
+
+        const panelSimple = document.getElementById("panelSimple");
+        const panelLotes = document.getElementById("panelLotes");
+        const panelSeries = document.getElementById("panelSeries");
+
+        // Simple
+        const simpleContado = document.getElementById("simpleContado");
+        const simpleObs = document.getElementById("simpleObs");
+        const simpleDiff = document.getElementById("simpleDiff");
+
+        // Lotes
+        const tbodyLotes = document.getElementById("tbodyLotes");
+        const lotesTotal = document.getElementById("lotesTotal");
+
+        // Series
+        const txtSerie = document.getElementById("txtSerie");
+        const seriesChips = document.getElementById("seriesChips");
+        const seriesCount = document.getElementById("seriesCount");
+
+        // Header labels
+        document.getElementById("lblAlmacen").textContent = conteo.almacen;
+        document.getElementById("lblResponsable").textContent = conteo.responsable;
+        setToday();
+
+        // Events
+        elSearch.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") doSearch();
+            if (e.key === "Escape") { elSearch.value = ""; renderResults([]); }
+        });
+
+        simpleContado.addEventListener("input", () => {
+            const item = conteo.items[currentItemIndex];
+            const contado = parseFloat(simpleContado.value || "0");
+            const diff = contado - (item?.stockSistema || 0);
+            simpleDiff.textContent = formatNumber(diff);
+            simpleDiff.className = diffClass(diff);
+        });
+
+        txtSerie.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") addSerieFromInput();
+        });
+
+        // ======================
+        // Utils
+        // ======================
+        function setToday() {
+            const now = new Date();
+            conteo.fecha = now.toISOString();
+            document.getElementById("lblFecha").textContent =
+                now.toLocaleDateString("es-PE", { year: "numeric", month: "2-digit", day: "2-digit" });
+            refreshPayloadPreview();
+        }
+
+        function formatNumber(n) {
+            const num = Number(n || 0);
+            if (Number.isNaN(num)) return "0";
+            return num.toLocaleString("es-PE", { maximumFractionDigits: 2 });
+        }
+
+        function diffClass(diff) {
+            if (diff > 0) return "diff-pos";
+            if (diff < 0) return "diff-neg";
+            return "diff-zero";
+        }
+
+        function typePill(tipo) {
+            if (tipo === "SIMPLE") return '<span class="pill-type pill-simple"><i class="bi bi-box-seam"></i> SIMPLE</span>';
+            if (tipo === "LOTE") return '<span class="pill-type pill-lote"><i class="bi bi-collection"></i> LOTES</span>';
+            return '<span class="pill-type pill-serie"><i class="bi bi-upc"></i> SERIES</span>';
+        }
+
+        function escapeHtml(str) {
+            return (str ?? "").toString()
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
+        function focusSearch() { elSearch.focus(); }
+
+        // ======================
+        // Search
+        // ======================
+        //function doSearch() {
+        //    const q = (elSearch.value || "").trim().toLowerCase();
+        //    if (!q) {
+        //        renderResults([]);
+        //        return;
+        //    }
+
+        //    const found = productosDb.filter(p => {
+        //        return (p.codigo || "").toLowerCase().includes(q)
+        //            || (p.barcode || "").toLowerCase().includes(q)
+        //            || (p.nombre || "").toLowerCase().includes(q);
+        //    });
+
+        //    renderResults(found, q);
+        //}
+
+        function renderResults(list, q = "") {
+            resultsWrap.innerHTML = "";
+            lblCountResults.textContent = list.length;
+
+            if (!q && list.length === 0) {
+                resultsWrap.innerHTML = `
+                                      <div class="text-secondary small">
+                                        Escribe algo y presiona <b>Buscar</b>. Ejemplos: <span class="mono">750105533</span>, <span class="mono">ARROZ</span>, <span class="mono">P001</span>.
+                                      </div>`;
+                return;
+            }
+
+            if (list.length === 0) {
+                resultsWrap.innerHTML = `
+                                      <div class="alert alert-warning border rounded-4 mb-2">
+                                        <div class="fw-bold"><i class="bi bi-exclamation-circle me-1"></i> No se encontró: <span class="mono">${escapeHtml(q)}</span></div>
+                                        <div class="small text-secondary mt-1">Puedes crear el producto y volver al conteo.</div>
+                                      </div>
+                                      <button class="btn btn-outline-primary w-100" onclick="goNuevoProducto('${escapeHtml(q)}')">
+                                        <i class="bi bi-plus-circle me-1"></i> Nuevo producto
+                                      </button>`;
+                return;
+            }
+
+            list.forEach(p => {
+                const html = `
+                                      <div class="result-item p-3">
+                                        <div class="d-flex align-items-start justify-content-between gap-2">
+                                          <div>
+                                            <div class="fw-bold">${escapeHtml(p.nombre)}</div>
+                                            <div class="text-secondary small">
+                                              <span class="mono">${escapeHtml(p.codigo)}</span>
+                                              <span class="mx-2">•</span>
+                                              <span class="mono">${escapeHtml(p.barcode)}</span>
+                                              <span class="mx-2">•</span>
+                                              <span>${escapeHtml(p.um || "UND")}</span>
+                                            </div>
+                                            <div class="mt-2 d-flex align-items-center gap-2 flex-wrap">
+                                              ${typePill(p.tipo)}
+                                              <span class="pill-type"><i class="bi bi-database"></i> Stock: <b>${formatNumber(p.stock)}</b></span>
+                                            </div>
+                                          </div>
+                                          <div class="text-end">
+                                            <button class="btn btn-primary" onclick="addToConteo(${p.id})">
+                                              <i class="bi bi-plus-lg me-1"></i> Agregar
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>`;
+                resultsWrap.insertAdjacentHTML("beforeend", html);
+            });
+        }
+
+        function seedDemoSearch() {
+            elSearch.value = "P00";
+            doSearch();
+            focusSearch();
+        }
+
+        function goNuevoProducto(q = "") {
+            alert("Aquí rediriges a tu formulario real de 'Nuevo Producto'.\n\nSugerencia:\n/Producto/Nuevo?returnUrl=<url_de_regreso>&q=" + q);
+        }
+
+        // ======================
+        // Conteo
+        // ======================
+        function addToConteo(idProducto) {
+            const p = productosDb.find(x => x.id === idProducto);
+            if (!p) return;
+
+            const existingIndex = conteo.items.findIndex(i => i.idProducto === p.id);
+            if (existingIndex >= 0) {
+                openDetalle(existingIndex);
+                return;
+            }
+
+            const item = {
+                idProducto: p.id,
+                codigo: p.codigo,
+                barcode: p.barcode,
+                nombre: p.nombre,
+                tipo: p.tipo,
+                stockSistema: p.stock,
+                contado: (p.tipo === "SERIE") ? (p.series?.length || 0) : (p.tipo === "LOTE" ? (p.lotes?.reduce((a, b) => a + (b.stock || 0), 0) || 0) : p.stock),
+                obs: "",
+                lotes: (p.tipo === "LOTE") ? (p.lotes || []).map(l => ({ lote: l.lote, vence: l.vence, stockSistema: l.stock, contado: l.stock })) : [],
+                series: (p.tipo === "SERIE") ? ([...(p.series || [])]) : []
+            };
+
+            conteo.items.push(item);
+            renderConteo();
+            openDetalle(conteo.items.length - 1);
+        }
+
+        function renderConteo() {
+            const items = conteo.items;
+            document.getElementById("lblConteoItems").textContent = items.length;
+
+            if (items.length === 0) {
+                tbodyConteo.innerHTML = `
+                                      <tr>
+                                        <td colspan="6" class="text-center text-secondary py-5">
+                                          <div class="mb-2"><i class="bi bi-inboxes fs-1"></i></div>
+                                          Aún no hay productos en el conteo. Busca y agrega uno desde la izquierda.
+                                        </td>
+                                      </tr>`;
+                refreshPayloadPreview();
+                document.getElementById("lblConteoDiffs").textContent = "0";
+                return;
+            }
+
+            let diffs = 0;
+            tbodyConteo.innerHTML = "";
+
+            items.forEach((it, idx) => {
+                const contado = calcContado(it);
+                const diff = contado - (it.stockSistema || 0);
+                if (diff !== 0) diffs++;
+
+                const row = `
+                                      <tr>
+                                        <td>
+                                          <div class="fw-bold">${escapeHtml(it.nombre)}</div>
+                                          <div class="text-secondary small">
+                                            <span class="mono">${escapeHtml(it.codigo)}</span>
+                                            <span class="mx-2">•</span>
+                                            <span class="mono">${escapeHtml(it.barcode || "-")}</span>
+                                          </div>
+                                        </td>
+                                        <td class="text-center">${typePill(it.tipo)}</td>
+                                        <td class="text-end fw-bold">${formatNumber(it.stockSistema)}</td>
+                                        <td class="text-end fw-bold">${formatNumber(contado)}</td>
+                                        <td class="text-end ${diffClass(diff)}">${formatNumber(diff)}</td>
+                                        <td class="text-end">
+                                          <button class="btn btn-sm btn-outline-primary" onclick="openDetalle(${idx})">
+                                            <i class="bi bi-sliders2-vertical me-1"></i> Detalle
+                                          </button>
+                                          <button class="btn btn-sm btn-outline-danger ms-1" onclick="removeItem(${idx})">
+                                            <i class="bi bi-trash me-1"></i>
+                                          </button>
+                                        </td>
+                                      </tr>`;
+                tbodyConteo.insertAdjacentHTML("beforeend", row);
+            });
+
+            document.getElementById("lblConteoDiffs").textContent = diffs;
+            refreshPayloadPreview();
+        }
+
+        function calcContado(item) {
+            if (item.tipo === "SERIE") return item.series?.length || 0;
+            if (item.tipo === "LOTE") return (item.lotes || []).reduce((a, b) => a + Number(b.contado || 0), 0);
+            return Number(item.contado || 0);
+        }
+
+        function removeItem(idx) {
+            if (!confirm("¿Quitar este producto del conteo?")) return;
+            conteo.items.splice(idx, 1);
+            renderConteo();
+        }
+
+        function resetConteo() {
+            if (!confirm("¿Crear un nuevo conteo? Se perderá el borrador actual.")) return;
+            conteo.items = [];
+            conteo.estado = "BORRADOR";
+            setToday();
+            renderConteo();
+            renderResults([]);
+            elSearch.value = "";
+            focusSearch();
+        }
+
+        function closeConteo() {
+            conteo.estado = "CERRADO";
+            alert("Conteo cerrado (demo). En tu sistema: bloquear edición y permitir solo aplicar/revertir.");
+            refreshPayloadPreview();
+        }
+
+        function applyConteo() {
+            if (conteo.items.length === 0) {
+                alert("No hay ítems en el conteo.");
+                return;
+            }
+            if (!confirm("¿Aplicar conteo? Esto debería generar el Ajuste de Inventario.")) return;
+
+            conteo.estado = "APLICADO";
+            alert("Aplicado (demo). Aquí generas el ajuste de inventario con trazabilidad.");
+            refreshPayloadPreview();
+        }
+        function doSearch() {
+            const q = (elSearch.value || "").trim();
+            if (!q) {
+                renderResults([]);
+                return;
+            }
+
+            $.get('/TomaInventario/Listar', {
+                texto: q,
+                idAlmacen: -1
+            }, function (resp) {
+
+                productosDb = mapBackendToUI(resp);
+                renderResults(productosDb, q.toLowerCase());
+
+            }).fail(() => {
+                toast("Error al buscar productos", "danger");
+            });
+        }
+
+        function mapBackendToUI(resp) {
+
+            const productos = resp.ListaProductos || [];
+            const detalles = resp.ListaDetalleProductoDto || [];
+
+            return productos.map(p => {
+
+                let lotes = [];
+                let series = [];
+
+                if (p.tipoProducto === "LOTE") {
+                    lotes = detalles
+                        .filter(d => d.idProducto === p.idProducto)
+                        .map(d => ({
+                            lote: d.serieLote,
+                            vence: d.fechaVencimiento?.substring(0, 10),
+                            stock: d.cantidad
+                        }));
+                }
+
+                if (p.tipoProducto === "SERIE") {
+                    series = detalles
+                        .filter(d => d.idProducto === p.idProducto)
+                        .map(d => d.serieLote);
+                }
+
+                return {
+                    id: p.idProducto,
+                    codigo: p.codigo,
+                    barcode: "",
+                    nombre: p.nombre,
+                    tipo: p.tipoProducto,
+                    stock: Number(p.cantidad || 0),
+                    um: "UND",
+                    lotes,
+                    series
+                };
+            });
+        }
+
+
+
+        // ======================
+        // Detalle Offcanvas
+        // ======================
+        function openDetalle(idx) {
+            currentItemIndex = idx;
+            const item = conteo.items[idx];
+
+            document.getElementById("detTitulo").textContent = item.nombre;
+            document.getElementById("detSub").textContent = "Configura el conteo para este producto";
+            document.getElementById("detCodigo").textContent = item.codigo;
+            document.getElementById("detStock").textContent = formatNumber(item.stockSistema);
+
+            const tipoEl = document.getElementById("detTipo");
+            tipoEl.className = "pill-type";
+            if (item.tipo === "SIMPLE") { tipoEl.classList.add("pill-simple"); tipoEl.innerHTML = '<i class="bi bi-box-seam"></i> SIMPLE'; }
+            if (item.tipo === "LOTE") { tipoEl.classList.add("pill-lote"); tipoEl.innerHTML = '<i class="bi bi-collection"></i> LOTES'; }
+            if (item.tipo === "SERIE") { tipoEl.classList.add("pill-serie"); tipoEl.innerHTML = '<i class="bi bi-upc"></i> SERIES'; }
+
+            panelSimple.classList.add("d-none");
+            panelLotes.classList.add("d-none");
+            panelSeries.classList.add("d-none");
+
+            if (item.tipo === "SIMPLE") {
+                panelSimple.classList.remove("d-none");
+                simpleContado.value = item.contado ?? 0;
+                simpleObs.value = item.obs ?? "";
+                const diff = Number(simpleContado.value || 0) - (item.stockSistema || 0);
+                simpleDiff.textContent = formatNumber(diff);
+                simpleDiff.className = diffClass(diff);
+            }
+
+            if (item.tipo === "LOTE") {
+                panelLotes.classList.remove("d-none");
+                renderLotes(item);
+            }
+
+            if (item.tipo === "SERIE") {
+                panelSeries.classList.remove("d-none");
+                txtSerie.value = "";
+                renderSeries(item);
+            }
+
+            offDetalle.show();
+        }
+
+        function saveDetalle() {
+            const item = conteo.items[currentItemIndex];
+            if (!item) return;
+
+            if (item.tipo === "SIMPLE") {
+                item.contado = Number(simpleContado.value || 0);
+                item.obs = simpleObs.value || "";
+            }
+
+            renderConteo();
+            offDetalle.hide();
+        }
+
+        // ======================
+        // LOTES (FIX: NO PERDER FOCO)
+        // - renderLotes solo se usa al abrir / agregar / eliminar.
+        // - al tipear contado, NO se hace renderLotes (no re-render).
+        // ======================
+        function renderLotes(item) {
+            tbodyLotes.innerHTML = "";
+
+            (item.lotes || []).forEach((l, i) => {
+                const diff = Number(l.contado || 0) - Number(l.stockSistema || 0);
+
+                const row = `
+                                      <tr>
+                                        <td><input class="form-control form-control-sm mono" value="${escapeHtml(l.lote || "")}"
+                                          oninput="updLoteField(${i}, 'lote', this.value)"></td>
+
+                                        <td><input type="date" class="form-control form-control-sm" value="${escapeHtml(l.vence || "")}"
+                                          oninput="updLoteField(${i}, 'vence', this.value)"></td>
+
+                                        <td class="text-end fw-bold">${formatNumber(l.stockSistema)}</td>
+
+                                        <td class="text-end">
+                                          <input type="number" class="form-control form-control-sm text-end" min="0" step="1"
+                                            value="${Number(l.contado || 0)}"
+                                            oninput="updLoteContado(${i}, this.value, this)">
+                                        </td>
+
+                                        <td class="text-end ${diffClass(diff)}">${formatNumber(diff)}</td>
+
+                                        <td class="text-end">
+                                          <button class="btn btn-sm btn-outline-danger" onclick="delLoteRow(${i})"><i class="bi bi-x-lg"></i></button>
+                                        </td>
+                                      </tr>`;
+                tbodyLotes.insertAdjacentHTML("beforeend", row);
+            });
+
+            refreshLotesTotalOnly(item);
+        }
+
+        function refreshLotesTotalOnly(item) {
+            const total = (item.lotes || []).reduce((a, b) => a + Number(b.contado || 0), 0);
+            lotesTotal.textContent = formatNumber(total);
+        }
+
+        function addLoteRow() {
+            const item = conteo.items[currentItemIndex];
+            if (!item) return;
+
+            item.lotes = item.lotes || [];
+            item.lotes.push({ lote: "", vence: "", stockSistema: 0, contado: 0 });
+
+            // aquí sí re-render (no estamos tipeando)
+            renderLotes(item);
+        }
+
+        function delLoteRow(i) {
+            const item = conteo.items[currentItemIndex];
+            if (!item) return;
+
+            item.lotes.splice(i, 1);
+
+            // aquí sí re-render (no estamos tipeando)
+            renderLotes(item);
+        }
+
+        function updLoteField(i, field, value) {
+            const item = conteo.items[currentItemIndex];
+            if (!item) return;
+
+            item.lotes[i][field] = value;
+
+            // NO re-render para no perder foco
+            refreshLotesTotalOnly(item);
+        }
+
+        function updLoteContado(i, value, inputEl) {
+            const item = conteo.items[currentItemIndex];
+            if (!item) return;
+
+            const contado = Number(value || 0);
+            item.lotes[i].contado = contado;
+
+            // Actualiza TOTAL sin re-render
+            refreshLotesTotalOnly(item);
+
+            // Actualiza la DIF de ESA FILA sin re-render
+            const td = inputEl?.closest("td");
+            const diffTd = td?.nextElementSibling; // columna Dif.
+            if (diffTd) {
+                const stockSistema = Number(item.lotes[i].stockSistema || 0);
+                const diff = contado - stockSistema;
+
+                diffTd.textContent = formatNumber(diff);
+                diffTd.className = "text-end " + diffClass(diff);
+            }
+        }
+
+        // ======================
+        // SERIES
+        // ======================
+        function renderSeries(item) {
+            seriesChips.innerHTML = "";
+            const list = item.series || [];
+            seriesCount.textContent = list.length;
+
+            if (list.length === 0) {
+                seriesChips.innerHTML = `<div class="text-secondary small">Aún no hay series contadas. Ingresa una arriba.</div>`;
+                return;
+            }
+
+            list.forEach((s, i) => {
+                const chip = document.createElement("div");
+                chip.className = "chip";
+                chip.innerHTML = `<span class="mono">${escapeHtml(s)}</span>
+                                                      <span class="x" title="Quitar" onclick="delSerie(${i})"><i class="bi bi-x"></i></span>`;
+                seriesChips.appendChild(chip);
+            });
+        }
+
+        function addSerieFromInput() {
+            const item = conteo.items[currentItemIndex];
+            if (!item) return;
+
+            const val = (txtSerie.value || "").trim();
+            if (!val) return;
+
+            item.series = item.series || [];
+            const exists = item.series.some(x => (x || "").toLowerCase() === val.toLowerCase());
+            if (exists) {
+                txtSerie.value = "";
+                txtSerie.focus();
+                toast("Serie duplicada", "warning");
+                return;
+            }
+
+            item.series.push(val);
+            txtSerie.value = "";
+            txtSerie.focus();
+            renderSeries(item);
+        }
+
+        function delSerie(i) {
+            const item = conteo.items[currentItemIndex];
+            if (!item) return;
+            item.series.splice(i, 1);
+            renderSeries(item);
+        }
+
+        // ======================
+        // Payload / Backend
+        // ======================
+        function buildPayload() {
+            return {
+                cabecera: {
+                    idConteo: conteo.idConteo,
+                    almacen: conteo.almacen,
+                    responsable: conteo.responsable,
+                    fecha: conteo.fecha,
+                    estado: conteo.estado
+                },
+                detalle: conteo.items.map(it => ({
+                    idProducto: it.idProducto,
+                    codigo: it.codigo,
+                    barcode: it.barcode,
+                    nombre: it.nombre,
+                    tipo: it.tipo,
+                    stockSistema: it.stockSistema,
+                    contado: calcContado(it),
+                    diferencia: calcContado(it) - (it.stockSistema || 0),
+                    obs: it.obs || null,
+                    lotes: (it.tipo === "LOTE") ? (it.lotes || []).map(l => ({
+                        lote: l.lote,
+                        vence: l.vence || null,
+                        stockSistema: Number(l.stockSistema || 0),
+                        contado: Number(l.contado || 0),
+                        diferencia: Number(l.contado || 0) - Number(l.stockSistema || 0)
+                    })) : [],
+                    series: (it.tipo === "SERIE") ? (it.series || []) : []
+                }))
+            };
+        }
+
+        function refreshPayloadPreview() {
+            payloadPreview.textContent = JSON.stringify(buildPayload(), null, 2);
+        }
+
+        function exportPayload() {
+            alert("Payload listo (demo). Revisa el JSON en la sección 'Payload (preview)'.");
+            refreshPayloadPreview();
+        }
+
+        async function copyPayload() {
+            const txt = JSON.stringify(buildPayload(), null, 2);
+            try {
+                await navigator.clipboard.writeText(txt);
+                toast("JSON copiado al portapapeles", "success");
+            } catch {
+                alert("No se pudo copiar. Copia manualmente desde el preview.");
+            }
+        }
+
+        // ======================
+        // Mini toast
+        // ======================
+        function toast(msg, type = "info") {
+            const colors = { info: "primary", success: "success", warning: "warning", danger: "danger" };
+            const el = document.createElement("div");
+            el.className = `toast align-items-center text-bg-${colors[type] || "primary"} border-0 position-fixed bottom-0 end-0 m-3`;
+            el.setAttribute("role", "alert");
+            el.innerHTML = `
+                                    <div class="d-flex">
+                                      <div class="toast-body">${escapeHtml(msg)}</div>
+                                      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                                    </div>`;
+            document.body.appendChild(el);
+            const t = new bootstrap.Toast(el, { delay: 1600 });
+            t.show();
+            el.addEventListener("hidden.bs.toast", () => el.remove());
+        }
+
+        $(document).ready(() => {
+            $('.menu-accordion').removeClass('active');
+        })
+        // Init
+        renderConteo();
+        refreshPayloadPreview();
+        focusSearch();
+    </script>
+
+}

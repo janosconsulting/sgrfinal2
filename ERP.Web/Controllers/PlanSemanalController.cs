@@ -234,6 +234,7 @@ namespace ReyDavid.Web.Controllers
                 // Deserializar el objeto data
                 var obsData = JsonConvert.DeserializeObject<dynamic>(data);
                 RequerimientoDetalleObservacion oDT = new Mantenimiento.Datos.Entidades.RequerimientoDetalleObservacion();
+                oDT.idObservacion = obsData.idObservacion;
                 oDT.idRequerimientoDetalle = obsData.idRequerimientoDetalle;
                 oDT.comentario = obsData.comentario;
                 oDT.severidad = obsData.severidad;
@@ -265,7 +266,12 @@ namespace ReyDavid.Web.Controllers
                     oDT.extension = Path.GetExtension(file.FileName);
                     // Si se guarda la ruta en DB, setear oDT.rutaArchivo = rutaArchivo;
                 }
-                if(obsData.idObservacion == 0)
+                else
+                {
+                    oDT.nombreArchivo = obsData.nombreArchivo;
+                    oDT.extension = obsData.extension;
+                }
+                if(oDT.idObservacion == 0)
                 {
                     var ok = planSemanalServicio.InsertarObservacion(oDT);
                     return Json(new { ok = ok, mensaje = ok ? "Observación registrada." : "No se pudo registrar." });
