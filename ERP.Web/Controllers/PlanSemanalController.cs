@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Mantenimiento.Negocio.Servicios;
+using Mantenimiento.Datos.Entidades;
 
 namespace ReyDavid.Web.Controllers
 {
@@ -59,11 +60,11 @@ namespace ReyDavid.Web.Controllers
         }
 
         // JSON: Cards
-        public JsonResult ListarTarjetas(int idPlanSemana)
+        public JsonResult ListarTarjetas(int idPlanSemana, int? idPersonaResponsable = null)
         {
             try
             {
-                var cards = planSemanalServicio.ListarTarjetas(idPlanSemana);
+                var cards = planSemanalServicio.ListarTarjetas(idPlanSemana, idPersonaResponsable);
                 return Json(new { ok = true, cards }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

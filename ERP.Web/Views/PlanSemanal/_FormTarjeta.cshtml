@@ -1,75 +1,94 @@
 ﻿@model Mantenimiento.Datos.Entidades.PlanSemanaDetalle
 
-@using (Html.BeginForm("GuardarTarjeta", "PlanSemanal", FormMethod.Post, new { id = "frmTarjeta" }))
+
+@using (Html.BeginForm("GuardarTarjeta", "PlanSemanal", FormMethod.Post, new { id = "frmTarjeta", @class = "form" }))
 {
     @Html.AntiForgeryToken()
 
     @Html.HiddenFor(x => x.idPlanDetalle)
     @Html.HiddenFor(x => x.idPlanSemana)
-    @Html.HiddenFor(x => x.idRequerimientoDetalle)
     @Html.HiddenFor(x => x.idObservacion)
 
-    <div class="grid">
-        <div>
-            <label>Día</label>
+    <div class="row g-5 mb-5">
+        <div class="col-md-6">
+            <label class="form-label required">Requerimiento</label>
+            <select id="ddlRequerimiento" class="form-select" data-control="select2" data-placeholder="Seleccione requerimiento">
+                <option></option>
+            </select>
+            <div class="text-muted fs-7 mt-1">Selecciona el requerimiento padre.</div>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label required">SubRequerimiento</label>
+
+            <!-- IMPORTANTE: name="idRequerimientoDetalle" para el model binder -->
+            <select id="ddlSubRequerimiento" name="idRequerimientoDetalle" class="form-select" data-control="select2" data-placeholder="Seleccione subrequerimiento">
+                <option></option>
+            </select>
+
+            <div class="text-muted fs-7 mt-1">Se filtrará según el requerimiento.</div>
+        </div>
+    </div>
+
+    <div class="row g-5">
+        <div class="col-md-3">
+            <label class="form-label">Día</label>
             @Html.DropDownListFor(x => x.dia,
-                new SelectList(new[]
-                {
-                    new { Value = 0, Text = "Lunes" },
-                    new { Value = 1, Text = "Martes" },
-                    new { Value = 2, Text = "Miércoles" },
-                    new { Value = 3, Text = "Jueves" },
-                    new { Value = 4, Text = "Viernes" },
-                    new { Value = 5, Text = "Sábado" },
-                    new { Value = 6, Text = "Domingo" },
+                new SelectList(new[] {
+                    new { Value=0, Text="Lunes" },
+                    new { Value=1, Text="Martes" },
+                    new { Value=2, Text="Miércoles" },
+                    new { Value=3, Text="Jueves" },
+                    new { Value=4, Text="Viernes" },
+                    new { Value=5, Text="Sábado" },
+                    new { Value=6, Text="Domingo" }
                 }, "Value", "Text", Model.dia),
-                "-- Seleccione --",
-                new { @class = "" })
+                new { @class = "form-select" })
         </div>
 
-        <div>
-            <label>Prioridad</label>
+        <div class="col-md-3">
+            <label class="form-label">Prioridad</label>
             @Html.DropDownListFor(x => x.prioridad,
-                new SelectList(new[]
-                {
-                    new { Value = 1, Text = "P1 (Alta)" },
-                    new { Value = 2, Text = "P2 (Media)" },
-                    new { Value = 3, Text = "P3 (Baja)" },
+                new SelectList(new[] {
+                    new { Value=1, Text="Alta" },
+                    new { Value=2, Text="Media" },
+                    new { Value=3, Text="Baja" }
                 }, "Value", "Text", Model.prioridad),
-                new { @class = "" })
+                new { @class = "form-select" })
         </div>
-    </div>
 
-    <label>Título</label>
-    @Html.TextBoxFor(x => x.titulo, new { @placeholder = "Ej: Corregir validación placa/sede..." })
-
-    <div class="grid" style="margin-top:10px">
-        <div>
-            <label>Responsable</label>
-            @Html.TextBoxFor(x => x.responsable, new { @placeholder = "Ej: Backend / Frontend / QA" })
-        </div>
-        <div>
-            <label>Estado</label>
+        <div class="col-md-3">
+            <label class="form-label">Estado</label>
             @Html.DropDownListFor(x => x.estado,
-                new SelectList(new[]
-                {
-                    new { Value = "pendiente", Text = "Pendiente" },
-                    new { Value = "proceso", Text = "En proceso" },
-                    new { Value = "hecho", Text = "Hecho" },
-                    new { Value = "bloqueado", Text = "Bloqueado" },
+                new SelectList(new[] {
+                    new { Value="pendiente", Text="Pendiente" },
+                    new { Value="proceso", Text="En proceso" },
+                    new { Value="hecho", Text="Hecho" },
+                    new { Value="bloqueado", Text="Bloqueado" }
                 }, "Value", "Text", (Model.estado ?? "pendiente")),
-                new { @class = "" })
+                new { @class = "form-select" })
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Horas</label>
+            @Html.TextBoxFor(x => x.horas, new { @class = "form-control", placeholder = "Ej: 4" })
         </div>
     </div>
 
-    <label>Horas (estimado)</label>
-    @Html.TextBoxFor(x => x.horas, new { @placeholder = "Ej: 4" })
-
-    <div class="small muted" style="margin-top:10px">
-        SubRequerimiento: <b>@Model.idRequerimientoDetalle</b>
-        @if (Model.idObservacion.HasValue)
-        {
-            <span> • Observación: <b>@Model.idObservacion</b></span>
-        }
+    <div class="mt-5">
+        <label class="form-label required">Título</label>
+        @Html.TextBoxFor(x => x.titulo, new { @class = "form-control", placeholder = "Ej: Ajustar validación..." })
     </div>
+
+    <div class="mb-5">
+        <label class="form-label">Trabajador</label>
+        <select id="ddlTrabajador" name="idPersonaResponsable" class="form-select" data-control="select2" data-placeholder="Seleccione trabajador">
+            <option></option>
+        </select>
+    </div>
+
+    <!-- Valores para preselección -->
+    <input type="hidden" id="hdSubSelected" value="@Model.idRequerimientoDetalle" />
 }
+
+<input type="hidden" id="hdTrabSelected" value="@(Model.idPersonaResponsable ?? 0)" />

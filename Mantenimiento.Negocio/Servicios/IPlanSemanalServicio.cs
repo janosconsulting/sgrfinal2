@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Mantenimiento.Datos.Entidades;
 using Mantenimiento.Negocio.Poco;
 
 namespace Mantenimiento.Negocio.Contratos.Servicios
@@ -11,7 +12,7 @@ namespace Mantenimiento.Negocio.Contratos.Servicios
         List<sp_PlanSemanal_TreeRequerimiento> TreeRequerimientos(string q);
         List<sp_PlanSemanal_TreeSubReq> TreeSubRequerimientos(string q);
 
-        List<sp_PlanSemanal_ListarTarjetas> ListarTarjetas(int idPlanSemana);
+        List<sp_PlanSemanal_ListarTarjetas> ListarTarjetas(int idPlanSemana, int? idPersonaResponsable);
         PlanSemanaDetalle ObtenerTarjeta(int idPlanDetalle);
 
         bool GuardarTarjeta(PlanSemanaDetalle tarjeta, string usuario);

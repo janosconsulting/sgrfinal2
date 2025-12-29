@@ -65,6 +65,20 @@ namespace ReyDavid.Web.Controllers
             List<sp_ListarTrabajadores> oLista = this.personaServicio.ListarTrabajadores();
             return Json(oLista, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult ListarTrabajadores2()
+        {
+            try
+            {
+                var lista = personaServicio.ListarTrabajadores();
+                return Json(new { ok = true, lista }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ok = false, error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         public ActionResult Nuevo()
         {
             if (Session["usuario"] == null)

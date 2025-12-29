@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Dapper.Contrib.Extensions;
 using Mantenimiento.Datos.Base;
+using Mantenimiento.Datos.Entidades;
 using Mantenimiento.Negocio.Contratos.Servicios;
 using Mantenimiento.Negocio.Poco;
 using System;
@@ -91,7 +92,7 @@ namespace Mantenimiento.Negocio.Servicios
             }
         }
 
-        public List<sp_PlanSemanal_ListarTarjetas> ListarTarjetas(int idPlanSemana)
+        public List<sp_PlanSemanal_ListarTarjetas> ListarTarjetas(int idPlanSemana, int? idPersonaResponsable)
         {
             try
             {
@@ -157,11 +158,15 @@ namespace Mantenimiento.Negocio.Servicios
                     // Si tienes [Table("PlanSemanaDetalle")] puedes usar Contrib
                     if (tarjeta.idPlanDetalle == 0)
                     {
+                        tarjeta.fechaRegistro = DateTime.Now;
                         connection.Insert(tarjeta);
                         return true;
                     }
                     else
                     {
+                        PlanSemanaDetalle oPn = connection.Get<PlanSemanaDetalle>(tarjeta.idPlanDetalle);
+                        tarjeta.fechaRegistro = oPn.fechaRegistro;
+                        tarjeta.fechaActualizacion = DateTime.Now;
                         connection.Update(tarjeta);
                         return true;
                     }

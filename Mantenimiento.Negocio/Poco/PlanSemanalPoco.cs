@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mantenimiento.Datos.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,20 +15,7 @@ namespace Mantenimiento.Negocio.Poco
         public PlanSemanaDetalle Tarjeta { get; set; } = new PlanSemanaDetalle();
     }
 
-    // entidad simple (si no la tienes)
-    public class PlanSemanaDetalle
-    {
-        public int idPlanDetalle { get; set; }
-        public int idPlanSemana { get; set; }
-        public byte dia { get; set; }
-        public string titulo { get; set; }
-        public string responsable { get; set; }
-        public string estado { get; set; }
-        public byte prioridad { get; set; }
-        public decimal? horas { get; set; }
-        public int idRequerimientoDetalle { get; set; }
-        public int? idObservacion { get; set; }
-    }
+    
     public class ObservacionModel
     {
         public RequerimientoDetalleObservacion Observacion { get; set; } = new RequerimientoDetalleObservacion();
