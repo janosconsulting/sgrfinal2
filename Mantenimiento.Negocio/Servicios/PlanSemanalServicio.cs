@@ -221,5 +221,45 @@ WHERE IdPlanDetalle = @idPlanDetalle;";
             }
         }
 
+        public List<sp_Obs_ListarPorSubReq> ListarObservaciones(int idRequerimientoDetalle)
+        {
+            using (var cn = new SqlConnection(ConnectionConfig.ConnectionString))
+            {
+                return cn.Query<sp_Obs_ListarPorSubReq>(
+                    "sp_Obs_ListarPorSubReq",
+                    new { idRequerimientoDetalle },
+                    commandType: CommandType.StoredProcedure
+                ).AsList();
+            }
+        }
+
+        public bool InsertarObservacion(int idRequerimientoDetalle, string comentario, string severidad, string usuario,string estado)
+        {
+            using (var cn = new SqlConnection(ConnectionConfig.ConnectionString))
+            {
+                RequerimientoDetalleObservacion oDT = new Datos.Entidades.RequerimientoDetalleObservacion();
+                oDT.comentario = comentario;
+                oDT.severidad = severidad;
+                oDT.registradoPor = usuario;
+                oDT.fechaRegistro = DateTime.Now;
+                oDT.estado = estado;
+                var id = cn.Insert(oDT);
+                
+                return id > 0;
+            }
+        }
+
+        public bool CerrarObservacion(int idObservacion, string usuario)
+        {
+            using (var cn = new SqlConnection(ConnectionConfig.ConnectionString))
+            {
+                cn.Execute(
+                    "sp_Obs_Cerrar",
+                    new { idObservacion, cerradoPor = usuario },
+                    commandType: CommandType.StoredProcedure
+                );
+                return true;
+            }
+        }
     }
 }

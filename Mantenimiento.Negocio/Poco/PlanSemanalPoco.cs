@@ -20,15 +20,29 @@ namespace Mantenimiento.Negocio.Poco
     {
         public RequerimientoDetalleObservacion Observacion { get; set; } = new RequerimientoDetalleObservacion();
     }
-
-    public class RequerimientoDetalleObservacion
+    public class sp_Obs_ListarPorSubReq
     {
         public int idObservacion { get; set; }
+
         public int idRequerimientoDetalle { get; set; }
-        public int numero { get; set; }
-        public string severidad { get; set; }
-        public string estado { get; set; }
-        public string descripcion { get; set; }
+
+        public string comentario { get; set; }
+
+        public string severidad { get; set; }      // baja | media | alta
+
+        public string estado { get; set; }         // abierta | cerrada
+
+        public string registradoPor { get; set; }
+
+        public DateTime fechaRegistro { get; set; }
+
+        public DateTime? fechaCierre { get; set; }
+
+        public string cerradoPor { get; set; }
+
+        public string nombreArchivo { get; set; }
+
+        public string extension { get; set; }
     }
 
     public class GestionarObservacionPoco

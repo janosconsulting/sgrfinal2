@@ -18,5 +18,9 @@ namespace Mantenimiento.Negocio.Contratos.Servicios
         bool GuardarTarjeta(PlanSemanaDetalle tarjeta, string usuario);
         bool MoverTarjeta(int idPlanDetalle, byte dia, string usuario);
         bool EliminarTarjeta(int idPlanDetalle);
+
+        List<sp_Obs_ListarPorSubReq> ListarObservaciones(int idRequerimientoDetalle);
+        bool InsertarObservacion(int idRequerimientoDetalle, string comentario, string severidad, string usuario,string estado);
+        bool CerrarObservacion(int idObservacion, string usuario);
     }
 }

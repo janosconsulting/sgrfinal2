@@ -191,5 +191,59 @@ namespace ReyDavid.Web.Controllers
             int diff = day == 0 ? -6 : (1 - day);
             return d.AddDays(diff).Date;
         }
+
+        public JsonResult ListarObservaciones(int idRequerimientoDetalle)
+        {
+            try
+            {
+                var lista = planSemanalServicio.ListarObservaciones(idRequerimientoDetalle);
+                return Json(new { ok = true, lista }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ok = false, error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GuardarObservacion(int idRequerimientoDetalle, string comentario, string severidad,string estado)
+        {
+            try
+            {
+                if (Session["usuario"] == null)
+                    return RedirectToAction("Index", "Login");
+
+                var usuario = Session["usuario"].ToString();
+
+                if (string.IsNullOrWhiteSpace(comentario))
+                    return Json(new { ok = false, mensaje = "Falta comentario." });
+
+                var ok = planSemanalServicio.InsertarObservacion(idRequerimientoDetalle, comentario, severidad, usuario,estado);
+                return Json(new { ok = ok, mensaje = ok ? "Observación registrada." : "No se pudo registrar." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ok = false, mensaje = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CerrarObservacion(int idObservacion)
+        {
+            try
+            {
+                if (Session["usuario"] == null)
+                    return RedirectToAction("Index", "Login");
+
+                var usuario = Session["usuario"].ToString();
+                var ok = planSemanalServicio.CerrarObservacion(idObservacion, usuario);
+
+                return Json(new { ok = ok, mensaje = ok ? "Observación cerrada." : "No se pudo cerrar." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ok = false, mensaje = ex.Message });
+            }
+        }
     }
 }

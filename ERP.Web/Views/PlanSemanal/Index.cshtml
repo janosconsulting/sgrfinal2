@@ -584,13 +584,14 @@
                     </div>
 
                     <div class="card-body pt-2" id="detailPane">
-                        <div class="p-4 border border-dashed rounded">
+                        <div class="border border-dashed rounded p-4 bg-light">
                             <div class="fw-bold">Selecciona un SubRequerimiento</div>
-                            <div class="text-muted fs-7 mt-2">
-                                Aquí verás el detalle y el timeline de observaciones del cliente.
+                            <div class="text-muted fs-7 mt-1">
+                                Aquí verás el timeline de observaciones del cliente y el historial.
                             </div>
                         </div>
                     </div>
+                   
                 </div>
             </div>
 
@@ -601,7 +602,107 @@
 </div>
 <!--end::Content-->
 <!-- MODAL -->
+<div class="modal fade" id="kt_modal_obs" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="fw-bold m-0"><i class="bi bi-chat-left-text text-primary me-2"></i>Nueva Observación</h2>
+                <button type="button" class="btn btn-icon btn-sm btn-light" data-bs-dismiss="modal">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
 
+            <div class="modal-body py-5">
+                <input type="hidden" id="obs_subreq" value="0" />
+                <!-- IDs ocultos -->
+             
+                <!-- Resumen -->
+                <div class="alert alert-info d-flex align-items-start">
+                    <i class="bi bi-info-circle fs-4 me-3"></i>
+                    <div class="fs-7">
+                        Registra una observación del cliente. Puedes adjuntar un archivo (opcional).
+                    </div>
+                </div>
+
+                <div class="row g-5">
+
+                    <!-- comentario -->
+                    <div class="col-12">
+                        <label class="form-label fw-bold required">Comentario</label>
+                        <textarea class="form-control" id="obs_comentario" rows="6"
+                                  placeholder="Describe la observación..."></textarea>
+                    </div>
+
+                    <!-- severidad -->
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Severidad</label>
+                        <select class="form-select" id="obs_severidad">
+                            <option value="baja">Baja</option>
+                            <option value="media" selected>Media</option>
+                            <option value="alta">Alta</option>
+                        </select>
+                    </div>
+
+                    <!-- estado -->
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Estado</label>
+                        <input type="text" class="form-control" id="obs_estado" value="abierta" readonly />
+                    </div>
+
+                    <!-- registradoPor -->
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Registrado por</label>
+                        <input type="text" class="form-control" id="obs_registradoPor" readonly />
+                    </div>
+
+                    <!-- fechaRegistro -->
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Fecha registro</label>
+                        <input type="text" class="form-control" id="obs_fechaRegistro" readonly />
+                    </div>
+
+                    <!-- cerradoPor -->
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Cerrado por</label>
+                        <input type="text" class="form-control" id="obs_cerradoPor" readonly />
+                    </div>
+
+                    <!-- fechaCierre -->
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Fecha cierre</label>
+                        <input type="text" class="form-control" id="obs_fechaCierre" readonly />
+                    </div>
+
+                    <!-- archivo -->
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Adjunto (opcional)</label>
+                        <input type="file" class="form-control" id="obs_file" />
+                        <div class="text-muted fs-8 mt-1">JPG, PNG, PDF (opcional).</div>
+                    </div>
+
+                    <!-- nombreArchivo + extension (solo vista, se llena al elegir archivo) -->
+                    <div class="col-md-8">
+                        <label class="form-label fw-bold">Nombre archivo</label>
+                        <input type="text" class="form-control" id="obs_nombreArchivo" readonly />
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Extensión</label>
+                        <input type="text" class="form-control" id="obs_extension" readonly />
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardarObs">
+                    <i class="bi bi-send"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <!--begin::Modal - Tarjeta-->
 <div class="modal fade" id="kt_modal_tarjeta"  tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
@@ -645,11 +746,26 @@
     var toastr;
     // Selección actual
     let selected = { reqId: null, subId: null, subNombre: null, reqCodigo: null, reqNombre: null };
-
+    let CURRENT_SUBREQ_ID = 0;
+    let CURRENT_SUBREQ_INFO = null;
     // Cache tree/carts
     let treeData = { reqs: [], subs: [] };
     let cardsData = [];
     let modalTarjeta;
+
+    window.onSelectSubReq = function (idSubReq, info) {
+        console.log("onSelectSubReq ejecutado:", idSubReq, info);
+
+        CURRENT_SUBREQ_ID = idSubReq;
+        CURRENT_SUBREQ_INFO = info || null;
+
+        
+        $("#btnNewObs").prop("disabled", false);
+
+        loadObservaciones(idSubReq, info); // tu función real
+    };
+
+
     $(function () {
         modalTarjeta = new bootstrap.Modal(
             document.getElementById('kt_modal_tarjeta'),
@@ -684,9 +800,9 @@
         renderWeekLabel();
         buildBoardCols();
         loadTree("");
-       
+
         loadCards();
-       
+
         $("#btnSearch").on("click", function(){ loadTree($("#qReq").val() || ""); });
         $("#qReq").on("keydown", function(e){ if(e.key === "Enter") loadTree($("#qReq").val() || ""); });
 
@@ -710,7 +826,56 @@
             }
             openTarjetaModal(0, selected.subId, null, 0);
         });
+        $(document).on("click", "#tree .subitem *", function (e) {
+            // si haces click en algo dentro, sube al padre subitem
+            const $sub = $(this).closest(".subitem");
+            if ($sub.length) $sub.trigger("click");
+        });
+        // Delegación: engancha al contenedor padre que SI existe desde el inicio
+        $(document).on("click", "#tree .subitem", function (e) {
 
+            const idSubReq = parseInt($(this).data("subreq") || "0", 10);
+            if (!idSubReq) return;
+
+            const info = {
+                reqCodigo: $(this).data("reqcodigo") || "",
+                reqNombre: $(this).data("reqnombre") || "",
+                subNombre: $(this).data("subnombre") || ""
+            };
+
+            // UI selected
+            $("#tree .subitem").removeClass("selected");
+            $(this).addClass("selected");
+
+            console.log("CLICK SUBREQ:", idSubReq, info);
+
+            // Llamada
+            onSelectSubReq(idSubReq, info);
+        });
+
+        $("#btnNewObs").on("click", function () {
+
+            // Setear subreq actual en el modal
+            $("#obs_subreq").val(CURRENT_SUBREQ_ID);
+
+            // Limpieza del formulario
+            $("#obs_comentario").val("");
+            $("#obs_severidad").val("media");
+
+            // Título dinámico (opcional, pro)
+            if (CURRENT_SUBREQ_INFO) {
+                $("#kt_modal_obs .modal-header h2").html(`
+            <i class="bi bi-chat-left-text text-primary me-2"></i>
+            Observación – ${esc(CURRENT_SUBREQ_INFO.subNombre)}
+        `);
+            }
+
+            // Abrir modal Metronic
+            const modal = new bootstrap.Modal(
+                document.getElementById("kt_modal_obs")
+            );
+            modal.show();
+        });
         // Navegación semana (recarga para que tu Index calcule lunes e IdPlanSemana real)
         $("#btnPrev").on("click", function(){
             const d = addDays(parseISO(LUNES_ISO), -7);
@@ -752,6 +917,139 @@
             });
         });
     });
+
+    function onSelectSubReq(idSubReq, info) {
+        CURRENT_SUBREQ_ID = idSubReq;
+        CURRENT_SUBREQ_INFO = info || null;
+      
+      // info: { reqCodigo, reqNombre, subNombre } si lo tienes
+      loadObservaciones(idSubReq, info);
+    }
+
+    function loadObservaciones(idSubReq, info) {
+      $.get("@Url.Action("ListarObservaciones","PlanSemanal")", { idRequerimientoDetalle: idSubReq })
+        .done(function(r){
+          if(!r || !r.ok){ toastr.error(r?.error || "Error al listar observaciones"); return; }
+            CURRENT_SUBREQ_ID = idSubReq;
+          
+          const lista = r.lista || [];
+          $("#detailPane").html(renderDetailPane(idSubReq, info, lista));
+        });
+    }
+
+    function renderDetailPane(idSubReq, info, lista){
+      const head = `
+        <div class="d-flex flex-stack mb-4">
+          <div>
+            <div class="fw-bold">${esc(info?.reqCodigo || "")} ${esc(info?.reqNombre || "Requerimiento")}</div>
+            <div class="text-muted fs-7">${esc(info?.subNombre || "SubRequerimiento")} (ID: ${idSubReq})</div>
+          </div>
+          <button class="btn btn-sm btn-primary" onclick="openObsModal(${idSubReq})">
+            <i class="bi bi-chat-left-text"></i> Observación
+          </button>
+        </div>
+        <div class="separator mb-4"></div>
+      `;
+
+      if(!lista.length){
+        return head + `
+          <div class="border border-dashed rounded p-4 bg-light">
+            <div class="fw-bold">Sin observaciones</div>
+            <div class="text-muted fs-7 mt-1">Este subrequerimiento no tiene observaciones registradas.</div>
+          </div>
+        `;
+      }
+
+      const items = lista.map(o => {
+        const badge = o.estado === "cerrada" ? "badge-light-success" : "badge-light-warning";
+        const sev = (o.severidad || "").toLowerCase();
+        const sevBadge = sev === "alta" ? "badge-light-danger" : sev === "baja" ? "badge-light" : "badge-light-primary";
+
+        return `
+          <div class="d-flex align-items-start gap-3 p-3 border rounded mb-3">
+            <div class="symbol symbol-35px symbol-circle bg-light">
+              <div class="symbol-label">
+                <i class="bi bi-chat-dots text-primary"></i>
+              </div>
+            </div>
+
+            <div class="flex-grow-1">
+              <div class="d-flex flex-wrap gap-2 align-items-center">
+                <span class="badge ${badge}">${esc(o.estado)}</span>
+                <span class="badge ${sevBadge}">sev: ${esc(o.severidad || "media")}</span>
+                <span class="text-muted fs-8">por ${esc(o.registradoPor || "-")} · ${fmtDate(o.fechaRegistro)}</span>
+              </div>
+
+              <div class="mt-2">${esc(o.comentario || "")}</div>
+
+              ${o.nombreArchivo ? `
+                <div class="mt-2">
+                  <a href="#" class="btn btn-sm btn-light"><i class="bi bi-paperclip"></i> ${esc(o.nombreArchivo)}</a>
+                </div>` : ``}
+
+              ${o.estado !== "cerrada" ? `
+                <div class="mt-3">
+                  <button class="btn btn-sm btn-light-success" onclick="cerrarObs(${o.idObservacion}, ${idSubReq})">
+                    <i class="bi bi-check2-circle"></i> Cerrar
+                  </button>
+                </div>` : ``}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      return head + items;
+    }
+
+    function openObsModal(idSubReq){
+      $("#obs_subreq").val(idSubReq);
+      $("#obs_comentario").val("");
+      $("#obs_severidad").val("media");
+      new bootstrap.Modal(document.getElementById("kt_modal_obs")).show();
+    }
+
+    $("#btnGuardarObs").on("click", function(){
+      const idSubReq = parseInt($("#obs_subreq").val()||"0",10);
+      const comentario = $("#obs_comentario").val();
+      const severidad = $("#obs_severidad").val();
+      const estado = $("#obs_estado").val();
+
+        $.post("@Url.Action("GuardarObservacion","PlanSemanal")", { idRequerimientoDetalle: idSubReq, comentario, severidad, estado: estado })
+        .done(function(r){
+          if(r && r.ok){
+            toastr.success(r.mensaje || "Guardado");
+            bootstrap.Modal.getInstance(document.getElementById("kt_modal_obs")).hide();
+            // recarga panel
+            loadObservaciones(idSubReq, { });
+          }else{
+            toastr.error(r?.mensaje || "No se pudo guardar");
+          }
+        });
+    });
+
+    function cerrarObs(idObs, idSubReq){
+      $.post("@Url.Action("CerrarObservacion","PlanSemanal")", { idObservacion: idObs })
+        .done(function(r){
+          if(r && r.ok){
+            toastr.success(r.mensaje || "Cerrada");
+            loadObservaciones(idSubReq, { });
+          }else{
+            toastr.error(r?.mensaje || "No se pudo cerrar");
+          }
+        });
+    }
+
+    // helpers
+    function fmtDate(d){
+      if(!d) return "";
+      // si viene /Date(...)/
+      if(typeof d === "string" && d.indexOf("/Date(") >= 0){
+        const ms = parseInt(d.replace("/Date(","").replace(")/",""),10);
+        return new Date(ms).toLocaleString();
+      }
+      return new Date(d).toLocaleString();
+    }
+
     function initTrabajadorCombo() {
         const $t = $("#ddlTrabajador");
         const sel = parseInt($("#hdTrabSelected").val() || "0", 10);

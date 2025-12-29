@@ -140,6 +140,7 @@
     <Compile Include="Entidades\PlanSemanal.cs" />
     <Compile Include="Entidades\PlanSemanalDetalle.cs" />
     <Compile Include="Entidades\PropuestaEntidad.cs" />
+    <Compile Include="Entidades\RequerimientoDetalleObservacion.cs" />
     <Compile Include="Entidades\Rol.cs" />
     <Compile Include="Entidades\Servicio.cs" />
     <Compile Include="Entidades\sp_ListarCategoriaCliente.cs" />
