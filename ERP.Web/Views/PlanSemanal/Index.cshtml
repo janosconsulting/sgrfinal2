@@ -927,6 +927,7 @@
     }
 
     function loadObservaciones(idSubReq, info) {
+       
       $.get("@Url.Action("ListarObservaciones","PlanSemanal")", { idRequerimientoDetalle: idSubReq })
         .done(function(r){
           if(!r || !r.ok){ toastr.error(r?.error || "Error al listar observaciones"); return; }
@@ -1220,9 +1221,10 @@
                     selected.reqCodigo = r.codigo;
                     selected.reqNombre = r.nombre;
                     renderTree();
-                    renderDetailSelected();
+                    renderDetailSelected(selected.subId);
                 });
 
+               
                 $sublist.append($sub);
             });
 
@@ -1328,7 +1330,7 @@
         `);
     }
 
-    function renderDetailSelected(){
+    function renderDetailSelected(a){
         if(!selected.subId){
             renderDetailEmpty();
             return;
