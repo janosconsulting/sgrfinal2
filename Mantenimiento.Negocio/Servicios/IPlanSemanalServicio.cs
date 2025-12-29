@@ -20,7 +20,9 @@ namespace Mantenimiento.Negocio.Contratos.Servicios
         bool EliminarTarjeta(int idPlanDetalle);
 
         List<sp_Obs_ListarPorSubReq> ListarObservaciones(int idRequerimientoDetalle);
-        bool InsertarObservacion(int idRequerimientoDetalle, string comentario, string severidad, string usuario,string estado);
+        bool InsertarObservacion(RequerimientoDetalleObservacion oDT);
         bool CerrarObservacion(int idObservacion, string usuario);
+        RequerimientoDetalleObservacion ObtenerObservacion(int idObservacion);
+        bool Actualizar(RequerimientoDetalleObservacion oDT);
     }
 }

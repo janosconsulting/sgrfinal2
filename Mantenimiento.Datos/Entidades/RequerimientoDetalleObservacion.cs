@@ -35,5 +35,6 @@ namespace Mantenimiento.Datos.Entidades
         public string nombreArchivo { get; set; }
 
         public string extension { get; set; }
+        public int? ObservadorPor {  get; set; }
     }
 }

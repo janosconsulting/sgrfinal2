@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Mantenimiento.Negocio.Servicios;
 using Mantenimiento.Datos.Entidades;
+using System.Web;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace ReyDavid.Web.Controllers
 {
@@ -39,6 +42,7 @@ namespace ReyDavid.Web.Controllers
                 lunes = lunes,
                 lunesTexto = lunes.ToString("yyyy-MM-dd")
             };
+            ViewBag.usuario = usuario;
 
             var model = new PlanSemanalModel { Plan = poco };
             return View(model);
@@ -204,9 +208,21 @@ namespace ReyDavid.Web.Controllers
                 return Json(new { ok = false, error = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+        public JsonResult ObtenerObservacion(int idObservacion)
+        {
+            try
+            {
+                var observacion = planSemanalServicio.ObtenerObservacion(idObservacion);
+                return Json(new { ok = true, observacion }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ok = false, error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         [HttpPost]
-        public ActionResult GuardarObservacion(int idRequerimientoDetalle, string comentario, string severidad,string estado)
+        public ActionResult GuardarObservacion(string data, HttpPostedFileBase file)
         {
             try
             {
@@ -215,11 +231,50 @@ namespace ReyDavid.Web.Controllers
 
                 var usuario = Session["usuario"].ToString();
 
-                if (string.IsNullOrWhiteSpace(comentario))
+                // Deserializar el objeto data
+                var obsData = JsonConvert.DeserializeObject<dynamic>(data);
+                RequerimientoDetalleObservacion oDT = new Mantenimiento.Datos.Entidades.RequerimientoDetalleObservacion();
+                oDT.idRequerimientoDetalle = obsData.idRequerimientoDetalle;
+                oDT.comentario = obsData.comentario;
+                oDT.severidad = obsData.severidad;
+                oDT.estado = obsData.estado;
+                oDT.ObservadorPor = obsData.observadopor;
+                oDT.registradoPor = obsData.registradoPor;
+                oDT.fechaRegistro = string.IsNullOrEmpty((string)obsData.fechaRegistro) ? DateTime.Now : DateTime.Parse((string)obsData.fechaRegistro);
+                oDT.cerradoPor = obsData.cerradoPor;
+                //oDT.fechaCierre = string.IsNullOrEmpty((string)obsData.fechaCierre) ? (DateTime?)null : DateTime.Parse((string)obsData.fechaCierre);
+
+                if (string.IsNullOrWhiteSpace(oDT.comentario))
                     return Json(new { ok = false, mensaje = "Falta comentario." });
 
-                var ok = planSemanalServicio.InsertarObservacion(idRequerimientoDetalle, comentario, severidad, usuario,estado);
-                return Json(new { ok = ok, mensaje = ok ? "Observación registrada." : "No se pudo registrar." });
+                // Manejar el archivo si existe
+                string rutaArchivo = null;
+                if (file != null && file.ContentLength > 0)
+                {
+                    // Definir la ruta donde guardar el archivo, por ejemplo en ~/Uploads/
+                    var uploadsPath = Server.MapPath("~/Uploads/");
+                    if (!Directory.Exists(uploadsPath))
+                    {
+                        Directory.CreateDirectory(uploadsPath);
+                    }
+                    var fileName = Path.GetFileName(file.FileName);
+                    rutaArchivo = Path.Combine(uploadsPath, fileName);
+                    file.SaveAs(rutaArchivo);
+                    // Guardar nombre y extensión en el objeto
+                    oDT.nombreArchivo = file.FileName;
+                    oDT.extension = Path.GetExtension(file.FileName);
+                    // Si se guarda la ruta en DB, setear oDT.rutaArchivo = rutaArchivo;
+                }
+                if(obsData.idObservacion == 0)
+                {
+                    var ok = planSemanalServicio.InsertarObservacion(oDT);
+                    return Json(new { ok = ok, mensaje = ok ? "Observación registrada." : "No se pudo registrar." });
+                }
+                else
+                {
+                    var ok = planSemanalServicio.Actualizar(oDT);
+                    return Json(new { ok = ok, mensaje = ok ? "Observación actualizada." : "No se pudo registrar." });
+                }
             }
             catch (Exception ex)
             {

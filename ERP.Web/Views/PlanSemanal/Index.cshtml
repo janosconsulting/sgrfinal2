@@ -8,323 +8,324 @@
 }
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 <style>
-     /* =========================================================
+    /* =========================================================
     PLAN SEMANAL (Metronic Light) - CSS scoped
     Usa dentro del wrapper: <div class="plan-semanal"> ... </div>
     ========================================================= */
 
-     .plan-semanal {
-         --ps-line: rgba(15, 23, 42, .12);
-         --ps-soft: rgba(15, 23, 42, .04);
-         --ps-text: #0f172a;
-         --ps-muted: #64748b;
-         --ps-shadow: 0 10px 24px rgba(15,23,42,.08);
-         --ps-radius: 16px;
-     }
+    .plan-semanal {
+        --ps-line: rgba(15, 23, 42, .12);
+        --ps-soft: rgba(15, 23, 42, .04);
+        --ps-text: #0f172a;
+        --ps-muted: #64748b;
+        --ps-shadow: 0 10px 24px rgba(15,23,42,.08);
+        --ps-radius: 16px;
+    }
 
-         /* Helpers */
-         .plan-semanal .ps-muted {
-             color: var(--ps-muted) !important;
-         }
+        /* Helpers */
+        .plan-semanal .ps-muted {
+            color: var(--ps-muted) !important;
+        }
 
-         .plan-semanal .ps-small {
-             font-size: .85rem;
-         }
+        .plan-semanal .ps-small {
+            font-size: .85rem;
+        }
 
-         /* LEFT: Tree */
-         .plan-semanal #tree {
-             display: flex;
-             flex-direction: column;
-             gap: 12px;
-         }
+        /* LEFT: Tree */
+        .plan-semanal #tree {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
 
-         .plan-semanal .req {
-             border: 1px solid var(--ps-line);
-             border-radius: var(--ps-radius);
-             background: #fff;
-             overflow: hidden;
-             transition: .15s ease;
-         }
+        .plan-semanal .req {
+            border: 1px solid var(--ps-line);
+            border-radius: var(--ps-radius);
+            background: #fff;
+            overflow: hidden;
+            transition: .15s ease;
+        }
 
-             .plan-semanal .req:hover {
-                 box-shadow: var(--ps-shadow);
-                 transform: translateY(-1px);
-             }
+            .plan-semanal .req:hover {
+                box-shadow: var(--ps-shadow);
+                transform: translateY(-1px);
+            }
 
-         .plan-semanal .req-head {
-             padding: 12px 12px 10px 12px;
-             display: flex;
-             align-items: flex-start;
-             justify-content: space-between;
-             gap: 12px;
-             cursor: pointer;
-             background: linear-gradient(180deg, rgba(15,23,42,.02), transparent);
-         }
+        .plan-semanal .req-head {
+            padding: 12px 12px 10px 12px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            cursor: pointer;
+            background: linear-gradient(180deg, rgba(15,23,42,.02), transparent);
+        }
 
-         .plan-semanal .req-title {
-             margin: 0;
-             font-weight: 800;
-             font-size: .95rem;
-             color: var(--ps-text);
-             line-height: 1.25;
-         }
+        .plan-semanal .req-title {
+            margin: 0;
+            font-weight: 800;
+            font-size: .95rem;
+            color: var(--ps-text);
+            line-height: 1.25;
+        }
 
-         .plan-semanal .req-meta {
-             margin-top: 6px;
-             display: flex;
-             flex-wrap: wrap;
-             gap: 8px;
-         }
+        .plan-semanal .req-meta {
+            margin-top: 6px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
 
-         .plan-semanal .pill {
-             display: inline-flex;
-             align-items: center;
-             gap: 6px;
-             padding: .25rem .55rem;
-             border-radius: 999px;
-             border: 1px solid var(--ps-line);
-             background: var(--ps-soft);
-             color: rgba(15,23,42,.85);
-             font-size: .75rem;
-             white-space: nowrap;
-         }
+        .plan-semanal .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: .25rem .55rem;
+            border-radius: 999px;
+            border: 1px solid var(--ps-line);
+            background: var(--ps-soft);
+            color: rgba(15,23,42,.85);
+            font-size: .75rem;
+            white-space: nowrap;
+        }
 
-         /* Sublist */
-         .plan-semanal .sublist {
-             padding: 0 12px 12px 12px;
-             display: none;
-         }
+        /* Sublist */
+        .plan-semanal .sublist {
+            padding: 0 12px 12px 12px;
+            display: none;
+        }
 
-         .plan-semanal .req.open .sublist {
-             display: block;
-         }
+        .plan-semanal .req.open .sublist {
+            display: block;
+        }
 
-         .plan-semanal .subitem {
-             margin-top: 10px;
-             border: 1px solid rgba(15,23,42,.10);
-             border-radius: 14px;
-             background: #fff;
-             padding: 10px 10px 10px 12px;
-             cursor: pointer;
-             transition: .15s ease;
-         }
+        .plan-semanal .subitem {
+            margin-top: 10px;
+            border: 1px solid rgba(15,23,42,.10);
+            border-radius: 14px;
+            background: #fff;
+            padding: 10px 10px 10px 12px;
+            cursor: pointer;
+            transition: .15s ease;
+        }
 
-             .plan-semanal .subitem:hover {
-                 border-color: rgba(0, 158, 247, .35); /* primary Metronic */
-                 box-shadow: 0 10px 20px rgba(15,23,42,.06);
-                 transform: translateY(-1px);
-             }
+            .plan-semanal .subitem:hover {
+                border-color: rgba(0, 158, 247, .35); /* primary Metronic */
+                box-shadow: 0 10px 20px rgba(15,23,42,.06);
+                transform: translateY(-1px);
+            }
 
-             .plan-semanal .subitem.selected {
-                 outline: 3px solid rgba(0, 158, 247, .22);
-                 outline-offset: 2px;
-             }
+            .plan-semanal .subitem.selected {
+                outline: 3px solid rgba(0, 158, 247, .22);
+                outline-offset: 2px;
+            }
 
-         .plan-semanal .subrow {
-             display: flex;
-             align-items: flex-start;
-             justify-content: space-between;
-             gap: 10px;
-         }
+        .plan-semanal .subrow {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+        }
 
-         .plan-semanal .subname {
-             margin: 0;
-             font-weight: 800;
-             font-size: .9rem;
-             color: var(--ps-text);
-         }
+        .plan-semanal .subname {
+            margin: 0;
+            font-weight: 800;
+            font-size: .9rem;
+            color: var(--ps-text);
+        }
 
-         .plan-semanal .submeta {
-             margin-top: 6px;
-             display: flex;
-             flex-wrap: wrap;
-             gap: 8px;
-             color: var(--ps-muted);
-             font-size: .8rem;
-         }
+        .plan-semanal .submeta {
+            margin-top: 6px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            color: var(--ps-muted);
+            font-size: .8rem;
+        }
 
-         /* CENTER: Board */
-         .plan-semanal #board {
-             scrollbar-width: thin;
-         }
+        /* CENTER: Board */
+        .plan-semanal #board {
+            scrollbar-width: thin;
+        }
 
-         .plan-semanal .ps-col {
-             min-width: 260px;
-             max-width: 260px;
-             border: 1px solid var(--ps-line);
-             border-radius: var(--ps-radius);
-             background: #fff;
-             overflow: hidden;
-             display: flex;
-             flex-direction: column;
-         }
+        .plan-semanal .ps-col {
+            min-width: 260px;
+            max-width: 260px;
+            border: 1px solid var(--ps-line);
+            border-radius: var(--ps-radius);
+            background: #fff;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
 
-         .plan-semanal .ps-col-head {
-             padding: 12px;
-             border-bottom: 1px solid rgba(15,23,42,.08);
-             background: linear-gradient(180deg, rgba(15,23,42,.02), transparent);
-             display: flex;
-             align-items: center;
-             justify-content: space-between;
-             gap: 10px;
-         }
+        .plan-semanal .ps-col-head {
+            padding: 12px;
+            border-bottom: 1px solid rgba(15,23,42,.08);
+            background: linear-gradient(180deg, rgba(15,23,42,.02), transparent);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
 
-         .plan-semanal .ps-col-title {
-             margin: 0;
-             font-weight: 900;
-             font-size: .92rem;
-             color: var(--ps-text);
-         }
+        .plan-semanal .ps-col-title {
+            margin: 0;
+            font-weight: 900;
+            font-size: .92rem;
+            color: var(--ps-text);
+        }
 
-     .dropzone {
-         min-height: 400px !important;
-     }
+    .dropzone {
+        min-height: 400px !important;
+    }
 
-     .plan-semanal .ps-col-date {
-         font-size: .8rem;
-         color: var(--ps-muted);
-         white-space: nowrap;
-     }
+    .plan-semanal .ps-col-date {
+        font-size: .8rem;
+        color: var(--ps-muted);
+        white-space: nowrap;
+    }
 
-     .plan-semanal .ps-dropzone {
-         padding: 12px;
-         display: flex;
-         flex-direction: column;
-         gap: 12px;
-         min-height: 520px;
-     }
+    .plan-semanal .ps-dropzone {
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        min-height: 520px;
+    }
 
-     .plan-semanal .ps-col.dragover {
-         outline: 2px dashed rgba(0, 158, 247, .35);
-         outline-offset: -8px;
-     }
+    .plan-semanal .ps-col.dragover {
+        outline: 2px dashed rgba(0, 158, 247, .35);
+        outline-offset: -8px;
+    }
 
-     /* Cards (Tarjetas) */
-     .plan-semanal .cardtask {
-         border: 1px solid rgba(15,23,42,.12);
-         border-radius: 14px;
-         background: #fff;
-         padding: 12px 12px 12px 14px;
-         box-shadow: 0 10px 18px rgba(15,23,42,.06);
-         cursor: grab;
-         position: relative;
-         transition: .15s ease;
-     }
+    /* Cards (Tarjetas) */
+    .plan-semanal .cardtask {
+        border: 1px solid rgba(15,23,42,.12);
+        border-radius: 14px;
+        background: #fff;
+        padding: 12px 12px 12px 14px;
+        box-shadow: 0 10px 18px rgba(15,23,42,.06);
+        cursor: grab;
+        position: relative;
+        transition: .15s ease;
+    }
 
-         .plan-semanal .cardtask:hover {
-             transform: translateY(-1px);
-             box-shadow: 0 12px 26px rgba(15,23,42,.10);
-         }
+        .plan-semanal .cardtask:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 26px rgba(15,23,42,.10);
+        }
 
-         .plan-semanal .cardtask:active {
-             cursor: grabbing;
-         }
+        .plan-semanal .cardtask:active {
+            cursor: grabbing;
+        }
 
-         .plan-semanal .cardtask.ghost {
-             opacity: .55;
-         }
+        .plan-semanal .cardtask.ghost {
+            opacity: .55;
+        }
 
-         /* bar color por estado */
-         .plan-semanal .cardtask .bar {
-             position: absolute;
-             left: 0;
-             top: 12px;
-             bottom: 12px;
-             width: 5px;
-             border-radius: 999px;
-             background: #009EF7; /* default primary */
-         }
+        /* bar color por estado */
+        .plan-semanal .cardtask .bar {
+            position: absolute;
+            left: 0;
+            top: 12px;
+            bottom: 12px;
+            width: 5px;
+            border-radius: 999px;
+            background: #009EF7; /* default primary */
+        }
 
-     .plan-semanal .status-pendiente .bar {
-         background: #009EF7;
-     }
+    .plan-semanal .status-pendiente .bar {
+        background: #009EF7;
+    }
 
-     .plan-semanal .status-proceso .bar {
-         background: #FFC700;
-     }
+    .plan-semanal .status-proceso .bar {
+        background: #FFC700;
+    }
 
-     .plan-semanal .status-hecho .bar {
-         background: #50CD89;
-     }
+    .plan-semanal .status-hecho .bar {
+        background: #50CD89;
+    }
 
-     .plan-semanal .status-bloqueado .bar {
-         background: #F1416C;
-     }
+    .plan-semanal .status-bloqueado .bar {
+        background: #F1416C;
+    }
 
-     .plan-semanal .ctitle {
-         margin: 0 0 8px 10px;
-         font-weight: 900;
-         font-size: .92rem;
-         color: var(--ps-text);
-         line-height: 1.25;
-     }
+    .plan-semanal .ctitle {
+        margin: 0 0 8px 10px;
+        font-weight: 900;
+        font-size: .92rem;
+        color: var(--ps-text);
+        line-height: 1.25;
+    }
 
-     .plan-semanal .cmeta {
-         margin-left: 10px;
-         display: flex;
-         flex-wrap: wrap;
-         gap: 8px;
-         color: var(--ps-muted);
-         font-size: .8rem;
-     }
+    .plan-semanal .cmeta {
+        margin-left: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        color: var(--ps-muted);
+        font-size: .8rem;
+    }
 
-     .plan-semanal .pri {
-         width: 8px;
-         height: 8px;
-         border-radius: 999px;
-         display: inline-block;
-     }
+    .plan-semanal .pri {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        display: inline-block;
+    }
 
-         .plan-semanal .pri.p1 {
-             background: #F1416C;
-         }
+        .plan-semanal .pri.p1 {
+            background: #F1416C;
+        }
 
-         .plan-semanal .pri.p2 {
-             background: #FFC700;
-         }
+        .plan-semanal .pri.p2 {
+            background: #FFC700;
+        }
 
-         .plan-semanal .pri.p3 {
-             background: #50CD89;
-         }
+        .plan-semanal .pri.p3 {
+            background: #50CD89;
+        }
 
-     /* Panel derecho */
-     .plan-semanal #detailPane .p-4.border-dashed.rounded {
-         border-color: rgba(15,23,42,.18) !important;
-         background: rgba(15,23,42,.02);
-     }
+    /* Panel derecho */
+    .plan-semanal #detailPane .p-4.border-dashed.rounded {
+        border-color: rgba(15,23,42,.18) !important;
+        background: rgba(15,23,42,.02);
+    }
 
-     /* Toast (si usas tu toast) */
-     .plan-semanal .toast {
-         position: fixed;
-         left: 16px;
-         bottom: 16px;
-         padding: 10px 12px;
-         border-radius: 12px;
-         border: 1px solid rgba(15,23,42,.14);
-         background: #fff;
-         box-shadow: var(--ps-shadow);
-         color: var(--ps-text);
-         display: none;
-         z-index: 1050;
-     }
+    /* Toast (si usas tu toast) */
+    .plan-semanal .toast {
+        position: fixed;
+        left: 16px;
+        bottom: 16px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(15,23,42,.14);
+        background: #fff;
+        box-shadow: var(--ps-shadow);
+        color: var(--ps-text);
+        display: none;
+        z-index: 1050;
+    }
 
-     /* Modal (si mantienes tu modal custom) */
-     .plan-semanal .modal-backdrop {
-         background: rgba(15,23,42,.35);
-     }
+    /* Modal (si mantienes tu modal custom) */
+    .plan-semanal .modal-backdrop {
+        background: rgba(15,23,42,.35);
+    }
 
-     .plan-semanal .modal {
-         background: #fff;
-         border: 1px solid rgba(15,23,42,.14);
-         border-radius: 18px;
-         overflow: hidden;
-     }
+    .plan-semanal .modal {
+        background: #fff;
+        border: 1px solid rgba(15,23,42,.14);
+        border-radius: 18px;
+        overflow: hidden;
+    }
 
-         .plan-semanal .modal header,
-         .plan-semanal .modal footer {
-             border-color: rgba(15,23,42,.10);
-         }
+        .plan-semanal .modal header,
+        .plan-semanal .modal footer {
+            border-color: rgba(15,23,42,.10);
+        }
 
 
     /* ===== CARD MEJORADA ===== */
@@ -380,9 +381,11 @@
         font-size: .7rem;
         padding: .35em .55em;
     }
+
     .plan-semanal .cardtask:hover {
         transform: scale(1.02);
     }
+
     .plan-semanal .ctitle {
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -467,6 +470,183 @@
         min-height: auto;
     }
 
+
+
+    /* ==========================================
+           ESTILOS GENERALES
+           ========================================== */
+
+    /* Estilos para el área de arrastrar y soltar */
+    .drop-area {
+        transition: all 0.3s ease;
+        cursor: pointer;
+        min-height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .drop-area:hover {
+            background-color: #f8f9fa;
+            border-color: #007bff;
+        }
+
+        .drop-area.active {
+            background-color: #e3f2fd;
+            border-color: #0056b3;
+            transform: scale(1.02);
+        }
+
+    .drop-area-content {
+        text-align: center;
+    }
+
+    /* ==========================================
+           SECCIÓN DEL ADJUNTO - COMPONENTE DE SUBIDA DE ARCHIVOS
+           ========================================== */
+
+    /* Estilos para la vista previa del archivo */
+    .file-preview {
+        margin-bottom: 20px;
+    }
+
+    .file-item {
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 12px;
+        transition: all 0.3s ease;
+        animation: fadeIn 0.3s ease-in;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .file-item:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .file-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .file-icon {
+        font-size: 20px;
+        margin-right: 12px;
+        color: #6c757d;
+    }
+
+    .file-details {
+        flex-grow: 1;
+    }
+
+    .file-name {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 3px;
+        font-size: 0.9rem;
+    }
+
+    .file-size {
+        font-size: 0.8rem;
+        color: #6c757d;
+    }
+
+    .file-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn-remove {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: white;
+        transition: all 0.2s ease;
+        padding: 4px 8px;
+        font-size: 0.8rem;
+    }
+
+        .btn-remove:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+            transform: scale(1.05);
+        }
+
+        .btn-remove:focus {
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+        }
+
+    /* Mensajes de estado */
+    .status-message {
+        margin-top: 10px;
+        padding: 8px 12px;
+        border-radius: 4px;
+        display: none;
+        font-size: 0.85rem;
+    }
+
+    .status-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .status-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    /* Ajustes para el modal */
+    .modal .drop-area {
+        min-height: 100px;
+    }
+
+    .modal .file-item {
+        padding: 10px;
+    }
+
+    .modal .file-name {
+        font-size: 0.85rem;
+    }
+
+    .modal .file-size {
+        font-size: 0.75rem;
+    }
+
+    /* Responsive para el modal */
+    @@media (max-width: 768px) {
+        .file-info {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .file-actions {
+            margin-top: 8px;
+            align-self: flex-end;
+        }
+
+        .file-icon {
+            margin-right: 0;
+            margin-bottom: 8px;
+        }
+
+        .drop-area {
+            min-height: 100px;
+        }
+    }
 </style>
 
 <!--begin::Content-->
@@ -577,7 +757,7 @@
                         </div>
 
                         <div class="card-toolbar">
-                            <button type="button" class="btn btn-sm btn-primary" id="btnNewObs">
+                            <button type="button" class="btn btn-sm btn-primary" id="btnNewObs" disabled>
                                 <i class="bi bi-chat-left-text"></i> Observación
                             </button>
                         </div>
@@ -591,7 +771,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
 
@@ -615,7 +795,6 @@
             <div class="modal-body py-5">
                 <input type="hidden" id="obs_subreq" value="0" />
                 <!-- IDs ocultos -->
-             
                 <!-- Resumen -->
                 <div class="alert alert-info d-flex align-items-start">
                     <i class="bi bi-info-circle fs-4 me-3"></i>
@@ -648,9 +827,16 @@
                         <label class="form-label fw-bold">Estado</label>
                         <input type="text" class="form-control" id="obs_estado" value="abierta" readonly />
                     </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Observado por</label>
+                        <select class="form-select" id="cbo_observadopor">
+                            <option value="1" selected>Interna</option>
+                            <option value="2">Cliente</option>
+                        </select>
+                    </div>
 
                     <!-- registradoPor -->
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label class="form-label fw-bold">Registrado por</label>
                         <input type="text" class="form-control" id="obs_registradoPor" readonly />
                     </div>
@@ -672,25 +858,67 @@
                         <label class="form-label fw-bold">Fecha cierre</label>
                         <input type="text" class="form-control" id="obs_fechaCierre" readonly />
                     </div>
-
+                    <!-- ID oculto para edición -->
+                    <input type="hidden" id="obs_idObservacion" value="0" />
                     <!-- archivo -->
-                    <div class="col-md-6">
+                    <!--<div class="col-md-12">
                         <label class="form-label fw-bold">Adjunto (opcional)</label>
                         <input type="file" class="form-control" id="obs_file" />
                         <div class="text-muted fs-8 mt-1">JPG, PNG, PDF (opcional).</div>
+                    </div>-->
+                    <!-- ==========================================
+                    SECCIÓN DEL ADJUNTO - COMPONENTE DE SUBIDA DE ARCHIVOS
+                    ========================================== -->
+                    <div class="col-md-12">
+                        <label class="form-label fw-bold">Adjunto (opcional)</label>
+
+                        <!-- Área de arrastrar y soltar -->
+                        <div id="drop-area-obs" class="drop-area border-2 border-dashed border-primary text-center p-3 mb-3" style="cursor: pointer;">
+                            <div class="drop-area-content">
+                                <i class="fas fa-cloud-upload-alt fa-2x text-primary mb-2"></i>
+                                <p class="mb-0">Arrastra y suelta un archivo aquí o</p>
+                                <button type="button" class="btn btn-outline-primary btn-sm mt-2" id="select-file-btn-obs">
+                                    <i class="fas fa-folder-open me-2"></i>
+                                    Seleccionar Archivo
+                                </button>
+                                <input type="file" id="obs_file" class="d-none">
+                            </div>
+                        </div>
+
+                        <!-- Vista previa del archivo -->
+                        <div id="file-preview-obs" class="file-preview" style="display: none;">
+                            <div class="file-item">
+                                <div class="file-info">
+                                    <div class="d-flex align-items-center">
+                                        <div class="file-icon">
+                                            <i class="fas fa-file"></i>
+                                        </div>
+                                        <div class="file-details">
+                                            <div class="file-name" id="preview-name-obs">Nombre del archivo</div>
+                                            <div class="file-size" id="preview-size-obs">Tamaño del archivo</div>
+                                        </div>
+                                    </div>
+                                    <div class="file-actions">
+                                        <button class="btn btn-sm btn-remove" id="remove-file-btn-obs" title="Eliminar archivo">
+                                            <i class="fas fa-trash"></i> Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mensaje cuando no hay archivo -->
+                        <div id="no-file-message-obs" class="text-center text-muted py-3" style="display: none;">
+                            <i class="fas fa-inbox fa-2x mb-2"></i>
+                            <p class="mb-0">No hay archivo seleccionado</p>
+                        </div>
+
                     </div>
 
-                    <!-- nombreArchivo + extension (solo vista, se llena al elegir archivo) -->
-                    <div class="col-md-8">
-                        <label class="form-label fw-bold">Nombre archivo</label>
-                        <input type="text" class="form-control" id="obs_nombreArchivo" readonly />
-                    </div>
-
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Extensión</label>
-                        <input type="text" class="form-control" id="obs_extension" readonly />
-                    </div>
-
+                    <!-- Campos ocultos para almacenar información del archivo -->
+                    <input type="hidden" id="obs_nombreArchivo" />
+                    <input type="hidden" id="obs_extension" />
+                    <input type="hidden" id="obs_fileSize" />
                 </div>
             </div>
 
@@ -704,7 +932,7 @@
     </div>
 </div>
 <!--begin::Modal - Tarjeta-->
-<div class="modal fade" id="kt_modal_tarjeta"  tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="kt_modal_tarjeta" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
         <div class="modal-content">
 
@@ -738,6 +966,7 @@
 <div class="toast" id="toast"></div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script>
     // ====== Datos "como antes" (ViewBag) ======
     const ID_PLAN = @idPlanSemana;
@@ -759,7 +988,7 @@
         CURRENT_SUBREQ_ID = idSubReq;
         CURRENT_SUBREQ_INFO = info || null;
 
-        
+
         $("#btnNewObs").prop("disabled", false);
 
         loadObservaciones(idSubReq, info); // tu función real
@@ -834,6 +1063,7 @@
 
         $("#btnClearSel").on("click", function(){
             selected = { reqId:null, subId:null, subNombre:null, reqCodigo:null, reqNombre:null };
+            $("#btnNewObs").prop("disabled", true)
             renderTree();
             renderDetailEmpty();
         });
@@ -852,7 +1082,7 @@
             }
             openTarjetaModal(0, selected.subId, null, 0);
         });
-       
+
 
         $("#btnNewObs").on("click", function () {
 
@@ -876,6 +1106,30 @@
                 document.getElementById("kt_modal_obs")
             );
             modal.show();
+            $("#obs_fechaRegistro").flatpickr({
+                 dateFormat: 'd/m/Y',
+                 locale: spanishLocale,
+                 minDate: "today", // Bloquear fechas anteriores a hoy
+                 defaultDate: new Date(),
+                 clickOpens: false,   // 🚫 No abre el calendario
+                 allowInput: false
+            });
+            /*
+            $("#obs_fechaCierre").flatpickr({
+                 dateFormat: 'd/m/Y',
+                 locale: spanishLocale,
+                 minDate: "today", // Bloquear fechas anteriores a hoy
+                 defaultDate: new Date(),
+            });*/
+            $('#obs_severidad').select2({
+                 placeholder: 'Seleccione cliente',
+                 width: '100%'
+            });
+            $('#cbo_observadopor').select2({
+                  placeholder: 'Seleccione cliente',
+                  width: '100%'
+            });
+            $("#obs_registradoPor").val("@ViewBag.usuario")
         });
         // Navegación semana (recarga para que tu Index calcule lunes e IdPlanSemana real)
         $("#btnPrev").on("click", function(){
@@ -919,21 +1173,21 @@
         });
     });
 
-    function onSelectSubReq(idSubReq, info) {
+   /* function onSelectSubReq(idSubReq, info) {
         CURRENT_SUBREQ_ID = idSubReq;
         CURRENT_SUBREQ_INFO = info || null;
-      
+
       // info: { reqCodigo, reqNombre, subNombre } si lo tienes
       loadObservaciones(idSubReq, info);
-    }
+    }*/
 
     function loadObservaciones(idSubReq, info) {
-       
+
       $.get("@Url.Action("ListarObservaciones","PlanSemanal")", { idRequerimientoDetalle: idSubReq })
         .done(function(r){
           if(!r || !r.ok){ toastr.error(r?.error || "Error al listar observaciones"); return; }
             CURRENT_SUBREQ_ID = idSubReq;
-          
+
           const lista = r.lista || [];
           $("#detailPane").html(renderDetailPane(idSubReq, info, lista));
         });
@@ -989,12 +1243,15 @@
                   <a href="#" class="btn btn-sm btn-light"><i class="bi bi-paperclip"></i> ${esc(o.nombreArchivo)}</a>
                 </div>` : ``}
 
-              ${o.estado !== "cerrada" ? `
-                <div class="mt-3">
-                  <button class="btn btn-sm btn-light-success" onclick="cerrarObs(${o.idObservacion}, ${idSubReq})">
-                    <i class="bi bi-check2-circle"></i> Cerrar
-                  </button>
-                </div>` : ``}
+              <div class="mt-3">
+                <button class="btn btn-sm btn-light-primary" onclick="editarObs(${o.idObservacion}, ${idSubReq})">
+                  <i class="bi bi-pencil"></i> Editar
+                </button>
+                ${o.estado !== "cerrada" ? `
+                <button class="btn btn-sm btn-light-success" onclick="cerrarObs(${o.idObservacion}, ${idSubReq})">
+                  <i class="bi bi-check2-circle"></i> Cerrar
+                </button>` : ``}
+              </div>
             </div>
           </div>
         `;
@@ -1009,8 +1266,61 @@
       $("#obs_severidad").val("media");
       new bootstrap.Modal(document.getElementById("kt_modal_obs")).show();
     }
+    function formatearFecha(fecha) {
+        if (!fecha) return "";
 
-    $("#btnGuardarObs").on("click", function(){
+        const d = new Date(fecha);
+        if (isNaN(d.getTime())) return "";
+
+        return d.toLocaleDateString('es-ES');
+    }
+    function parseNetDate(netDate) {
+        if (!netDate) return "";
+
+        const match = /\/Date\((\d+)\)\//.exec(netDate);
+        if (!match) return "";
+
+        const date = new Date(parseInt(match[1], 10));
+        return isNaN(date.getTime()) ? "" : date.toLocaleDateString('es-ES');
+    }
+
+
+    function editarObs(idObs, idSubReq){
+       $.get("@Url.Action("ObtenerObservacion","PlanSemanal")", { idObservacion: idObs })
+         .done(function(r){
+           if(!r || !r.ok){ toastr.error(r?.error || "Error obteniendo observación"); return; }
+           const obs = r.observacion;
+
+           //INICIALIZAR LOS SELECT
+            $('#obs_severidad').select2({
+                placeholder: 'Seleccione cliente',
+                width: '100%'
+            });
+            $('#cbo_observadopor').select2({
+                placeholder: 'Seleccione cliente',
+                width: '100%'
+            });
+           // Populate modal
+           $("#obs_subreq").val(idSubReq);
+           $("#obs_comentario").val(obs.comentario || "");
+           $("#obs_severidad").val(obs.severidad || "media");
+           $("#obs_estado").val(obs.estado || "abierta");
+           $("#cbo_observadopor").val(obs.observadopor || "1");
+           $("#obs_registradoPor").val(obs.registradoPor || "");
+           $("#obs_fechaRegistro").val(parseNetDate(obs.fechaRegistro));
+           $("#obs_fechaCierre").val(parseNetDate(obs.fechaCierre));
+           $("#obs_cerradoPor").val(obs.cerradoPor || "");
+           $("#obs_idObservacion").val(idObs);
+
+           // Change title
+           $("#kt_modal_obs .modal-header h2").html(`<i class="bi bi-chat-left-text text-primary me-2"></i>Editar Observación`);
+
+           // Open modal
+           new bootstrap.Modal(document.getElementById("kt_modal_obs")).show();
+         })
+         .fail(function(){ toastr.error("Error al obtener observación"); });
+     }
+    @*$("#btnGuardarObs").on("click", function(){
       const idSubReq = parseInt($("#obs_subreq").val()||"0",10);
       const comentario = $("#obs_comentario").val();
       const severidad = $("#obs_severidad").val();
@@ -1027,7 +1337,65 @@
             toastr.error(r?.mensaje || "No se pudo guardar");
           }
         });
+    });*@
+    $("#btnGuardarObs").on("click", function(){
+      const idSubReq = parseInt($("#obs_subreq").val()||"0",10);
+      const idObs = parseInt($("#obs_idObservacion").val()||"0",10);
+      const comentario = $("#obs_comentario").val();
+      const severidad = $("#obs_severidad").val();
+      const estado = $("#obs_estado").val();
+      const observadopor = $("#cbo_observadopor").val();
+      const registradoPor = $("#obs_registradoPor").val();
+      const fechaRegistro = $("#obs_fechaRegistro").val();
+      const cerradoPor = $("#obs_cerradoPor").val();
+      const fechaCierre = $("#obs_fechaCierre").val();
+      const file = $("#obs_file")[0].files[0];
+      const nombreArchivo = $("#obs_nombreArchivo").val();
+      const extension = $("#obs_extension").val();
+
+     const data = {
+        idObservacion: idObs,
+        idRequerimientoDetalle: idSubReq,
+        comentario: comentario,
+        severidad: severidad,
+        estado: estado,
+        observadopor: observadopor,
+        registradoPor: registradoPor,
+        fechaRegistro: fechaRegistro,
+        cerradoPor: cerradoPor,
+        fechaCierre: fechaCierre,
+        nombreArchivo: nombreArchivo,
+        extension: extension
+      };
+
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(data));
+      if (file) {
+        formData.append("file", file);
+      }
+
+      $.ajax({
+        url: "@Url.Action("GuardarObservacion","PlanSemanal")",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(r){
+          if(r && r.ok){
+            toastr.success(r.mensaje || "Guardado");
+            bootstrap.Modal.getInstance(document.getElementById("kt_modal_obs")).hide();
+            // recarga panel
+            loadObservaciones(idSubReq, { });
+          }else{
+            toastr.error(r?.mensaje || "No se pudo guardar");
+          }
+        },
+        error: function(){
+          toastr.error("Error al guardar la observación");
+        }
+      });
     });
+
 
     function cerrarObs(idObs, idSubReq){
       $.post("@Url.Action("CerrarObservacion","PlanSemanal")", { idObservacion: idObs })
@@ -1232,7 +1600,7 @@
                     console.log(1)
                 });
 
-               
+
                 $sublist.append($sub);
             });
 
@@ -1374,6 +1742,8 @@
             $("#kt_modal_tarjeta_body").html(html);
             initTarjetaCombos();
             initTrabajadorCombo();
+
+
             modalTarjeta.show();
 
         }).fail(function () {
@@ -1513,4 +1883,240 @@
         const months=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
         return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
     }
+</script>
+<script>
+        // ==========================================
+        // COMPONENTE DE SUBIDA DE ARCHIVOS PARA EL MODAL
+        // ==========================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos del DOM específicos para el modal
+            const dropArea = document.getElementById('drop-area-obs');
+            const fileInput = document.getElementById('obs_file');
+            const selectFileBtn = document.getElementById('select-file-btn-obs');
+            const filePreview = document.getElementById('file-preview-obs');
+            const noFileMessage = document.getElementById('no-file-message-obs');
+            const removeFileBtn = document.getElementById('remove-file-btn-obs');
+            const previewName = document.getElementById('preview-name-obs');
+            const previewSize = document.getElementById('preview-size-obs');
+
+            // Campos ocultos para almacenar información del archivo
+            const obsNombreArchivo = document.getElementById('obs_nombreArchivo');
+            const obsExtension = document.getElementById('obs_extension');
+            const obsFileSize = document.getElementById('obs_fileSize');
+
+            // Variables de estado
+            let currentFile = null;
+
+            // Eventos principales
+            setupEventListeners();
+
+            function setupEventListeners() {
+                // Eventos del área de arrastrar y soltar
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    dropArea.addEventListener(eventName, preventDefaults, false);
+                });
+
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropArea.addEventListener(eventName, highlight, false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropArea.addEventListener(eventName, unhighlight, false);
+                });
+
+                dropArea.addEventListener('drop', handleDrop, false);
+
+                // Botón de selección de archivo
+                selectFileBtn.addEventListener('click', () => fileInput.click());
+
+                // Evento de click en el área de arrastrar y soltar (solo para el área, no para el botón)
+                dropArea.addEventListener('click', (e) => {
+                    // Verificar que el clic no sea en el botón de selección
+                    if (!e.target.closest('#select-file-btn-obs')) {
+                        fileInput.click();
+                    }
+                });
+
+                // Input de archivo
+                fileInput.addEventListener('change', handleFile, false);
+
+                // Botón de eliminar archivo
+                removeFileBtn.addEventListener('click', removeFile);
+            }
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            function highlight(e) {
+                dropArea.classList.add('active');
+            }
+
+            function unhighlight(e) {
+                dropArea.classList.remove('active');
+            }
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const droppedFiles = dt.files;
+
+                if (droppedFiles.length > 0) {
+                    handleFile({ target: { files: droppedFiles } });
+                }
+            }
+
+            function handleFile(e) {
+                const selectedFile = e.target.files[0];
+
+                if (selectedFile) {
+                    if (isValidFile(selectedFile)) {
+                        addFile(selectedFile);
+                    } else {
+                        showStatusMessage(`El archivo "${selectedFile.name}" no es válido.`, 'error');
+                    }
+                }
+
+                // Limpiar el input para permitir seleccionar el mismo archivo de nuevo
+                fileInput.value = '';
+            }
+
+            function isValidFile(file) {
+                // Validación de tamaño máximo (10MB)
+                const maxSize = 10 * 1024 * 1024;
+                if (file.size > maxSize) {
+                    showStatusMessage(`El archivo "${file.name}" excede el tamaño máximo de 10MB.`, 'error');
+                    return false;
+                }
+                return true;
+            }
+
+            function addFile(file) {
+                // Sobre escribe el archivo actual
+                currentFile = file;
+                renderFilePreview();
+                updateHiddenFields();
+                showStatusMessage(`Archivo "${file.name}" seleccionado`, 'success');
+            }
+
+            function removeFile() {
+                currentFile = null;
+                renderFilePreview();
+                clearHiddenFields();
+                showStatusMessage('Archivo eliminado', 'success');
+            }
+
+            function renderFilePreview() {
+                if (currentFile) {
+                    // Mostrar toda la sección del adjunto
+                    filePreview.style.display = 'block';
+                    noFileMessage.style.display = 'none';
+                    
+                    // Actualizar información del archivo
+                    previewName.textContent = currentFile.name;
+                    previewSize.textContent = formatFileSize(currentFile.size);
+                    
+                    // Actualizar icono según el tipo de archivo
+                    const fileIcon = filePreview.querySelector('.file-icon i');
+                    const iconClass = getFileIconClass(currentFile);
+                    fileIcon.className = `fas ${iconClass}`;
+                } else {
+                    // Ocultar toda la sección del adjunto
+                    filePreview.style.display = 'none';
+                    noFileMessage.style.display = 'none';
+                }
+            }
+
+            function updateHiddenFields() {
+                if (currentFile) {
+                    obsNombreArchivo.value = currentFile.name;
+                    obsExtension.value = getFileExtension(currentFile.name);
+                    obsFileSize.value = currentFile.size;
+                }
+            }
+
+            function clearHiddenFields() {
+                obsNombreArchivo.value = '';
+                obsExtension.value = '';
+                obsFileSize.value = '';
+            }
+
+            function getFileIconClass(file) {
+                const extension = file.name.split('.').pop().toLowerCase();
+                const iconMap = {
+                    'pdf': 'fa-file-pdf text-danger',
+                    'doc': 'fa-file-word text-primary',
+                    'docx': 'fa-file-word text-primary',
+                    'xls': 'fa-file-excel text-success',
+                    'xlsx': 'fa-file-excel text-success',
+                    'ppt': 'fa-file-powerpoint text-warning',
+                    'pptx': 'fa-file-powerpoint text-warning',
+                    'txt': 'fa-file-alt text-secondary',
+                    'jpg': 'fa-file-image text-info',
+                    'jpeg': 'fa-file-image text-info',
+                    'png': 'fa-file-image text-info',
+                    'gif': 'fa-file-image text-info',
+                    'zip': 'fa-file-archive text-warning',
+                    'rar': 'fa-file-archive text-warning',
+                    'mp3': 'fa-file-audio text-warning',
+                    'mp4': 'fa-file-video text-danger',
+                    'avi': 'fa-file-video text-danger'
+                };
+
+                return iconMap[extension] || 'fa-file';
+            }
+
+            function getFileExtension(filename) {
+                return filename.split('.').pop().toLowerCase();
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            function showStatusMessage(message, type) {
+                // Eliminar mensajes anteriores
+                const existingMessage = document.querySelector('.status-message');
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
+
+                // Crear nuevo mensaje
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `status-message status-${type}`;
+                messageDiv.textContent = message;
+
+                // Insertar después del área de arrastrar y soltar
+                const modalBody = dropArea.closest('.modal-body');
+                modalBody.insertBefore(messageDiv, dropArea.nextSibling);
+
+                // Mostrar mensaje
+                messageDiv.style.display = 'block';
+
+                // Ocultar después de 3 segundos
+                setTimeout(() => {
+                    messageDiv.style.opacity = '0';
+                    setTimeout(() => messageDiv.remove(), 300);
+                }, 3000);
+            }
+
+            // Función para obtener el archivo actual (para usar en el guardado)
+            window.getObservationFile = function() {
+                return currentFile;
+            };
+
+            // Función para limpiar el archivo (para usar cuando se cierra el modal)
+            window.clearObservationFile = function() {
+                currentFile = null;
+                renderFilePreview();
+                clearHiddenFields();
+            };
+        });
 </script>

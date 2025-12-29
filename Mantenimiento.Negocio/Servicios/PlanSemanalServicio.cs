@@ -233,20 +233,26 @@ WHERE IdPlanDetalle = @idPlanDetalle;";
             }
         }
 
-        public bool InsertarObservacion(int idRequerimientoDetalle, string comentario, string severidad, string usuario,string estado)
+        public bool InsertarObservacion(RequerimientoDetalleObservacion oDT)
         {
             using (var cn = new SqlConnection(ConnectionConfig.ConnectionString))
             {
-                RequerimientoDetalleObservacion oDT = new Datos.Entidades.RequerimientoDetalleObservacion();
-                oDT.comentario = comentario;
-                oDT.severidad = severidad;
-                oDT.idRequerimientoDetalle = idRequerimientoDetalle;
-                oDT.registradoPor = usuario;
-                oDT.fechaRegistro = DateTime.Now;
-                oDT.estado = estado;
                 var id = cn.Insert(oDT);
-                
                 return id > 0;
+            }
+        }
+        public bool Actualizar(RequerimientoDetalleObservacion oDT)
+        {
+            bool resultado = false;
+            using (var cn = new SqlConnection(ConnectionConfig.ConnectionString))
+            {
+                RequerimientoDetalleObservacion dtT = cn.Get<RequerimientoDetalleObservacion>(oDT.idObservacion);
+                if(dtT != null)
+                {
+                    cn.Update(dtT);
+                    resultado = true;
+                }
+                return resultado;
             }
         }
 
@@ -260,6 +266,14 @@ WHERE IdPlanDetalle = @idPlanDetalle;";
                     commandType: CommandType.StoredProcedure
                 );
                 return true;
+            }
+        }
+        public RequerimientoDetalleObservacion ObtenerObservacion(int idObservacion)
+        {
+            using (var connection = new SqlConnection(ConnectionConfig.ConnectionString))
+            {
+                connection.Open();
+                return connection.Get<RequerimientoDetalleObservacion>(idObservacion);
             }
         }
     }
