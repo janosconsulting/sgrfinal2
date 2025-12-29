@@ -1,0 +1,519 @@
+﻿@model Mantenimiento.Negocio.Poco.GestionarPropuestaPoco
+@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    var isEdit = Model != null && Model.IsEditing && Model.Propuesta != null && Model.Propuesta.idPropuesta > 0;
+}
+
+<style>
+    .card-soft {
+        border: 1px solid #eef0f4;
+        box-shadow: 0 10px 30px rgba(0,0,0,.04);
+        border-radius: 14px;
+    }
+
+    .section-title {
+        font-weight: 800;
+        letter-spacing: .2px;
+        background: #f6f8fb;
+        border: 1px solid #e8edf5;
+        border-radius: 10px;
+        padding: 10px 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .section-title i {
+            font-size: 18px;
+        }
+
+    .form-hint {
+        font-size: 12px;
+        color: #7a8699;
+        margin-top: 6px;
+    }
+
+    .req {
+        color: #d9214e;
+        font-weight: 800;
+    }
+
+    .control-sm {
+        min-height: 44px;
+        border-radius: 10px;
+    }
+
+    .sticky-actions {
+        position: sticky;
+        bottom: 16px;
+        z-index: 10;
+        background: rgba(255,255,255,.92);
+        backdrop-filter: blur(8px);
+        border: 1px solid #eef0f4;
+        border-radius: 14px;
+        padding: 12px;
+        box-shadow: 0 12px 28px rgba(0,0,0,.06);
+    }
+</style>
+
+<div class="d-flex flex-column flex-column-fluid">
+
+    <!-- TOOLBAR -->
+    <div id="kt_app_toolbar" class="app-toolbar pt-7 pt-lg-10">
+        <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+            <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+
+                <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+                    <h1 class="page-heading text-dark fw-bold fs-3 m-0">
+                        @(isEdit ? "Editar Propuesta" : "Nueva Propuesta")
+                    </h1>
+
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+                        <li class="breadcrumb-item text-muted">
+                            <a href="@Url.Action("Index","Dashboard")" class="text-muted text-hover-primary">Home</a>
+                        </li>
+                        <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
+                        <li class="breadcrumb-item text-muted">Comercial</li>
+                        <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
+                        <li class="breadcrumb-item text-muted">
+                            <a href="@Url.Action("Index","Propuesta")" class="text-muted text-hover-primary">Propuestas</a>
+                        </li>
+                        <li class="breadcrumb-item"><span class="bullet bg-gray-400 w-5px h-2px"></span></li>
+                        <li class="breadcrumb-item text-muted">@(isEdit ? "Editar" : "Nuevo")</li>
+                    </ul>
+                </div>
+
+                <div class="d-flex align-items-center gap-2">
+                    <a href="@Url.Action("Index","Propuesta")" class="btn btn-light">
+                        <i class="las la-arrow-left fs-3"></i> Volver
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div id="kt_app_content" class="app-content flex-column-fluid">
+        <div id="kt_app_content_container" class="app-container container-fluid">
+
+            <div class="card card-flush card-soft">
+                <div class="card-body p-6 p-lg-8">
+
+                    <div class="section-title mb-4">
+                        <i class="las la-file-contract"></i>
+                        Datos de la Propuesta
+                    </div>
+
+                    <input type="hidden" id="idPropuesta" value="@(Model.Propuesta.idPropuesta)" />
+
+                    <!-- =========================
+         BLOQUE: DATOS GENERALES
+    ========================== -->
+                    <div class="row g-4 mb-6">
+
+                        <div class="col-lg-3">
+                            <label class="form-label fw-bold">Código</label>
+                            <input type="text" id="codigo" class="form-control form-control-solid control-sm"
+                                   value="@(Model.Propuesta.codigo)"
+                                   placeholder="Se genera automático" readonly />
+                            <div class="form-hint">Se asigna automáticamente al guardar.</div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label class="form-label fw-bold">Estado</label>
+                            <select id="idEstado" class="form-select control-sm" data-control="select2">
+                                <option value="1" @(Model.Propuesta.idEstado == 1 ? "selected" : "")>BORRADOR</option>
+                                <option value="2" @(Model.Propuesta.idEstado == 2 ? "selected" : "")>ENVIADA</option>
+                                <option value="3" @(Model.Propuesta.idEstado == 3 ? "selected" : "")>APROBADA</option>
+                                <option value="4" @(Model.Propuesta.idEstado == 4 ? "selected" : "")>RECHAZADA</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label class="form-label fw-bold">Cliente</label>
+                            <select id="idCliente" class="form-select control-sm" data-control="select2" data-placeholder="Seleccione...">
+                                <option value=""></option>
+                                @foreach (var c in Model.ListaClientes)
+                                {
+                                    <option value="@c.idPersona" @(Model.Propuesta.idCliente == c.idPersona ? "selected" : "")>@c.nombreCli</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-lg-8">
+                            <label class="form-label fw-bold">Título <span class="req">*</span></label>
+                            <input type="text" id="titulo" class="form-control control-sm"
+                                   value="@(Model.Propuesta.titulo)"
+                                   placeholder="Ej: Rediseño web corporativo" />
+                            <div class="form-hint">Este título se mostrará como encabezado principal en el PDF.</div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <label class="form-label fw-bold">Responsable</label>
+                            <input type="text" id="responsable" class="form-control control-sm"
+                                   value="@(Model.Propuesta.responsable ?? "")"
+                                   placeholder="Ej: Equipo Codetus / Área TI" />
+                        </div>
+                    </div>
+
+
+                    <!-- =========================
+         SECCIÓN: RESUMEN EJECUTIVO
+    ========================== -->
+                    <div class="section-title mb-3">
+                        <i class="las la-align-left"></i>
+                        Resumen Ejecutivo
+                    </div>
+
+                    <div class="row g-4 mb-6">
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Resumen Ejecutivo <span class="req">*</span></label>
+                            <textarea id="resumenEjecutivo" rows="4" class="form-control"
+                                      placeholder="Describe en 5-10 líneas el objetivo y valor de la propuesta...">@(Model.Propuesta.resumenEjecutivo ?? "")</textarea>
+                            <div class="form-hint">Este texto aparece destacado en el PDF (tipo bloque resaltado).</div>
+                        </div>
+                    </div>
+
+
+                    <!-- =========================
+         SECCIÓN: ALCANCE
+    ========================== -->
+                    <div class="section-title mb-3">
+                        <i class="las la-bullseye"></i>
+                        Alcance del Servicio
+                    </div>
+
+                    <div class="row g-4 mb-6">
+                        <div class="col-lg-6">
+                            <label class="form-label fw-bold">Incluye</label>
+                            <textarea id="incluye" rows="5" class="form-control"
+                                      placeholder="- Análisis del requerimiento&#10;- Diseño UI&#10;- Desarrollo&#10;- Pruebas y validación">@(Model.Propuesta.incluye ?? "")</textarea>
+                            <div class="form-hint">Tip: usa guiones por línea para que se vea como lista en el PDF.</div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label class="form-label fw-bold">No incluye</label>
+                            <textarea id="noIncluye" rows="5" class="form-control"
+                                      placeholder="- Hosting / dominio&#10;- Licencias terceros&#10;- Cambios fuera de alcance">@(Model.Propuesta.noIncluye ?? "")</textarea>
+                            <div class="form-hint">Sirve para evitar malos entendidos con el cliente.</div>
+                        </div>
+                    </div>
+
+                    <!-- =========================
+         SECCIÓN: CARACTERÍSTICAS DEL DESARROLLO
+    ========================== -->
+                    <div class="section-title mb-3">
+                        <i class="las la-cogs"></i>
+                        Características del Desarrollo
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label fw-bold">
+                            Descripción de funcionalidades de desarrollo
+                        </label>
+
+                        <!-- Editor -->
+                        <div id="editorDescripcion" style="height:260px;">
+                            @Html.Raw(Model.Propuesta.caracteristicas ?? "")
+                        </div>
+
+                        <!-- Campo oculto que se envía al backend -->
+                        <input type="hidden" id="descripcionFuncionalidades" />
+
+                        <div class="form-hint">
+                            Usa este editor para detallar funcionalidades, flujos, validaciones, respuestas automáticas e IA.
+                        </div>
+                    </div>
+
+                    <!-- =========================
+         SECCIÓN: PLAZO
+    ========================== -->
+                    <div class="section-title mb-3">
+                        <i class="las la-calendar"></i>
+                        Plazo de Ejecución
+                    </div>
+
+                    <div class="row g-4 mb-6">
+                        <div class="col-lg-3">
+                            <label class="form-label fw-bold">Plazo (días)</label>
+                            <input type="number" id="plazoDias" class="form-control control-sm"
+                                   value="@(Model.Propuesta.plazoDias ?? 15)" min="1" />
+                        </div>
+
+                        <div class="col-lg-9">
+                            <label class="form-label fw-bold">Detalle del plazo</label>
+                            <input type="text" id="plazoDetalle" class="form-control control-sm"
+                                   value="@(Model.Propuesta.plazoDetalle ?? "")"
+                                   placeholder="Ej: Contados desde la aceptación / entregas parciales por avance" />
+                        </div>
+                    </div>
+
+
+                    <!-- =========================
+         SECCIÓN: INVERSIÓN ECONÓMICA
+    ========================== -->
+                    <div class="section-title mb-3">
+                        <i class="las la-coins"></i>
+                        Inversión Económica
+                    </div>
+
+                    <div class="row g-4 mb-6">
+                        <div class="col-lg-3">
+                            <label class="form-label fw-bold">Moneda</label>
+                            <select id="idMoneda" class="form-select control-sm" data-control="select2">
+                                <option value=""></option>
+                                @foreach (var m in Model.ListaMonedas)
+                                {
+                                    <option value="@m.idMoneda" @(Model.Propuesta.idMoneda == m.idMoneda ? "selected" : "")>@m.nombre</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label class="form-label fw-bold">Monto Base</label>
+                            <input type="number" step="0.01" id="montoReferencia"
+                                   class="form-control control-sm"
+                                   value="@(Model.Propuesta.montoReferencia)" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label class="form-label fw-bold">¿Incluye IGV?</label>
+                            <select id="incluyeIgv" class="form-select control-sm" data-control="select2">
+                                <option value="0" @((Model.Propuesta.incluyeIgv ?? 0) == 0 ? "selected" : "")>NO</option>
+                                <option value="1" @((Model.Propuesta.incluyeIgv ?? 0) == 1 ? "selected" : "")>SÍ</option>
+                            </select>
+                            <div class="form-hint">Si no incluye, en el PDF se mostrará “+ IGV”.</div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label class="form-label fw-bold">Observación de precio</label>
+                            <input type="text" id="observacionPrecio" class="form-control control-sm"
+                                   value="@(Model.Propuesta.observacionPrecio)"
+                                   placeholder="Ej: Precio referencial / sujeto a alcance" />
+                        </div>
+                    </div>
+
+
+                    <!-- =========================
+         SECCIÓN: CONDICIONES COMERCIALES
+    ========================== -->
+                    <div class="section-title mb-3">
+                        <i class="las la-handshake"></i>
+                        Condiciones Comerciales
+                    </div>
+
+                    <div class="row g-4 mb-6">
+                        <div class="col-lg-4">
+                            <label class="form-label fw-bold">Forma de pago</label>
+                            <select id="formaPago" class="form-select control-sm" data-control="select2">
+                                <option value="">Seleccione</option>
+                                <option value="CONTADO">CONTADO</option>
+                                <option value="50_50">50% / 50%</option>
+                                <option value="MENSUAL">MENSUAL</option>
+                                <option value="POR_HITOS">POR HITOS</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-8">
+                            <label class="form-label fw-bold">Detalle / comentario de pago</label>
+                            <input type="text" id="formaPagoDetalle" class="form-control control-sm"
+                                   value="@(Model.Propuesta.formaPagoDetalle ?? "")"
+                                   placeholder="Ej: 50% al inicio y 50% contra entrega / transferencia bancaria" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label class="form-label fw-bold">Validez (días)</label>
+                            <input type="number" id="validezDias" class="form-control control-sm"
+                                   value="@(Model.Propuesta.validezDias ?? 15)" min="1" />
+                        </div>
+
+                        <div class="col-lg-9">
+                            <label class="form-label fw-bold">Condiciones / comentarios</label>
+                            <textarea id="condiciones" rows="3" class="form-control"
+                                      placeholder="Ej: Cambios fuera de alcance se cotizan aparte / cliente valida avances...">@(Model.Propuesta.condiciones ?? "")</textarea>
+                        </div>
+                    </div>
+
+                    <div id="sectionHitos" style="display:none;">
+
+                        <div class="section-title mb-3">
+                            <i class="las la-flag-checkered"></i>
+                            Hitos de Desarrollo (por entregas)
+                        </div>
+
+                        <div class="row g-4 mb-6">
+                            <div class="col-12">
+                                <label class="form-label fw-bold">
+                                    Detalle de hitos / entregables
+                                </label>
+
+                                <textarea id="detalleHitos" rows="8" class="form-control"
+                                          placeholder="HITO 1: Análisis y diseño (5 días) – S/ 2,000.00
+- Levantamiento y definición de alcance
+- Diseño de flujos y pantallas
+- Validación con el cliente">@(
+Model.Propuesta.detalleHitos ?? ""
+)</textarea>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <label class="form-label fw-bold">Criterio de aceptación por hito</label>
+                                <input type="text" id="criterioAceptacionHitos"
+                                       class="form-control control-sm"
+                                       value="@(Model.Propuesta.criterioAceptacionHitos ?? "")"
+                                       placeholder="Ej: Aprobación por correo/WhatsApp. Observaciones en 5 días hábiles." />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- =========================
+         SECCIÓN: TEXTO ACEPTACIÓN
+    ========================== -->
+                    <div class="section-title mb-3">
+                        <i class="las la-file-signature"></i>
+                        Aceptación de la Propuesta
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Texto de aceptación</label>
+                            <textarea id="textoAceptacion" rows="3" class="form-control"
+                                      placeholder="Texto que aparecerá antes del recuadro de firma...">@(Model.Propuesta.textoAceptacion ?? "Con la aceptación de la presente propuesta, el cliente declara su conformidad con el alcance y condiciones descritas en este documento.")</textarea>
+                            <div class="form-hint">Se mostrará en el PDF junto al espacio de firma.</div>
+                        </div>
+                    </div>
+
+
+                    <!-- STICKY ACTIONS -->
+                    <div class="sticky-actions mt-6 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                        <div class="text-muted fs-7">
+                            <i class="las la-info-circle"></i>
+                            Completa las secciones para generar un PDF de propuesta profesional.
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="@Url.Action("Index","Propuesta")" class="btn btn-light">Cancelar</a>
+                            <button type="button" class="btn btn-primary" onclick="GuardarPropuesta();">
+                                <i class="las la-save fs-3"></i> Guardar
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script>
+
+function toggleHitos() {
+    var formaPago = $('#formaPago').val();
+
+    if (formaPago === 'POR_HITOS') {
+        $('#sectionHitos').slideDown();
+    } else {
+        $('#sectionHitos').slideUp();
+        $('#detalleHitos').val('');
+        $('#criterioAceptacionHitos').val('');
+    }
+}
+        var quillDescripcion;
+function GuardarPropuesta() {
+
+    var model = {
+        Propuesta: {
+            idPropuesta: parseInt($('#idPropuesta').val() || '0'),
+            codigo: $('#codigo').val(),
+            idCliente: $('#idCliente').val() ? parseInt($('#idCliente').val()) : null,
+            idEstado: $('#idEstado').val() ? parseInt($('#idEstado').val()) : 1,
+
+            titulo: $('#titulo').val(),
+            responsable: $('#responsable').val(),
+
+            // Secciones PDF
+            resumenEjecutivo: $('#resumenEjecutivo').val(),
+            incluye: $('#incluye').val(),
+            noIncluye: $('#noIncluye').val(),
+
+            plazoDias: $('#plazoDias').val() ? parseInt($('#plazoDias').val()) : null,
+            plazoDetalle: $('#plazoDetalle').val(),
+            caracteristicas: quillDescripcion.root.innerHTML,
+            idMoneda: $('#idMoneda').val() ? parseInt($('#idMoneda').val()) : null,
+            montoReferencia: $('#montoReferencia').val() ? parseFloat($('#montoReferencia').val()) : null,
+            incluyeIgv: $('#incluyeIgv').val() ? parseInt($('#incluyeIgv').val()) : 0,
+            observacionPrecio: $('#observacionPrecio').val(),
+
+            formaPago: $('#formaPago').val(),
+            formaPagoDetalle: $('#formaPagoDetalle').val(),
+            validezDias: $('#validezDias').val() ? parseInt($('#validezDias').val()) : null,
+            condiciones: $('#condiciones').val(),
+            detalleHitos: $('#detalleHitos').val(),
+            esPorHitos: $('#esPorHitos').val() ? parseInt($('#esPorHitos').val()) : 0,
+            criterioAceptacionHitos: $('#criterioAceptacionHitos').val(),
+            textoAceptacion: $('#textoAceptacion').val()
+        }
+    };
+
+    if (!model.Propuesta.titulo || model.Propuesta.titulo.trim().length < 3) {
+        Swal.fire("Falta título", "Ingrese un título válido.", "warning"); return;
+    }
+    if (!model.Propuesta.resumenEjecutivo || model.Propuesta.resumenEjecutivo.trim().length < 10) {
+        Swal.fire("Falta resumen", "Ingrese un resumen ejecutivo (mínimo 10 caracteres).", "warning"); return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("Guardar", "Propuesta")",
+        data: model,
+        success: function (res) {
+            if (res && res.idResultado == 1) {
+                Swal.fire({
+                    text: res.mensaje || "Propuesta guardada correctamente.",
+                    icon: "success",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok",
+                    customClass: { confirmButton: "btn fw-bold btn-primary" }
+                }).then(function () {
+                    window.location.href = "@Url.Action("Index","Propuesta")";
+                });
+            } else {
+                Swal.fire("Error", (res && res.mensaje) ? res.mensaje : "No se pudo guardar.", "error");
+            }
+        },
+        error: function (xhr) {
+            Swal.fire("Error", xhr.responseText || "Error inesperado.", "error");
+        }
+    });
+}
+        $(document).ready(function () {
+            toggleHitos();
+
+            $('#formaPago').on('change', function () {
+                toggleHitos();
+            });
+
+            quillDescripcion = new Quill('#editorDescripcion', {
+                theme: 'snow',
+                placeholder: 'Describe las funcionalidades de desarrollo...',
+                modules: {
+                    toolbar: [
+                        [{ header: [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline'],
+                        [{ list: 'ordered' }, { list: 'bullet' }],
+                        [{ align: [] }],
+                        ['link'],
+                        ['clean']
+                    ]
+                }
+            });
+        });
+    </script>
+}

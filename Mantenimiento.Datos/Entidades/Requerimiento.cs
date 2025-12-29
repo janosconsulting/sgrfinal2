@@ -16,6 +16,7 @@ namespace Mantenimiento.Datos.Entidades
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int idRequerimiento { get; set; }
         public int idPersona { get; set; }
+        public int? idAdicional { get; set; }
         public int? idProyecto { get; set; }
         public int idTipoRequerimiento { get; set; }
         public string codigo { get; set; }

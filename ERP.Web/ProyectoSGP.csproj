@@ -231,8 +231,11 @@
     <Compile Include="Controllers\CategoriaClienteController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DocumentoOrigenController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PlanSemanalController.cs" />
+    <Compile Include="Controllers\PropuestaController.cs" />
     <Compile Include="Controllers\ProyectoController.cs" />
     <Compile Include="Controllers\RequerimientoController.cs" />
     <Compile Include="Controllers\RequerimientosporTrabajadorController.cs" />
@@ -5947,6 +5950,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Uploads\Files\Others\" />
     <Folder Include="Uploads\Files\PDFs\" />
+    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -6486,6 +6490,14 @@
     <Content Include="Views\Subscripcion\Index.cshtml" />
     <Content Include="Views\Subscripcion\Nuevo.cshtml" />
     <Content Include="Views\Tareas\Seguimiento.cshtml" />
+    <Content Include="Views\Requerimiento\Wizard.cshtml" />
+    <Content Include="Views\DocumentoOrigen\Index.cshtml" />
+    <Content Include="Views\DocumentoOrigen\Nuevo.cshtml" />
+    <Content Include="Views\Propuesta\Nuevo.cshtml" />
+    <Content Include="Views\Propuesta\Index.cshtml" />
+    <Content Include="Views\Propuesta\Imprimir.cshtml" />
+    <Content Include="Views\PlanSemanal\Index.cshtml" />
+    <Content Include="Views\PlanSemanal\_FormTarjeta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ControlCombustible.Utilitario\Mantenimiento.Utilitario.csproj">

@@ -212,9 +212,42 @@
                                             <!--begin::Select-->
                                             <select id="kt_estado_select" class="form-select" data-control="select2">
                                                 <option value="-1">Seleccione</option>
-                                                <option value="1" @(Model.Requerimiento.estadoReq == 1 ? "selected" : "")>REGISTRADO</option>
-                                                <option value="2" @(Model.Requerimiento.estadoReq == 2 ? "selected" : "")>EN PROCESO</option>
-                                                <option value="3" @(Model.Requerimiento.estadoReq == 3 ? "selected" : "")>FINALIZADO</option>
+
+                                                <option value="">Seleccione </option>
+                                                <option value="1" @(Model.Requerimiento.estadoReq == 1 ? "selected" : "")>RECIBIDO</option>
+                                                <option value="2" @(Model.Requerimiento.estadoReq == 2 ? "selected" : "")>EN ANÁLISIS</option>
+                                                <option value="3" @(Model.Requerimiento.estadoReq == 3 ? "selected" : "")>APROBADO PARA DESARROLLO</option>
+                                                <option value="4" @(Model.Requerimiento.estadoReq == 4 ? "selected" : "")>EN DESARROLLO</option>
+                                                <option value="5" @(Model.Requerimiento.estadoReq == 5 ? "selected" : "")>EN QA</option>
+                                                <option value="6" @(Model.Requerimiento.estadoReq == 6 ? "selected" : "")>OBSERVADO</option>
+                                                <option value="7" @(Model.Requerimiento.estadoReq == 7 ? "selected" : "")>APROBADO (QA)</option>
+                                                <option value="8" @(Model.Requerimiento.estadoReq == 8 ? "selected" : "")>EN REVISION DEL CLIENTE</option>
+                                                <option value="9" @(Model.Requerimiento.estadoReq == 9 ? "selected" : "")>CERRADO</option>
+                                                <option value="10" @(Model.Requerimiento.estadoReq == 10 ? "selected" : "")>ENTREGADO</option>
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Label-->
+                                            <label class="fs-5 fw-semibold mb-2"
+                                                   for="kt_proyecto_cliente_select">ORIGEN:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select id="kt_adicional" class="form-select" data-control="select2">
+                                                <!-- Opción por defecto -->
+                                                <option value="">Seleccione Adicional</option>
+                                                @if (Model.ListarAdicionales.Any())
+                                                {
+                                                    foreach (var item in Model.ListarAdicionales)
+                                                    {
+                                                        <option value="@item.idAdicional">@item.nombre</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    // Si no hay proyectos disponibles, mostrar una opción por defecto
+                                                    <option value="">No existen adicionales</option>
+                                                }
                                             </select>
                                             <!--end::Select-->
                                         </div>
@@ -786,7 +819,7 @@
             formData.append('Requerimiento.aprobacion', $("#txtAprobacion").val());
             formData.append('Requerimiento.fechaRegistro', $("#kt_datepicker_fecha").val());
             formData.append('Requerimiento.estadoReq', $("#kt_estado_select").val());
-
+            formData.append('Requerimiento.idAdicional', $("#kt_adicional").val());
             formData.append('DetalleRequerimiento.idRequerimiento', @Model.Requerimiento.idRequerimiento);
 
             // Obtener el número total de elementos en el repeater

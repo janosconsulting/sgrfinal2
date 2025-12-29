@@ -24,6 +24,7 @@ namespace ReyDavid.Web.Controllers
         public IPersonaServicio personaServicio { get; set; }
         public IProyectoServicio proyectoServicio { get; set; }
         public ITipoRequerimientoServicio tipoRequerimientoServicio { get; set; }
+        public IAdicionalServicio adicionalServicio { get; set; }
         public RequerimientoController()
         {
             this.requerimientoServicio = IoCHelper.ResolverIoC<IRequerimientoServicio>();
@@ -31,6 +32,7 @@ namespace ReyDavid.Web.Controllers
             this.proyectoServicio = IoCHelper.ResolverIoC<IProyectoServicio>();
             this.tipoRequerimientoServicio = IoCHelper.ResolverIoC<ITipoRequerimientoServicio>();
             this.detalleRequerimientoServicio = IoCHelper.ResolverIoC<IDetalleRequerimiento>();
+            this.adicionalServicio = IoCHelper.ResolverIoC<IAdicionalServicio>();
         }
         // GET: Requerimiento
         public ActionResult Index()
@@ -63,11 +65,49 @@ namespace ReyDavid.Web.Controllers
             oGestionar.ListarClientes = personaServicio.ListarClientes();
             oGestionar.ListarTrabajadores = personaServicio.ListarTrabajadores();
             oGestionar.ListarProyectos = proyectoServicio.ListarProyectos();
+            oGestionar.ListarAdicionales = adicionalServicio.Listar();
             oGestionar.ListarTipoRequerimientos = tipoRequerimientoServicio.ListarTipoReq();
             oGestionar.Requerimiento = new Requerimiento();
             oGestionar.DetalleRequerimiento = new DetalleRequerimiento();
 
             return View(oGestionar);
+        }
+
+        public ActionResult Wizard()
+        {
+            GestionarRequerimientoPoco oGestionar = new GestionarRequerimientoPoco();
+            oGestionar.ListarAdicionales = adicionalServicio.Listar();
+            oGestionar.ListarClientes = personaServicio.ListarClientes();
+            oGestionar.ListarProyectos = proyectoServicio.ListarProyectos();
+            return View(oGestionar);
+        }
+
+        [HttpPost]
+        public JsonResult GenerarDesdeDOWizard(WizardGenerarReqDesdeDoRequest request)
+        {
+            try
+            {
+                // ✅ Si tú tienes sesión/empresa/usuario, aquí lo mapearías.
+                // En tu servicio actual el método no recibe idEmpresa/idUsuario,
+                // pero si luego lo agregas, lo envías aquí.
+                var resp = this.requerimientoServicio.GenerarDesdeDocumentoOrigenWizard(request);
+
+                return Json(new
+                {
+                    ok = true,
+                    cantidad = resp.cantidad,
+                    ids = resp.idsRequerimiento
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    ok = false,
+                    message = ex.Message,
+                    detail = ex.InnerException != null ? ex.InnerException.Message : null
+                });
+            }
         }
 
         [ValidateInput(false)]
@@ -293,7 +333,7 @@ namespace ReyDavid.Web.Controllers
             oGestionar.Requerimiento = requerimientoServicio.ObtenerRequerimiento(id);
             oGestionar.DetalleRequerimiento = new DetalleRequerimiento();
             oGestionar.ListaDetalleRequerimiento = detalleRequerimientoServicio.ObtenerDetalleReq(id);
-
+            oGestionar.ListarAdicionales = adicionalServicio.Listar();
             // Crear una lista para almacenar los folders únicos
             List<ListaFoldersMapping> folders = new List<ListaFoldersMapping>();
 

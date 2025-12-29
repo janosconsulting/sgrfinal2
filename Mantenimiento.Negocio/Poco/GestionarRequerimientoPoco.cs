@@ -17,6 +17,7 @@ namespace Mantenimiento.Negocio.Poco
         public DetalleRequerimiento DetalleRequerimiento { get; set; }
         public List<ListaDetalleRequerimiento> ListaDetalleRequerimiento { get; set; }
         public string Codigo { get; set; }
+        public List<Adicional> ListarAdicionales { get; set; }
         public List<ListaFoldersMapping> ListaFoldersMapping { get; set; }
     }
 }

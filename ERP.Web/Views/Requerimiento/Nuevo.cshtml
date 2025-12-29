@@ -123,21 +123,21 @@
                                                    for="kt_proyecto_cliente_select">PROYECTO:</label>
                                             <!--end::Label-->
                                             <!--begin::Select-->
-                                            <select id="kt_proyecto_cliente_select" class="form-select" data-control="select2">                                                
-                                                    <!-- Opción por defecto -->
-                                                    <option value="">Seleccione Proyecto</option>
-                                                    @if (Model.ListarProyectos.Any())
+                                            <select id="kt_proyecto_cliente_select" class="form-select" data-control="select2">
+                                                <!-- Opción por defecto -->
+                                                <option value="">Seleccione Proyecto</option>
+                                                @if (Model.ListarProyectos.Any())
+                                                {
+                                                    foreach (var item in Model.ListarProyectos)
                                                     {
-                                                        foreach (var item in Model.ListarProyectos)
-                                                        {
-                                                            <option value="@item.idProyecto">@item.nombre</option>
-                                                        }
+                                                        <option value="@item.idProyecto">@item.nombre</option>
                                                     }
-                                                    else
-                                                    {
-                                                        // Si no hay proyectos disponibles, mostrar una opción por defecto
-                                                        <option value="">No existen proyectos</option>
-                                                    }
+                                                }
+                                                else
+                                                {
+                                                    // Si no hay proyectos disponibles, mostrar una opción por defecto
+                                                    <option value="">No existen proyectos</option>
+                                                }
                                             </select>
                                             <!--end::Select-->
                                         </div>
@@ -150,8 +150,7 @@
                                             <!--begin::Input-->
                                             <input type="text" id="txtSolicitante"
                                                    class="form-control"
-                                                   placeholder="Ingrese nombre del solicitante"
-                                                   />
+                                                   placeholder="Ingrese nombre del solicitante" />
                                             <!--end::Input-->
                                             <!--end::Input group-->
                                         </div>
@@ -161,7 +160,7 @@
                                                    for="kt_tipo_req_select">TIPO DE REQUERIMIENTO:</label>
                                             <!--end::Label-->
                                             <!--begin::Select-->
-                                            <select id="kt_tipo_req_select" class="form-select" data-control="select2">                                                
+                                            <select id="kt_tipo_req_select" class="form-select" data-control="select2">
                                                 <!-- Opción por defecto -->
                                                 <option value="">Seleccione Tipo de Requerimiento</option>
                                                 @if (Model.ListarTipoRequerimientos.Any())
@@ -173,7 +172,7 @@
                                                 }
                                                 else
                                                 {
-                                                    // Si no hay tipos de requerimiento disponibles, mostrar una opción por defecto                                            
+                                                    // Si no hay tipos de requerimiento disponibles, mostrar una opción por defecto
                                                     <option value="">No existen tipos de requerimientos</option>
                                                 }
                                             </select>
@@ -201,12 +200,45 @@
                                             <!--begin::Select-->
                                             <select id="kt_estado_select" class="form-select" data-control="select2">
                                                 <option value="">Seleccione estado</option>
-                                                <option value="1">REGISTRADO</option>
-                                                <option value="2">EN PROCESO</option>
-                                                <option value="3">FINALIZADO</option>
+                                                <option value="1">RECIBIDO</option>
+                                                <option value="2">EN ANÁLISIS</option>
+                                                <option value="3">APROBADO PARA DESARROLLO</option>
+                                                <option value="4">EN DESARROLLO</option>
+                                                <option value="5">EN QA</option>
+                                                <option value="6">OBSERVADO</option>
+                                                <option value="7">APROBADO (QA)</option>
+                                                <option value="8">EN REVISION DEL CLIENTE</option>
+                                                <option value="9">CERRADO</option>
+                                                <option value="10">ENTREGADO</option>
                                             </select>
                                             <!--end::Select-->
                                         </div>
+
+                                        <div class="row mb-5 gx-1">
+                                            <!--begin::Label-->
+                                            <label class="fs-5 fw-semibold mb-2"
+                                                   for="kt_proyecto_cliente_select">ORIGEN:</label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select id="kt_adicional" class="form-select" data-control="select2">
+                                                <!-- Opción por defecto -->
+                                                <option value="">Seleccione Adicional</option>
+                                                @if (Model.ListarAdicionales.Any())
+                                                {
+                                                    foreach (var item in Model.ListarAdicionales)
+                                                    {
+                                                        <option value="@item.idAdicional">@item.nombre</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    // Si no hay proyectos disponibles, mostrar una opción por defecto
+                                                    <option value="">No existen adicionales</option>
+                                                }
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+
                                     </div>
                                     <div class="col-md-6">
                                         <div class="row mb-5 gx-1">
@@ -573,6 +605,7 @@
                 formData.append('Requerimiento.fechaFin', $("#kt_datepicker_fecha_fin").val());
                 formData.append('Requerimiento.avanceDesarrollo', $("#txtAvanceDesa").val());
                 formData.append('Requerimiento.tiempo', $("#txtTiempo").val());
+                formData.append('Requerimiento.idAdicional', $("#kt_adicional").val());
                 formData.append('Requerimiento.aprobacion', $("#txtAprobacion").val());
                 formData.append('Requerimiento.fechaRegistro', $("#kt_datepicker_fecha").val());
                 formData.append('Requerimiento.estadoReq', $("#kt_estado_select").val());

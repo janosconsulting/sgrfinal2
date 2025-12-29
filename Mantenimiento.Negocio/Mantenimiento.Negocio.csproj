@@ -67,6 +67,9 @@
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\ERP.Web\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -100,14 +103,17 @@
     <Compile Include="Contenedor\cContenedor.cs" />
     <Compile Include="Contenedor\Fabrica.cs" />
     <Compile Include="Contenedor\IContenedor.cs" />
+    <Compile Include="Contratos\Servicios\IAdicionalServicio.cs" />
     <Compile Include="Contratos\Servicios\IArticuloServicio.cs" />
     <Compile Include="Contratos\Servicios\ICasosExitoServicio.cs" />
     <Compile Include="Contratos\Servicios\ICategoriaClienteServicio.cs" />
     <Compile Include="Contratos\Servicios\IDetalleRequerimiento.cs" />
     <Compile Include="Contratos\Servicios\IAutorServicio.cs" />
     <Compile Include="Contratos\Servicios\IDocumentoIdentidadServicio.cs" />
+    <Compile Include="Contratos\Servicios\IDocumentoOrigenServicio.cs" />
     <Compile Include="Contratos\Servicios\IPaisServicio.cs" />
     <Compile Include="Contratos\Servicios\IPersonaServicio.cs" />
+    <Compile Include="Contratos\Servicios\IPropuestaServicio.cs" />
     <Compile Include="Contratos\Servicios\IProyectoServicio.cs" />
     <Compile Include="Contratos\Servicios\IRequerimientoServicio.cs" />
     <Compile Include="Contratos\Servicios\IRequerimientosporTrabajadorServicio.cs" />
@@ -118,6 +124,8 @@
     <Compile Include="Poco\Config.cs" />
     <Compile Include="Poco\DetalleDocumentoView.cs" />
     <Compile Include="Poco\DetalleRepeatablePoco.cs" />
+    <Compile Include="Poco\GestionarDocumentoOrigenPoco.cs" />
+    <Compile Include="Poco\GestionarPropuestaPoco.cs" />
     <Compile Include="Poco\GestionarSeguimientoPoco.cs" />
     <Compile Include="Poco\GestionarArticuloPoco.cs" />
     <Compile Include="Poco\GestionarCasosExito.cs" />
@@ -131,21 +139,28 @@
     <Compile Include="Poco\GestionarTrabajadorPoco.cs" />
     <Compile Include="Poco\ListaDetalleRequerimiento.cs" />
     <Compile Include="Poco\ListaFoldersMapping.cs" />
+    <Compile Include="Poco\PlanSemanalPoco.cs" />
     <Compile Include="Poco\ResultadoTransaccion.cs" />
+    <Compile Include="Poco\WizardPoco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recursos\Mensajes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Mensajes.resx</DependentUpon>
     </Compile>
+    <Compile Include="Servicios\AdicionalServicio.cs" />
     <Compile Include="Servicios\ArticuloServicio.cs" />
     <Compile Include="Servicios\AutorServicio.cs" />
     <Compile Include="Servicios\CasosExitoServicio.cs" />
     <Compile Include="Servicios\CategoriaClienteServicio.cs" />
     <Compile Include="Servicios\DetalleRequerimientoServicio.cs" />
     <Compile Include="Servicios\DocumentoIdentidadServicio.cs" />
+    <Compile Include="Servicios\DocumentoOrigenServicio.cs" />
+    <Compile Include="Servicios\IPlanSemanalServicio.cs" />
     <Compile Include="Servicios\PaisServicio.cs" />
     <Compile Include="Servicios\PersonaServicio.cs" />
+    <Compile Include="Servicios\PlanSemanalServicio.cs" />
+    <Compile Include="Servicios\PropuestaServicio.cs" />
     <Compile Include="Servicios\ProyectoServicio.cs" />
     <Compile Include="Servicios\RequerimientoServicio.cs" />
     <Compile Include="Servicios\RequerimientosporTrabajadorServicio.cs" />

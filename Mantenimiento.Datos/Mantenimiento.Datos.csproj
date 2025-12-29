@@ -132,10 +132,12 @@
     <Compile Include="DocumentoIdentidad.cs">
       <DependentUpon>Pocos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\Adicional.cs" />
     <Compile Include="Entidades\CasosExito.cs" />
     <Compile Include="Entidades\CategoriaCliente.cs" />
     <Compile Include="Entidades\Frecuencia.cs" />
     <Compile Include="Entidades\Moneda.cs" />
+    <Compile Include="Entidades\PropuestaEntidad.cs" />
     <Compile Include="Entidades\Rol.cs" />
     <Compile Include="Entidades\Servicio.cs" />
     <Compile Include="Entidades\sp_ListarCategoriaCliente.cs" />

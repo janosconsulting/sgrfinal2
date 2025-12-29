@@ -101,14 +101,15 @@ namespace Mantenimiento.IoC.Contenedor
             contenedor.RegisterType<IDocumentoIdentidadRepositorio, DocumentoIdentidadRepositorio>(new TransientLifetimeManager());
             contenedor.RegisterType<IArticuloAdjuntoRepositorio, ArticuloAdjuntoRepositorio>(new TransientLifetimeManager());           
             contenedor.RegisterType<IUsuarioServicio, UsuarioServicio>(new TransientLifetimeManager());
-
+            contenedor.RegisterType<IAdicionalServicio, AdicionalServicio>(new TransientLifetimeManager());
+            contenedor.RegisterType<IPropuestaServicio, PropuestaServicio>(new TransientLifetimeManager());
             contenedor.RegisterType<IRequerimientoServicio, RequerimientoServicio>(new TransientLifetimeManager());
             contenedor.RegisterType<IPersonaServicio, PersonaServicio>(new TransientLifetimeManager());
             contenedor.RegisterType<IProyectoServicio, ProyectoServicio>(new TransientLifetimeManager());
             contenedor.RegisterType<ITipoRequerimientoServicio, TipoRequerimientoServicio>(new TransientLifetimeManager());
             contenedor.RegisterType<IDetalleRequerimiento, DetalleRequerimientoServicio>(new TransientLifetimeManager());
             contenedor.RegisterType<IRequerimientosporTrabajadorServicio, RequerimientosporTrabajadorServicio>(new TransientLifetimeManager());
-
+            contenedor.RegisterType<IPlanSemanalServicio, PlanSemanalServicio>(new TransientLifetimeManager());
             //Registro de la capa transversal
             contenedor.RegisterType<IOcurrencia, cOcurrencia>(new TransientLifetimeManager());
         }

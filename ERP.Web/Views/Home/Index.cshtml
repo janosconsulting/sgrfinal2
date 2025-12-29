@@ -137,6 +137,1601 @@
         </div>
     </div>
 </section>
+<!-- Quick Value Bar + Sectores + Incluye + CTA (Post Hero) -->
+<section class="codetus-post-hero fix">
+    <div class="container">
+
+        <!-- Barra de beneficios -->
+        <div class="codetus-valuebar">
+            <div class="row g-3">
+                <div class="col-xl-3 col-md-6">
+                    <div class="codetus-value-item">
+                        <div class="icon"><i class="fa-solid fa-bolt"></i></div>
+                        <div class="text">
+                            <h6>Implementación rápida</h6>
+                            <p>Listo para usar y configurar.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="codetus-value-item">
+                        <div class="icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="text">
+                            <h6>Seguridad y respaldo</h6>
+                            <p>Protección + copias programadas.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="codetus-value-item">
+                        <div class="icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                        <div class="text">
+                            <h6>Multiplataforma</h6>
+                            <p>PC, tablet y celular.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="codetus-value-item">
+                        <div class="icon"><i class="fa-solid fa-headset"></i></div>
+                        <div class="text">
+                            <h6>Soporte y mejoras</h6>
+                            <p>Acompañamiento continuo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sectores -->
+        <div class="codetus-sectors">
+            <div class="codetus-title-wrap">
+                <span class="codetus-kicker">Soluciones por rubro</span>
+                <h2 class="codetus-title">Elige tu sector y te mostramos la mejor opción</h2>
+                <p class="codetus-subtitle">Sistemas listos + desarrollo a medida para crecer sin complicaciones.</p>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-lg-3 col-md-6">
+                    <a class="codetus-sector-card" href="javascript:void(0)"
+                       data-bs-toggle="modal" data-bs-target="#modalSector"
+                       data-sector="Salud"
+                       data-desc="Agenda, historias, formatos, reportes y módulos a medida."
+                       data-link="@Url.Action("DiseñoWeb","Home")">
+                        <i class="fa-solid fa-hospital"></i>
+                        <div>
+                            <h6>Salud</h6>
+                            <p>Agenda, historias, formatos, reportes.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <a class="codetus-sector-card" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modalHoteles">
+                        <i class="fa-solid fa-hotel"></i>
+                        <div>
+                            <h6>Hoteles y hospedajes</h6>
+                            <p>Reservas, caja, turnos, reportes.</p>
+                        </div>
+                    </a>
+
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <a class="codetus-sector-card" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modalRestaurantes">
+                        <i class="fa-solid fa-utensils"></i>
+                        <div>
+                            <h6>Restaurantes</h6>
+                            <p>Mesas, cocina, delivery, POS.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <a class="codetus-sector-card" href="#">
+                        <i class="fa-solid fa-store"></i>
+                        <div>
+                            <h6>Comercio</h6>
+                            <p>Ventas, stock, facturación, clientes.</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <a class="codetus-sector-card" href="#">
+                        <i class="fa-solid fa-prescription-bottle-medical"></i>
+                        <div>
+                            <h6>Boticas</h6>
+                            <p>Lotes, vencimientos, inventario.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <a class="codetus-sector-card" href="#">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        <div>
+                            <h6>Ferreterías</h6>
+                            <p>Cotizaciones, stock, guías, Sunat.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <a class="codetus-sector-card" href="#">
+                        <i class="fa-solid fa-building"></i>
+                        <div>
+                            <h6>Constructoras</h6>
+                            <p>Compras, almacén, obra, costos.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <a class="codetus-sector-card" href="#">
+                        <i class="fa-solid fa-code"></i>
+                        <div>
+                            <h6>A medida</h6>
+                            <p>Integramos tu flujo y creamos módulos.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade"
+             id="modalSector"
+             tabindex="-1"
+             data-bs-backdrop="false"
+             data-bs-keyboard="true"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content codetus-modal">
+                    <div class="modal-header border-0">
+                        <div>
+                            <small class="codetus-kicker">Sector</small>
+                            <h5 class="modal-title mb-0" id="modalSectorTitle">Sector</h5>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body pt-0">
+
+                        <p class="mb-3">
+                            Selecciona el tipo de centro para ver los módulos disponibles.
+                        </p>
+
+                        <!-- Selector de subcategorías -->
+                        <div class="codetus-tabs mb-4">
+                            <button class="codetus-tab active" data-target="medico">
+                                <i class="fa-solid fa-user-doctor"></i>
+                                Centro Médico
+                            </button>
+                            <button class="codetus-tab" data-target="odontologico">
+                                <i class="fa-solid fa-tooth"></i>
+                                Centro Odontológico
+                            </button>
+                        </div>
+
+                        <!-- CONTENIDO DINÁMICO -->
+                        <div class="codetus-dynamic">
+
+                            <!-- Centro Médico -->
+                            <div class="codetus-panel show" id="panel-medico">
+                                <h6 class="mb-3">Módulos del sistema</h6>
+
+                                <div class="codetus-modules">
+
+                                    <div class="codetus-module">
+                                        <i class="fa-solid fa-calendar-check"></i>
+                                        <h6>Agendamiento</h6>
+                                        <p>Citas y horarios médicos.</p>
+                                    </div>
+
+                                    <div class="codetus-module">
+                                        <i class="fa-solid fa-heart-pulse"></i>
+                                        <h6>Triaje</h6>
+                                        <p>Signos vitales y evaluación inicial.</p>
+                                    </div>
+
+                                    <div class="codetus-module">
+                                        <i class="fa-solid fa-user-doctor"></i>
+                                        <h6>Atención</h6>
+                                        <p>Consulta médica digital.</p>
+                                    </div>
+
+                                    <div class="codetus-module">
+                                        <i class="fa-solid fa-prescription"></i>
+                                        <h6>Recetas</h6>
+                                        <p>Recetas electrónicas.</p>
+                                    </div>
+
+                                    <div class="codetus-module">
+                                        <i class="fa-solid fa-flask"></i>
+                                        <h6>Laboratorio</h6>
+                                        <p>Resultados y formatos.</p>
+                                    </div>
+
+                                    <div class="codetus-module">
+                                        <i class="fa-solid fa-chart-line"></i>
+                                        <h6>Reportes</h6>
+                                        <p>Indicadores y estadísticas.</p>
+                                    </div>
+
+                                </div>
+                                <div class="codetus-proof mt-4">
+                                    <div class="codetus-proof-head">
+                                        <h6 class="mb-1">Clientes que lo usan</h6>
+                                        <p class="mb-0">Implementado en centros de salud y consultorios (variantes por tamaño).</p>
+                                    </div>
+
+                                    <div class="codetus-logos">
+                                        <!-- Reemplaza src por tus logos reales -->
+                                        <div class="codetus-logo"><img src="@Url.Content("~/Content/theme/assets/img/clients/cliente-1.png")" alt="Cliente 1"></div>
+                                        <div class="codetus-logo"><img src="@Url.Content("~/Content/theme/assets/img/clients/cliente-2.png")" alt="Cliente 2"></div>
+                                        <div class="codetus-logo"><img src="@Url.Content("~/Content/theme/assets/img/clients/cliente-3.png")" alt="Cliente 3"></div>
+                                        <div class="codetus-logo"><img src="@Url.Content("~/Content/theme/assets/img/clients/cliente-4.png")" alt="Cliente 4"></div>
+                                        <div class="codetus-logo"><img src="@Url.Content("~/Content/theme/assets/img/clients/cliente-5.png")" alt="Cliente 5"></div>
+                                    </div>
+
+                                    <div class="codetus-tags">
+                                        <span><i class="fa-solid fa-check"></i> Consultorios</span>
+                                        <span><i class="fa-solid fa-check"></i> Centros médicos</span>
+                                        <span><i class="fa-solid fa-check"></i> Laboratorios</span>
+                                        <span><i class="fa-solid fa-check"></i> Multiespecialidad</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <!-- Centro Odontológico -->
+                            <div class="codetus-panel" id="panel-odontologico">
+                                <h6 class="mb-3">Módulos del sistema</h6>
+
+                                <div class="codetus-modules">
+
+                                    <div class="codetus-module">
+                                        <i class="fa-solid fa-calendar-check"></i>
+                                        <h6>Agenda</h6>
+                                        <p>Citas odontológicas.</p>
+                                    </div>
+
+                                    <div class="codetus-module">
+                                        <i class="fa-solid fa-notes-medical"></i>
+                                        <h6>Historia</h6>
+                                        <p>Ficha clínica dental.</p>
+                                    </div>
+
+                                    <div class="codetus-module">
+                                        <i class="fa-solid fa-tooth"></i>
+                                        <h6>Odontograma</h6>
+                                        <p>Registro por pieza.</p>
+                                    </div>
+
+                                    <div class="codetus-module">
+                                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                                        <h6>Tratamientos</h6>
+                                        <p>Procedimientos y planes.</p>
+                                    </div>
+
+                                    <div class="codetus-module">
+                                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                                        <h6>Presupuestos</h6>
+                                        <p>Cotización y pagos.</p>
+                                    </div>
+
+                                    <div class="codetus-module">
+                                        <i class="fa-solid fa-chart-pie"></i>
+                                        <h6>Reportes</h6>
+                                        <p>Control y resultados.</p>
+                                    </div>
+
+                                </div>
+
+                                <div class="codetus-proof mt-4">
+                                    <div class="codetus-proof-head">
+                                        <h6 class="mb-1">Clientes que lo usan</h6>
+                                        <p class="mb-0">Usado en clínicas y consultorios odontológicos.</p>
+                                    </div>
+
+                                    <div class="codetus-logos">
+                                        <div class="codetus-logo"><img src="@Url.Content("~/Content/theme/assets/img/clients/odonto-1.png")" alt="Cliente 1"></div>
+                                        <div class="codetus-logo"><img src="@Url.Content("~/Content/theme/assets/img/clients/odonto-2.png")" alt="Cliente 2"></div>
+                                        <div class="codetus-logo"><img src="@Url.Content("~/Content/theme/assets/img/clients/odonto-3.png")" alt="Cliente 3"></div>
+                                        <div class="codetus-logo"><img src="@Url.Content("~/Content/theme/assets/img/clients/odonto-4.png")" alt="Cliente 4"></div>
+                                        <div class="codetus-logo"><img src="@Url.Content("~/Content/theme/assets/img/clients/odonto-5.png")" alt="Cliente 5"></div>
+                                    </div>
+
+                                    <div class="codetus-tags">
+                                        <span><i class="fa-solid fa-check"></i> Odontología general</span>
+                                        <span><i class="fa-solid fa-check"></i> Ortodoncia</span>
+                                        <span><i class="fa-solid fa-check"></i> Implantes</span>
+                                        <span><i class="fa-solid fa-check"></i> Estética dental</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <style>
+                                .codetus-modules {
+                                    display: grid;
+                                    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                                    gap: 14px;
+                                }
+
+                                .codetus-module {
+                                    background: #fff;
+                                    border: 1px solid rgba(0,0,0,.06);
+                                    border-radius: 14px;
+                                    padding: 14px 12px;
+                                    text-align: center;
+                                    box-shadow: 0 8px 24px rgba(0,0,0,.06);
+                                    transition: .2s;
+                                }
+
+                                    .codetus-module i {
+                                        font-size: 28px;
+                                        color: #1b4fff;
+                                        margin-bottom: 8px;
+                                    }
+
+                                    .codetus-module h6 {
+                                        margin: 0 0 4px;
+                                        font-size: 14px;
+                                        font-weight: 800;
+                                    }
+
+                                    .codetus-module p {
+                                        margin: 0;
+                                        font-size: 12px;
+                                        opacity: .75;
+                                    }
+
+                                    .codetus-module:hover {
+                                        transform: translateY(-3px);
+                                        box-shadow: 0 14px 36px rgba(0,0,0,.12);
+                                    }
+
+
+                                .codetus-proof {
+                                    background: #ffffff;
+                                    border: 1px solid rgba(0,0,0,.06);
+                                    border-radius: 14px;
+                                    padding: 14px;
+                                }
+
+                                .codetus-proof-head p {
+                                    font-size: 12.5px;
+                                    opacity: .75;
+                                }
+
+                                .codetus-logos {
+                                    margin-top: 10px;
+                                    display: flex;
+                                    gap: 10px;
+                                    flex-wrap: wrap;
+                                    align-items: center;
+                                }
+
+                                .codetus-logo {
+                                    width: 92px;
+                                    height: 46px;
+                                    border-radius: 12px;
+                                    background: rgba(0,0,0,.03);
+                                    border: 1px solid rgba(0,0,0,.05);
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    padding: 6px;
+                                }
+
+                                    .codetus-logo img {
+                                        max-width: 100%;
+                                        max-height: 100%;
+                                        object-fit: contain;
+                                        filter: grayscale(1);
+                                        opacity: .85;
+                                        transition: .2s;
+                                    }
+
+                                    .codetus-logo:hover img {
+                                        filter: grayscale(0);
+                                        opacity: 1;
+                                    }
+
+                                .codetus-tags {
+                                    margin-top: 10px;
+                                    display: flex;
+                                    gap: 8px;
+                                    flex-wrap: wrap;
+                                }
+
+                                    .codetus-tags span {
+                                        font-size: 12px;
+                                        background: rgba(27,79,255,.08);
+                                        color: #0b1b4f;
+                                        padding: 6px 10px;
+                                        border-radius: 999px;
+                                        display: inline-flex;
+                                        gap: 6px;
+                                        align-items: center;
+                                    }
+
+                                    .codetus-tags i {
+                                        color: #1b4fff;
+                                    }
+                            </style>
+
+
+                        </div>
+                    </div>
+
+                    <style>
+                        .codetus-tabs {
+                            display: flex;
+                            gap: 10px;
+                            flex-wrap: wrap;
+                        }
+
+                        .codetus-tab {
+                            border: 1px solid rgba(0,0,0,.1);
+                            background: #fff;
+                            padding: 10px 14px;
+                            border-radius: 12px;
+                            font-size: 14px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            display: flex;
+                            gap: 8px;
+                            align-items: center;
+                            transition: .2s;
+                        }
+
+                            .codetus-tab i {
+                                color: #1b4fff;
+                            }
+
+                            .codetus-tab.active {
+                                background: #1b4fff;
+                                color: #fff;
+                                border-color: #1b4fff;
+                            }
+
+                                .codetus-tab.active i {
+                                    color: #fff;
+                                }
+
+                        .codetus-panel {
+                            display: none;
+                            background: #f9fafc;
+                            border-radius: 14px;
+                            padding: 16px;
+                            border: 1px solid rgba(0,0,0,.06);
+                        }
+
+                            .codetus-panel.show {
+                                display: block;
+                            }
+
+                        .codetus-list {
+                            list-style: none;
+                            padding: 0;
+                            margin: 10px 0 14px;
+                        }
+
+                            .codetus-list li {
+                                padding: 4px 0;
+                                font-size: 13px;
+                                opacity: .85;
+                            }
+                    </style>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalHoteles" tabindex="-1"
+             data-bs-backdrop="false"
+             data-bs-keyboard="true"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content codetus-modal-content">
+
+                    <div class="modal-header codetus-modal-header">
+                        <div>
+                            <span class="codetus-pill"><i class="fa-solid fa-hotel"></i> Sector</span>
+                            <h4 class="codetus-modal-title mb-1">Hoteles y Hospedajes</h4>
+                            <p class="codetus-modal-sub mb-0">
+                                Controla reservas, habitaciones, check-in/check-out, caja y reportes desde un solo sistema.
+                            </p>
+                        </div>
+
+                        <button type="button" class="btn-close codetus-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body pt-0">
+
+                        <!-- Ideal para -->
+                        <div class="codetus-soft-card mt-3">
+                            <h6 class="codetus-sec-title"><i class="fa-solid fa-star"></i> Ideal para</h6>
+                            <div class="codetus-tags">
+                                <span><i class="fa-solid fa-check"></i> Hoteles pequeños y medianos</span>
+                                <span><i class="fa-solid fa-check"></i> Hostales y hospedajes</span>
+                                <span><i class="fa-solid fa-check"></i> Recepción + caja</span>
+                                <span><i class="fa-solid fa-check"></i> Boleta / factura</span>
+                            </div>
+                        </div>
+
+                        <!-- Módulos (cards horizontales) -->
+                        <div class="mt-4">
+                            <h6 class="codetus-sec-title"><i class="fa-solid fa-grid-2"></i> Módulos principales</h6>
+
+                            <div class="codetus-modules">
+                                <div class="codetus-module">
+                                    <i class="fa-solid fa-bed"></i>
+                                    <h6>Habitaciones</h6>
+                                    <p>Estados, limpieza y disponibilidad.</p>
+                                </div>
+
+                                <div class="codetus-module">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                    <h6>Reservas</h6>
+                                    <p>Fechas, noches, tarifas y control.</p>
+                                </div>
+
+                                <div class="codetus-module">
+                                    <i class="fa-solid fa-bell-concierge"></i>
+                                    <h6>Check-in / Check-out</h6>
+                                    <p>Ingreso, salida, penalidades y extensiones.</p>
+                                </div>
+
+                                <div class="codetus-module">
+                                    <i class="fa-solid fa-cash-register"></i>
+                                    <h6>Caja y pagos</h6>
+                                    <p>Adelantos, saldos y pagos parciales.</p>
+                                </div>
+
+                                <div class="codetus-module">
+                                    <i class="fa-solid fa-file-invoice"></i>
+                                    <h6>Facturación Electrónica</h6>
+                                    <p>Boletas y facturas (Sunat).</p>
+                                </div>
+
+                                <div class="codetus-module">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    <h6>Reportes</h6>
+                                    <p>Ocupación, ingresos y cierres.</p>
+                                </div>
+                            </div>
+
+                            <div class="codetus-note mt-2">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span>Modular: puedes activar solo lo que necesites (y crecer por etapas).</span>
+                            </div>
+                        </div>
+
+                        <!-- Flujo -->
+                        <div class="mt-4">
+                            <h6 class="codetus-sec-title"><i class="fa-solid fa-route"></i> ¿Cómo funciona?</h6>
+
+                            <div class="codetus-steps">
+                                <div class="codetus-step">
+                                    <div class="n">1</div>
+                                    <i class="fa-solid fa-user"></i>
+                                    <div>
+                                        <h6>Registro de huésped</h6>
+                                        <p>Datos y documento.</p>
+                                    </div>
+                                </div>
+
+                                <div class="codetus-step">
+                                    <div class="n">2</div>
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    <div>
+                                        <h6>Reserva o ingreso directo</h6>
+                                        <p>Disponibilidad y tarifa.</p>
+                                    </div>
+                                </div>
+
+                                <div class="codetus-step">
+                                    <div class="n">3</div>
+                                    <i class="fa-solid fa-bed"></i>
+                                    <div>
+                                        <h6>Asignación de habitación</h6>
+                                        <p>Estado y control.</p>
+                                    </div>
+                                </div>
+
+                                <div class="codetus-step">
+                                    <div class="n">4</div>
+                                    <i class="fa-solid fa-money-bill-wave"></i>
+                                    <div>
+                                        <h6>Pagos y consumos</h6>
+                                        <p>Adelantos y saldo.</p>
+                                    </div>
+                                </div>
+
+                                <div class="codetus-step">
+                                    <div class="n">5</div>
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    <div>
+                                        <h6>Check-out y facturación</h6>
+                                        <p>Salida y comprobante.</p>
+                                    </div>
+                                </div>
+
+                                <div class="codetus-step">
+                                    <div class="n">6</div>
+                                    <i class="fa-solid fa-chart-pie"></i>
+                                    <div>
+                                        <h6>Reportes</h6>
+                                        <p>Cierres diarios y mensuales.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Seguridad + Soporte -->
+                        <div class="mt-4 codetus-two-cols">
+                            <div class="codetus-soft-card">
+                                <h6 class="codetus-sec-title"><i class="fa-solid fa-shield-halved"></i> Seguridad y control</h6>
+                                <ul class="codetus-bullets">
+                                    <li><i class="fa-solid fa-user-lock"></i> Accesos por usuario y rol</li>
+                                    <li><i class="fa-solid fa-clock-rotate-left"></i> Historial de movimientos</li>
+                                    <li><i class="fa-solid fa-database"></i> Respaldo programado</li>
+                                </ul>
+                            </div>
+
+                            <div class="codetus-soft-card">
+                                <h6 class="codetus-sec-title"><i class="fa-solid fa-headset"></i> Soporte y acompañamiento</h6>
+                                <ul class="codetus-bullets">
+                                    <li><i class="fa-solid fa-people-group"></i> Capacitación práctica</li>
+                                    <li><i class="fa-solid fa-screwdriver-wrench"></i> Soporte y mejoras</li>
+                                    <li><i class="fa-solid fa-list-check"></i> Implementación guiada</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Prueba social -->
+                        <div class="mt-4 codetus-proof">
+                            <div class="d-flex align-items-start gap-2">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <div>
+                                    <h6 class="mb-1">Clientes que lo usan</h6>
+                                    <p class="mb-0">Implementado en hoteles y hospedajes (logos opcionales).</p>
+                                </div>
+                            </div>
+
+                            <div class="codetus-logos mt-3">
+                                <!-- Cambia estas imágenes por tus logos reales -->
+                                <div class="codetus-logo"><img src="assets/img/clients/hotel-1.png" alt="Cliente"></div>
+                                <div class="codetus-logo"><img src="assets/img/clients/hotel-2.png" alt="Cliente"></div>
+                                <div class="codetus-logo"><img src="assets/img/clients/hotel-3.png" alt="Cliente"></div>
+                                <div class="codetus-logo"><img src="assets/img/clients/hotel-4.png" alt="Cliente"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer codetus-modal-footer">
+                        <a href="landing-hotel.html" class="btn codetus-btn-primary">
+                            Ver solución para Hoteles
+                            <i class="fa-solid fa-arrow-right-long"></i>
+                        </a>
+
+                        <a href="https://wa.me/TU_NUMERO?text=Hola%20CODETUS,%20quiero%20informaci%C3%B3n%20del%20sistema%20para%20Hoteles%20y%20Hospedajes."
+                           target="_blank" rel="noopener" class="btn codetus-btn-outline">
+                            WhatsApp
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================
+        MODAL: RESTAURANTES
+        ========================= -->
+
+        <div class="modal fade" id="modalRestaurantes"
+             tabindex="-1"
+             data-bs-backdrop="false"
+             data-bs-keyboard="true"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content codetus-modal-content">
+
+                    <!-- Header -->
+                    <div class="modal-header codetus-modal-header">
+                        <div>
+                            <span class="codetus-pill"><i class="fa-solid fa-utensils"></i> Sector</span>
+                            <h4 class="codetus-modal-title mb-1">Restaurantes</h4>
+                            <p class="codetus-modal-sub mb-0">
+                                Controla mesas, pedidos, cocina, delivery, caja y reportes desde un solo sistema.
+                            </p>
+                        </div>
+
+                        <button type="button" class="btn-close codetus-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="modal-body pt-0">
+
+                        <!-- Ideal para -->
+                        <div class="codetus-soft-card mt-3">
+                            <h6 class="codetus-sec-title"><i class="fa-solid fa-star"></i> Ideal para</h6>
+                            <div class="codetus-tags">
+                                <span><i class="fa-solid fa-check"></i> Restaurantes</span>
+                                <span><i class="fa-solid fa-check"></i> Pollerías</span>
+                                <span><i class="fa-solid fa-check"></i> Cafeterías</span>
+                                <span><i class="fa-solid fa-check"></i> Delivery y para llevar</span>
+                            </div>
+                        </div>
+
+                        <!-- Módulos -->
+                        <div class="mt-4">
+                            <h6 class="codetus-sec-title"><i class="fa-solid fa-grid-2"></i> Módulos principales</h6>
+
+                            <div class="codetus-modules">
+                                <div class="codetus-module">
+                                    <i class="fa-solid fa-chair"></i>
+                                    <h6>Mesas</h6>
+                                    <p>Control de ocupación y estados.</p>
+                                </div>
+
+                                <div class="codetus-module">
+                                    <i class="fa-solid fa-clipboard-list"></i>
+                                    <h6>Pedidos</h6>
+                                    <p>Por mesa, para llevar o delivery.</p>
+                                </div>
+
+                                <div class="codetus-module">
+                                    <i class="fa-solid fa-kitchen-set"></i>
+                                    <h6>Cocina</h6>
+                                    <p>Pantalla de preparación en tiempo real.</p>
+                                </div>
+
+                                <div class="codetus-module">
+                                    <i class="fa-solid fa-motorcycle"></i>
+                                    <h6>Delivery</h6>
+                                    <p>Despachos y control de repartos.</p>
+                                </div>
+
+                                <div class="codetus-module">
+                                    <i class="fa-solid fa-cash-register"></i>
+                                    <h6>Caja</h6>
+                                    <p>Cobros, cierres y pagos.</p>
+                                </div>
+
+                                <div class="codetus-module">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    <h6>Reportes</h6>
+                                    <p>Ventas, productos y turnos.</p>
+                                </div>
+                            </div>
+
+                            <div class="codetus-note mt-2">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span>Sistema modular: puedes activar solo lo que necesitas.</span>
+                            </div>
+                        </div>
+
+                        <!-- Flujo -->
+                        <div class="mt-4">
+                            <h6 class="codetus-sec-title"><i class="fa-solid fa-route"></i> ¿Cómo funciona?</h6>
+
+                            <div class="codetus-steps">
+                                <div class="codetus-step">
+                                    <div class="n">1</div>
+                                    <i class="fa-solid fa-chair"></i>
+                                    <div>
+                                        <h6>Mesa / pedido</h6>
+                                        <p>Asignación o pedido directo.</p>
+                                    </div>
+                                </div>
+
+                                <div class="codetus-step">
+                                    <div class="n">2</div>
+                                    <i class="fa-solid fa-clipboard-list"></i>
+                                    <div>
+                                        <h6>Registro de pedido</h6>
+                                        <p>Productos y cantidades.</p>
+                                    </div>
+                                </div>
+
+                                <div class="codetus-step">
+                                    <div class="n">3</div>
+                                    <i class="fa-solid fa-kitchen-set"></i>
+                                    <div>
+                                        <h6>Cocina</h6>
+                                        <p>Preparación en tiempo real.</p>
+                                    </div>
+                                </div>
+
+                                <div class="codetus-step">
+                                    <div class="n">4</div>
+                                    <i class="fa-solid fa-cash-register"></i>
+                                    <div>
+                                        <h6>Cobro</h6>
+                                        <p>Efectivo, Yape, POS.</p>
+                                    </div>
+                                </div>
+
+                                <div class="codetus-step">
+                                    <div class="n">5</div>
+                                    <i class="fa-solid fa-file-invoice"></i>
+                                    <div>
+                                        <h6>Comprobante</h6>
+                                        <p>Boleta o factura.</p>
+                                    </div>
+                                </div>
+
+                                <div class="codetus-step">
+                                    <div class="n">6</div>
+                                    <i class="fa-solid fa-chart-pie"></i>
+                                    <div>
+                                        <h6>Reportes</h6>
+                                        <p>Cierre diario y control.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Seguridad + soporte -->
+                        <div class="mt-4 codetus-two-cols">
+                            <div class="codetus-soft-card">
+                                <h6 class="codetus-sec-title"><i class="fa-solid fa-shield-halved"></i> Seguridad y control</h6>
+                                <ul class="codetus-bullets">
+                                    <li><i class="fa-solid fa-user-lock"></i> Accesos por usuario</li>
+                                    <li><i class="fa-solid fa-clock-rotate-left"></i> Historial de ventas</li>
+                                    <li><i class="fa-solid fa-database"></i> Respaldo de información</li>
+                                </ul>
+                            </div>
+
+                            <div class="codetus-soft-card">
+                                <h6 class="codetus-sec-title"><i class="fa-solid fa-headset"></i> Soporte y acompañamiento</h6>
+                                <ul class="codetus-bullets">
+                                    <li><i class="fa-solid fa-people-group"></i> Capacitación al personal</li>
+                                    <li><i class="fa-solid fa-screwdriver-wrench"></i> Soporte continuo</li>
+                                    <li><i class="fa-solid fa-list-check"></i> Implementación guiada</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Prueba social -->
+                        <div class="mt-4 codetus-proof">
+                            <div class="d-flex align-items-start gap-2">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <div>
+                                    <h6 class="mb-1">Clientes que lo usan</h6>
+                                    <p class="mb-0">Implementado en restaurantes y negocios de comida.</p>
+                                </div>
+                            </div>
+
+                            <div class="codetus-logos mt-3">
+                                <div class="codetus-logo"><img src="assets/img/clients/rest-1.png" alt=""></div>
+                                <div class="codetus-logo"><img src="assets/img/clients/rest-2.png" alt=""></div>
+                                <div class="codetus-logo"><img src="assets/img/clients/rest-3.png" alt=""></div>
+                                <div class="codetus-logo"><img src="assets/img/clients/rest-4.png" alt=""></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer codetus-modal-footer">
+                        <a href="landing-restaurante.html" class="btn codetus-btn-primary">
+                            Ver solución para Restaurantes
+                            <i class="fa-solid fa-arrow-right-long"></i>
+                        </a>
+
+                        <a href="https://wa.me/TU_NUMERO?text=Hola%20CODETUS,%20quiero%20informaci%C3%B3n%20del%20sistema%20para%20Restaurantes."
+                           target="_blank" class="btn codetus-btn-outline">
+                            WhatsApp
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <style>
+            /* =========================
+               Estilos del modal (CODETUS)
+               ========================= */
+
+            /* Fondo oscuro (backdrop) */
+            .modal-backdrop.show {
+                opacity: .55 !important;
+            }
+
+            /* Modal blanco */
+            .codetus-modal-content {
+                border: 1px solid rgba(0,0,0,.08);
+                border-radius: 18px;
+                box-shadow: 0 25px 70px rgba(0,0,0,.22);
+                background: #fff;
+                overflow: hidden;
+            }
+
+            /* Header */
+            .codetus-modal-header {
+                border-bottom: 0;
+                padding: 18px 18px 12px;
+            }
+
+            .codetus-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 12px;
+                font-weight: 800;
+                padding: 6px 10px;
+                border-radius: 999px;
+                background: rgba(27,79,255,.10);
+                color: #1b4fff;
+            }
+
+            .codetus-modal-title {
+                font-weight: 900;
+                letter-spacing: -.3px;
+            }
+
+            .codetus-modal-sub {
+                font-size: 13.5px;
+                opacity: .78;
+                max-width: 560px;
+            }
+
+            .codetus-close {
+                opacity: .6;
+            }
+
+                .codetus-close:hover {
+                    opacity: 1;
+                }
+
+            /* Secciones */
+            .codetus-sec-title {
+                font-weight: 900;
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                margin: 0 0 10px;
+            }
+
+                .codetus-sec-title i {
+                    color: #1b4fff;
+                }
+
+            /* Card suave */
+            .codetus-soft-card {
+                background: rgba(0,0,0,.02);
+                border: 1px solid rgba(0,0,0,.06);
+                border-radius: 16px;
+                padding: 14px;
+            }
+
+            /* Tags */
+            .codetus-tags {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+                .codetus-tags span {
+                    display: inline-flex;
+                    gap: 6px;
+                    align-items: center;
+                    font-size: 12px;
+                    padding: 7px 10px;
+                    border-radius: 999px;
+                    background: rgba(27,79,255,.08);
+                    color: #0b1b4f;
+                }
+
+                .codetus-tags i {
+                    color: #1b4fff;
+                }
+
+            /* Módulos */
+            .codetus-modules {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+                gap: 12px;
+            }
+
+            .codetus-module {
+                background: #fff;
+                border: 1px solid rgba(0,0,0,.06);
+                border-radius: 16px;
+                padding: 14px 12px;
+                text-align: center;
+                box-shadow: 0 10px 26px rgba(0,0,0,.06);
+                transition: .18s ease;
+            }
+
+                .codetus-module:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 16px 42px rgba(0,0,0,.12);
+                }
+
+                .codetus-module i {
+                    font-size: 28px;
+                    color: #1b4fff;
+                    margin-bottom: 8px;
+                }
+
+                .codetus-module h6 {
+                    margin: 0 0 4px;
+                    font-weight: 900;
+                    font-size: 14px;
+                }
+
+                .codetus-module p {
+                    margin: 0;
+                    font-size: 12.5px;
+                    opacity: .75;
+                }
+
+            /* Nota */
+            .codetus-note {
+                display: flex;
+                gap: 10px;
+                align-items: flex-start;
+                padding: 10px 12px;
+                border-radius: 14px;
+                background: rgba(27,79,255,.08);
+                color: #0b1b4f;
+                font-size: 13px;
+                border: 1px solid rgba(27,79,255,.12);
+            }
+
+                .codetus-note i {
+                    color: #1b4fff;
+                    margin-top: 2px;
+                }
+
+            /* Steps */
+            .codetus-steps {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .codetus-step {
+                position: relative;
+                background: #fff;
+                border: 1px solid rgba(0,0,0,.06);
+                border-radius: 16px;
+                padding: 12px;
+                display: flex;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+                .codetus-step .n {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    width: 26px;
+                    height: 26px;
+                    border-radius: 999px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: rgba(0,0,0,.05);
+                    font-size: 12px;
+                    font-weight: 900;
+                    opacity: .7;
+                }
+
+                .codetus-step i {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: rgba(27,79,255,.10);
+                    color: #1b4fff;
+                    flex: 0 0 auto;
+                }
+
+                .codetus-step h6 {
+                    margin: 0 0 2px;
+                    font-weight: 900;
+                    font-size: 13.5px;
+                }
+
+                .codetus-step p {
+                    margin: 0;
+                    font-size: 12.5px;
+                    opacity: .75;
+                }
+
+            /* 2 columnas (seguridad/soporte) */
+            .codetus-two-cols {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .codetus-bullets {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: grid;
+                gap: 8px;
+            }
+
+                .codetus-bullets li {
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    font-size: 13px;
+                    opacity: .85;
+                }
+
+                    .codetus-bullets li i {
+                        color: #1b4fff;
+                    }
+
+            /* Proof + logos */
+            .codetus-proof {
+                background: #fff;
+                border: 1px solid rgba(0,0,0,.06);
+                border-radius: 16px;
+                padding: 14px;
+            }
+
+                .codetus-proof > .d-flex i {
+                    color: #12b76a;
+                    margin-top: 2px;
+                }
+
+            .codetus-logos {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .codetus-logo {
+                width: 110px;
+                height: 52px;
+                border-radius: 14px;
+                background: rgba(0,0,0,.03);
+                border: 1px solid rgba(0,0,0,.05);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 8px;
+            }
+
+                .codetus-logo img {
+                    max-width: 100%;
+                    max-height: 100%;
+                    object-fit: contain;
+                    filter: grayscale(1);
+                    opacity: .86;
+                    transition: .18s ease;
+                }
+
+                .codetus-logo:hover img {
+                    filter: grayscale(0);
+                    opacity: 1;
+                }
+
+            /* Footer */
+            .codetus-modal-footer {
+                border-top: 0;
+                padding: 14px 18px 18px;
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .codetus-btn-primary {
+                background: #1b4fff;
+                color: #fff;
+                border-radius: 14px;
+                font-weight: 900;
+                padding: 10px 14px;
+                border: 1px solid transparent;
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+                .codetus-btn-primary:hover {
+                    filter: brightness(1.02);
+                    color: #fff;
+                }
+
+            .codetus-btn-outline {
+                background: transparent;
+                color: #1b4fff;
+                border: 1px solid rgba(27,79,255,.35);
+                border-radius: 14px;
+                font-weight: 900;
+                padding: 10px 14px;
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+                .codetus-btn-outline:hover {
+                    background: rgba(27,79,255,.06);
+                    color: #1b4fff;
+                }
+
+            /* Responsive */
+            @@media (max-width: 991px) {
+                .codetus-steps {
+                    grid-template-columns: 1fr;
+                }
+
+                .codetus-two-cols {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+        <style>
+            .codetus-modal {
+                border-radius: 18px;
+                overflow: hidden;
+            }
+
+            /* Modal blanco limpio */
+            .modal-content.codetus-modal {
+                background: #ffffff !important;
+                border-radius: 18px;
+                border: 1px solid rgba(0,0,0,.08);
+                box-shadow: 0 24px 60px rgba(0,0,0,.25);
+            }
+
+            /* Header y footer blancos */
+            .modal-header,
+            .modal-footer {
+                background: #ffffff !important;
+            }
+
+            .fade .modal-dialog {
+                transform: scale(0.96);
+                transition: transform .25s ease, opacity .25s ease;
+            }
+
+            .show .modal-dialog {
+                transform: scale(1);
+            }
+        </style>
+
+        <!-- Qué incluye -->
+        <div class="codetus-includes">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-7">
+                    <div class="codetus-card">
+                        <span class="codetus-kicker">¿Qué incluye?</span>
+                        <h3 class="codetus-title-sm">Un servicio completo, no solo “un sistema”</h3>
+
+                        <div class="row g-3 mt-1">
+                            <div class="col-md-6">
+                                <div class="codetus-check">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <div>
+                                        <h6>Implementación y configuración</h6>
+                                        <p>Arranque guiado y validación.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="codetus-check">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <div>
+                                        <h6>Capacitación</h6>
+                                        <p>Para tu equipo (básica y práctica).</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="codetus-check">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <div>
+                                        <h6>Soporte</h6>
+                                        <p>Atención y mejoras continuas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="codetus-check">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <div>
+                                        <h6>Escalable</h6>
+                                        <p>Módulos según tu crecimiento.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="codetus-mini-note">
+                            <i class="fa-solid fa-lock"></i>
+                            <span>Tu información es prioridad: control de accesos, auditoría y respaldos según plan.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA asesoría -->
+                <div class="col-lg-5">
+                    <div class="codetus-cta">
+                        <h3>¿No sabes por dónde empezar?</h3>
+                        <p>Te asesoramos gratis y te recomendamos el sistema ideal según tu rubro y tamaño.</p>
+
+                        <div class="codetus-cta-actions">
+                            <a class="theme-btn hover-white" href="contact.html">
+                                Solicitar asesoría
+                                <i class="fa-solid fa-arrow-right-long"></i>
+                            </a>
+                            <a class="theme-btn border-white" href="@Url.Action("KedroPro","Home")">
+                                Ver sistemas
+                                <i class="fa-solid fa-arrow-right-long"></i>
+                            </a>
+                        </div>
+
+                        <div class="codetus-cta-badges">
+                            <span><i class="fa-solid fa-check"></i> Sunat</span>
+                            <span><i class="fa-solid fa-check"></i> Multi-sede</span>
+                            <span><i class="fa-solid fa-check"></i> Reportes</span>
+                            <span><i class="fa-solid fa-check"></i> Soporte</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* === Codetus Post Hero Styles (no choca con tu theme) === */
+    .codetus-post-hero {
+        padding: 0 0 70px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .codetus-valuebar {
+        margin-top: 38px;
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 18px;
+        box-shadow: 0 14px 40px rgba(0,0,0,.08);
+    }
+
+    .codetus-value-item {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        padding: 14px 12px;
+        border-radius: 14px;
+        background: rgba(0,0,0,.02);
+        height: 100%;
+    }
+
+        .codetus-value-item .icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(27,79,255,.10);
+            color: #1b4fff;
+            font-size: 18px;
+            flex: 0 0 auto;
+        }
+
+        .codetus-value-item h6 {
+            margin: 0 0 3px;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .codetus-value-item p {
+            margin: 0;
+            font-size: 13px;
+            opacity: .78;
+        }
+
+    .codetus-title-wrap {
+        margin: 44px 0 18px;
+        max-width: 780px;
+    }
+
+    .codetus-kicker {
+        display: inline-block;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: .3px;
+        color: #1b4fff;
+        background: rgba(27,79,255,.10);
+        padding: 6px 10px;
+        border-radius: 999px;
+    }
+
+    .codetus-title {
+        margin: 10px 0 6px;
+        font-size: 30px;
+        font-weight: 800;
+    }
+
+    .codetus-subtitle {
+        margin: 0;
+        font-size: 15px;
+        opacity: .78;
+    }
+
+    .codetus-sector-card {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 16px 14px;
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 10px 26px rgba(0,0,0,.06);
+        text-decoration: none;
+        color: inherit;
+        height: 100%;
+        transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+        .codetus-sector-card i {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,.04);
+            font-size: 18px;
+            flex: 0 0 auto;
+        }
+
+        .codetus-sector-card h6 {
+            margin: 0 0 2px;
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .codetus-sector-card p {
+            margin: 0;
+            font-size: 13px;
+            opacity: .78;
+        }
+
+        .codetus-sector-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 36px rgba(0,0,0,.10);
+        }
+
+    .codetus-includes {
+        margin-top: 26px;
+    }
+
+    .codetus-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 22px;
+        box-shadow: 0 14px 40px rgba(0,0,0,.08);
+    }
+
+    .codetus-title-sm {
+        margin: 10px 0 0;
+        font-size: 22px;
+        font-weight: 900;
+    }
+
+    .codetus-check {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 12px;
+        border-radius: 14px;
+        background: rgba(0,0,0,.02);
+        height: 100%;
+    }
+
+        .codetus-check i {
+            margin-top: 2px;
+            color: #12b76a;
+        }
+
+        .codetus-check h6 {
+            margin: 0 0 2px;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .codetus-check p {
+            margin: 0;
+            font-size: 13px;
+            opacity: .78;
+        }
+
+    .codetus-mini-note {
+        margin-top: 14px;
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(27,79,255,.08);
+        color: #0b1b4f;
+        font-size: 13px;
+    }
+
+        .codetus-mini-note i {
+            margin-top: 2px;
+            color: #1b4fff;
+        }
+
+    .codetus-cta {
+        border-radius: 18px;
+        padding: 22px;
+        background: linear-gradient(135deg, rgba(27,79,255,.92), rgba(12,30,92,.92));
+        color: #fff;
+        box-shadow: 0 16px 40px rgba(0,0,0,.12);
+    }
+
+        .codetus-cta h3 {
+            margin: 0 0 8px;
+            font-size: 22px;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        .codetus-cta p {
+            margin: 0 0 16px;
+            font-size: 14px;
+            opacity: .92;
+        }
+
+    .codetus-cta-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .codetus-cta .theme-btn {
+        padding: 12px 18px;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .codetus-cta-badges {
+        margin-top: 14px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+        .codetus-cta-badges span {
+            font-size: 12px;
+            background: rgba(255,255,255,.14);
+            padding: 7px 10px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+    @@media (max-width: 991px) {
+        .codetus-title {
+            font-size: 26px;
+        }
+
+        .codetus-valuebar {
+            margin-top: -26px;
+        }
+    }
+</style>
 
 <!-- About Section Start -->
 <section class="about-section section-padding fix bg-cover">
@@ -227,8 +1822,7 @@
     </div>
 </section>
 
-<!-- marcas de las empresas  -->
-<div class="brand-section fix section-padding pt-0">
+<!--<div class="brand-section fix section-padding pt-0">
     <div class="container">
         <div class="brand-wrapper">
             <h6 class="text-center wow fadeInUp" data-wow-delay=".5s">Nuestro Principales Clientes </h6>
@@ -278,7 +1872,305 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
+
+<section class="clientes-section">
+    <div class="container">
+
+        <span class="badge-clientes">Confianza comprobada</span>
+        <h2>Algunas de las empresas que confían en nuestras soluciones</h2>
+        <p class="clientes-subtitle">
+            Implementaciones reales en distintos rubros comerciales e industriales.
+        </p>
+
+        <div class="clientes-slider-wrap">
+            <div class="swiper clientesSwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="cliente-card destacado" title="">
+                            <span class="badge-rubro rubro-industria">Inmobiliaria</span>
+                            <img src="~/Uploads/Files/iconEmpresa/daro.png" alt="DARO">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide" title="">
+                        <div class="cliente-card ">
+                            <span class="badge-rubro rubro-industria">Marketing</span>
+                            <img src="~/Uploads/Files/iconEmpresa/sparen.png" alt="Grupo Sparen">
+                        </div>
+                    </div>
+
+                    <!-- Slide -->
+                    <div class="swiper-slide">
+                        <div class="cliente-card" title="">
+                            <span class="badge-rubro rubro-industria">Inmobiliaria</span>
+                            <img src="~/Uploads/Files/iconEmpresa/logoVillaLuz.png" alt="Grupo VillaLuz">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide" title="">
+                        <div class="cliente-card">
+                            <span class="badge-rubro rubro-industria">Educación</span>
+                            <img src="~/Uploads/Files/iconEmpresa/logoSopiest.png" alt="Sopiest">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide" title="">
+                        <div class="cliente-card">
+                            <span class="badge-rubro rubro-industria">Transportes</span>
+                            <img src="~/Uploads/Files/iconEmpresa/jcperlamayo.png" alt="JC Perlamayo">
+                        </div>
+                    </div>
+
+
+                    <div class="swiper-slide">
+                        <div class="cliente-card" title="">
+                            <span class="badge-rubro rubro-industria">Industria</span>
+                            <img src="~/Uploads/Files/iconEmpresa/zicca2.png" alt="Zicca">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide" title="">
+                        <div class="cliente-card">
+                            <span class="badge-rubro rubro-industria">Industria</span>
+                            <img src="~/Uploads/Files/iconEmpresa/continental.png" alt="Convertidora Continental">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="cliente-card" title="">
+                            <span class="badge-rubro rubro-industria">Industria</span>
+                            <img src="~/Uploads/Files/iconEmpresa/logoJEN.png" alt="MultiServicios Jen">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide" title="">
+                        <div class="cliente-card">
+                            <span class="badge-rubro rubro-industria">Salud - Clinicas Odontológicas</span>
+                            <img src="~/Uploads/Files/iconEmpresa/aurea.png" alt="Clínica Aurea">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide" title="">
+                        <div class="cliente-card">
+                            <span class="badge-rubro rubro-industria">Salud - Centro Médico</span>
+                            <img src="~/Uploads/Files/iconEmpresa/esperanza.png" alt="Clínica La Esperanza">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide" title="">
+                        <div class="cliente-card">
+                            <span class="badge-rubro rubro-industria">Restaurantes</span>
+                            <img src="~/Uploads/Files/iconEmpresa/logoSabor2.png" alt="Polleria El Sabor">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide" title="">
+                        <div class="cliente-card">
+                            <span class="badge-rubro rubro-industria">Hoteles y Hospedajes</span>
+                            <img src="~/Uploads/Files/iconEmpresa/luchine.png" alt="Hospedaje Luchine">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide" title="">
+                        <div class="cliente-card">
+                            <span class="badge-rubro rubro-industria">Servicios</span>
+                            <img src="~/Uploads/Files/iconEmpresa/familogo.png" alt="Famytel">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide" title="">
+                        <div class="cliente-card">
+                            <span class="badge-rubro rubro-industria">Comercio</span>
+                            <img src="~/Uploads/Files/iconEmpresa/logoDavid.jpg" alt="Tortas Rey David">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide" title="">
+                        <div class="cliente-card">
+                            <span class="badge-rubro rubro-industria">Comercio</span>
+                            <img src="~/Uploads/Files/iconEmpresa/logoMavila3.jpg" alt="Mavila">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide" title="">
+                        <div class="cliente-card">
+                            <span class="badge-rubro rubro-industria">Comercio - Textil</span>
+                            <img src="~/Uploads/Files/iconEmpresa/kadosh.jpg" alt="Kadosh">
+                        </div>
+                    </div>
+                    <!-- agrega más slides aquí -->
+                </div>
+
+                <!-- Paginación -->
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <!-- Flechas -->
+            <div class="swiper-button-prev clientes-prev"></div>
+            <div class="swiper-button-next clientes-next"></div>
+        </div>
+
+    </div>
+</section>
+
+
+<style>
+    .clientes-section {
+        padding: 70px 0;
+        background: #f8f9fc;
+        text-align: center;
+    }
+
+        .clientes-section h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 10px 0 8px;
+        }
+
+    .clientes-subtitle {
+        color: #6c757d;
+        max-width: 640px;
+        margin: 0 auto 35px;
+    }
+
+    .badge-clientes {
+        display: inline-block;
+        background: #e8f0ff;
+        color: #2f5bea;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .clientes-slider-wrap {
+        position: relative;
+        padding: 10px 45px; /* espacio para flechas */
+    }
+
+    .cliente-card {
+        background: #fff;
+        border-radius: 14px;
+        padding: 22px;
+        height: 110px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        transition: transform .25s ease, filter .25s ease, box-shadow .25s ease;
+        filter: grayscale(100%);
+    }
+
+        .cliente-card img {
+            max-width: 150px;
+            max-height: 70px;
+            object-fit: contain;
+        }
+
+        .cliente-card:hover {
+            transform: translateY(-5px);
+            filter: grayscale(0%);
+            box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+        }
+
+        .cliente-card.destacado {
+            filter: grayscale(0%);
+            border: 2px solid #2f5bea;
+        }
+
+    .swiper-pagination {
+        position: static !important;
+        margin-top: 16px;
+    }
+
+    .clientes-prev, .clientes-next {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: #ffffff;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+        .clientes-prev::after, .clientes-next::after {
+            font-size: 14px;
+            font-weight: 700;
+            color: #2f5bea;
+        }
+
+    .clientes-cta {
+        margin-top: 35px;
+    }
+
+    .btn-clientes {
+        display: inline-block;
+        background: linear-gradient(135deg, #2f5bea, #1e3fa9);
+        color: #fff;
+        padding: 12px 28px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .cliente-card {
+        position: relative; /* importante */
+    }
+
+    /* Badge general */
+    .badge-rubro {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        padding: 4px 10px;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 12px;
+        color: #fff;
+        letter-spacing: .3px;
+        text-transform: uppercase;
+    }
+
+    /* Colores por rubro */
+    .rubro-comercio {
+        background: #2f5bea;
+    }
+
+    .rubro-industria {
+        background: #6f42c1;
+    }
+
+    .rubro-ferreteria {
+        background: #fd7e14;
+    }
+
+    .rubro-constructora {
+        background: #198754;
+    }
+
+    .rubro-salud {
+        background: #dc3545;
+    }
+
+    .rubro-restaurante {
+        background: #20c997;
+    }
+
+    .rubro-hotel {
+        background: #0dcaf0;
+    }
+    .badge-rubro {
+        opacity: 0;
+        transform: translateY(-5px);
+        transition: all .25s ease;
+    }
+
+    .cliente-card:hover .badge-rubro {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+</style>
+<!-- marcas de las empresas  -->
 <!-- Servicio Section Start -->
 <section class="service-section-3 section-padding pt-0">
     <div class="line-shape-2">
@@ -302,8 +2194,8 @@
                             </a>
                         </h4>
                         <p>
-                            Ofrecemos servicios de asesoría y consultoría en desarrollo web, incluyendo estrategia digital, diseño y 
-                            desarrollo de sitios web personalizados, 
+                            Ofrecemos servicios de asesoría y consultoría en desarrollo web, incluyendo estrategia digital, diseño y
+                            desarrollo de sitios web personalizados,
                             optimización SEO, seguridad web y mantenimiento continuo.
                         </p>
                         <a href="@Url.Action("AsesoriayConsultoria","Home")" class="theme-btn-2">
@@ -325,7 +2217,7 @@
                             </a>
                         </h4>
                         <p>
-                            se centran en entender las necesidades específicas de tu negocio para diseñar e implementar 
+                            se centran en entender las necesidades específicas de tu negocio para diseñar e implementar
                             soluciones tecnológicas efectivas,
                             nos enfocamos en crear sistemas innovadores y personalizados.
                         </p>
@@ -348,8 +2240,8 @@
                             </a>
                         </h4>
                         <p>
-                            En nuestro servicio de diseño web, nos dedicamos a crear experiencias digitales cautivadoras y 
-                            funcionales que representen fielmente la identidad de tu marca. Desde la conceptualización 
+                            En nuestro servicio de diseño web, nos dedicamos a crear experiencias digitales cautivadoras y
+                            funcionales que representen fielmente la identidad de tu marca. Desde la conceptualización
                             inicial hasta la implementación final.
                         </p>
                         <a href="@Url.Action("DiseñoWeb","Home")" class="theme-btn-2">
@@ -524,98 +2416,426 @@
         </div>
     </div>
 </section>
+<script>
+    const proyectosSlider = [
+        {
+            titulo: "Módulo para Hoteles en Hospedaje Luchine",
+            estado: "En pruebas",
+            plan: "Profesional",
+            icono: "fa-clinic-medical",
+            descripcion: "Reservas, Checkin, Checkout, Cochera",
+            modulos: ["Reservas", "Habitaciones", "Inventario", "Reportes"]
+        },
+        {
+            titulo: "Módulo Motorizados en Grupo Sparen",
+            estado: "En desarrollo",
+            plan: "Profesional",
+            icono: "fa-clinic-medical",
+            descripcion: "Merchandicing, Motorizados, Manifiestos, Control Stock",
+            modulos: ["Agendamiento", "Motorizados", "Inventario", "Reportes"]
+        },
+        {
+            titulo: "Módulo Pedidos para Cereza Detalles",
+            estado: "En Producción",
+            plan: "Profesional",
+            icono: "fa-clinic-medical",
+            descripcion: "Pedidos, Kanban, Calendario, Agendamiento",
+            modulos: ["Pedidos", "Inventario", "Catálogo"]
+        },
+        {
+            titulo: "Módulo Servicio Técnico para TurboDiesel Padilla",
+            estado: "En Desarrollo",
+            plan: "Profesional",
+            icono: "fa-clinic-medical",
+            descripcion: "Servicio Técnico",
+            modulos: ["Servicio Técnico", "Informes"]
+        },
+        {
+            titulo: "Módulo Servicio Técnico para TurboDiesel Padilla",
+            estado: "En Desarrollo",
+            plan: "Profesional",
+            icono: "fa-clinic-medical",
+            descripcion: "Servicio Técnico",
+            modulos: ["Servicio Técnico", "Informes"]
+        }
+    ];
+</script>
 
-<!-- Project Section Start -->
-<section class="project-section-3 section-padding pb-0 fix bg-cover" style="background-image: url('@Url.Content("~/Content/theme/assets/img/testimonial/bg.jpg")');">
+<section class="codetus-projects-snap">
     <div class="container">
-        <div class="section-title-area">
-            <div class="section-title">
-                <span class="text-white">PROYECTOS</span>
-                <h2 class="text-white">
-                    Nuestros últimos <br> Proyectos 
-                </h2>
-            </div>
-            <div class="video-box">
-                <a href="https://www.youtube.com/watch?v=Cn4G2lZ_g2I" class="video-btn ripple video-popup">
-                    <i class="fa-solid fa-play"></i>
-                </a>
-            </div>
+
+        <div class="projects-head">
+            <h2 class="codetus-title">Proyectos en curso</h2>
+            <p class="codetus-subtitle">
+                Implementaciones reales que Codetus está desarrollando actualmente.
+            </p>
         </div>
-        <div class="project-wrapper style-4">
-            <div class="swiper project-slider-3">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="project-items style-2">
-                            <div class="project-image">
-                                <img src="~/Uploads/Files/Proyectos/cursos_lms.png" alt="project-img">
-                                @*<div class="project-content">
-                                    <p>DESARROLLO DE SITEMAS</p>
-                                    <h4>
-                                        <a href="project-details.html">Sistema Integrado para Inmobilarias (SGP)</a>
-                                    </h4>
-                                    <a href="project-details.html" class="arrow-icon-2">
-                                        <i class="fa-solid fa-arrow-right"></i>
-                                    </a>
-                                </div>*@
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="project-items style-2">
-                            <div class="project-image">
-                                <img src="~/Uploads/Files/Proyectos/agendamiento.png" alt="project-img">
-                                @*<div class="project-content">
-                                    <p>DESARROLLO DE SISTEMAS</p>
-                                    <h4>
-                                        <a href="project-details.html">Sistema de Agendamiento (AGENDARIS)</a>
-                                    </h4>
-                                    <a href="project-details.html" class="arrow-icon-2">
-                                        <i class="fa-solid fa-arrow-right"></i>
-                                    </a>
-                                </div>*@
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="project-items style-2">
-                            <div class="project-image">
-                                <img src="~/Uploads/Files/Proyectos/sst.png" alt="project-img">
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="project-items style-2">
-                            <div class="project-image">
-                                <img src="~/Uploads/Files/imagenindex/Designer (1).jpeg" alt="project-img">
-                               
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="project-items style-2">
-                            <div class="project-image">
-                                <img src="~/Uploads/Files/imagenindex/Designer (10).jpeg" alt="project-img">
-                               
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="project-items style-2">
-                            <div class="project-image">
-                                <img src="~/Uploads/Files/imagenindex/Designer (5).jpeg" alt="project-img">
-                               
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="snap-controls">
+            <button class="snap-btn" id="snapPrev" aria-label="Anterior">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <button class="snap-btn" id="snapNext" aria-label="Siguiente">
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
-        <div class="swiper-dot-2 mr-left">
-            <div class="dot-2"></div>
+
+        <div class="snap-wrapper" id="snapWrapper">
+            <!-- cards renderizadas por JS -->
         </div>
+
+        <div class="snap-progress">
+            <span id="snapProgress"></span>
+        </div>
+
     </div>
 </section>
+<style>
+    .codetus-projects-snap {
+        padding: 80px 0;
+        background: linear-gradient(180deg,#f6f8ff,#fff);
+    }
+
+    .snap-wrapper {
+        display: flex;
+        gap: 24px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        padding-bottom: 20px;
+    }
+
+        .snap-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+    .snap-card {
+        min-width: 340px;
+        scroll-snap-align: center;
+        background: #fff;
+        border-radius: 22px;
+        border: 1px solid var(--codetus-border);
+        padding: 24px;
+        box-shadow: 0 20px 45px rgba(0,0,0,.08);
+        transition: .3s ease;
+    }
+
+        .snap-card:hover {
+            transform: translateY(-6px);
+        }
+
+    .snap-title {
+        font-weight: 900;
+        font-size: 1.1rem;
+        color: var(--codetus-dark);
+    }
+
+    .snap-badges {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+    }
+
+    .snap-badge {
+        font-size: .75rem;
+        font-weight: 800;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: #eef2ff;
+        color: #4338ca;
+    }
+
+    .snap-desc {
+        margin: 12px 0;
+        color: var(--codetus-muted);
+    }
+
+    .snap-mods {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+        .snap-mods span {
+            font-size: .78rem;
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: #f8f9fa;
+            border: 1px solid var(--codetus-border);
+            font-weight: 700;
+        }
+
+    .snap-progress {
+        height: 4px;
+        background: #e5e7eb;
+        border-radius: 10px;
+        margin-top: 18px;
+        overflow: hidden;
+    }
+
+        .snap-progress span {
+            display: block;
+            height: 100%;
+            width: 0%;
+            background: var(--codetus-primary);
+            transition: width .3s ease;
+        }
+
+    .snap-controls {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin: 10px 0 14px;
+    }
+
+    .snap-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid var(--codetus-border);
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: .2s ease;
+        box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    }
+
+        .snap-btn i {
+            font-size: 16px;
+            color: var(--codetus-primary);
+        }
+
+        .snap-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0,0,0,.12);
+        }
+
+        .snap-btn:active {
+            transform: scale(.95);
+        }
+
+    .snap-wrapper {
+        cursor: grab;
+        user-select: none;
+    }
+
+        .snap-wrapper.dragging {
+            cursor: grabbing;
+        }
+
+    @@media(max-width:576px) {
+        .snap-card {
+            min-width: 280px;
+        }
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    const wrapper = document.getElementById("snapWrapper");
+    const progress = document.getElementById("snapProgress");
+    const btnPrev = document.getElementById("snapPrev");
+    const btnNext = document.getElementById("snapNext");
+
+    let indexSnap = 0;
+    let snapInterval = null;
+
+    /* =========================
+       RENDER
+    ========================= */
+    function renderSnap() {
+        wrapper.innerHTML = "";
+        proyectosSlider.forEach(p => {
+            wrapper.innerHTML += `
+      <div class="snap-card">
+        <h5 class="snap-title">
+          <i class="fas ${p.icono} text-primary"></i> ${p.titulo}
+        </h5>
+
+        <div class="snap-badges">
+          <span class="snap-badge">${p.plan}</span>
+          <span class="snap-badge">${p.estado}</span>
+        </div>
+
+        <p class="snap-desc">${p.descripcion}</p>
+
+        <div class="snap-mods">
+          ${p.modulos.map(m => `<span>${m}</span>`).join("")}
+        </div>
+      </div>
+    `;
+        });
+    }
+
+    /* =========================
+       NAVEGACIÓN HORIZONTAL (SIN SCROLL VERTICAL)
+    ========================= */
+    function goToSnap(i) {
+        const cards = wrapper.children;
+        if (!cards.length) return;
+
+        indexSnap = (i + cards.length) % cards.length;
+
+        const card = cards[indexSnap];
+        const left =
+            card.offsetLeft -
+            (wrapper.clientWidth / 2) +
+            (card.clientWidth / 2);
+
+        wrapper.scrollTo({
+            left,
+            behavior: "smooth"
+        });
+
+        progress.style.width = ((indexSnap + 1) / cards.length) * 100 + "%";
+    }
+
+    function nextSnap() { goToSnap(indexSnap + 1); }
+    function prevSnap() { goToSnap(indexSnap - 1); }
+
+    /* =========================
+       BOTONES
+    ========================= */
+    btnNext.addEventListener("click", () => {
+        nextSnap();
+        restartAuto();
+    });
+
+    btnPrev.addEventListener("click", () => {
+        prevSnap();
+        restartAuto();
+    });
+
+    /* =========================
+       AUTOPLAY
+    ========================= */
+    function startAuto() {
+        snapInterval = setInterval(nextSnap, 4200);
+    }
+    function stopAuto() {
+        if (snapInterval) clearInterval(snapInterval);
+    }
+    function restartAuto() {
+        stopAuto();
+        startAuto();
+    }
+
+    /* =========================
+       DRAG CON MOUSE / TOUCH
+    ========================= */
+    let isDown = false;
+    let startX;
+    let scrollLeftStart;
+
+    wrapper.addEventListener("mousedown", (e) => {
+        isDown = true;
+        wrapper.classList.add("dragging");
+        startX = e.pageX - wrapper.offsetLeft;
+        scrollLeftStart = wrapper.scrollLeft;
+        stopAuto();
+    });
+
+    wrapper.addEventListener("mouseleave", () => {
+        isDown = false;
+        wrapper.classList.remove("dragging");
+        startAuto();
+    });
+
+    wrapper.addEventListener("mouseup", () => {
+        isDown = false;
+        wrapper.classList.remove("dragging");
+        startAuto();
+    });
+
+    wrapper.addEventListener("mousemove", (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+
+        const x = e.pageX - wrapper.offsetLeft;
+        const walk = (x - startX) * 2; // velocidad del drag
+        wrapper.scrollLeft = scrollLeftStart - walk;
+    });
+
+    /* TOUCH (mobile) */
+    wrapper.addEventListener("touchstart", () => {
+        stopAuto();
+    });
+    wrapper.addEventListener("touchend", () => {
+        startAuto();
+    });
+
+    /* =========================
+       INIT
+    ========================= */
+    renderSnap();
+    goToSnap(0);
+    startAuto();
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var modal = document.getElementById('modalSector');
+        if (!modal) return;
+
+        modal.addEventListener('show.bs.modal', function (event) {
+            var btn = event.relatedTarget;
+            if (!btn) return;
+
+            var sector = btn.getAttribute('data-sector') || 'Sector';
+            var desc = btn.getAttribute('data-desc') || '';
+            var link = btn.getAttribute('data-link') || '#';
+
+            document.getElementById('modalSectorTitle').textContent = sector;
+            document.getElementById('modalSectorDesc').textContent = desc;
+            document.getElementById('modalSectorExplore').setAttribute('href', link);
+        });
+
+        const tabs = document.querySelectorAll(".codetus-tab");
+        const panels = document.querySelectorAll(".codetus-panel");
+
+        tabs.forEach(tab => {
+            tab.addEventListener("click", function () {
+
+                // activar tab
+                tabs.forEach(t => t.classList.remove("active"));
+                this.classList.add("active");
+
+                // mostrar panel
+                const target = this.getAttribute("data-target");
+                panels.forEach(p => p.classList.remove("show"));
+                document.getElementById("panel-" + target).classList.add("show");
+            });
+        });
+    });
+
+    const clientesSwiper = new Swiper(".clientesSwiper", {
+        loop: true,
+        speed: 650,
+        spaceBetween: 18,
+        grabCursor: true,        // cursor de "agarre"
+        autoplay: {
+            delay: 2200,
+            disableOnInteraction: false
+        },
+        pagination: {
+            el: ".clientesSwiper .swiper-pagination",
+            clickable: true
+        },
+        navigation: {
+            nextEl: ".clientes-next",
+            prevEl: ".clientes-prev"
+        },
+        breakpoints: {
+            0: { slidesPerView: 1.2 },
+            576: { slidesPerView: 2.2 },
+            768: { slidesPerView: 3 },
+            992: { slidesPerView: 4 },
+            1200: { slidesPerView: 5 }
+        }
+    });
+</script>
+
 
 
 <!--<< Team Section Start >>-->
@@ -733,7 +2953,7 @@
 </section>
 
 <!--<< Testimonial Section Start >>-->
-<section class="tesimonial-section-3 section-padding section-bg-2 bg-cover" >
+<section class="tesimonial-section-3 section-padding section-bg-2 bg-cover">
     <div class="line-shape">
         <img src="@Url.Content("~/Content/theme/assets/img/team/line-shape.png")" alt="shape-img">
     </div>
@@ -807,7 +3027,7 @@
 </section>
 
 <!-- News Section Start -->
-<section class="news-section-3 fix section-padding"  style="display:none">
+<section class="news-section-3 fix section-padding" style="display:none">
     <div class="container">
         <div class="section-title-area">
             <div class="section-title">

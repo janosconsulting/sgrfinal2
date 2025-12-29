@@ -368,7 +368,7 @@
             border-radius: 1rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             padding: 2rem;
-            width: 300px;
+          
             text-align: center;
             transition: transform 0.3s;
         }
@@ -1021,9 +1021,9 @@
         }
 
         .row {
-            display: grid;
+            
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+           
         }
 
         .field {
@@ -1147,18 +1147,18 @@
                                             <input type="text" placeholder="Nombre" required>
                                         </div>
                                         <div class="field">
-                                            <i class="fa fa-envelope"  style="margin-left: 10px;"></i>
+                                            <i class="fa fa-envelope" style="margin-left: 10px;"></i>
                                             <input type="email" placeholder="Correo electrónico" required>
                                         </div>
                                     </div>
 
                                     <div class="row" style="margin-top:12px;">
                                         <div class="field">
-                                            <i class="fa fa-id-card"  style="margin-left: 10px;"></i>
+                                            <i class="fa fa-id-card" style="margin-left: 10px;"></i>
                                             <input type="text" placeholder="RUC">
                                         </div>
                                         <div class="field">
-                                            <i class="fa fa-phone"  style="margin-left: 10px;"> </i>
+                                            <i class="fa fa-phone" style="margin-left: 10px;"> </i>
                                             <input type="text" placeholder="Teléfono">
                                         </div>
                                     </div>
@@ -1270,10 +1270,6 @@
                             </div>
                         </div>
 
-                        <div class="screenshot-gallery">
-                            <img src="img/screenshots/rest_pedidos.png" alt="Pedidos restaurante" class="screenshot">
-                            <img src="img/screenshots/rest_factura.png" alt="Factura restaurante" class="screenshot">
-                        </div>
                     </div>
 
                     <!-- EJEMPLO HOTELES -->
@@ -1299,33 +1295,159 @@
                             </div>
                         </div>
 
-                        <div class="screenshot-gallery">
-                            <img src="img/screenshots/hotel_reservas.png" alt="Reservas hotel" class="screenshot">
-                            <img src="img/screenshots/hotel_checkin.png" alt="Check-in hotel" class="screenshot">
-                        </div>
                     </div>
+                    <style>
+                        .section-title {
+                            font-weight: 700;
+                            text-align: center;
+                            margin-bottom: 10px;
+                        }
 
-                    <!-- Beneficios -->
-                    <section class="mt-5">
+                        .beneficio-item {
+                            padding: 30px 20px;
+                            border-radius: 14px;
+                            transition: all 0.3s ease;
+                            height: 100%;
+                        }
+
+                            .beneficio-item:hover {
+                                background: #f8f9fa;
+                                transform: translateY(-5px);
+                            }
+
+                            .beneficio-item i {
+                                margin-bottom: 15px;
+                            }
+
+                            .beneficio-item h5 {
+                                font-weight: 600;
+                                margin-bottom: 8px;
+                            }
+
+                            .beneficio-item p {
+                                font-size: 0.95rem;
+                                color: #6c757d;
+                            }
+                    </style>
+                    <!-- BENEFICIOS -->
+                    <section class="mt-5 mb-5">
                         <h2 class="section-title">¿Por qué elegir nuestro sistema?</h2>
-                        <div class="row text-center mt-4">
+                        <p class="text-center text-muted mb-5">
+                            Todo lo que tu negocio necesita para facturar, controlar y crecer sin complicaciones.
+                        </p>
+
+                        <div class="row text-center">
+
+                            <!-- SUNAT -->
                             <div class="col-md-4 mb-4">
-                                <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
-                                <h5>Compatible con SUNAT</h5>
-                                <p>Cumple con todos los requisitos para emisión de comprobantes electrónicos.</p>
+                                <div class="beneficio-item">
+                                    <i class="fas fa-check-circle fa-2x text-success"></i>
+                                    <h5>Compatible con SUNAT</h5>
+                                    <p>
+                                        Cumple con todos los requisitos para la emisión de comprobantes electrónicos.
+                                    </p>
+                                </div>
                             </div>
+
+                            <!-- NUBE -->
                             <div class="col-md-4 mb-4">
-                                <i class="fas fa-cloud-upload-alt fa-2x text-primary mb-2"></i>
-                                <h5>En la nube</h5>
-                                <p>Funciona desde internet y desde cualquier dispositivo.</p>
+                                <div class="beneficio-item">
+                                    <i class="fas fa-cloud-upload-alt fa-2x text-primary"></i>
+                                    <h5>En la nube</h5>
+                                    <p>
+                                        Accede desde internet y desde cualquier dispositivo.
+                                    </p>
+                                </div>
                             </div>
+
+                            <!-- SOPORTE -->
                             <div class="col-md-4 mb-4">
-                                <i class="fas fa-headset fa-2x text-danger mb-2"></i>
-                                <h5>Soporte personalizado</h5>
-                                <p>Asistencia por WhatsApp, remoto o presencial según tu ciudad.</p>
+                                <div class="beneficio-item">
+                                    <i class="fas fa-headset fa-2x text-danger"></i>
+                                    <h5>Soporte personalizado</h5>
+                                    <p>
+                                        Asistencia por WhatsApp, remoto o presencial según tu ciudad.
+                                    </p>
+                                </div>
                             </div>
+
+                            <!-- IMPLEMENTACIÓN -->
+                            <div class="col-md-4 mb-4">
+                                <div class="beneficio-item">
+                                    <i class="fas fa-rocket fa-2x text-warning"></i>
+                                    <h5>Implementación rápida</h5>
+                                    <p>
+                                        Tu sistema operativo en pocos días, sin complicaciones.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- SEGURIDAD -->
+                            <div class="col-md-4 mb-4">
+                                <div class="beneficio-item">
+                                    <i class="fas fa-shield-alt fa-2x text-secondary"></i>
+                                    <h5>Seguridad y respaldo</h5>
+                                    <p>
+                                        Protección de datos con copias de seguridad automáticas.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- REPORTES -->
+                            <div class="col-md-4 mb-4">
+                                <div class="beneficio-item">
+                                    <i class="fas fa-chart-line fa-2x text-info"></i>
+                                    <h5>Reportes en tiempo real</h5>
+                                    <p>
+                                        Visualiza ventas, ingresos y comprobantes al instante.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- ESCALABLE -->
+                            <div class="col-md-4 mb-4">
+                                <div class="beneficio-item">
+                                    <i class="fas fa-layer-group fa-2x text-primary"></i>
+                                    <h5>Sistema escalable</h5>
+                                    <p>
+                                        Agrega módulos según crezca tu negocio.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- MULTIUSUARIO -->
+                            <div class="col-md-4 mb-4">
+                                <div class="beneficio-item">
+                                    <i class="fas fa-users fa-2x text-success"></i>
+                                    <h5>Multiusuario y sucursales</h5>
+                                    <p>
+                                        Ideal para empresas con varios usuarios o locales.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- RESPONSIVE -->
+                            <div class="col-md-4 mb-4">
+                                <div class="beneficio-item">
+                                    <i class="fas fa-mobile-alt fa-2x text-dark"></i>
+                                    <h5>Responsive</h5>
+                                    <p>
+                                        Funciona perfectamente en celular, tablet y PC.
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- CTA -->
+                        <div class="text-center mt-4">
+                            <a href="#contacto" class="btn btn-primary btn-lg px-5">
+                                Solicitar demostración
+                            </a>
                         </div>
                     </section>
+
+
 
                     <!-- Testimonios en forma de slider -->
                     <section class="mt-5">
@@ -1363,213 +1485,748 @@
                             </button>
                         </div>
                     </section>
+                    <!-- =======================
+    PROTOTIPO: PLANES + EJEMPLOS (CODETUS)
+    Requiere: Bootstrap 5 + FontAwesome
+    ======================= -->
 
-                    <div class="pricing-wrapper">
-                        <div class="section-title-area">
-                            <div class="section-title center">
-                                <span class="wow fadeInUp">PLAN DE PRECIOS FLEXIBLE</span>
-                                <h2 class="wow fadeInUp" data-wow-delay=".3s">
-                                    Te ofrecemos la mejor <br> Tarifa para ti
-                                </h2>
+                    <style>
+                                                :root {
+                                                    --codetus-primary: #2F49FF;
+                                                    --codetus-dark: #0B1220;
+                                                    --codetus-muted: #6B7280;
+                                                    --codetus-border: #E6EAF5;
+                                                    --codetus-bg: #F6F8FF;
+                                                }
+
+                                                .codetus-section {
+                                                    background: linear-gradient(180deg, var(--codetus-bg) 0%, #fff 65%);
+                                                    border-top: 1px solid var(--codetus-border);
+                                                    border-bottom: 1px solid var(--codetus-border);
+                                                    padding: 70px 0;
+                                                }
+
+                                                .codetus-title {
+                                                    font-weight: 900;
+                                                    color: var(--codetus-dark);
+                                                    letter-spacing: -0.02em;
+                                                }
+
+                                                .codetus-subtitle {
+                                                    color: var(--codetus-muted);
+                                                    max-width: 860px;
+                                                    margin: 10px auto 0;
+                                                }
+
+                                                .codetus-note {
+                                                    color: var(--codetus-muted);
+                                                    font-size: .95rem;
+                                                    margin-top: 10px;
+                                                }
+
+                                                /* Cards planes */
+                                                .plan-card {
+                                                    background: #fff;
+                                                    border: 1px solid var(--codetus-border);
+                                                    border-radius: 18px;
+                                                    padding: 26px 22px;
+                                                    box-shadow: 0 10px 30px rgba(15,23,42,.06);
+                                                    transition: .25s ease;
+                                                    height: 100%;
+                                                    position: relative;
+                                                    overflow: hidden;
+                                                }
+
+                                                    .plan-card:hover {
+                                                        transform: translateY(-6px);
+                                                        box-shadow: 0 16px 45px rgba(15,23,42,.10);
+                                                    }
+
+                                                    .plan-card.featured {
+                                                        background: var(--codetus-primary);
+                                                        color: #fff;
+                                                        border-color: rgba(255,255,255,.18);
+                                                    }
+
+                                                .plan-badge {
+                                                    position: absolute;
+                                                    top: 18px;
+                                                    right: 18px;
+                                                    padding: 6px 10px;
+                                                    border-radius: 999px;
+                                                    font-weight: 800;
+                                                    font-size: .85rem;
+                                                    background: rgba(47,73,255,.10);
+                                                    border: 1px solid rgba(47,73,255,.25);
+                                                    color: var(--codetus-primary);
+                                                }
+
+                                                .plan-card.featured .plan-badge {
+                                                    background: rgba(255,255,255,.14);
+                                                    border-color: rgba(255,255,255,.22);
+                                                    color: #fff;
+                                                }
+
+                                                .plan-icon {
+                                                    width: 44px;
+                                                    height: 44px;
+                                                    border-radius: 12px;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
+                                                    background: rgba(47,73,255,.10);
+                                                    color: var(--codetus-primary);
+                                                    font-size: 20px;
+                                                }
+
+                                                .plan-card.featured .plan-icon {
+                                                    background: rgba(255,255,255,.16);
+                                                    color: #fff;
+                                                }
+
+                                                .plan-price {
+                                                    font-size: 2.1rem;
+                                                    font-weight: 950;
+                                                    letter-spacing: -0.02em;
+                                                    margin: 10px 0 0;
+                                                }
+
+                                                .plan-meta {
+                                                    color: var(--codetus-muted);
+                                                    margin-top: 4px;
+                                                }
+
+                                                .plan-card.featured .plan-meta {
+                                                    color: rgba(255,255,255,.82);
+                                                }
+
+                                                .plan-list {
+                                                    margin-top: 18px;
+                                                    padding: 0;
+                                                    list-style: none;
+                                                }
+
+                                                    .plan-list li {
+                                                        display: flex;
+                                                        gap: 10px;
+                                                        padding: 8px 0;
+                                                        border-bottom: 1px dashed rgba(230,234,245,.9);
+                                                        align-items: flex-start;
+                                                    }
+
+                                                        .plan-list li:last-child {
+                                                            border-bottom: none;
+                                                        }
+
+                                                    .plan-list i {
+                                                        margin-top: 3px;
+                                                        color: #16a34a;
+                                                    }
+
+                                                .plan-card.featured .plan-list i {
+                                                    color: #C7FFB9;
+                                                }
+
+                                                .chips {
+                                                    margin-top: 14px;
+                                                    display: flex;
+                                                    flex-wrap: wrap;
+                                                    gap: 8px;
+                                                }
+
+                                                .chip {
+                                                    font-size: .85rem;
+                                                    padding: 6px 10px;
+                                                    border-radius: 999px;
+                                                    border: 1px solid var(--codetus-border);
+                                                    color: var(--codetus-dark);
+                                                    background: #fff;
+                                                }
+
+                                                .plan-card.featured .chip {
+                                                    background: rgba(255,255,255,.14);
+                                                    border-color: rgba(255,255,255,.22);
+                                                    color: #fff;
+                                                }
+
+                                                .btn-codetus {
+                                                    background: var(--codetus-primary);
+                                                    border-color: var(--codetus-primary);
+                                                    color: #fff;
+                                                    border-radius: 14px;
+                                                    padding: 12px 16px;
+                                                    font-weight: 900;
+                                                }
+
+                                                    .btn-codetus:hover {
+                                                        filter: brightness(.95);
+                                                        color: #fff;
+                                                    }
+
+                                                .plan-card.featured .btn-codetus {
+                                                    background: #fff;
+                                                    border-color: #fff;
+                                                    color: var(--codetus-primary);
+                                                }
+
+                                                .btn-soft {
+                                                    border-radius: 14px;
+                                                    padding: 12px 16px;
+                                                    font-weight: 900;
+                                                }
+
+                                                /* Selector rubros */
+                                                .rubro-grid {
+                                                    margin-top: 28px;
+                                                    display: grid;
+                                                    grid-template-columns: repeat(6, minmax(0, 1fr));
+                                                    gap: 12px;
+                                                }
+
+                                                .rubro-item {
+                                                    background: #fff;
+                                                    border: 1px solid var(--codetus-border);
+                                                    border-radius: 14px;
+                                                    padding: 14px 12px;
+                                                    text-align: center;
+                                                    cursor: pointer;
+                                                    transition: .2s ease;
+                                                    user-select: none;
+                                                }
+
+                                                    .rubro-item:hover {
+                                                        transform: translateY(-3px);
+                                                        box-shadow: 0 10px 25px rgba(15,23,42,.06);
+                                                    }
+
+                                                    .rubro-item i {
+                                                        font-size: 22px;
+                                                        color: var(--codetus-primary);
+                                                    }
+
+                                                    .rubro-item .lbl {
+                                                        display: block;
+                                                        margin-top: 6px;
+                                                        font-weight: 800;
+                                                        color: var(--codetus-dark);
+                                                        font-size: .95rem;
+                                                    }
+
+                                                    .rubro-item .sub {
+                                                        display: block;
+                                                        margin-top: 2px;
+                                                        color: var(--codetus-muted);
+                                                        font-size: .82rem;
+                                                    }
+                                                @@media
+                                                (max-width: 992px) {
+                                                    .rubro-grid
+
+                                                {
+                                                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                                                }
+
+                                                }
+
+                                                @@media (max-width: 576px) {
+                                                    .rubro-grid {
+                                                        grid-template-columns: repeat(2, minmax(0, 1fr));
+                                                    }
+                                                }
+
+                                                /* Comparativa */
+                                                .compare-wrap {
+                                                    margin-top: 34px;
+                                                    background: #fff;
+                                                    border: 1px solid var(--codetus-border);
+                                                    border-radius: 18px;
+                                                    overflow: hidden;
+                                                    box-shadow: 0 10px 30px rgba(15,23,42,.06);
+                                                }
+
+                                                .compare-head {
+                                                    padding: 18px 20px;
+                                                    border-bottom: 1px solid var(--codetus-border);
+                                                    display: flex;
+                                                    justify-content: space-between;
+                                                    align-items: center;
+                                                    gap: 12px;
+                                                    flex-wrap: wrap;
+                                                }
+
+                                                    .compare-head h4 {
+                                                        margin: 0;
+                                                        font-weight: 950;
+                                                        color: var(--codetus-dark);
+                                                        letter-spacing: -0.02em;
+                                                    }
+
+                                                .table-compare {
+                                                    margin: 0;
+                                                }
+
+                                                    .table-compare th, .table-compare td {
+                                                        padding: 14px 14px;
+                                                        vertical-align: middle;
+                                                        border-color: var(--codetus-border);
+                                                    }
+
+                                                    .table-compare thead th {
+                                                        background: #F3F6FF;
+                                                        color: var(--codetus-dark);
+                                                        font-weight: 950;
+                                                    }
+
+                                                .tick {
+                                                    color: #16a34a;
+                                                    font-size: 18px;
+                                                }
+
+                                                .cross {
+                                                    color: #ef4444;
+                                                    font-size: 18px;
+                                                }
+
+                                                .muted {
+                                                    color: var(--codetus-muted);
+                                                }
+
+                                                /* Ejemplos Básico vs Avanzado */
+                                                .example-card {
+                                                    background: #fff;
+                                                    border: 1px solid var(--codetus-border);
+                                                    border-radius: 18px;
+                                                    padding: 22px;
+                                                    height: 100%;
+                                                    box-shadow: 0 10px 30px rgba(15,23,42,.05);
+                                                }
+
+                                                .example-title {
+                                                    font-weight: 950;
+                                                    color: var(--codetus-dark);
+                                                    margin: 0 0 8px;
+                                                }
+
+                                                .example-pill {
+                                                    display: inline-flex;
+                                                    align-items: center;
+                                                    gap: 8px;
+                                                    padding: 6px 10px;
+                                                    border-radius: 999px;
+                                                    font-weight: 900;
+                                                    font-size: .85rem;
+                                                    border: 1px solid var(--codetus-border);
+                                                    background: #fff;
+                                                    margin-bottom: 10px;
+                                                }
+
+                                                    .example-pill.basic {
+                                                        color: #0ea5e9;
+                                                        border-color: rgba(14,165,233,.25);
+                                                        background: rgba(14,165,233,.08);
+                                                    }
+
+                                                    .example-pill.adv {
+                                                        color: #8b5cf6;
+                                                        border-color: rgba(139,92,246,.25);
+                                                        background: rgba(139,92,246,.08);
+                                                    }
+
+                                                .example-list {
+                                                    margin: 10px 0 0;
+                                                    padding-left: 18px;
+                                                    color: var(--codetus-muted);
+                                                }
+                    </style>
+
+                    <section class="codetus-section" id="planes-codetus">
+                        <div class="container">
+
+                            <!-- Header -->
+                            <div class="text-center mb-4">
+                                <h2 class="codetus-title">Planes de implementación Codetus</h2>
+                                <p class="codetus-subtitle">
+                                    Elige el plan según el tamaño de tu negocio. <strong>El sistema lo definimos según tu rubro</strong>:
+                                    Facturación, POS, Inventarios, Clínica, Restaurante, Hotel y más.
+                                </p>
+                                <div class="codetus-note">
+                                    <i class="fas fa-info-circle"></i>
+                                    <strong>Precios referenciales</strong>. El alcance final depende de módulos, usuarios, sucursales e integraciones.
+                                </div>
                             </div>
 
-                        </div>
-                        <div class="tab-content">
-                            <div id="monthly" class="tab-pane fade show active" role="tabpanel">
-                                <div class="row">
-                                    <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".3s">
-                                        <div class="pricing-items">
-                                            <div class="tag">
-                                                <h6>WEB ECONÓMICA</h6>
-                                            </div>
-                                            <div class="pricing-header">
-                                                <h2>S/ 500.00</h2>
-                                                <span>Único Pago</span>
-                                                <p>
-                                                    Diseño 100% Administrable
-                                                </p>
-                                            </div>
-                                            <ul class="pricing-list">
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Redes Sociales
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Adaptable a dispositivos móviles
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Diseño Web al gusto del Cliente
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Galería Multimedia
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Slider de Fotos
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Mapa de Ubicación
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Formulario de contacto
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Soporte Hosting
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Soporte Web
-                                                </li>
-                                            </ul>
-                                            <div class="pricing-button">
-                                                <a href="contact.html" class="pricing-btn mt-4">
-                                                    Elegir Plan
-                                                    <i class="fa-solid fa-arrow-right-long"></i>
-                                                </a>
-                                            </div>
+                            <!-- Cards planes -->
+                            <div class="row g-4">
+                                <!-- Básico -->
+                                <div class="col-lg-4">
+                                    <div class="plan-card">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="plan-icon"><i class="fas fa-seedling"></i></div>
+                                            <span class="badge bg-light text-dark fw-bold rounded-pill px-3 py-2" style="border:1px solid var(--codetus-border);">
+                                                Emprendedor
+                                            </span>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".5s">
-                                        <div class="pricing-items active">
-                                            <div class="tag">
-                                                <h6>WEB EMPRESA</h6>
-                                            </div>
-                                            <div class="pricing-header">
-                                                <h2>S/800</h2>
-                                                <span>Único Pago</span>
-                                                <p>
-                                                    Diseño 100% Administrable
-                                                </p>
-                                            </div>
-                                            <ul class="pricing-list">
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Diseño web al gusto del Cliente
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Adaptable a dispositivos móviles
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Galería Multimedia
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Slider de Fotos
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Redes sociales
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Hasta 8 páginas Interiores
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Blog de Noticias
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Soporte Hosting
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Soporte Web
-                                                </li>
-                                            </ul>
-                                            <div class="pricing-button">
-                                                <a href="contact.html" class="pricing-btn mt-4">
-                                                    Elegir Plan
-                                                    <i class="fa-solid fa-arrow-right-long"></i>
-                                                </a>
-                                            </div>
+
+                                        <div class="plan-price">Desde S/ 350</div>
+                                        <div class="plan-meta">Pago Anual • Implementación base</div>
+
+                                        <ul class="plan-list">
+                                            <li><i class="fas fa-check-circle"></i> 1 sistema base a elegir (según rubro)</li>
+                                            <li><i class="fas fa-check-circle"></i> Configuración inicial + plantilla estándar</li>
+                                            <li><i class="fas fa-check-circle"></i> Capacitación corta (operación básica)</li>
+                                            <li><i class="fas fa-check-circle"></i> Soporte inicial por WhatsApp</li>
+                                            <li><i class="fas fa-check-circle"></i> Acceso en la nube / remoto</li>
+                                        </ul>
+
+                                        <div class="chips">
+                                            <span class="chip">Facturación</span>
+                                            <span class="chip">POS simple</span>
+                                            <span class="chip">Inventario básico</span>
+                                            <span class="chip">Web informativa</span>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".7s">
-                                        <div class="pricing-items">
-                                            <div class="tag">
-                                                <h6>WEB CORPORATIVO</h6>
-                                            </div>
-                                            <div class="pricing-header">
-                                                <h2>S/1000</h2>
-                                                <span>Único Pago</span>
-                                                <p>
-                                                    Diseño 100% Administrable
-                                                </p>
-                                            </div>
-                                            <ul class="pricing-list">
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Diseño al gusto del Cliente
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Adaptable a dispositivos móviles
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Galeria Multimedia
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Slider de Fotos
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Redes Sociales
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Hata 12 Páginas Interiores
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Blog de Noticias
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Optimización para SEO
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Soporte Hosting
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Soporte Web
-                                                </li>
-                                                <li>
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Manejo web
-                                                </li>
-                                            </ul>
-                                            <div class="pricing-button">
-                                                <a href="contact.html" class="pricing-btn mt-4">
-                                                    Elegir Plan
-                                                    <i class="fa-solid fa-arrow-right-long"></i>
-                                                </a>
-                                            </div>
+
+                                        <div class="mt-4 d-grid gap-2">
+                                            <a class="btn btn-codetus"
+                                               href="https://wa.me/51989010140?text=Hola%20Codetus,%20quiero%20el%20PLAN%20B%C3%81SICO.%20Mi%20rubro%20es:%20_____%20y%20necesito:%20_____"
+                                               target="_blank">
+                                                Cotizar por WhatsApp <i class="fas fa-arrow-right ms-1"></i>
+                                            </a>
+                                            <a class="btn btn-outline-secondary btn-soft" href="#comparativa-codetus">
+                                                Ver comparación
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
 
+                                <!-- Profesional (destacado) -->
+                                <div class="col-lg-4">
+                                    <div class="plan-card featured">
+                                        <div class="plan-badge"><i class="fas fa-star"></i> Más elegido</div>
+
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="plan-icon"><i class="fas fa-rocket"></i></div>
+                                            <span class="badge bg-transparent text-white fw-bold rounded-pill px-3 py-2" style="border:1px solid rgba(255,255,255,.22);">
+                                                Crecimiento
+                                            </span>
+                                        </div>
+
+                                        <div class="plan-price">Desde S/ 800</div>
+                                        <div class="plan-meta">Pago Anual • Estándar listo para operar</div>
+
+                                        <ul class="plan-list">
+                                            <li><i class="fas fa-check-circle"></i> Sistema principal + módulos clave</li>
+                                            <li><i class="fas fa-check-circle"></i> Multiusuario (roles y permisos)</li>
+                                            <li><i class="fas fa-check-circle"></i> Reportes en tiempo real</li>
+                                            <li><i class="fas fa-check-circle"></i> Capacitación completa + acompañamiento</li>
+                                            <li><i class="fas fa-check-circle"></i> Soporte prioritario</li>
+                                        </ul>
+
+                                        <div class="chips">
+                                            <span class="chip">Clínica básica</span>
+                                            <span class="chip">Hotel básico</span>
+                                            <span class="chip">Restaurante básico</span>
+                                            <span class="chip">Facturación + Inventario</span>
+                                        </div>
+
+                                        <div class="mt-4 d-grid gap-2">
+                                            <a class="btn btn-codetus"
+                                               href="https://wa.me/51989010140?text=Hola%20Codetus,%20quiero%20el%20PLAN%20PROFESIONAL%20(M%C3%81S%20ELEGIDO).%20Mi%20rubro%20es:%20_____%20Usuarios:%20_____%20Sucursales:%20_____%20Necesito:%20_____"
+                                               target="_blank">
+                                                Solicitar demo <i class="fas fa-play ms-1"></i>
+                                            </a>
+                                            <a class="btn btn-outline-light btn-soft" href="#comparativa-codetus">
+                                                Ver comparación
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Empresarial -->
+                                <div class="col-lg-4">
+                                    <div class="plan-card">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="plan-icon"><i class="fas fa-building"></i></div>
+                                            <span class="badge bg-light text-dark fw-bold rounded-pill px-3 py-2" style="border:1px solid var(--codetus-border);">
+                                                A medida
+                                            </span>
+                                        </div>
+
+                                        <div class="plan-price">Desde S/ 1100</div>
+                                        <div class="plan-meta">Pago Anual / Proyecto avanzado • Personalizable y escalable</div>
+
+                                        <ul class="plan-list">
+                                            <li><i class="fas fa-check-circle"></i> Solución modular (varios procesos)</li>
+                                            <li><i class="fas fa-check-circle"></i> Sucursales / multi-almacén / flujos</li>
+                                            <li><i class="fas fa-check-circle"></i> Integraciones: WhatsApp, APIs, etc.</li>
+                                            <li><i class="fas fa-check-circle"></i> Migración de datos / carga masiva</li>
+                                            <li><i class="fas fa-check-circle"></i> Soporte dedicado + escalabilidad</li>
+                                        </ul>
+
+                                        <div class="chips">
+                                            <span class="chip">Clínica avanzada</span>
+                                            <span class="chip">Hotel avanzado</span>
+                                            <span class="chip">ERP integral</span>
+                                            <span class="chip">Integraciones</span>
+                                        </div>
+
+                                        <div class="mt-4 d-grid gap-2">
+                                            <a class="btn btn-codetus"
+                                               href="https://wa.me/51989010140?text=Hola%20Codetus,%20quiero%20el%20PLAN%20EMPRESARIAL%20(A%20MEDIDA).%20Mi%20rubro%20es:%20_____%20Usuarios:%20_____%20Sucursales:%20_____%20Integraciones:%20_____"
+                                               target="_blank">
+                                                Hablar con un asesor <i class="fas fa-headset ms-1"></i>
+                                            </a>
+                                            <a class="btn btn-outline-secondary btn-soft" href="#comparativa-codetus">
+                                                Ver comparación
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
+                            <!-- Selector visual de rubros (opcional, para guiar al cliente) -->
+                            <div class="mt-5">
+                                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                                    <h4 class="mb-0 codetus-title" style="font-size:1.35rem;">¿Qué sistema necesitas?</h4>
+                                    <div class="muted"><i class="fas fa-mouse-pointer"></i> Selecciona tu rubro y te recomendamos plan + módulos</div>
+                                </div>
+
+                                <div class="rubro-grid">
+                                    <div class="rubro-item">
+                                        <i class="fas fa-file-invoice"></i>
+                                        <span class="lbl">Facturación</span>
+                                        <span class="sub">SUNAT</span>
+                                    </div>
+                                    <div class="rubro-item">
+                                        <i class="fas fa-cash-register"></i>
+                                        <span class="lbl">POS</span>
+                                        <span class="sub">Ventas</span>
+                                    </div>
+                                    <div class="rubro-item">
+                                        <i class="fas fa-boxes"></i>
+                                        <span class="lbl">Inventarios</span>
+                                        <span class="sub">Almacén</span>
+                                    </div>
+                                    <div class="rubro-item">
+                                        <i class="fas fa-clinic-medical"></i>
+                                        <span class="lbl">Clínica</span>
+                                        <span class="sub">Salud</span>
+                                    </div>
+                                    <div class="rubro-item">
+                                        <i class="fas fa-utensils"></i>
+                                        <span class="lbl">Restaurante</span>
+                                        <span class="sub">Cocina</span>
+                                    </div>
+                                    <div class="rubro-item">
+                                        <i class="fas fa-hotel"></i>
+                                        <span class="lbl">Hotel</span>
+                                        <span class="sub">Reservas</span>
+                                    </div>
+                                </div>
+
+                                <div class="text-center mt-3">
+                                    <a class="btn btn-codetus"
+                                       href="https://wa.me/51989010140?text=Hola%20Codetus,%20mi%20rubro%20es:%20_____%20y%20quiero%20que%20me%20recomienden%20el%20plan%20ideal.%20Usuarios:%20_____%20Sucursales:%20_____"
+                                       target="_blank">
+                                        Quiero recomendación <i class="fas fa-arrow-right ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Tabla comparativa -->
+                            <div class="compare-wrap" id="comparativa-codetus">
+                                <div class="compare-head">
+                                    <h4>Tabla comparativa (Básico vs Avanzado)</h4>
+                                    <div class="muted">
+                                        <i class="fas fa-check-circle text-success"></i> Incluye
+                                        <span class="mx-2">•</span>
+                                        <i class="fas fa-times-circle text-danger"></i> No incluye
+                                        <span class="mx-2">•</span>
+                                        <i class="fas fa-sliders-h"></i> Según alcance
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-compare align-middle">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:42%">Característica</th>
+                                                <th class="text-center">S/ 500<br><span class="muted small">Básico</span></th>
+                                                <th class="text-center">S/ 800<br><span class="muted small">Profesional</span></th>
+                                                <th class="text-center">S/ 1000<br><span class="muted small">Empresarial</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Tipo de solución</strong><div class="muted small">Nivel de profundidad del sistema</div></td>
+                                                <td class="text-center"><span class="muted"><i class="fas fa-layer-group"></i> Base</span></td>
+                                                <td class="text-center"><span class="muted"><i class="fas fa-layer-group"></i> Estándar</span></td>
+                                                <td class="text-center"><span class="muted"><i class="fas fa-layer-group"></i> Avanzada / a medida</span></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><strong>Módulos</strong><div class="muted small">Compras, almacén, reportes, etc.</div></td>
+                                                <td class="text-center"><span class="muted"><i class="fas fa-sliders-h"></i> Limitado</span></td>
+                                                <td class="text-center"><i class="fas fa-check-circle tick"></i></td>
+                                                <td class="text-center"><i class="fas fa-check-circle tick"></i></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><strong>Multiusuario y roles</strong></td>
+                                                <td class="text-center"><span class="muted"><i class="fas fa-sliders-h"></i> Básico</span></td>
+                                                <td class="text-center"><i class="fas fa-check-circle tick"></i></td>
+                                                <td class="text-center"><i class="fas fa-check-circle tick"></i></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><strong>Sucursales / Multi-almacén</strong></td>
+                                                <td class="text-center"><i class="fas fa-times-circle cross"></i></td>
+                                                <td class="text-center"><span class="muted"><i class="fas fa-sliders-h"></i> Opcional</span></td>
+                                                <td class="text-center"><i class="fas fa-check-circle tick"></i></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><strong>Reportes</strong><div class="muted small">Operativos y gerenciales</div></td>
+                                                <td class="text-center"><span class="muted"><i class="fas fa-sliders-h"></i> Básicos</span></td>
+                                                <td class="text-center"><i class="fas fa-check-circle tick"></i></td>
+                                                <td class="text-center"><span class="muted"><i class="fas fa-check-circle tick"></i> Avanzados</span></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><strong>Integraciones</strong><div class="muted small">WhatsApp, APIs, OCR, pasarelas</div></td>
+                                                <td class="text-center"><i class="fas fa-times-circle cross"></i></td>
+                                                <td class="text-center"><span class="muted"><i class="fas fa-sliders-h"></i> Opcional</span></td>
+                                                <td class="text-center"><i class="fas fa-check-circle tick"></i></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><strong>Migración de datos</strong><div class="muted small">Importación de clientes, productos, etc.</div></td>
+                                                <td class="text-center"><i class="fas fa-times-circle cross"></i></td>
+                                                <td class="text-center"><span class="muted"><i class="fas fa-sliders-h"></i> Opcional</span></td>
+                                                <td class="text-center"><i class="fas fa-check-circle tick"></i></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><strong>Capacitación</strong></td>
+                                                <td class="text-center"><span class="muted">Corta</span></td>
+                                                <td class="text-center"><span class="muted">Completa</span></td>
+                                                <td class="text-center"><span class="muted">Dedicada</span></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><strong>Soporte</strong></td>
+                                                <td class="text-center"><span class="muted">Inicial</span></td>
+                                                <td class="text-center"><span class="muted">Prioritario</span></td>
+                                                <td class="text-center"><span class="muted">Dedicado</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="p-3 p-md-4">
+                                    <div class="muted">
+                                        <i class="fas fa-shield-alt"></i>
+                                        Nota: “Básico” o “Avanzado” depende del rubro y alcance. Las funciones finales se detallan en la propuesta técnica.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ejemplos claros: Clínica / Hotel (Básico vs Avanzado) -->
+                            <div class="mt-5">
+                                <div class="text-center mb-3">
+                                    <h3 class="codetus-title" style="font-size:1.6rem;">Ejemplos por rubro (Básico vs Avanzado)</h3>
+                                    <p class="codetus-subtitle">Esto ayuda al cliente a entender por qué un proyecto puede ser “básico” o “avanzado”.</p>
+                                </div>
+
+                                <div class="row g-4">
+                                    <!-- Clínica -->
+                                    <div class="col-lg-6">
+                                        <div class="example-card">
+                                            <h4 class="example-title"><i class="fas fa-clinic-medical me-2" style="color:var(--codetus-primary)"></i>Sistema para Clínica</h4>
+
+                                            <div class="row g-3 mt-1">
+                                                <div class="col-md-6">
+                                                    <span class="example-pill basic"><i class="fas fa-layer-group"></i> Clínica Básica (Plan S/ 800)</span>
+                                                    <ul class="example-list">
+                                                        <li>Pacientes</li>
+                                                        <li>Citas</li>
+                                                        <li>Historia clínica básica</li>
+                                                        <li>Caja</li>
+                                                        <li>Reportes simples</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <span class="example-pill adv"><i class="fas fa-cogs"></i> Clínica Avanzada (Plan S/ 1000)</span>
+                                                    <ul class="example-list">
+                                                        <li>Todo lo básico +</li>
+                                                        <li>Triaje</li>
+                                                        <li>Farmacia</li>
+                                                        <li>Laboratorio</li>
+                                                        <li>Reportes avanzados / integraciones</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Hotel -->
+                                    <div class="col-lg-6">
+                                        <div class="example-card">
+                                            <h4 class="example-title"><i class="fas fa-hotel me-2" style="color:var(--codetus-primary)"></i>Sistema para Hotel</h4>
+
+                                            <div class="row g-3 mt-1">
+                                                <div class="col-md-6">
+                                                    <span class="example-pill basic"><i class="fas fa-layer-group"></i> Hotel Básico (Plan S/ 800)</span>
+                                                    <ul class="example-list">
+                                                        <li>Habitaciones</li>
+                                                        <li>Check-in / Check-out</li>
+                                                        <li>Reservas simples</li>
+                                                        <li>Tarifa por día</li>
+                                                        <li>Caja básica</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <span class="example-pill adv"><i class="fas fa-cogs"></i> Hotel Avanzado (Plan S/ 1000)</span>
+                                                    <ul class="example-list">
+                                                        <li>Todo lo básico +</li>
+                                                        <li>Tarifas por hora / promos</li>
+                                                        <li>Penalidades / extensiones</li>
+                                                        <li>Cochera y adicionales</li>
+                                                        <li>Reportes de ocupación avanzados</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- CTA final -->
+                            <div class="text-center" style="margin-top:10px">
+                                <a class="btn btn-codetus btn-lg px-5"
+                                   href="https://wa.me/51989010140?text=Hola%20Codetus,%20quiero%20una%20cotizaci%C3%B3n.%20Mi%20rubro%20es:%20_____%20Usuarios:%20_____%20Sucursales:%20_____%20Necesito:%20_____"
+                                   target="_blank">
+                                    Solicitar cotización <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
+                                <div class="codetus-note mt-2">
+                                    <i class="fas fa-check-circle text-success"></i> Compatible con SUNAT
+                                    <span class="mx-2">•</span>
+                                    <i class="fas fa-cloud text-primary"></i> En la nube
+                                    <span class="mx-2">•</span>
+                                    <i class="fas fa-headset text-danger"></i> Soporte por WhatsApp
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
+                    </section>
 
                     <!-- CTA final -->
                     <section class="mt-5 text-center">
                         <h2 class="section-title">¿Listo para modernizar tu negocio?</h2>
                         <p class="mb-4">Empieza hoy con nuestro sistema de facturación electrónica y lleva tu empresa al siguiente nivel.</p>
-                        <a href="https://wa.me/519XXXXXXXX" class="btn btn-success btn-lg">
+                        <a href="https://wa.me/51989010140" class="btn btn-success btn-lg">
                             <i class="fab fa-whatsapp"></i> Cotiza por WhatsApp
                         </a>
                     </section>

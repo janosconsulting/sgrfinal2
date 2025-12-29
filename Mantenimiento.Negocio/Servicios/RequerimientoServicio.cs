@@ -83,6 +83,47 @@ namespace Mantenimiento.Negocio.Servicios
                 throw new Exception("Error al generar el código automático.", ex);
             }
         }
+
+        public string GenerarCodigoAutomaticoTx(SqlConnection con, SqlTransaction tx)
+        {
+            try
+            {
+                if (con == null) throw new ArgumentNullException(nameof(con));
+                if (tx == null) throw new ArgumentNullException(nameof(tx));
+                if (tx.Connection != con) throw new InvalidOperationException("La transacción no pertenece a esta conexión.");
+
+                // Obtener el último código de la base de datos
+                string ultimoCodigo = con.QueryFirstOrDefault<string>("SELECT TOP 1 codigo FROM Requerimiento ORDER BY idRequerimiento DESC", transaction: tx);
+
+                // Si no hay códigos en la base de datos, empezar desde REQ-0001
+                if (string.IsNullOrEmpty(ultimoCodigo))
+                {
+                    return "REQ-0001";
+                }
+
+                // Extraer el número de secuencia del último código
+                int numeroSecuencia = int.Parse(ultimoCodigo.Substring(4));
+
+                // Incrementar el número de secuencia
+                numeroSecuencia++;
+
+                // Verificar si el nuevo número secuencial excede el límite permitido
+                if (numeroSecuencia > 9999)
+                {
+                    throw new InvalidOperationException("Se ha alcanzado el límite máximo de códigos.");
+                }
+
+                // Formatear el nuevo código
+                string nuevoCodigo = $"REQ-{numeroSecuencia:D4}";
+
+                return nuevoCodigo;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al generar el código automático.", ex);
+            }
+        }
+
         public string GetSubFolderByExtension(string extension)
         {
             switch (extension.ToLower())
@@ -349,5 +390,153 @@ namespace Mantenimiento.Negocio.Servicios
                 return connection.Get<Requerimiento>(id);
             }
         }
+
+        private bool ExisteCodigoEnProyecto(SqlConnection connection, SqlTransaction tx, int idProyecto, string codigo)
+        {
+            const string sql = @"SELECT TOP 1 1 FROM Requerimiento WITH (NOLOCK) WHERE idProyecto=@idProyecto AND codigo=@codigo AND idEstado=1";
+            var r = connection.QueryFirstOrDefault<int?>(sql, new { idProyecto, codigo }, tx);
+            return r.HasValue;
+        }
+
+        private void InsertarDetalleMasivo(SqlConnection connection, SqlTransaction tx, int idRequerimiento, int idPersonaAsignado, List<string> items, string tipo)
+        {
+            if (items == null || items.Count == 0) return;
+
+            int orden = 1;
+
+            foreach (var raw in items)
+            {
+                var txt = (raw ?? "").Trim();
+                if (string.IsNullOrWhiteSpace(txt)) continue;
+
+                var detalle = new DetalleRequerimiento
+                {
+                    idRequerimiento = idRequerimiento,
+                    idPersona = idPersonaAsignado,     // o 0 si no aplica
+                    descripcion = $"{txt}",   // ✅ separa visualmente
+
+                    // Ajusta a tus catálogos
+                    estadoDesarrollo = 1,              // pendiente
+                    estadoCliente = 1,                 // pendiente
+                    comentarioCliente = "",
+
+                    fechaRegistro = DateTime.Now,
+                    idEstado = 1,
+
+                    fechaInicio = DateTime.Now,
+                    fechaFin = DateTime.Now.AddDays(7),
+
+                    nombreArchivo = null,
+                    extension = null,
+
+                    // Si el tipo es CRITERIO, también lo guardo en criterioAceptacion
+                    criterioAceptacion = (tipo == "CRITERIO") ? txt : null
+                };
+
+                connection.Insert(detalle, tx);
+                orden++;
+            }
+        }
+
+
+        public WizardGenerarReqDesdeDoResponse GenerarDesdeDocumentoOrigenWizard(WizardGenerarReqDesdeDoRequest request)
+        {
+            if (request == null) throw new Exception("Request inválido.");
+            if (request.idPersona <= 0) throw new Exception("Debe indicar idPersona (cliente).");
+            if (request.idProyecto <= 0) throw new Exception("Debe indicar idProyecto.");
+            if (request.idTipoRequerimiento <= 0) throw new Exception("Debe indicar idTipoRequerimiento.");
+            if (request.requerimientos == null || request.requerimientos.Count == 0)
+                throw new Exception("No hay requerimientos para generar.");
+
+            var resp = new WizardGenerarReqDesdeDoResponse();
+            resp.idsRequerimiento = new List<int>();
+
+            using (SqlConnection connection = new SqlConnection(ConnectionConfig.ConnectionString))
+            {
+                connection.Open();
+
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (var item in request.requerimientos)
+                        {
+                            var codigo = GenerarCodigoAutomaticoTx(connection, transaction);
+                            var titulo = (item.titulo ?? "").Trim();
+                            var descripcionMacro = (item.descripcion ?? "").Trim();
+
+                            if (string.IsNullOrWhiteSpace(codigo))
+                                throw new Exception("Existe un requerimiento sin código.");
+                            if (string.IsNullOrWhiteSpace(titulo))
+                                throw new Exception($"El requerimiento {codigo} no tiene título.");
+
+                            // Evitar duplicado de código dentro del proyecto (ajusta si quieres global)
+                           
+                            // ----------------------------
+                            // Insert REQUERIMIENTO (tabla actual)
+                            // ----------------------------
+                            Requerimiento requerimiento = new Requerimiento
+                            {
+                                idPersona = request.idPersona,
+                                idProyecto = request.idProyecto,
+                                idTipoRequerimiento = request.idTipoRequerimiento,
+                                codigo = codigo,
+                                solicitante = string.IsNullOrWhiteSpace(request.solicitante) ? "Cliente" : request.solicitante,
+                                idAdicional = request.idAdicional,
+                                // ✅ Mapeo Wizard → tu tabla
+                                resumen = titulo,             // título del módulo
+                                prioridad = request.prioridad,
+
+                                fechaInicio = request.fechaInicio ?? DateTime.Now,
+                                fechaFin = request.fechaFin ?? DateTime.Now.AddDays(7),
+
+                                avanceDesarrollo = 0,
+                                aprobacion = 0,
+                                fechaRegistro = DateTime.Now,
+
+                                // Ajusta según tus estados reales
+                                estadoReq = 1, // 1=Activo/Pendiente (ajusta)
+                                idEstado = 1
+                            };
+
+                            connection.Insert(requerimiento, transaction);
+                            int idRequerimiento = requerimiento.idRequerimiento;
+
+                            resp.idsRequerimiento.Add(idRequerimiento);
+                            resp.cantidad++;
+
+                            // ----------------------------
+                            // Insert DETALLES (unificando tipos)
+                            // ----------------------------
+                            // NOTA: Como tu DetalleRequerimiento no tiene campo "tipo",
+                            // lo guardaremos como prefijo en descripcion: [DETALLE_DO], [CRITERIO], [QA], [SUBTAREA]
+                            // (Si luego agregas campo tipo, lo cambias aquí y listo)
+                            
+                            
+                            InsertarDetalleMasivo(connection, transaction, idRequerimiento, request.idPersona, item.detalleItems, "DETALLE_DO");
+                            //InsertarDetalleMasivo(connection, transaction, idRequerimiento, request.idPersona, item.criteriosAceptacion, "CRITERIO");
+                            //InsertarDetalleMasivo(connection, transaction, idRequerimiento, request.idPersona, item.checklistQA, "QA");
+                            //InsertarDetalleMasivo(connection, transaction, idRequerimiento, request.idPersona, item.subtareasSugeridas, "SUBTAREA");
+
+                            // Si quieres guardar la descripción macro como un detalle también:
+                            //if (!string.IsNullOrWhiteSpace(descripcionMacro))
+                            //{
+                            //    InsertarDetalleMasivo(connection, transaction, idRequerimiento, request.idPersona,
+                            //        new List<string> { descripcionMacro }, "DESCRIPCION");
+                            //}
+                        }
+
+                        transaction.Commit();
+                        return resp;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw new Exception("Error al generar requerimientos desde DO (wizard).", ex);
+                    }
+                }
+            }
+        }
+
     }
 }

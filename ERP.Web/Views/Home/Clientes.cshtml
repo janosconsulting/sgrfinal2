@@ -5,131 +5,721 @@
 <!-- Mirrored from gramentheme.com/html/infotek/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Jun 2024 13:43:11 GMT -->
 
 <body>
-    <div class="breadcrumb-wrapper bg-cover" style="background-image: url('@Url.Content("~/Content/theme/assets/img/breadcrumb.jpg")');">
-        <div class="border-shape">
-            <img src="@Url.Content("~/Content/theme/assets/img/element.png")" alt="shape-img">
+   
+    <style>
+        body {
+            background: #f4f6fb;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .hero {
+            background: radial-gradient(circle at top left, #0d6efd 0, #1b1f3b 50%, #050716 100%);
+            color: #fff;
+            padding: 3.5rem 1rem;
+            border-radius: 0 0 40px 40px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+            margin-bottom: 2rem;
+        }
+
+        .hero-badge {
+            background: rgba(255,255,255,.12);
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            font-size: .8rem;
+        }
+
+            .hero-badge i {
+                margin-right: .4rem;
+            }
+
+        .hero-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: .02em;
+        }
+
+        .hero-subtitle {
+            font-size: .95rem;
+            color: #d3ddff;
+        }
+
+        .filter-bar {
+            margin-top: 1.5rem;
+            background: #fff;
+            border-radius: 16px;
+            padding: .75rem 1rem;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+        }
+
+            .filter-bar .form-control,
+            .filter-bar .form-select {
+                border-radius: 999px;
+                border: 1px solid #e0e4f2;
+                font-size: .85rem;
+            }
+
+        .sector-title-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .4rem .9rem;
+            border-radius: 999px;
+            background: #f1f4ff;
+            font-size: .8rem;
+            font-weight: 600;
+            color: #1f3bb3;
+        }
+
+        .sector-section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: .8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+            .sector-section-title span {
+                font-size: .8rem;
+                color: #6b7280;
+            }
+
+        .sector-section {
+            margin-bottom: 1.8rem;
+        }
+
+        .cliente-card {
+            border: none;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+            transition: transform .18s ease, box-shadow .18s ease;
+            background: #fff;
+        }
+
+            .cliente-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 18px 40px rgba(15, 23, 42, 0.16);
+            }
+
+        .cliente-logo {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            object-fit: cover;
+            background: #f5f5f5;
+        }
+
+        .cliente-sector-chip {
+            font-size: .7rem;
+            border-radius: 999px;
+            padding: .2rem .6rem;
+            background: #f3f4ff;
+            color: #4f46e5;
+        }
+
+        .cliente-meta small {
+            display: inline-flex;
+            align-items: center;
+            gap: .25rem;
+            font-size: .75rem;
+            color: #6b7280;
+        }
+
+        .tag-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: .15rem .6rem;
+            border-radius: 999px;
+            background: #f3f4f6;
+            font-size: .7rem;
+            color: #4b5563;
+            margin-right: .25rem;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #9ca3af;
+            font-size: .9rem;
+        }
+
+        .btn-ver-mas {
+            font-size: .75rem;
+            border-radius: 999px;
+        }
+
+        /* Modal list */
+        .modal-cliente-item h6 {
+            margin-bottom: 0;
+            font-size: .9rem;
+        }
+
+        .modal-cliente-item small {
+            font-size: .75rem;
+        }
+    </style>
+
+
+    <div class="container py-3">
+
+        <!-- HERO / CABECERA -->
+        <section class="hero">
+            <div class="row align-items-center">
+                <div class="col-lg-7 mb-3 mb-lg-0">
+                    <div class="hero-badge mb-2">
+                        <i class="bi bi-pie-chart"></i>
+                        Panel de Clientes Codetus
+                    </div>
+                    <h1 class="hero-title mb-2" style="color:#fff">Clientes y/o Proyectos agrupados por sector</h1>
+                    <p class="hero-subtitle mb-0">
+                        Muestra los 5 clientes más importantes por rubro y permite explorar el listado completo desde un modal.
+                    </p>
+                </div>
+                <div class="col-lg-5 text-lg-end text-center">
+                    <img src="https://via.placeholder.com/320x180?text=Mapa+de+Clientes"
+                         alt="Mapa de clientes"
+                         class="img-fluid rounded-4 border border-2 border-light shadow-sm">
+                </div>
+            </div>
+
+            <!-- FILTROS -->
+            <div class="filter-bar mt-4">
+                <div class="row g-2 align-items-center">
+                    <div class="col-md-6">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text border-0 bg-transparent">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input id="txtBuscar" type="text" class="form-control"
+                                   placeholder="Buscar por nombre de cliente, ciudad o RUC/DNI...">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="cboSector" class="form-select">
+                            <!-- Opciones se llenan desde el array -->
+                        </select>
+                    </div>
+                    <div class="col-md-3 text-md-end">
+                        <span class="text-light small">
+                            <i class="bi bi-people-fill me-1"></i>
+                            <span id="lblTotalClientes">0</span> clientes filtrados
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTENIDO DINÁMICO -->
+        <section class="mt-4" id="contenedorSectores">
+            <!-- Aquí JS inyecta los sectores y clientes -->
+        </section>
+
+        <!-- SIN RESULTADOS -->
+        <div id="noResultados" class="no-results d-none">
+            <i class="bi bi-search"></i>
+            <div class="mt-2">
+                No se encontraron clientes con los filtros seleccionados.
+            </div>
         </div>
-        <div class="line-shape">
-            <img src="@Url.Content("~/Content/theme/assets/img/line-element.png")" alt="shape-img">
-        </div>
-        <div class="container">
-            <div class="page-heading">
-                <h1 class="wow fadeInUp" data-wow-delay=".3s">Clientes</h1>
-                <ul class="breadcrumb-items wow fadeInUp" data-wow-delay=".5s">
-                    <li>
-                        <a href="index.html">
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <i class="fas fa-chevron-right"></i>
-                    </li>
-                    <li>
-                        Clientes
-                    </li>
-                </ul>
+
+    </div>
+
+    <!-- MODAL: TODOS LOS CLIENTES DEL SECTOR -->
+    <div class="modal fade" id="modalClientesSector" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        Clientes del sector <span id="modalSectorNombre" class="fw-semibold"></span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="modalClientesContenido">
+                        <!-- JS rellenará acá -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <small class="text-muted me-auto">
+                        Mostrando todos los clientes del sector según los filtros actuales.
+                    </small>
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>
-    @functions {
-        public static string LimpiarTexto(string texto)
-        {
-            var normalized = texto.ToLowerInvariant().Normalize(System.Text.NormalizationForm.FormD);
-            var sb = new System.Text.StringBuilder();
-            foreach (var c in normalized)
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // =========================
+        // 1. ARRAYS DE DATOS
+        // =========================
+
+        // Sectores
+        const sectors = [
+            { id: "", name: "Todos los sectores", icon: "" },
+            { id: "INMOBILIARIO", name: "Sector Inmobiliario", icon: "bi-heart-pulse-fill" },
+            { id: "TRANSPORTE", name: "Sector Transporte", icon: "bi-gear-fill" },
+            { id: "MARKETING", name: "Marketing", icon: "bi-bag-heart-fill" },
+            { id: "SALUD", name: "Sector Salud", icon: "bi-people-fill" },
+            { id: "INDUSTRIAS", name: "Sector Industrial", icon: "bi-people-fill" },
+            { id: "RESTAURANTES", name: "Sector Restaurantes", icon: "bi-people-fill" }
+        ];
+
+        // Clientes (agregamos "importance" para ordenar a los más importantes primero)
+        const clients = [
             {
-                var unicodeCategory = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c);
-                if (unicodeCategory != System.Globalization.UnicodeCategory.NonSpacingMark &&
-                    (char.IsLetterOrDigit(c) || c == '_'))
-                {
-                    sb.Append(c);
-                }
+                id: 1,
+                name: "DARO SAC",
+                sectorId: "INMOBILIARIO",
+                city: "Lima",
+                country: "Perú",
+                ruc: "-",
+                logoUrl: "https://daro.cc/img/logo2023.png",
+                tags: ["Logistica", "Compras", "Ventas", "Costos","Proyectos"],
+                contactName: "-",
+                contactRole: "-",
+                importance: 100
+            },
+            {
+                id: 2,
+                name: "GRUPO VILLALUZ SAC",
+                sectorId: "INMOBILIARIO",
+                city: "Nueva Cajamarca",
+                country: "Perú",
+                ruc: "-",
+                logoUrl: "https://via.placeholder.com/64x64?text=SM",
+                tags: ["Contratos", "Proyectos", "Ventas"],
+                contactName: "-",
+                contactRole: "-",
+                importance: 90
+            },
+            {
+                id: 2,
+                name: "CONSTRUCTORA CASA HOGAR",
+                sectorId: "INMOBILIARIO",
+                city: "Chile",
+                country: "Chile",
+                ruc: "-",
+                logoUrl: "https://via.placeholder.com/64x64?text=SM",
+                tags: ["Inventario", "Logistica"],
+                contactName: "-",
+                contactRole: "-",
+                importance: 90
+            },
+            {
+                id: 3,
+                name: "JC PERLAMAYO",
+                sectorId: "TRANSPORTE",
+                city: "Trujillo",
+                country: "Perú",
+                ruc: "",
+                logoUrl: "https://via.placeholder.com/64x64?text=IP",
+                tags: ["Inventario", "Compras", "Guías de remisión"],
+                contactName: "-",
+                contactRole: "-",
+                importance: 100
+            },
+            {
+                id: 4,
+                name: "JALICI SAC",
+                sectorId: "TRANSPORTE",
+                city: "Trujillo",
+                country: "Perú",
+                ruc: "",
+                logoUrl: "https://via.placeholder.com/64x64?text=MA",
+                tags: ["Facturación Electrónica", "Guias de Remisión"],
+                contactName: "",
+                contactRole: "",
+                importance: 95
+            },
+            {
+                id: 4,
+                name: "BENDICION POR MISERICORDIA",
+                sectorId: "TRANSPORTE",
+                city: "Trujillo",
+                country: "Perú",
+                ruc: "",
+                logoUrl: "https://via.placeholder.com/64x64?text=MA",
+                tags: ["Facturación Electrónica", "Guias de Remisión"],
+                contactName: "",
+                contactRole: "",
+                importance: 95
+            },
+            {
+                id: 5,
+                name: "GRUPO SPAREN",
+                sectorId: "MARKETING",
+                city: "Lima",
+                country: "Perú",
+                ruc: "",
+                logoUrl: "https://via.placeholder.com/64x64?text=CM",
+                tags: ["Agendamiento", "Branding","Motorizados","Cobranza"],
+                contactName: "",
+                contactRole: "",
+                importance: 100
+            },
+            {
+                id: 6,
+                name: "AGENDARIS",
+                sectorId: "MARKETING",
+                city: "Lima",
+                country: "Perú",
+                ruc: "",
+                logoUrl: "https://via.placeholder.com/64x64?text=BP",
+                tags: ["Agendamiento", "Recordatorios"],
+                contactName: "",
+                contactRole: "",
+                importance: 95
+            },
+            {
+                id: 7,
+                name: "ARTESANOS DON BOSCO",
+                sectorId: "INDUSTRIAS",
+                city: "Pucallpa",
+                country: "Perú",
+                ruc: "",
+                logoUrl: "https://via.placeholder.com/64x64?text=CT",
+                tags: ["Pedidos", "Stock", "Ordenes de Trabajo"],
+                contactName: "",
+                contactRole: "",
+                importance: 100
+            },
+            // Ejemplos extra para probar "Ver más"
+            {
+                id: 8,
+                name: "MULTISERVICIOS JEN",
+                sectorId: "INDUSTRIAS",
+                city: "Pucallpa",
+                country: "Perú",
+                ruc: "",
+                logoUrl: "https://via.placeholder.com/64x64?text=BV",
+                tags: ["Ventas", "Ordenes de Trabajo","Inventario","Gastos"],
+                contactName: "",
+                contactRole: "",
+                importance: 80
+            },
+            
+            // Ejemplos extra para probar "Ver más"
+            {
+                id: 8,
+                name: "ZICCA",
+                sectorId: "INDUSTRIAS",
+                city: "Trujillo",
+                country: "Perú",
+                ruc: "",
+                logoUrl: "https://via.placeholder.com/64x64?text=BV",
+                tags: ["Ventas", "Ordenes de Trabajo", "Inventario", "Gastos"],
+                contactName: "",
+                contactRole: "",
+                importance: 80
+            },
+            // Ejemplos extra para probar "Ver más"
+            {
+                id: 8,
+                name: "POLLERIA EL SABOR",
+                sectorId: "RESTAURANTES",
+                city: "Pucallpa",
+                country: "Perú",
+                ruc: "",
+                logoUrl: "https://via.placeholder.com/64x64?text=BV",
+                tags: ["Ventas", "Mesas", "Inventario", "Gastos"],
+                contactName: "",
+                contactRole: "",
+                importance: 80
+            },
+            // Ejemplos extra para probar "Ver más"
+            {
+                id: 8,
+                name: "POLLERIA SAN MARTIN",
+                sectorId: "RESTAURANTES",
+                city: "Pucallpa",
+                country: "Perú",
+                ruc: "",
+                logoUrl: "https://via.placeholder.com/64x64?text=BV",
+                tags: ["Ventas", "Mesas", "Inventario", "Gastos"],
+                contactName: "",
+                contactRole: "",
+                importance: 80
+            },
+            // Ejemplos extra para probar "Ver más"
+            {
+                id: 8,
+                name: "COOPER",
+                sectorId: "RESTAURANTES",
+                city: "Pucallpa",
+                country: "Perú",
+                ruc: "",
+                logoUrl: "https://via.placeholder.com/64x64?text=BV",
+                tags: ["Ventas", "Mesas", "Inventario", "Gastos"],
+                contactName: "",
+                contactRole: "",
+                importance: 80
             }
-            return sb.ToString();
+        ];
+
+        // =========================
+        // 2. ELEMENTOS DEL DOM
+        // =========================
+        const txtBuscar = document.getElementById('txtBuscar');
+        const cboSector = document.getElementById('cboSector');
+        const contenedorSectores = document.getElementById('contenedorSectores');
+        const totalLabel = document.getElementById('lblTotalClientes');
+        const noResultados = document.getElementById('noResultados');
+        const modalClientesSector = document.getElementById('modalClientesSector');
+        const modalSectorNombre = document.getElementById('modalSectorNombre');
+        const modalClientesContenido = document.getElementById('modalClientesContenido');
+        const modalInstance = new bootstrap.Modal(modalClientesSector);
+
+        // =========================
+        // 3. RENDER COMBO SECTORES
+        // =========================
+        function renderSectorOptions() {
+            cboSector.innerHTML = "";
+            sectors.forEach(sec => {
+                const opt = document.createElement('option');
+                opt.value = sec.id;
+                opt.textContent = sec.id === "" ? "Todos los sectores" : sec.name;
+                cboSector.appendChild(opt);
+            });
         }
-    }
 
-    <section class="section">
-        <div class="container">
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-            <link rel="stylesheet" href="@Url.Content("~/Scripts/assets/css/styleCodetus.css")" />
+        // =========================
+        // 4. FILTRADO Y AGRUPADO
+        // =========================
+        function getFilteredClients() {
+            const searchText = txtBuscar.value.toLowerCase().trim();
+            const selectedSector = cboSector.value;
 
-            <div class="acordeon-rubros">
-                <div class="titulo-dentro">Clientes por Categorías</div>
+            const filtered = clients.filter(c => {
+                const matchSector = !selectedSector || c.sectorId === selectedSector;
+                const textToSearch =
+                    (c.name + " " + c.city + " " + c.country + " " + c.ruc + " " + c.tags.join(" "))
+                        .toLowerCase();
+                const matchText = !searchText || textToSearch.includes(searchText);
+                return matchSector && matchText;
+            });
 
-                <div class="accordion accordion-flush" id="accordionFlushExample">
-                    @foreach (var rubro in Model)
-                    {
-                        var idRubro = rubro.Key.Replace(" ", "").ToLower(); // id para collapse
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-heading-@idRubro">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-@idRubro" aria-expanded="false" aria-controls="flush-collapse-@idRubro">
-                                    @rubro.Key
-                                </button>
-                            </h2>
-                            <div id="flush-collapse-@idRubro" class="accordion-collapse collapse" aria-labelledby="flush-heading-@idRubro" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
-                                    <div class="logo-container d-flex flex-wrap gap-4">
-                                        @foreach (var imagen in rubro.Value)
-                                        {
-                                            var nombreSinExtension = System.IO.Path.GetFileNameWithoutExtension(imagen).ToLower();
+            totalLabel.textContent = filtered.length;
+            return filtered;
+        }
 
-                                            // Diccionario de rubros con sus equivalentes como prefijo de archivo
-                                            var rubrosPrefijos = new Dictionary<string, string>
-                                             {
-                                             { "INDUSTRIA", "industria" },
-                                            { "SALUD & BELLEZA", "salud_&_belleza" },
-                                            { "FERRETERÍAS", "ferreterias" },
-                                            { "BARES Y RESTAURANTES", "bares_y_restaurantes" },
-                                            { "AGRO Y VETERINARIAS", "agro_y_veterinarias" },
-                                            { "EDUCACIÓN", "educacion" },
-                                            { "MODA Y CALZADOS", "moda_y_calzados" },
-                                            { "TRANSPORTES", "transportes" },
-                                            { "INMOBILIARIA", "inmobiliaria" },
-                                            { "REPUESTOS", "repuestos" },
-                                            { "SERVICIOS", "servicios" },
-                                            { "GENERAL", "general" }
-                                             };
-                                            // Obtener el prefijo del rubro actual
-                                            var claveRubro = rubro.Key.Trim().ToUpperInvariant();
-                                            var prefijo = rubrosPrefijos.ContainsKey(claveRubro) ? rubrosPrefijos[claveRubro] : "";
-                                            var nombreLimpio = nombreSinExtension;
-                                            // Si empieza con el prefijo, lo quitamos
-                                            if (!string.IsNullOrEmpty(prefijo) && nombreLimpio.StartsWith(prefijo + "_"))
-                                            {
-                                                nombreLimpio = nombreLimpio.Substring(prefijo.Length + 1); // quitar el prefijo y el _
-                                            }
-                                            // Quitar palabra 'logo'
-                                            var indexLogo = nombreLimpio.IndexOf("logo", StringComparison.OrdinalIgnoreCase);
-                                            if (indexLogo >= 0)
-                                            {
-                                                nombreLimpio = nombreLimpio.Remove(indexLogo, 4);
-                                            }
+        function groupBySector(list) {
+            const grouped = {};
+            list.forEach(c => {
+                if (!grouped[c.sectorId]) grouped[c.sectorId] = [];
+                grouped[c.sectorId].push(c);
+            });
 
-                                            // Reemplazar guiones bajos con espacio, limpiar
-                                            nombreLimpio = nombreLimpio.Replace("_", " ").Trim();
+            // Ordenar por importancia dentro de cada sector
+            Object.keys(grouped).forEach(secId => {
+                grouped[secId].sort((a, b) => (b.importance || 0) - (a.importance || 0));
+            });
 
-                                            // Capitalizar
-                                            var soloNombre = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(nombreLimpio);
+            return grouped;
+        }
 
-                                            <div class="text-center">
-                                                <img src="@Url.Content("~/Uploads/Images/" + imagen)"
-                                                     class="logo-cliente"
-                                                     alt="Logo @rubro.Key"
-                                                     title="@soloNombre" />
+        // =========================
+        // 5. RENDER PRINCIPAL (TOP 5 + botón VER MÁS)
+        // =========================
+        function renderClients() {
+            const filtered = getFilteredClients();
+
+            if (filtered.length === 0) {
+                contenedorSectores.innerHTML = "";
+                noResultados.classList.remove('d-none');
+                return;
+            } else {
+                noResultados.classList.add('d-none');
+            }
+
+            const grouped = groupBySector(filtered);
+            let html = "";
+
+            sectors
+                .filter(s => s.id !== "")
+                .forEach(sec => {
+                    const list = grouped[sec.id];
+                    if (!list || list.length === 0) return;
+
+                    const totalSector = list.length;
+                    const topFive = list.slice(0, 5);
+
+                    html += `
+                    <div class="sector-section" data-sector="${sec.id}">
+                        <div class="sector-section-title">
+                            <div>
+                                <span class="sector-title-pill">
+                                    <i class="bi ${sec.icon}"></i> ${sec.name}
+                                </span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span><span data-count>${totalSector}</span> cliente${totalSector > 1 ? "s" : ""}</span>
+                                ${totalSector > 0
+                            ? `<button class="btn btn-outline-primary btn-sm btn-ver-mas"
+                                                  data-sector-id="${sec.id}">
+                                               Ver todos
+                                           </button>`
+                            : ""
+                        }
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                `;
+
+                    topFive.forEach(c => {
+                        const tagsHtml = c.tags.map(t => `<span class="tag-pill">${t}</span>`).join(" ");
+                        const contactLine = (c.contactName || c.contactRole)
+                            ? `<small class="text-muted">
+                               <i class="bi bi-person-badge me-1"></i>
+                               ${c.contactName || ""}${c.contactRole ? " · " + c.contactRole : ""}
+                           </small>`
+                            : "";
+
+                        html += `
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card cliente-card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start gap-3">
+                                        <img src="${c.logoUrl}"
+                                             class="cliente-logo"
+                                             alt="${c.name}">
+                                        <div class="flex-grow-1">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <h6 class="mb-1">${c.name}</h6>
+                                                    <div class="cliente-meta mb-1">
+                                                        <small>
+                                                            <i class="bi bi-geo-alt"></i> ${c.city}, ${c.country}
+                                                        </small>
+                                                        &nbsp;•&nbsp;
+                                                        <small>
+                                                            <i class="bi bi-upc-scan"></i> RUC ${c.ruc}
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <span class="cliente-sector-chip">
+                                                    ${sec.name.replace("Sector ", "")}
+                                                </span>
                                             </div>
-                                        }
+                                            <div class="mb-1">
+                                                ${tagsHtml}
+                                            </div>
+                                            ${contactLine}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    }
-                </div>
-            </div>
+                    `;
+                    });
 
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        </div>
-    </section>
+                    html += `
+                        </div>
+                    </div>
+                `;
+                });
+
+            contenedorSectores.innerHTML = html;
+        }
+
+
+        // =========================
+        // 6. MODAL: VER TODOS LOS CLIENTES DEL SECTOR
+        // =========================
+        function openSectorModal(sectorId) {
+            const sectorInfo = sectors.find(s => s.id === sectorId);
+            const filtered = getFilteredClients();
+            const grouped = groupBySector(filtered);
+            const list = grouped[sectorId] || [];
+
+            modalSectorNombre.textContent = sectorInfo ? sectorInfo.name.replace("Sector ", "") : "";
+
+            if (list.length === 0) {
+                modalClientesContenido.innerHTML = `<p class="text-muted mb-0">No hay clientes para este sector con los filtros actuales.</p>`;
+            } else {
+                let html = `
+                    <div class="list-group list-group-flush">
+                `;
+
+                list.forEach(c => {
+                    const tagsHtml = c.tags && c.tags.length
+                        ? `<div class="mt-1">${c.tags.map(t => `<span class="badge bg-light text-secondary border me-1">${t}</span>`).join("")}</div>`
+                        : "";
+
+                    html += `
+                        <div class="list-group-item border-0 border-bottom modal-cliente-item">
+                            <div class="d-flex align-items-start gap-3">
+                                <img src="${c.logoUrl}"
+                                     class="cliente-logo"
+                                     alt="${c.name}">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6>${c.name}</h6>
+                                            <small class="text-muted d-block">
+                                                <i class="bi bi-geo-alt"></i> ${c.city}, ${c.country}
+                                            </small>
+                                            <small class="text-muted d-block">
+                                                <i class="bi bi-upc-scan"></i> RUC ${c.ruc}
+                                            </small>
+                                            ${tagsHtml}
+                                        </div>
+                                        <div class="text-end">
+                                            <small class="text-muted d-block">
+                                                Importancia: ${c.importance || 0}
+                                            </small>
+                                            ${(c.contactName || c.contactRole)
+                            ? `<small class="text-muted d-block mt-1">
+                                                       <i class="bi bi-person-badge me-1"></i>
+                                                       ${c.contactName || ""}${c.contactRole ? " · " + c.contactRole : ""}
+                                                   </small>`
+                            : ""
+                        }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `</div>`;
+                modalClientesContenido.innerHTML = html;
+            }
+
+            modalInstance.show();
+        }
+
+        // =========================
+        // 7. EVENTOS
+        // =========================
+        txtBuscar.addEventListener('input', renderClients);
+        cboSector.addEventListener('change', renderClients);
+
+        // Delegación para botón "Ver todos"
+        document.addEventListener('click', function (e) {
+            const btn = e.target.closest('.btn-ver-mas');
+            if (btn) {
+                const sectorId = btn.getAttribute('data-sector-id');
+                openSectorModal(sectorId);
+            }
+        });
+
+        // =========================
+        // 8. INICIALIZACIÓN
+        // =========================
+        window.addEventListener('DOMContentLoaded', () => {
+            renderSectorOptions();
+            renderClients();
+        });
+    </script>
+
 </body>
 
 <!-- Mirrored from gramentheme.com/html/infotek/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Jun 2024 13:43:11 GMT -->

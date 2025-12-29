@@ -10,6 +10,7 @@ namespace Mantenimiento.Negocio.Contratos.Servicios
 {
     public interface IRequerimientoServicio
     {
+        WizardGenerarReqDesdeDoResponse GenerarDesdeDocumentoOrigenWizard(WizardGenerarReqDesdeDoRequest request);
         List<sp_ListarRequerimientosxFiltro> ListaRequerimientos(int? cliente, int? proyecto, int? estado);
         string GenerarCodigoAutomatico();
         string GetSubFolderByExtension(string extension);

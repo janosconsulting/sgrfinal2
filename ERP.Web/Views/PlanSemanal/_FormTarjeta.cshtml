@@ -1,0 +1,75 @@
+﻿@model Mantenimiento.Datos.Entidades.PlanSemanaDetalle
+
+@using (Html.BeginForm("GuardarTarjeta", "PlanSemanal", FormMethod.Post, new { id = "frmTarjeta" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(x => x.idPlanDetalle)
+    @Html.HiddenFor(x => x.idPlanSemana)
+    @Html.HiddenFor(x => x.idRequerimientoDetalle)
+    @Html.HiddenFor(x => x.idObservacion)
+
+    <div class="grid">
+        <div>
+            <label>Día</label>
+            @Html.DropDownListFor(x => x.dia,
+                new SelectList(new[]
+                {
+                    new { Value = 0, Text = "Lunes" },
+                    new { Value = 1, Text = "Martes" },
+                    new { Value = 2, Text = "Miércoles" },
+                    new { Value = 3, Text = "Jueves" },
+                    new { Value = 4, Text = "Viernes" },
+                    new { Value = 5, Text = "Sábado" },
+                    new { Value = 6, Text = "Domingo" },
+                }, "Value", "Text", Model.dia),
+                "-- Seleccione --",
+                new { @class = "" })
+        </div>
+
+        <div>
+            <label>Prioridad</label>
+            @Html.DropDownListFor(x => x.prioridad,
+                new SelectList(new[]
+                {
+                    new { Value = 1, Text = "P1 (Alta)" },
+                    new { Value = 2, Text = "P2 (Media)" },
+                    new { Value = 3, Text = "P3 (Baja)" },
+                }, "Value", "Text", Model.prioridad),
+                new { @class = "" })
+        </div>
+    </div>
+
+    <label>Título</label>
+    @Html.TextBoxFor(x => x.titulo, new { @placeholder = "Ej: Corregir validación placa/sede..." })
+
+    <div class="grid" style="margin-top:10px">
+        <div>
+            <label>Responsable</label>
+            @Html.TextBoxFor(x => x.responsable, new { @placeholder = "Ej: Backend / Frontend / QA" })
+        </div>
+        <div>
+            <label>Estado</label>
+            @Html.DropDownListFor(x => x.estado,
+                new SelectList(new[]
+                {
+                    new { Value = "pendiente", Text = "Pendiente" },
+                    new { Value = "proceso", Text = "En proceso" },
+                    new { Value = "hecho", Text = "Hecho" },
+                    new { Value = "bloqueado", Text = "Bloqueado" },
+                }, "Value", "Text", (Model.estado ?? "pendiente")),
+                new { @class = "" })
+        </div>
+    </div>
+
+    <label>Horas (estimado)</label>
+    @Html.TextBoxFor(x => x.horas, new { @placeholder = "Ej: 4" })
+
+    <div class="small muted" style="margin-top:10px">
+        SubRequerimiento: <b>@Model.idRequerimientoDetalle</b>
+        @if (Model.idObservacion.HasValue)
+        {
+            <span> • Observación: <b>@Model.idObservacion</b></span>
+        }
+    </div>
+}

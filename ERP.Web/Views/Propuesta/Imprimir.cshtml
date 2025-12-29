@@ -1,0 +1,286 @@
+﻿@model Mantenimiento.Negocio.Poco.PropuestaPdfPoco
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Propuesta @Model.codigo</title>
+
+    <style>
+        @@page { margin: 18mm 16mm; }
+
+        body{
+            font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #1f2937;
+            line-height: 1.55;
+        }
+
+        .topbar{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            border-bottom: 3px solid #1f3c88;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+        }
+        .brand{
+            display:flex; gap:12px; align-items:center;
+        }
+        .brand .logo{
+            width: 52px; height: 52px;
+            border-radius: 12px;
+            background:#eef2ff;
+        }
+        .brand .name{
+            font-weight: 800;
+            font-size: 16px;
+            color:#0f172a;
+        }
+        .meta{
+            text-align:right;
+            font-size: 11px;
+            color:#475569;
+        }
+        .meta strong{ color:#1f3c88; font-size: 13px; }
+
+        h1{
+            font-size: 20px;
+            margin: 10px 0 8px 0;
+            color:#0f172a;
+        }
+
+        .grid{
+            display:flex; gap:14px; flex-wrap:wrap;
+            margin: 10px 0 16px 0;
+        }
+        .box{
+            border:1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 10px 12px;
+            flex: 1;
+            min-width: 240px;
+        }
+        .box .label{
+            font-size: 10px;
+            color:#64748b;
+            font-weight:700;
+            text-transform:uppercase;
+        }
+        .box .value{
+            font-size: 12px;
+            color:#0f172a;
+            font-weight:700;
+            margin-top:4px;
+        }
+
+        h2{
+            font-size: 13px;
+            color:#1f3c88;
+            margin: 18px 0 10px 0;
+            padding-bottom: 6px;
+            border-bottom:1px solid #e5e7eb;
+        }
+
+        .highlight{
+            border-left: 4px solid #1f3c88;
+            background:#f8fafc;
+            padding: 10px 12px;
+            border-radius: 10px;
+        }
+
+        ul{ margin: 8px 0 0 18px; }
+        li{ margin: 4px 0; }
+
+        table{
+            width:100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+        th, td{
+            border:1px solid #e5e7eb;
+            padding: 8px 10px;
+        }
+        th{ background:#f8fafc; }
+
+        .right{ text-align:right; }
+        .total{
+            font-weight: 900;
+            color:#0f172a;
+            font-size: 13px;
+        }
+
+        .muted{ color:#64748b; font-size: 11px; }
+
+        .sign{
+            margin-top: 26px;
+            border-top:1px dashed #cbd5e1;
+            padding-top: 14px;
+        }
+        .line{
+            margin-top: 22px;
+            width: 60%;
+            border-top:1px solid #0f172a;
+            padding-top: 6px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+        <div class="brand">
+            <div class="logo"></div>
+            <div>
+                <div class="name">PROPUESTA COMERCIAL</div>
+                <div class="muted">@Model.responsable</div>
+            </div>
+        </div>
+
+        <div class="meta">
+            Código: <strong>@Model.codigo</strong><br />
+            Fecha: @(Model.fechaRegistro.HasValue ? Model.fechaRegistro.Value.ToString("dd/MM/yyyy") : "-")
+        </div>
+    </div>
+
+    <h1>@Model.titulo</h1>
+
+    <div class="grid">
+        <div class="box">
+            <div class="label">Cliente</div>
+            <div class="value">@Model.cliente</div>
+        </div>
+        <div class="box">
+            <div class="label">Estado</div>
+            <div class="value">@Model.estado</div>
+        </div>
+        <div class="box">
+            <div class="label">Validez</div>
+            <div class="value">@((Model.validezDias ?? 15)) días</div>
+        </div>
+    </div>
+
+    <h2>Resumen Ejecutivo</h2>
+    <div class="highlight">
+        @Html.Raw((Model.resumenEjecutivo ?? "").Replace("\n", "<br/>"))
+    </div>
+
+
+    @if (!string.IsNullOrWhiteSpace(Model.caracteristicas))
+    {
+        <h2>Características del Desarrollo</h2>
+       
+        <div class="highlight">
+            @Html.Raw(Model.caracteristicas)
+        </div>
+    }
+
+
+
+    <h2>Alcance del Servicio</h2>
+    <div class="grid">
+        <div class="box">
+            <div class="label">Incluye</div>
+            <ul>
+                @foreach (var x in (Model.incluye ?? "").Split('\n'))
+                {
+                    if (!string.IsNullOrWhiteSpace(x))
+                    {
+                        <li>@x.Trim().TrimStart('-', '•')</li>
+                    }
+                }
+            </ul>
+        </div>
+
+        <div class="box">
+            <div class="label">No incluye</div>
+            <ul>
+                @foreach (var x in (Model.noIncluye ?? "").Split('\n'))
+                {
+                    if (!string.IsNullOrWhiteSpace(x))
+                    {
+                        <li>@x.Trim().TrimStart('-', '•')</li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+
+    <h2>Plazo de Ejecución</h2>
+    <div class="highlight">
+        Plazo estimado: <strong>@(Model.plazoDias ?? 15) días</strong><br />
+        <span class="muted">@Model.plazoDetalle</span>
+    </div>
+
+    <h2>Inversión Económica</h2>
+    <table>
+        <tr>
+            <th>Concepto</th>
+            <th class="right">Monto</th>
+        </tr>
+        <tr>
+            <td>Servicio de desarrollo</td>
+            <td class="right">@Model.moneda @((Model.montoReferencia ?? 0).ToString("N2"))</td>
+        </tr>
+        <tr>
+            <td class="right total" colspan="2">
+                Total: @Model.moneda @((Model.montoReferencia ?? 0).ToString("N2"))
+                @if ((Model.incluyeIgv ?? 0) == 0)
+                {
+                    <span class="muted"> + IGV</span>
+                }
+            </td>
+        </tr>
+    </table>
+
+    @if (!string.IsNullOrWhiteSpace(Model.observacionPrecio))
+    {
+        <div class="muted" style="margin-top:6px;">
+            Observación: @Model.observacionPrecio
+        </div>
+    }
+
+    <h2>Condiciones Comerciales</h2>
+    <ul>
+        <li><strong>Forma de pago:</strong> @Model.formaPago @Model.formaPagoDetalle</li>
+        <li><strong>Validez:</strong> @(Model.validezDias ?? 15) días calendario</li>
+    </ul>
+
+    @if (!string.IsNullOrWhiteSpace(Model.detalleHitos))
+    {
+        <h2>Hitos de Desarrollo</h2>
+        <div class="highlight">
+            @Html.Raw((Model.detalleHitos ?? "").Replace("\n", "<br/>"))
+        </div>
+
+        if (!string.IsNullOrWhiteSpace(Model.criterioAceptacionHitos))
+        {
+            <div class="muted" style="margin-top:8px;">
+                <strong>Criterio de aceptación:</strong> @Model.criterioAceptacionHitos
+            </div>
+        }
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.condiciones))
+    {
+        <div class="highlight" style="margin-top:10px;">
+            @Html.Raw(Model.condiciones.Replace("\n", "<br/>"))
+        </div>
+    }
+
+    <h2>Aceptación de la Propuesta</h2>
+    <div class="sign">
+        <div>
+            @Html.Raw((Model.textoAceptacion ?? "").Replace("\n", "<br/>"))
+        </div>
+
+        <div class="line">Nombre y firma del cliente</div>
+        <div class="muted">Fecha: ____ / ____ / ______</div>
+    </div>
+
+</body>
+</html>

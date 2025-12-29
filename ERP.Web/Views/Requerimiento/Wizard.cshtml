@@ -1,0 +1,875 @@
+﻿@model Mantenimiento.Negocio.Poco.GestionarRequerimientoPoco
+
+@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f6f7fb
+        }
+
+        .card {
+            border: 0;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0,0,0,.06)
+        }
+
+        .muted {
+            color: #6c757d
+        }
+
+        .step-pill {
+            border-radius: 999px;
+            padding: .35rem .75rem;
+            border: 1px solid #e8eaf0;
+            background: #fff
+        }
+
+            .step-pill.active {
+                background: #0d6efd;
+                color: #fff;
+                border-color: #0d6efd
+            }
+
+        .soft {
+            background: #fff;
+            border: 1px solid #eef0f4;
+            border-radius: 12px;
+            padding: 12px
+        }
+
+        .mono {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+
+        .req-card {
+            border: 1px solid #eef0f4;
+            border-radius: 14px;
+            background: #fff
+        }
+
+            .req-card .req-head {
+                padding: 12px 14px;
+                border-bottom: 1px solid #eef0f4
+            }
+
+            .req-card .req-body {
+                padding: 14px
+            }
+
+        .small-help {
+            font-size: .85rem;
+            color: #6c757d
+        }
+
+        .badge-soft {
+            background: rgba(13,110,253,.08);
+            color: #0d6efd;
+            border: 1px solid rgba(13,110,253,.15)
+        }
+
+        .badge-soft2 {
+            background: rgba(25,135,84,.10);
+            color: #198754;
+            border: 1px solid rgba(25,135,84,.18)
+        }
+
+        .btn-round {
+            border-radius: 12px
+        }
+
+        .sticky-footer {
+            position: sticky;
+            bottom: 0;
+            background: rgba(246,247,251,.92);
+            backdrop-filter: blur(6px);
+            padding: 10px 0;
+            border-top: 1px solid #eef0f4
+        }
+
+        .minh {
+            min-height: 42px
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container py-4">
+
+        <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-3">
+            <div>
+                <h4 class="mb-0">Wizard v2: Generar Requerimientos desde DO</h4>
+                <div class="muted">Descripción (macro) + Detalle (items DO) + Criterios + QA + Subtareas.</div>
+            </div>
+            <div class="d-flex gap-2">
+                <span class="badge badge-soft">Descripción ≠ Detalle</span>
+                <span class="badge badge-soft2">POST a MVC</span>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-body d-flex flex-wrap gap-2 align-items-center">
+                <span id="pill1" class="step-pill active">1) Pegar DO</span>
+                <span id="pill2" class="step-pill">2) Detectar módulos</span>
+                <span id="pill3" class="step-pill">3) Editar REQ</span>
+                <span id="pill4" class="step-pill">4) Confirmar</span>
+                <span class="ms-auto muted small">Nada se crea hasta el paso 4.</span>
+            </div>
+        </div>
+
+        <!-- 🔧 CONTEXTO (para crear Requerimiento real en tu BD) -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="fw-bold mb-2">Contexto para crear Requerimiento</div>
+                <div class="row g-3">
+                    <div class="col-lg-3">
+                        <label class="form-label">Cliente (idPersona)</label>
+                        <select id="idCliente" class="form-select" data-control="select2">
+                            <!-- Opción por defecto -->
+                            <option value="">Seleccione Cliente</option>
+                            @if (Model.ListarClientes.Any())
+                            {
+                                foreach (var item in Model.ListarClientes)
+                                {
+                                    <option value="@item.idPersona">@item.nombreCli</option>
+                                }
+                            }
+                            
+                        </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="form-label">Proyecto (idProyecto)</label>
+                        <select id="idProyecto" class="form-select" data-control="select2">
+                            <!-- Opción por defecto -->
+                            <option value="">Seleccione Proyecto</option>
+                            @if (Model.ListarProyectos.Any())
+                            {
+                                foreach (var item in Model.ListarProyectos)
+                                {
+                                    <option value="@item.idProyecto">@item.nombre</option>
+                                }
+                            }
+
+                        </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="form-label">Tipo Req (idTipoRequerimiento)</label>
+                        <input type="number" id="ctx_idTipo" class="form-control" value="1">
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="form-label">Prioridad</label>
+                        <input type="number" id="ctx_prioridad" class="form-control" value="1">
+                    </div>
+
+                    <div class="col-lg-6">
+                        <label class="form-label">Solicitante</label>
+                        <input type="text" id="ctx_solicitante" class="form-control" value="Cliente">
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="form-label">Fecha Inicio</label>
+                        <input type="date" id="ctx_fInicio" class="form-control">
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="form-label">Fecha Fin</label>
+                        <input type="date" id="ctx_fFin" class="form-control">
+                    </div>
+                    <div class="small-help">
+                        Ajusta estos campos según tu tabla Requerimiento (son necesarios para Insert).
+                    </div>
+                    <div class="row mb-5 gx-1">
+                        <!--begin::Label-->
+                        <label class="fs-5 fw-semibold mb-2"
+                               for="kt_proyecto_cliente_select">Doc. Origen:</label>
+                        <!--end::Label-->
+                        <!--begin::Select-->
+                        <select id="kt_adicional" class="form-select" data-control="select2">
+                            <!-- Opción por defecto -->
+                            <option value="">Seleccione Adicional</option>
+                            @if (Model.ListarAdicionales.Any())
+                            {
+                                foreach (var item in Model.ListarAdicionales)
+                                {
+                                    <option value="@item.idAdicional">@item.nombre</option>
+                                }
+                            }
+                            else
+                            {
+                                // Si no hay proyectos disponibles, mostrar una opción por defecto
+                                <option value="">No existen adicionales</option>
+                            }
+                        </select>
+                        <!--end::Select-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 1 -->
+        <div id="step1" class="card">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-lg-4">
+                        <label class="form-label">Prefijo de Requerimiento</label>
+                        <input class="form-control" id="reqPrefix" value="REQ">
+                    </div>
+
+                    <div class="col-lg-4">
+                        <label class="form-label">Acción automática al generar</label>
+                        <select class="form-select" id="autoDetailAction">
+                            <option value="none">No convertir detalle</option>
+                            <option value="criteria">Detalle → Criterios</option>
+                            <option value="subtasks">Detalle → Subtareas</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <label class="form-label">DO (texto)</label>
+                        <button class="btn btn-outline-secondary btn-round w-100" type="button" id="btnExample">Cargar ejemplo (Bienes)</button>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Texto del DO (alcance aprobado)</label>
+                        <textarea id="doText" class="form-control" rows="14"></textarea>
+                    </div>
+
+                    <div class="col-12 d-flex gap-2">
+                        <button class="btn btn-primary btn-round ms-auto" type="button" id="btnDetect">Detectar módulos →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div id="step2" class="card d-none">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div>
+                        <div class="fw-bold">Módulos detectados</div>
+                        <div class="muted">Renombra y ajusta “Detalle (items DO)” antes de generar REQ.</div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-secondary btn-round" type="button" id="btnBack2">← Volver</button>
+                        <button class="btn btn-primary btn-round" type="button" id="btnBuildReq">Generar REQ →</button>
+                    </div>
+                </div>
+
+                <div id="modulesList" class="row g-2"></div>
+            </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div id="step3" class="card d-none">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div>
+                        <div class="fw-bold">Requerimientos sugeridos</div>
+                        <div class="muted">Edita descripción macro, detalle, criterios, QA, subtareas.</div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-secondary btn-round" type="button" id="btnBack3">← Volver</button>
+                        <button class="btn btn-primary btn-round" type="button" id="btnConfirm">Confirmar →</button>
+                    </div>
+                </div>
+
+                <div id="reqCards" class="row g-3"></div>
+            </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div id="step4" class="card d-none">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="fw-bold">Confirmación</div>
+                        <div class="muted">Se enviará este payload a tu action MVC y se crearán los requerimientos.</div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-secondary btn-round" type="button" id="btnBack4">← Volver</button>
+                        <button class="btn btn-success btn-round" type="button" id="btnSend">Crear en BD</button>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row g-3">
+                    <div class="col-lg-6">
+                        <label class="form-label">Payload (JSON)</label>
+                        <textarea id="jsonOut" class="form-control mono" rows="14" readonly></textarea>
+                        <div class="small-help mt-2">Esto se manda a: <b>@Url.Action("GenerarDesdeDOWizard", "Requerimiento")</b></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="soft">
+                            <div class="fw-bold">Respuesta</div>
+                            <pre id="apiResp" class="mono mb-0" style="white-space:pre-wrap">—</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sticky-footer mt-3">
+            <div class="container d-flex justify-content-between align-items-center">
+                <div class="muted small">DO grande → Wizard. Micro-DO → REQ único.</div>
+                <div class="muted small">Recibido → Análisis → Desarrollo → QA → Revisión Cliente → Entregado → Cerrado</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    // ---------------------------
+    // Templates
+    // ---------------------------
+    const ACCEPTANCE_TEMPLATES = {
+        default: [
+            "Cumple el alcance del DO aprobado (sin salirse del alcance).",
+            "Reglas/validaciones funcionales mínimas implementadas.",
+            "Permisos/roles respetados (si aplica).",
+            "Evidencia de prueba adjunta (captura o video)."
+        ],
+        report: [
+            "Reporte muestra información correcta según filtros.",
+            "Exportación funciona (Excel/PDF) si aplica.",
+            "Evidencia de prueba adjunta."
+        ],
+        security: [
+            "Roles/permisos aplicados correctamente.",
+            "Acciones restringidas cuando no corresponde.",
+            "Evidencia de prueba con dos perfiles."
+        ]
+    };
+
+    const QA_CHECKLIST_BASE = [
+        "Prueba funcional completada",
+        "Validación de datos / reglas de negocio",
+        "Prueba de permisos (si aplica)",
+        "Evidencia (captura/video) adjunta",
+        "Revisión del cliente (si aplica)"
+    ];
+
+    let detectedModules = [];
+    let reqDraft = [];
+
+    function setStep(n) {
+        [1, 2, 3, 4].forEach(s => {
+            document.getElementById("step" + s).classList.toggle("d-none", s !== n);
+            document.getElementById("pill" + s).classList.toggle("active", s === n);
+        });
+    }
+
+    function normalizeLine(line) { return line.replace(/\t/g, ' ').replace(/\s+/g, ' ').trim(); }
+
+    function escapeHtml(str) {
+        return String(str ?? "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+    function guessTemplateByModuleName(name) {
+        const n = name.toLowerCase();
+        if (n.includes("reporte")) return "report";
+        if (n.includes("seguridad") || n.includes("permiso") || n.includes("rol")) return "security";
+        return "default";
+    }
+
+    function nextReqCode(prefix, index) {
+        const n = String(index).padStart(2, '0');
+        return `${prefix}-${n}`;
+    }
+
+    function toBullets(text) {
+        const lines = (text || "").split(/\r?\n/)
+            .map(l => l.trim())
+            .filter(Boolean)
+            .map(l => l.replace(/^[-*•]\s+/, "").trim())
+            .filter(Boolean);
+        const seen = new Set();
+        const res = [];
+        for (const x of lines) {
+            const k = x.toLowerCase();
+            if (seen.has(k)) continue;
+            seen.add(k);
+            res.push(x);
+        }
+        return res;
+    }
+
+    function macroDescriptionFromTitle(title) {
+        return `Implementar el módulo/funcionalidad "${title}" conforme al DO aprobado.`;
+    }
+
+    function parseModulesFromDo(text) {
+        const lines = text.split(/\r?\n/).map(normalizeLine);
+        const blocks = [];
+        let current = null;
+
+        function pushCurrent() {
+            if (!current) return;
+            current.items = current.items.filter(x => x && x !== "-");
+            blocks.push(current);
+        }
+
+        const headerRegex1 = /^(m[oó]dulo)\s*[:\-]\s*(.+)$/i;
+        const headerRegex2 = /^(.+?)\s*:\s*$/i;
+
+        for (let raw of lines) {
+            const line = raw.trim();
+            if (!line) continue;
+
+            const isBullet = /^[-*•]\s+/.test(line);
+
+            const m1 = line.match(headerRegex1);
+            if (m1 && !isBullet) {
+                pushCurrent();
+                current = { name: m1[2].trim(), items: [] };
+                continue;
+            }
+
+            const m2 = line.match(headerRegex2);
+            if (m2 && !isBullet) {
+                const headerName = m2[1].trim();
+                if (headerName.length >= 4) {
+                    pushCurrent();
+                    current = { name: headerName, items: [] };
+                    continue;
+                }
+            }
+
+            if (!current) current = { name: "General", items: [] };
+
+            if (isBullet) current.items.push(line.replace(/^[-*•]\s+/, '').trim());
+            else current.items.push(line);
+        }
+
+        pushCurrent();
+
+        const map = new Map();
+        for (const b of blocks) {
+            const key = b.name.toLowerCase();
+            if (!map.has(key)) map.set(key, { name: b.name, items: [...b.items] });
+            else map.get(key).items.push(...b.items);
+        }
+
+        return Array.from(map.values()).map((b, idx) => ({
+            id: idx + 1,
+            name: b.name,
+            itemsText: b.items.filter(Boolean).join("\n"),
+            selected: true
+        }));
+    }
+
+    function uniqueKeep(arr) {
+        const res = [];
+        const seen = new Set();
+        for (const x of arr) {
+            const v = (x || "").trim();
+            if (!v) continue;
+            const k = v.toLowerCase();
+            if (seen.has(k)) continue;
+            seen.add(k);
+            res.push(v);
+        }
+        return res;
+    }
+
+    function renderModules() {
+        const wrap = document.getElementById("modulesList");
+        wrap.innerHTML = "";
+
+        detectedModules.forEach((m) => {
+            const col = document.createElement("div");
+            col.className = "col-12";
+
+            col.innerHTML = `
+          <div class="soft">
+            <div class="d-flex justify-content-between align-items-start gap-2">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="mod_chk_${m.id}" ${m.selected ? "checked" : ""}>
+                <label class="form-check-label fw-bold" for="mod_chk_${m.id}">Bloque a convertir en REQ</label>
+                <div class="muted small">Marca/desmarca para crear requerimientos.</div>
+              </div>
+              <span class="badge badge-soft">Detectado</span>
+            </div>
+
+            <div class="row g-2 mt-2">
+              <div class="col-lg-4">
+                <label class="form-label">Nombre</label>
+                <input class="form-control" id="mod_name_${m.id}" value="${escapeHtml(m.name)}">
+              </div>
+              <div class="col-lg-8">
+                <label class="form-label">Detalle (items DO)</label>
+                <textarea class="form-control" id="mod_items_${m.id}" rows="5">${escapeHtml(m.itemsText)}</textarea>
+              </div>
+            </div>
+          </div>`;
+            wrap.appendChild(col);
+
+            setTimeout(() => {
+                document.getElementById(`mod_chk_${m.id}`).addEventListener("change", (e) => m.selected = e.target.checked);
+                document.getElementById(`mod_name_${m.id}`).addEventListener("input", (e) => m.name = e.target.value);
+                document.getElementById(`mod_items_${m.id}`).addEventListener("input", (e) => m.itemsText = e.target.value);
+            }, 0);
+        });
+    }
+
+    function renderEditableList(containerId, arr, placeholder) {
+        const el = document.getElementById(containerId);
+        el.innerHTML = "";
+
+        arr.forEach((item, j) => {
+            const row = document.createElement("div");
+            row.className = "d-flex gap-2 align-items-start mb-2";
+            row.innerHTML = `
+            <input class="form-control form-control-sm" value="${escapeHtml(item)}" placeholder="${placeholder}">
+            <button class="btn btn-outline-danger btn-sm btn-round" type="button">✕</button>`;
+            el.appendChild(row);
+
+            row.querySelector("input").addEventListener("input", (e) => arr[j] = e.target.value);
+            row.querySelector("button").addEventListener("click", () => { arr.splice(j, 1); renderReqCards(); });
+        });
+
+        if (arr.length === 0) el.innerHTML = `<div class="muted small">Sin elementos. Puedes agregar.</div>`;
+    }
+
+    function renderSubtasks(containerId, subs) {
+        const el = document.getElementById(containerId);
+        el.innerHTML = "";
+
+        if (!subs || subs.length === 0) {
+            el.innerHTML = `<div class="muted small">No se han generado subtareas.</div>`;
+            return;
+        }
+
+        const ul = document.createElement("ul");
+        ul.className = "mb-0";
+        subs.forEach((s, idx) => {
+            const li = document.createElement("li");
+            li.innerHTML = `${escapeHtml(s)} <button class="btn btn-outline-danger btn-sm btn-round ms-2" data-subdel="${idx}">Quitar</button>`;
+            ul.appendChild(li);
+        });
+        el.appendChild(ul);
+
+        el.querySelectorAll("[data-subdel]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const idx = parseInt(btn.getAttribute("data-subdel"), 10);
+                const card = btn.closest(".req-card");
+                const all = Array.from(document.querySelectorAll(".req-card"));
+                const reqIndex = all.indexOf(card);
+                if (reqIndex >= 0) {
+                    reqDraft[reqIndex].subtasks.splice(idx, 1);
+                    renderReqCards();
+                }
+            });
+        });
+    }
+
+    function renderReqCards() {
+        const wrap = document.getElementById("reqCards");
+        wrap.innerHTML = "";
+
+        reqDraft.forEach((r, idx) => {
+            const col = document.createElement("div");
+            col.className = "col-12";
+
+            const titleId = `title_${idx}`;
+            const macroId = `macro_${idx}`;
+            const detailId = `detail_${idx}`;
+            const accId = `acc_${idx}`;
+            const qaId = `qa_${idx}`;
+            const subId = `sub_${idx}`;
+
+            col.innerHTML = `
+          <div class="req-card">
+            <div class="req-head d-flex justify-content-between align-items-start gap-2">
+              <div class="flex-grow-1">
+                <div class="fw-bold">
+                  ${escapeHtml(r.code)} <span class="muted">—</span>
+                  <input class="form-control d-inline-block ms-2 minh" style="max-width:520px" id="${titleId}" value="${escapeHtml(r.title)}">
+                </div>
+                <div class="muted small">Separado: Descripción (macro) vs Detalle (items DO).</div>
+              </div>
+              <button class="btn btn-outline-danger btn-sm btn-round" type="button" data-del="${idx}">Eliminar</button>
+            </div>
+
+            <div class="req-body">
+              <div class="row g-3">
+                <div class="col-lg-6">
+                  <label class="form-label">Descripción (macro)</label>
+                  <textarea class="form-control" rows="4" id="${macroId}">${escapeHtml(r.descriptionMacro)}</textarea>
+
+                  <label class="form-label mt-3">Detalle del requerimiento (items DO)</label>
+                  <textarea class="form-control" rows="8" id="${detailId}">${escapeHtml(r.detailItems.join("\n"))}</textarea>
+
+                  <div class="d-flex flex-wrap gap-2 mt-2">
+                    <button class="btn btn-outline-primary btn-sm btn-round" type="button" data-to-criteria="${idx}">Detalle → Criterios</button>
+                    <button class="btn btn-outline-primary btn-sm btn-round" type="button" data-to-subtasks="${idx}">Detalle → Subtareas</button>
+                    <button class="btn btn-outline-secondary btn-sm btn-round" type="button" data-reset-macro="${idx}">Regenerar macro</button>
+                  </div>
+
+                  <div class="soft mt-3">
+                    <div class="fw-bold">Subtareas sugeridas (opcional)</div>
+                    <div class="muted small">Solo si quieres dividir internamente.</div>
+                    <div id="${subId}" class="mt-2"></div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3">
+                  <label class="form-label">Criterios de aceptación</label>
+                  <div class="soft" id="${accId}"></div>
+                  <button class="btn btn-outline-primary btn-sm mt-2 btn-round" type="button" data-addacc="${idx}">+ Agregar</button>
+                </div>
+
+                <div class="col-lg-3">
+                  <label class="form-label">Checklist QA</label>
+                  <div class="soft" id="${qaId}"></div>
+                  <button class="btn btn-outline-primary btn-sm mt-2 btn-round" type="button" data-addqa="${idx}">+ Agregar</button>
+                </div>
+              </div>
+            </div>
+          </div>`;
+            wrap.appendChild(col);
+
+            renderEditableList(accId, r.acceptance, "criterio...");
+            renderEditableList(qaId, r.qa, "ítem QA...");
+            renderSubtasks(subId, r.subtasks);
+
+            setTimeout(() => {
+                document.getElementById(titleId).addEventListener("input", (e) => r.title = e.target.value);
+                document.getElementById(macroId).addEventListener("input", (e) => r.descriptionMacro = e.target.value);
+                document.getElementById(detailId).addEventListener("input", (e) => r.detailItems = toBullets(e.target.value));
+            }, 0);
+        });
+
+        // Delegation
+        wrap.querySelectorAll("[data-del]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const i = parseInt(btn.getAttribute("data-del"), 10);
+                reqDraft.splice(i, 1);
+                const prefix = document.getElementById("reqPrefix").value.trim() || "REQ";
+                reqDraft.forEach((x, k) => x.code = nextReqCode(prefix, k + 1));
+                renderReqCards();
+            });
+        });
+
+        wrap.querySelectorAll("[data-addacc]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const i = parseInt(btn.getAttribute("data-addacc"), 10);
+                reqDraft[i].acceptance.push("");
+                renderReqCards();
+            });
+        });
+
+        wrap.querySelectorAll("[data-addqa]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const i = parseInt(btn.getAttribute("data-addqa"), 10);
+                reqDraft[i].qa.push("");
+                renderReqCards();
+            });
+        });
+
+        wrap.querySelectorAll("[data-to-criteria]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const i = parseInt(btn.getAttribute("data-to-criteria"), 10);
+                const items = reqDraft[i].detailItems.filter(Boolean);
+                if (!items.length) { alert("No hay detalle para convertir."); return; }
+                const newCrit = items.map(x => `Se implementa: ${x}.`);
+                reqDraft[i].acceptance = uniqueKeep(reqDraft[i].acceptance.concat(newCrit));
+                renderReqCards();
+            });
+        });
+
+        wrap.querySelectorAll("[data-to-subtasks]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const i = parseInt(btn.getAttribute("data-to-subtasks"), 10);
+                const items = reqDraft[i].detailItems.filter(Boolean);
+                if (!items.length) { alert("No hay detalle para convertir."); return; }
+                const newSubs = items.map(x => `Task: ${x}`);
+                reqDraft[i].subtasks = uniqueKeep((reqDraft[i].subtasks || []).concat(newSubs));
+                renderReqCards();
+            });
+        });
+
+        wrap.querySelectorAll("[data-reset-macro]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const i = parseInt(btn.getAttribute("data-reset-macro"), 10);
+                reqDraft[i].descriptionMacro = macroDescriptionFromTitle(reqDraft[i].title || "Funcionalidad");
+                renderReqCards();
+            });
+        });
+    }
+
+    // ---------------------------
+    // Botones Wizard
+    // ---------------------------
+    document.getElementById("btnExample").addEventListener("click", () => {
+        document.getElementById("doText").value =
+`Módulo: Gestión de Bienes
+- Registro de bienes (alta/edición)
+- Asignación a trabajador / área
+- Salidas y retornos
+- Historial de movimientos
+- Reportes básicos
+
+Módulo: Comprobantes
+- Generación de comprobante
+- Estados (Borrador/Emitido/Anulado)
+- Impresión / PDF
+- Asociación a registro principal
+
+Seguridad y permisos:
+- Roles por empresa
+- Restricción de acciones
+
+Reportes:
+- Reporte general con filtros
+- Exportación (Excel/PDF) si aplica`;
+    });
+
+    document.getElementById("btnDetect").addEventListener("click", () => {
+        const text = document.getElementById("doText").value || "";
+        if (text.trim().length < 10) { alert("Pega el DO antes de detectar."); return; }
+        detectedModules = parseModulesFromDo(text);
+        renderModules();
+        setStep(2);
+    });
+
+    document.getElementById("btnBack2").addEventListener("click", () => setStep(1));
+
+    document.getElementById("btnBuildReq").addEventListener("click", () => {
+        const prefix = document.getElementById("reqPrefix").value.trim() || "REQ";
+        const autoAction = document.getElementById("autoDetailAction").value;
+        const selected = detectedModules.filter(x => x.selected);
+        if (selected.length === 0) { alert("Selecciona al menos un módulo."); return; }
+
+        reqDraft = selected.map((m, idx) => {
+            const template = guessTemplateByModuleName(m.name);
+            const acceptance = [...(ACCEPTANCE_TEMPLATES[template] || ACCEPTANCE_TEMPLATES.default)];
+            const qa = [...QA_CHECKLIST_BASE];
+            const detailItems = toBullets(m.itemsText);
+            const macro = macroDescriptionFromTitle(m.name);
+
+            let subtasks = [];
+            if (autoAction === "criteria" && detailItems.length) {
+                const newCrit = detailItems.map(x => `Se implementa: ${x}.`);
+                return {
+                    code: nextReqCode(prefix, idx + 1),
+                    title: m.name,
+                    descriptionMacro: macro,
+                    detailItems,
+                    acceptance: uniqueKeep(acceptance.concat(newCrit)),
+                    qa,
+                    subtasks
+                };
+            }
+            if (autoAction === "subtasks" && detailItems.length) {
+                subtasks = detailItems.map(x => `Task: ${x}`);
+            }
+
+            return {
+                code: nextReqCode(prefix, idx + 1),
+                title: m.name,
+                descriptionMacro: macro,
+                detailItems,
+                acceptance,
+                qa,
+                subtasks
+            };
+        });
+
+        renderReqCards();
+        setStep(3);
+    });
+
+    document.getElementById("btnBack3").addEventListener("click", () => setStep(2));
+
+    document.getElementById("btnConfirm").addEventListener("click", () => {
+        const cleaned = reqDraft.map(r => ({
+            codigo: (r.code || "").trim(),
+            titulo: (r.title || "").trim(),
+            descripcion: (r.descriptionMacro || "").trim(),
+            detalleItems: (r.detailItems || []).map(x => (x || "").trim()).filter(Boolean),
+            criteriosAceptacion: (r.acceptance || []).map(x => (x || "").trim()).filter(Boolean),
+            checklistQA: (r.qa || []).map(x => (x || "").trim()).filter(Boolean),
+            subtareasSugeridas: (r.subtasks || []).map(x => (x || "").trim()).filter(Boolean)
+        })).filter(r => r.titulo && r.codigo);
+
+        if (cleaned.length === 0) { alert("No hay REQ válidos."); return; }
+
+        // Contexto (tu BD)
+        const payload = {
+            idPersona: parseInt(document.getElementById("idCliente").value || "0", 10),
+            idProyecto: parseInt(document.getElementById("idProyecto").value || "0", 10),
+            idTipoRequerimiento: parseInt(document.getElementById("ctx_idTipo").value || "0", 10),
+            prioridad: parseInt(document.getElementById("ctx_prioridad").value || "0", 10),
+            solicitante: document.getElementById("ctx_solicitante").value || "Cliente",
+            fechaInicio: document.getElementById("ctx_fInicio").value || null,
+            fechaFin: document.getElementById("ctx_fFin").value || null,
+            requerimientos: cleaned,
+            idAdicional: parseInt(document.getElementById("kt_adicional").value || "0", 10),
+        };
+
+        document.getElementById("jsonOut").value = JSON.stringify(payload, null, 2);
+        setStep(4);
+    });
+
+    document.getElementById("btnBack4").addEventListener("click", () => setStep(3));
+
+    document.getElementById("btnSend").addEventListener("click", async () => {
+        const json = document.getElementById("jsonOut").value;
+        if (!json) { alert("No hay payload."); return; }
+
+        const url = "@Url.Action("GenerarDesdeDOWizard","Requerimiento")";
+        document.getElementById("apiResp").textContent = "Enviando...";
+
+        try {
+            const res = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: json
+            });
+
+            const data = await res.json();
+            document.getElementById("apiResp").textContent = JSON.stringify(data, null, 2);
+
+            if (data.ok) alert(`✅ Creados: ${data.cantidad} requerimientos`);
+            else alert(`❌ Error: ${data.message}`);
+        } catch (e) {
+            document.getElementById("apiResp").textContent = String(e);
+            alert("❌ Error enviando al servidor.");
+        }
+    });
+
+    // Prellenar fechas por defecto (hoy + 7)
+    (function initDates() {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, "0");
+        const dd = String(today.getDate()).padStart(2, "0");
+        const iso = `${yyyy}-${mm}-${dd}`;
+        document.getElementById("ctx_fInicio").value = iso;
+
+        const end = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+        const y2 = end.getFullYear();
+        const m2 = String(end.getMonth() + 1).padStart(2, "0");
+        const d2 = String(end.getDate()).padStart(2, "0");
+        document.getElementById("ctx_fFin").value = `${y2}-${m2}-${d2}`;
+    })();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
