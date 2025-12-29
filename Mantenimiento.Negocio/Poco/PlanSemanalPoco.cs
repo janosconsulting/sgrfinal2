@@ -85,6 +85,7 @@ namespace Mantenimiento.Negocio.Poco
         public byte prioridad { get; set; }
         public decimal? horas { get; set; }
         public int idRequerimientoDetalle { get; set; }
+        public int? idPersonaResponsable { get; set; }
         public int? idObservacion { get; set; }
     }
 

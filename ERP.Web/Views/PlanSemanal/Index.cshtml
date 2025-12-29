@@ -642,7 +642,7 @@
     const ID_PLAN = @idPlanSemana;
     const LUNES_ISO = "@lunes"; // yyyy-MM-dd
     const DAY_NAMES = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
-
+    var toastr;
     // Selección actual
     let selected = { reqId: null, subId: null, subNombre: null, reqCodigo: null, reqNombre: null };
 
@@ -696,9 +696,16 @@
             renderDetailEmpty();
         });
 
-        $("#btnNewCard").on("click", function(){
+        $("#btnNewCard").on("click", function () {
+            console.log(1)
+            if (!selected.reqId) {
+                //toast("Selecciona un SubRequerimiento primero.");
+                toastr.error("Selecciona un Requerimiento primero.");
+                return;
+            }
             if(!selected.subId){
-                toast("Selecciona un SubRequerimiento primero.");
+                //toast("Selecciona un SubRequerimiento primero.");
+                toastr.error("Selecciona un SubRequerimiento primero.");
                 return;
             }
             openTarjetaModal(0, selected.subId, null, 0);

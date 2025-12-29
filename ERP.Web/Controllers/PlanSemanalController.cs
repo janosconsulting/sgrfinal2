@@ -94,7 +94,8 @@ namespace ReyDavid.Web.Controllers
                     estado = "pendiente",
                     prioridad = 2,
                     idRequerimientoDetalle = idRequerimientoDetalle,
-                    idObservacion = idObservacion
+                    idObservacion = idObservacion,
+                    //idPersonaResponsable= tarjeta.idPersonaResponsable
                 };
             }
 
