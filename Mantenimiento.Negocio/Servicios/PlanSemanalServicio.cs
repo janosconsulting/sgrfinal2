@@ -240,6 +240,7 @@ WHERE IdPlanDetalle = @idPlanDetalle;";
                 RequerimientoDetalleObservacion oDT = new Datos.Entidades.RequerimientoDetalleObservacion();
                 oDT.comentario = comentario;
                 oDT.severidad = severidad;
+                oDT.idRequerimientoDetalle = idRequerimientoDetalle;
                 oDT.registradoPor = usuario;
                 oDT.fechaRegistro = DateTime.Now;
                 oDT.estado = estado;

@@ -764,7 +764,33 @@
 
         loadObservaciones(idSubReq, info); // tu función real
     };
+     $(document).on("click", "#tree .subitem *", function (e) {
+         // si haces click en algo dentro, sube al padre subitem
+         const $sub = $(this).closest(".subitem");
+         if ($sub.length) $sub.trigger("click");
+         console.log("CLICK SUBREQ:");
+     });
+     // Delegación: engancha al contenedor padre que SI existe desde el inicio
+     $(document).on("click", "#tree .subitem", function (e) {
 
+         const idSubReq = parseInt($(this).data("subreq") || "0", 10);
+         if (!idSubReq) return;
+
+         const info = {
+             reqCodigo: $(this).data("reqcodigo") || "",
+             reqNombre: $(this).data("reqnombre") || "",
+             subNombre: $(this).data("subnombre") || ""
+         };
+
+         // UI selected
+         $("#tree .subitem").removeClass("selected");
+         $(this).addClass("selected");
+
+         console.log("CLICK SUBREQ:", idSubReq, info);
+
+         // Llamada
+         onSelectSubReq(idSubReq, info);
+     });
 
     $(function () {
         modalTarjeta = new bootstrap.Modal(
@@ -826,32 +852,7 @@
             }
             openTarjetaModal(0, selected.subId, null, 0);
         });
-        $(document).on("click", "#tree .subitem *", function (e) {
-            // si haces click en algo dentro, sube al padre subitem
-            const $sub = $(this).closest(".subitem");
-            if ($sub.length) $sub.trigger("click");
-        });
-        // Delegación: engancha al contenedor padre que SI existe desde el inicio
-        $(document).on("click", "#tree .subitem", function (e) {
-
-            const idSubReq = parseInt($(this).data("subreq") || "0", 10);
-            if (!idSubReq) return;
-
-            const info = {
-                reqCodigo: $(this).data("reqcodigo") || "",
-                reqNombre: $(this).data("reqnombre") || "",
-                subNombre: $(this).data("subnombre") || ""
-            };
-
-            // UI selected
-            $("#tree .subitem").removeClass("selected");
-            $(this).addClass("selected");
-
-            console.log("CLICK SUBREQ:", idSubReq, info);
-
-            // Llamada
-            onSelectSubReq(idSubReq, info);
-        });
+       
 
         $("#btnNewObs").on("click", function () {
 
@@ -1220,7 +1221,15 @@
                     selected.reqCodigo = r.codigo;
                     selected.reqNombre = r.nombre;
                     renderTree();
+
                     renderDetailSelected();
+                    var info= {
+                         reqCodigo: r.codigo,
+                         reqNombre: s.nombre,
+                         subNombre: r.nombre
+                    }
+                     onSelectSubReq(s.idRequerimientoDetalle, info);
+                    console.log(1)
                 });
 
                 $sublist.append($sub);
