@@ -254,10 +254,7 @@
         if (!model.DocumentoOrigen.fechaDocumento) { Swal.fire("Falta fecha", "Seleccione la fecha del documento.", "warning"); return; }
         if (!model.DocumentoOrigen.tipoDoc) { Swal.fire("Falta tipo", "Seleccione el tipo de documento.", "warning"); return; }
         if (!model.DocumentoOrigen.estado) { Swal.fire("Falta estado", "Seleccione el estado.", "warning"); return; }
-        if (!model.DocumentoOrigen.titulo || model.DocumentoOrigen.titulo.trim().length < 3) {
-            Swal.fire("Falta título", "Ingrese un título/asunto válido.", "warning"); return;
-        }
-
+       
         $.ajax({
             type: "POST",
             url: "@Url.Action("Guardar", "DocumentoOrigen")",
