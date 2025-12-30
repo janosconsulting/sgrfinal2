@@ -52,8 +52,8 @@ namespace ReyDavid.Web.Controllers
         {
             if (Session["usuario"] == null)
                 return RedirectToAction("Index", "Login");
-
-           
+            var usuario = Session["usuario"].ToString();
+            ViewBag.usuario = usuario;
             return View();
         }
 
@@ -348,6 +348,53 @@ namespace ReyDavid.Web.Controllers
                 var ok = planSemanalServicio.CerrarObservacion(idObservacion, usuario);
 
                 return Json(new { ok = ok, mensaje = ok ? "Observación cerrada." : "No se pudo cerrar." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ok = false, mensaje = ex.Message });
+            }
+        }
+        public ActionResult DescargarArchivo(int idObservacion)
+        {
+            try
+            {
+                if (Session["usuario"] == null)
+                    return RedirectToAction("Index", "Login");
+
+                var observacion = planSemanalServicio.ObtenerObservacion(idObservacion);
+                if (observacion == null || string.IsNullOrEmpty(observacion.nombreArchivo))
+                {
+                    return HttpNotFound("Archivo no encontrado.");
+                }
+
+                var uploadsPath = Server.MapPath("~/Uploads/");
+                var filePath = Path.Combine(uploadsPath, observacion.nombreArchivo);
+
+                if (!System.IO.File.Exists(filePath))
+                {
+                    return HttpNotFound("Archivo no encontrado en el servidor.");
+                }
+
+                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+                var contentType = MimeMapping.GetMimeMapping(observacion.nombreArchivo);
+
+                return File(fileBytes, contentType, observacion.nombreArchivo);
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(500, "Error al descargar el archivo: " + ex.Message);
+            }
+        }
+        [HttpPost]
+        public ActionResult EliminarObservacion(int idObservacion)
+        {
+            try
+            {
+                if (Session["usuario"] == null)
+                    return RedirectToAction("Index", "Login");
+                ResultadoTransaccion rs = planSemanalServicio.EliminarObservacion(idObservacion);
+               
+                return Json(new { ok = rs.codigo == -1 ? false: true, mensaje = rs.mensaje});
             }
             catch (Exception ex)
             {

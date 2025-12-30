@@ -27,6 +27,7 @@ namespace Mantenimiento.Negocio.Contratos.Servicios
         List<sp_Adicional_Listar> ListarAdicionales();
         List<sp_Requerimiento_ListarPorAdicional> ListarRequerimientosPorAdicional(int idAdicional);
         List<sp_SubRequerimiento_ListarPorRequerimiento> ListarSubRequerimientosPorRequerimiento(int idRequerimiento);
+        ResultadoTransaccion EliminarObservacion(int idObservacion);
 
     }
 }

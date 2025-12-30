@@ -145,38 +145,63 @@ namespace Mantenimiento.Negocio.Servicios
 
         public bool GuardarTarjeta(PlanSemanaDetalle tarjeta, string usuario)
         {
-            try
+            using (var connection = new SqlConnection(ConnectionConfig.ConnectionString))
             {
-                using (var connection = new SqlConnection(ConnectionConfig.ConnectionString))
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
                 {
-                    connection.Open();
-
-                    // Normaliza
-                    if (string.IsNullOrWhiteSpace(tarjeta.estado)) tarjeta.estado = "pendiente";
-                    if (tarjeta.prioridad <= 0) tarjeta.prioridad = 2;
-
-                    // Si tienes [Table("PlanSemanaDetalle")] puedes usar Contrib
-                    if (tarjeta.idPlanDetalle == 0)
+                    try
                     {
-                        tarjeta.fechaRegistro = DateTime.Now;
-                        connection.Insert(tarjeta);
+                        // Normaliza
+                        if (string.IsNullOrWhiteSpace(tarjeta.estado))
+                            tarjeta.estado = "pendiente";
+
+                        if (tarjeta.prioridad <= 0)
+                            tarjeta.prioridad = 2;
+
+                        if (tarjeta.idPlanDetalle == 0)
+                        {
+                            tarjeta.fechaRegistro = DateTime.Now;
+
+                            connection.Insert(tarjeta, transaction);
+
+                            if (tarjeta.idObservacion > 0)
+                            {
+                                var rd = connection.Get<RequerimientoDetalleObservacion>(
+                                    tarjeta.idObservacion, transaction);
+
+                                if (rd != null)
+                                {
+                                    rd.esAsociado = 1;
+                                    connection.Update(rd, transaction);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var oPn = connection.Get<PlanSemanaDetalle>(
+                                tarjeta.idPlanDetalle, transaction);
+
+                            tarjeta.fechaRegistro = oPn.fechaRegistro;
+                            tarjeta.fechaActualizacion = DateTime.Now;
+
+                            connection.Update(tarjeta, transaction);
+                        }
+
+                        // ✅ CONFIRMAR TRANSACCIÓN
+                        transaction.Commit();
                         return true;
                     }
-                    else
+                    catch
                     {
-                        PlanSemanaDetalle oPn = connection.Get<PlanSemanaDetalle>(tarjeta.idPlanDetalle);
-                        tarjeta.fechaRegistro = oPn.fechaRegistro;
-                        tarjeta.fechaActualizacion = DateTime.Now;
-                        connection.Update(tarjeta);
-                        return true;
+                        // ❌ REVERTIR TODO
+                        transaction.Rollback();
+                        throw;
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al guardar tarjeta.", ex);
-            }
         }
+
 
         public bool MoverTarjeta(int idPlanDetalle, byte dia, string usuario)
         {
@@ -185,10 +210,10 @@ namespace Mantenimiento.Negocio.Servicios
                 using (var connection = new SqlConnection(ConnectionConfig.ConnectionString))
                 {
                     var sql = @"
-UPDATE dbo.PlanSemanaDetalle
-SET Dia = @dia,
-    FechaActualizacion = SYSUTCDATETIME()
-WHERE IdPlanDetalle = @idPlanDetalle;";
+                        UPDATE dbo.PlanSemanaDetalle
+                        SET Dia = @dia,
+                            FechaActualizacion = SYSUTCDATETIME()
+                        WHERE IdPlanDetalle = @idPlanDetalle;";
 
                     var rows = connection.Execute(sql, new { idPlanDetalle, dia });
                     return rows > 0;
@@ -261,7 +286,7 @@ WHERE IdPlanDetalle = @idPlanDetalle;";
                 RequerimientoDetalleObservacion rn = cn.Get<RequerimientoDetalleObservacion>(idObservacion);
                 if(rn != null)
                 {
-                    rn.estado = "cerrada";
+                    rn.estado = "Cerrada";
                     rn.cerradoPor = usuario;
                     rn.fechaCierre = DateTime.Now;
                     cn.Update(rn);
@@ -318,6 +343,32 @@ WHERE IdPlanDetalle = @idPlanDetalle;";
                     commandType: CommandType.StoredProcedure
                 );
                 return res.AsList();
+            }
+        }
+        public ResultadoTransaccion EliminarObservacion(int idObservacion)
+        {
+            using (var cn = new SqlConnection(ConnectionConfig.ConnectionString))
+            {
+                ResultadoTransaccion rs = new ResultadoTransaccion();
+                RequerimientoDetalleObservacion rn = cn.Get<RequerimientoDetalleObservacion>(idObservacion);
+                if (rn != null)
+                {
+                    if(rn.esAsociado == 1)
+                    {
+                        rs.mensaje = "No puede eliminar este registro por que esta asociada un registro de Detalle Requerimiento";
+                        rs.codigo = -1;
+
+                    }
+                    else
+                    {
+                        rn.estado = "Eliminado";
+                        cn.Update(rn);
+                        rs.mensaje = "Observación eliminada";
+                        rs.codigo = 1;
+
+                    }
+                }
+                return rs;
             }
         }
     }

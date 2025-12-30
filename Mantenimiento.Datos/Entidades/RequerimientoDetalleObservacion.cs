@@ -33,8 +33,8 @@ namespace Mantenimiento.Datos.Entidades
         public string cerradoPor { get; set; }
 
         public string nombreArchivo { get; set; }
-
         public string extension { get; set; }
         public int? ObservadorPor {  get; set; }
+        public int? esAsociado {  get; set; }
     }
 }

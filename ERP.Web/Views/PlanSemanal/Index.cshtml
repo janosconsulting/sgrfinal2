@@ -888,7 +888,11 @@
                     <!-- estado -->
                     <div class="col-md-4">
                         <label class="form-label fw-bold">Estado</label>
-                        <input type="text" class="form-control" id="obs_estado" value="abierta" readonly />
+                        <select class="form-select" id="obs_estado">
+                            <option value="Abierta">Abierta</option>
+                            <option value="En Progreso">En Progreso</option>
+                            <option value="Resuelto">Resuelto</option>
+                        </select>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold">Observado por</label>
@@ -1030,7 +1034,8 @@
     // ====== Datos "como antes" (ViewBag) ======
     const ID_PLAN = @idPlanSemana;
     const LUNES_ISO = "@lunes"; // yyyy-MM-dd
-    const DAY_NAMES = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
+    const DAY_NAMES = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+    const DOWNLOAD_URL = '@Url.Action("DescargarArchivo", "PlanSemanal")';
     var toastr;
     // Selección actual
     let selected = { reqId: null, subId: null, subNombre: null, reqCodigo: null, reqNombre: null };
@@ -1079,12 +1084,17 @@
          // Llamada
          onSelectSubReq(idSubReq, info);
      });
-
+    function initSelect2() {
+        $('[data-control="select2"]').select2({
+            width: '100%'
+        });
+    }
     $(function () {
         modalTarjeta = new bootstrap.Modal(
             document.getElementById('kt_modal_tarjeta'),
             { backdrop: 'static' }
         );
+        initSelect2()
         initFiltroTrabajador();
         $("#kt_modal_tarjeta_save").on("click", function () {
             const $form = $("#kt_modal_tarjeta_body").find("form");
@@ -1102,6 +1112,7 @@
                         toastr.success(res.mensaje || "Guardado correctamente");
                         modalTarjeta.hide();
                         loadCards();
+                        loadObservaciones(CURRENT_SUBREQ_ID, CURRENT_SUBREQ_INFO);
                     } else {
                         toastr.error(res?.mensaje || "No se pudo guardar");
                     }
@@ -1151,6 +1162,7 @@
             // Limpieza del formulario
             $("#obs_comentario").val("");
             $("#obs_severidad").val("media");
+            $("#obs_estado").val("Abierta").trigger("change");
 
             // Título dinámico (opcional, pro)
             if (CURRENT_SUBREQ_INFO) {
@@ -1188,6 +1200,10 @@
             $('#cbo_observadopor').select2({
                   placeholder: 'Seleccione cliente',
                   width: '100%'
+            });
+            $('#obs_estado').select2({
+                placeholder: 'Seleccione cliente',
+                width: '100%'
             });
             $("#obs_registradoPor").val("@ViewBag.usuario")
         });
@@ -1277,7 +1293,7 @@
       }
 
       const items = lista.map(o => {
-        const badge = o.estado === "cerrada" ? "badge-light-success" : "badge-light-warning";
+          const badge = o.estado === "Cerrada" ? "badge-light-success" : "badge-light-warning";
         const sev = (o.severidad || "").toLowerCase();
         const sevBadge = sev === "alta" ? "badge-light-danger" : sev === "baja" ? "badge-light" : "badge-light-primary";
 
@@ -1293,6 +1309,11 @@
               <div class="d-flex flex-wrap gap-2 align-items-center">
                 <span class="badge ${badge}">${esc(o.estado)}</span>
                 <span class="badge ${sevBadge}">sev: ${esc(o.severidad || "media")}</span>
+                ${o.esAsociado == 1 ? `
+                    <span class="badge badge-light-success ms-2">
+                    <i class="bi bi-check-circle"></i> Asociado
+                    </span>` : ''
+                }
                 <span class="text-muted fs-8">por ${esc(o.registradoPor || "-")} · ${fmtDate(o.fechaRegistro)}</span>
               </div>
 
@@ -1300,14 +1321,21 @@
 
               ${o.nombreArchivo ? `
                 <div class="mt-2">
-                  <a href="#" class="btn btn-sm btn-light"><i class="bi bi-paperclip"></i> ${esc(o.nombreArchivo)}</a>
+                <a href="${DOWNLOAD_URL}?idObservacion=${o.idObservacion}" target="_blank" class="btn btn-sm btn-light"><i class="bi bi-paperclip"></i> ${esc(o.nombreArchivo)}</a>
                 </div>` : ``}
 
               <div class="mt-3">
                 <button class="btn btn-sm btn-light-primary" onclick="editarObs(${o.idObservacion}, ${idSubReq})">
                   <i class="bi bi-pencil"></i> Editar
                 </button>
-                ${o.estado !== "cerrada" ? `
+                 ${o.esAsociado == 0 ? `
+                  <button class="btn btn-sm btn-light-info"
+                          onclick="asociarObs(${o.idObservacion}, ${idSubReq})">
+                    <i class="bi bi-people"></i> Asociar
+                  </button>` : ``}
+
+
+                ${o.estado !== "Cerrada" ? `
                 <button class="btn btn-sm btn-light-success" onclick="cerrarObs(${o.idObservacion}, ${idSubReq})">
                   <i class="bi bi-check2-circle"></i> Cerrar
                 </button>` : ``}
@@ -1360,21 +1388,33 @@
                 placeholder: 'Seleccione cliente',
                 width: '100%'
             });
+             $('#obs_estado').select2({
+                 placeholder: 'Seleccione cliente',
+                 width: '100%'
+             });
            // Populate modal
            $("#obs_subreq").val(idSubReq);
            $("#obs_comentario").val(obs.comentario || "");
            $("#obs_severidad").val(obs.severidad).trigger("change");
-           $("#obs_estado").val(obs.estado || "abierta");
+
            $("#cbo_observadopor").val(obs.ObservadorPor || "1").trigger("change");
            $("#obs_registradoPor").val(obs.registradoPor || "");
            $("#obs_fechaRegistro").val(parseNetDate(obs.fechaRegistro));
            $("#obs_fechaCierre").val(parseNetDate(obs.fechaCierre));
            $("#obs_cerradoPor").val(obs.cerradoPor || "");
            $("#obs_idObservacion").val(idObs);
-
+             // Si el estado es "Cerrada", agregar la opción y deshabilitar el select
+             if (obs.estado === "Cerrada") {
+                 $("#obs_estado").append('<option value="Cerrada" selected >Cerrada</option>');
+                 $("#obs_estado").prop('disabled', true);
+             } else {
+                 $("#obs_estado option[value='Cerrada']").remove();
+                 $("#obs_estado").val(obs.estado || "Abierta").trigger("change");
+                 $("#obs_estado").prop('disabled', false);
+             }
             // Cargar información del archivo adjunto si existe
            if (obs.nombreArchivo && obs.extension) {
-               cargarArchivoAdjunto(obs.nombreArchivo, obs.extension);
+               cargarArchivoAdjunto(obs.nombreArchivo, obs.extension, idObs);
            } else {
                // Limpiar la vista previa si no hay archivo
                limpiarCamposArchivo();
@@ -1478,59 +1518,80 @@
     function limpiarCamposArchivo() {
         // Limpiar el input de archivo
         $("#obs_file").val("");
-        
+
         // Limpiar campos ocultos de archivo
         $("#obs_nombreArchivo").val("");
         $("#obs_extension").val("");
         $("#obs_fileSize").val("");
-        
+
         // Limpiar la vista previa del archivo
         const filePreview = document.getElementById('file-preview-obs');
         const noFileMessage = document.getElementById('no-file-message-obs');
-        
+
         if (filePreview) {
             filePreview.style.display = 'none';
         }
         if (noFileMessage) {
             noFileMessage.style.display = 'none';
         }
-        
+
         // Limpiar la variable global de archivo actual
         if (typeof window.clearObservationFile === 'function') {
             window.clearObservationFile();
         }
     }
      // Función para cargar archivo adjunto al editar observación
-    function cargarArchivoAdjunto(nombreArchivo, extension) {
-      
-        
+    function cargarArchivoAdjunto(nombreArchivo, extension, idObs = 0) {
+
+
         // Mostrar la vista previa
         const filePreview = document.getElementById('file-preview-obs');
         const noFileMessage = document.getElementById('no-file-message-obs');
         const previewName = document.getElementById('preview-name-obs');
         const previewSize = document.getElementById('preview-size-obs');
         const fileIcon = filePreview.querySelector('.file-icon i');
-        
+
         // Mostrar toda la sección del adjunto
         filePreview.style.display = 'block';
         noFileMessage.style.display = 'none';
-        
+
         // Actualizar información del archivo
         previewName.textContent = nombreArchivo;
         previewSize.textContent = 'Archivo adjunto'; // No tenemos el tamaño real
-        
+
         // Actualizar icono según el tipo de archivo
         const iconClass = getFileIconClassFromExtension(extension);
         fileIcon.className = `fas ${iconClass}`;
-        
+
         // Actualizar campos ocultos
         $("#obs_nombreArchivo").val(nombreArchivo);
         $("#obs_extension").val(extension);
         $("#obs_fileSize").val('0');
+
+
+        // Rebuild actions
+        const fileActions = document.querySelector('#file-preview-obs .file-actions');
+        fileActions.innerHTML = '';
+
+        if (idObs > 0) {
+            const downloadBtn = document.createElement('button');
+            downloadBtn.className = 'btn btn-sm btn-primary';
+            downloadBtn.innerHTML = '<i class="fas fa-download"></i> Descargar';
+            downloadBtn.onclick = () => window.open('@Url.Action("DescargarArchivo", "PlanSemanal")?idObservacion=' + idObs, '_blank');
+            fileActions.appendChild(downloadBtn);
+        }
+
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'btn btn-sm btn-remove';
+        removeBtn.id = 'remove-file-btn-obs';
+        removeBtn.title = 'Eliminar archivo';
+        removeBtn.innerHTML = '<i class="fas fa-trash" style="color: white"></i>';
+        removeBtn.onclick = window.removeFile;
+        fileActions.appendChild(removeBtn);
     }
-    
-   
-    
+
+
+
     // Función para obtener la clase del icono según la extensión
     function getFileIconClassFromExtension(extension) {
         const iconMap = {
@@ -1870,7 +1931,11 @@
           </div>
         `);
     }
+    function asociarObs(idObs, idSubReq) {
+        // Abrir el modal de tarjeta enviando el idObservacion
+        openTarjetaModal(0, idSubReq, idObs, 0);
 
+    }
     function openTarjetaModal(idPlanDetalle, idRequerimientoDetalle, idObservacion, dia) {
         $.get("@Url.Action("FormTarjeta","PlanSemanal")", {
             idPlanSemana: ID_PLAN,
@@ -1886,6 +1951,7 @@
             );
 
             $("#kt_modal_tarjeta_body").html(html);
+            $("#hdAsociado").val(idObservacion)
             initTarjetaCombos();
             initTrabajadorCombo();
 
@@ -1901,6 +1967,10 @@
 
         const $req = $("#ddlRequerimiento");
         const $sub = $("#ddlSubRequerimiento");
+
+        const $dia = $("#dia");
+        const $prioridad = $("#prioridad");
+        const $estado = $("#estado");
 
         // Preselección (viene del hidden)
         const subSelected = parseInt($("#hdSubSelected").val() || "0", 10);
@@ -1941,9 +2011,15 @@
                 // Re-init select2 (Metronic)
                 if ($req.data("select2")) $req.select2("destroy");
                 if ($sub.data("select2")) $sub.select2("destroy");
+                if ($dia.data("select2")) $dia.select2("destroy");
+                if ($estado.data("select2")) $estado.select2("destroy");
+                if ($prioridad.data("select2")) $prioridad.select2("destroy");
 
                 $req.select2({ dropdownParent: $("#kt_modal_tarjeta") });
                 $sub.select2({ dropdownParent: $("#kt_modal_tarjeta") });
+                $dia.select2({ dropdownParent: $("#kt_modal_tarjeta") });
+                $estado.select2({ dropdownParent: $("#kt_modal_tarjeta") });
+                $prioridad.select2({ dropdownParent: $("#kt_modal_tarjeta") });
 
             })
             .fail(function () {
@@ -2155,6 +2231,8 @@
                 clearHiddenFields();
                 showStatusMessage('Archivo eliminado', 'success');
             }
+            // Expose to global scope
+            window.removeFile = removeFile;
 
             function renderFilePreview() {
                 if (currentFile) {

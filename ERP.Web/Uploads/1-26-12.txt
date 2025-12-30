@@ -1,0 +1,96 @@
+USE [bdKedro2]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ListarTomaInventarioGeneral]    Script Date: 26/12/2025 10:26:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[sp_ListarTomaInventarioGeneral]
+ @texto VARCHAR(250) = 'SI',
+ @idAlmacen INT = -1,   -- -1 = todos
+ @idEmpresa INT = 65
+AS 
+BEGIN
+	IF OBJECT_ID('tempdb..#ListaProductos') IS NOT NULL DROP TABLE #ListaProductos;
+
+	CREATE TABLE #ListaProductos (
+		idProducto INT,
+		codigo VARCHAR(50),
+		nombre VARCHAR(250),
+		idEmpresa INT,
+		idUnidadMedida INT,
+		unidad VARCHAR(250),
+		cantidad DECIMAL(18,2),
+		precio  DECIMAL(18,2),
+		tipoProducto VARCHAR(100)
+	);
+	-- 1: LISTA DE PRODUCTOS - INFORMACION
+	INSERT INTO #ListaProductos
+	SELECT TOP 20 
+	p.idProducto, 
+	p.codigo, 
+	p.nombre, 
+	p.idEmpresa, 
+	p.idUnidadMedida,
+	um.nombre as unidad,
+	s.cantidad,
+	p.precioCompra as precio,
+	  CASE
+        WHEN ISNULL(p.aceptaSerie,0) = 0 AND ISNULL(p.aceptaLote,0) = 0 THEN 'SIMPLE'
+        WHEN ISNULL(p.aceptaSerie,0) = 0 AND ISNULL(p.aceptaLote,0) = 1 THEN 'LOTE'
+        WHEN ISNULL(p.aceptaSerie,0) = 1 AND ISNULL(p.aceptaLote,0) = 0 THEN 'SERIE'
+    END AS tipoProducto
+	FROM MAN.Producto p
+	INNER JOIN MAN.UnidadMedida um
+		ON um.idUnidadMedida = p.idUnidadMedida
+	INNER JOIN MAN.Saldo s
+		ON s.idProducto = p.idProducto
+	WHERE
+		(
+			@idAlmacen = -1 OR s.idAlmacen = @idAlmacen
+		)
+		AND p.idEmpresa = @idEmpresa
+		AND 
+		(
+			p.codigo LIKE '%' + @texto + '%' OR p.nombre LIKE '%' + @texto + '%'
+		)
+		AND p.idEstado != 2
+	ORDER BY
+		p.nombre;
+
+
+	-- luego reutilizas
+	SELECT *
+	FROM #ListaProductos
+	
+	-- 2: LISTA ADICIONAL POR PRODUCTO (con idProducto)
+	SELECT  
+		dna.*,
+		dni.idProducto
+	FROM OPE.DetalleNotaIngresoAdicional dna
+	INNER JOIN OPE.DetalleNotaIngreso dni
+		ON dna.idDetalleNotaIngreso = dni.idDetalleNotaIngreso
+	INNER JOIN #ListaProductos lp
+		ON lp.idProducto = dni.idProducto
+		WHERE ISNULL(dna.consumido, 0) <> ISNULL(dna.cantidad, 0);
+
+	
+	-- al final
+	DROP TABLE #ListaProductos;
+
+END
+-- 185631 EN DNIA
+
+SELECT * FROM OPE.DETALLENOTAINGRESO WHERE IDPRODUCTO = 185631 
+SELECT * FROM OPE.DetalleNotaIngresoAdicional WHERE idDetalleNotaIngreso = 143834 
+UPDATE OPE.DetalleNotaIngresoAdicional SET idEstado = 1 WHERE idDetalleNotaIngreso = 143834 
+---select * from man.producto  where idEmpresa = 65 
+
+select * from man.saldo where idproducto = 185643 
+
+SELECT * FROM OPE.NOTAINGRESO ORDER BY 1 DESC 
+
+
+
+SELECT * FROM OPE.DETALLENOTAINGRESO  WHERE IDNOTAINGRESO = 75494
+SELECT * FROM OPE.DETALLENOTAINGRESO  ORDER BY 1 DESC 

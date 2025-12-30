@@ -4,6 +4,8 @@
     var usuario = (string)ViewBag.usuario ?? "";
 }
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <div class="container-fluid py-4">
 
     <!-- TOPBAR -->
@@ -141,8 +143,8 @@
 
                         <!-- LISTA OBS -->
                         <div class="col-12 col-md-6">
-                            <div class="border rounded-4 p-3" style="background:#f8fbff; border-style:dashed; max-height:54vh; overflow:auto;">
-                                <div id="obsEmpty" class="text-muted small">
+                            <div class="border rounded-4 p-3" style="background:#f8fbff; border-style:dashed; min-height:54vh; overflow:auto;">
+                                <div id="obsEmpty" class="text-muted small text-center">
                                     <i class="bi bi-inboxes me-2"></i>
                                     Selecciona un Detalle (SubReq) para ver observaciones.
                                 </div>
@@ -152,7 +154,13 @@
 
                         <!-- FORM OBS -->
                         <div class="col-12 col-md-6">
-                            <div class="border rounded-4 p-3" style="max-height:54vh; overflow:auto;">
+                            <div id="obsFormPlaceholder" class="border rounded-4 p-3 d-flex align-items-center justify-content-center" style="min-height:54vh; background:#f8fbff; border-style:dashed;">
+                                <div class="text-muted small text-center">
+                                    <i class="bi bi-hourglass me-2"></i>
+                                    Esperando selección de detalle de requerimiento...
+                                </div>
+                            </div>
+                            <div id="obsFormContainer" class="border rounded-4 p-3" style="max-height:54vh; overflow:auto; display:none;">
                                 @Html.AntiForgeryToken()
 
                                 <input type="hidden" id="obs_idRequerimientoDetalle" value="0" />
@@ -170,7 +178,7 @@
                                 <textarea class="form-control mb-3" rows="6" id="obs_comentario" placeholder="Describe la observación..."></textarea>
 
                                 <div class="row g-3 mb-3">
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <label class="form-label fw-bold">Severidad</label>
                                         <select class="form-select" id="obs_severidad">
                                             <option value="baja">baja</option>
@@ -178,13 +186,20 @@
                                             <option value="alta">alta</option>
                                         </select>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <label class="form-label fw-bold">Estado</label>
                                         <select class="form-select" id="obs_estado">
-                                            <option value="abierta" selected>abierta</option>
-                                            <option value="enprogreso">enprogreso</option>
-                                            <option value="resuelta">resuelta</option>
-                                            <option value="cerrada">cerrada</option>
+                                            <option value="Abierta">Abierta</option>
+                                            <option value="En Progreso">En Progreso</option>
+                                            <option value="Resuelta">Resuelta</option>
+                                            <option value="Cerrada">Cerrada</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label fw-bold">Observado por</label>
+                                        <select class="form-select" id="cbo_observadopor">
+                                            <option value="1">Interna</option>
+                                            <option value="2">Cliente</option>
                                         </select>
                                     </div>
                                 </div>
@@ -211,16 +226,57 @@
                                     </div>
                                 </div>
 
-                                <div class="row g-3 mb-3">
-                                    <div class="col-6">
+                                <div class="row g-3 mb-3" id="adjunto-section">
+                                    <div class="col-12">
                                         <label class="form-label fw-bold">Adjunto (opcional)</label>
-                                        <input type="file" class="form-control" id="obs_file" />
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="form-label fw-bold">Nombre archivo</label>
-                                        <input class="form-control" id="obs_nombreArchivo" readonly />
+
+                                        <!-- Área de arrastrar y soltar -->
+                                        <div id="drop-area-obs" class="drop-area border-2 border-dashed border-primary text-center p-3 mb-3" style="cursor: pointer;">
+                                            <div class="drop-area-content">
+                                                <i class="fas fa-cloud-upload-alt fa-2x text-primary mb-2"></i>
+                                                <p class="mb-0">Arrastra y suelta un archivo aquí</p>
+                                                <input type="file" id="obs_file" class="d-none">
+                                            </div>
+                                        </div>
+
+                                        <!-- Vista previa del archivo -->
+                                        <div id="file-preview-obs" class="file-preview" style="display: none;">
+                                            <div class="file-item">
+                                                <div class="file-info">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="file-icon">
+                                                            <i class="fas fa-file"></i>
+                                                        </div>
+                                                        <div class="file-details">
+                                                            <div class="file-name" id="preview-name-obs">Nombre del archivo</div>
+                                                            <div class="file-size" id="preview-size-obs">Tamaño del archivo</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="file-actions">
+                                                        <button class="btn btn-sm btn-download" id="download-file-btn-obs" title="Descargar archivo" style="display: none; ">
+                                                            <i class="fas fa-download" style="color: white"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-remove" id="remove-file-btn-obs" title="Eliminar archivo">
+                                                            <i class="fas fa-trash" style="color: white"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Mensaje cuando no hay archivo -->
+                                        <div id="no-file-message-obs" class="text-center text-muted py-3" style="display: none;">
+                                            <i class="fas fa-inbox fa-2x mb-2"></i>
+                                            <p class="mb-0">No hay archivo seleccionado</p>
+                                        </div>
+
                                     </div>
                                 </div>
+
+                                <!-- Campos ocultos para almacenar información del archivo -->
+                                <input type="hidden" id="obs_nombreArchivo" />
+                                <input type="hidden" id="obs_extension" />
+                                <input type="hidden" id="obs_fileSize" />
 
                                 <div class="d-flex gap-2 mt-2">
                                     <button class="btn btn-light w-50" type="button" id="btnObsReset">
@@ -245,8 +301,198 @@
         </div>
 
     </div>
+    <!-- Toast para notificaciones -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="toastNotification" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-primary text-white">
+                <i class="bi bi-info-circle me-2"></i>
+                <strong class="me-auto">Notificación</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">
+                Mensaje aquí
+            </div>
+        </div>
+    </div>
 </div>
+<style>
+    /* ==========================================
+       ESTILOS GENERALES
+       ========================================== */
+
+    /* Estilos para el área de arrastrar y soltar */
+    .drop-area {
+        transition: all 0.3s ease;
+        cursor: pointer;
+        min-height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .drop-area:hover {
+            background-color: #f8f9fa;
+            border-color: #007bff;
+        }
+
+        .drop-area.active {
+            background-color: #e3f2fd;
+            border-color: #0056b3;
+            transform: scale(1.02);
+        }
+
+    .drop-area-content {
+        text-align: center;
+    }
+
+    /* ==========================================
+       SECCIÓN DEL ADJUNTO - COMPONENTE DE SUBIDA DE ARCHIVOS
+       ========================================== */
+
+    /* Estilos para la vista previa del archivo */
+    .file-preview {
+        margin-bottom: 20px;
+    }
+
+    .file-item {
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 12px;
+        transition: all 0.3s ease;
+        animation: fadeIn 0.3s ease-in;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .file-item:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .file-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .file-icon {
+        font-size: 20px;
+        margin-right: 12px;
+        color: #6c757d;
+    }
+
+    .file-details {
+        flex-grow: 1;
+    }
+
+    .file-name {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 3px;
+        font-size: 0.9rem;
+    }
+
+    .file-size {
+        font-size: 0.8rem;
+        color: #6c757d;
+    }
+
+    .file-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn-download {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+        transition: all 0.2s ease;
+        padding: 4px 8px;
+        font-size: 0.8rem;
+        margin-right: 4px;
+    }
+
+    .btn-download:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+        transform: scale(1.05);
+    }
+
+    .btn-download:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .btn-remove {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: white;
+        transition: all 0.2s ease;
+        padding: 4px 8px;
+        font-size: 0.8rem;
+    }
+
+        .btn-remove:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+            transform: scale(1.05);
+        }
+
+        .btn-remove:focus {
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+        }
+
+    /* Mensajes de estado */
+    .status-message {
+        margin-top: 10px;
+        padding: 8px 12px;
+        border-radius: 4px;
+        display: none;
+        font-size: 0.85rem;
+    }
+
+    .status-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .status-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    /* Ajustes para el modal */
+    .modal .drop-area {
+        min-height: 100px;
+    }
+
+    .modal .file-item {
+        padding: 10px;
+    }
+
+    .modal .file-name {
+        font-size: 0.85rem;
+    }
+
+    .modal .file-size {
+        font-size: 0.75rem;
+    }
+</style>
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @section Scripts{
     <script>
     // ===================== URLS (MVC) =====================
@@ -257,7 +503,9 @@
         obsBySub: '@Url.Action("ListarObservaciones","PlanSemanal")',
         obsGet: '@Url.Action("ObtenerObservacion","PlanSemanal")',
         obsSave: '@Url.Action("GuardarObservacion","PlanSemanal")',
-        obsClose: '@Url.Action("CerrarObservacion","PlanSemanal")'
+        obsClose: '@Url.Action("CerrarObservacion","PlanSemanal")',
+        obsDelete: '@Url.Action("EliminarObservacion","PlanSemanal")',
+        obsDownload: '@Url.Action("DescargarArchivo","PlanSemanal")'
     };
 
     // ===================== STATE =====================
@@ -268,7 +516,15 @@
         idObs: 0,
         q: '',
         estado: 'todos'
-    };
+        };
+    var toastr;
+    function parseDate(dateStr) {
+        if (dateStr && typeof dateStr === 'string' && dateStr.startsWith('/Date(')) {
+            const ticks = parseInt(dateStr.substring(6));
+            return new Date(ticks);
+        }
+        return new Date(dateStr);
+        }
 
     // ===================== HELPERS =====================
     function esc(s){
@@ -283,6 +539,12 @@
     function setBadges(){
         $('#tagEstado').text($('#obs_estado').val() || 'abierta');
         $('#tagSev').text($('#obs_severidad').val() || 'media');
+    }
+    function showToast(message, type = 'primary') {
+        $('#toastMessage').text(message);
+        $('#toastNotification .toast-header').removeClass('bg-primary bg-success bg-danger').addClass(`bg-${type}`);
+        const toast = new bootstrap.Toast($('#toastNotification')[0]);
+        toast.show();
     }
 
     // ===================== LOAD TOP =====================
@@ -407,16 +669,24 @@
     // ===================== OBSERVACIONES =====================
     function resetObsAll(){
         S.idObs = 0;
+
         $('#btnNewObs').prop('disabled', true);
         $('#obs_idRequerimientoDetalle').val(0);
         $('#obsList').html('');
         $('#obsEmpty').show().html(`<i class="bi bi-inboxes me-2"></i>Selecciona un Detalle (SubReq) para ver observaciones.`);
+        $('#obsFormContainer').hide();
+        $('#obsFormPlaceholder').show();
+        $('#obsFormPlaceholder').addClass("d-flex");
+
         resetObsForm();
     }
 
     function onSelectSubReq(idRequerimientoDetalle){
         $('#btnNewObs').prop('disabled', false);
         $('#obs_idRequerimientoDetalle').val(idRequerimientoDetalle);
+        $('#obsFormPlaceholder').hide();
+        $('#obsFormPlaceholder').removeClass("d-flex");
+        $('#obsFormContainer').show();
         resetObsForm();
         listarObservaciones();
     }
@@ -451,8 +721,12 @@
                                 <div class="d-flex gap-2">
                                     <span class="badge ${estado==='cerrada'?'bg-success':'bg-warning text-dark'}">${esc(estado)}</span>
                                     <span class="badge bg-info text-dark">${esc(sev)}</span>
+                                      ${o.esAsociado == 1 ? `
+                                       <span class="badge badge-light-success ms-2">
+                                         <i class="bi bi-check-circle mx-2"></i>   Asociado
+                                       </span>` : ''}
                                 </div>
-                                <div class="text-muted small">${esc((o.fechaRegistro||'').toString().substring(0,16))}</div>
+                                <div class="text-muted small">${parseDate(o.fechaRegistro).toLocaleString('es-ES')}</div>
                             </div>
                             <div class="fw-bold">${esc(short)}</div>
                             <div class="text-muted small mt-1">${esc(o.registradoPor||'')}</div>
@@ -474,23 +748,37 @@
 
     function resetObsForm(){
         S.idObs = 0;
+        $('#obs_severidad').select2({
+            placeholder: 'Seleccione cliente',
+            width: '100%'
+        });
+        $('#cbo_observadopor').select2({
+            placeholder: 'Seleccione cliente',
+            width: '100%'
+        });
+        $('#obs_estado').select2({
+            placeholder: 'Seleccione cliente',
+            width: '100%'
+        });
         $('#btnDelObs').prop('disabled', true);
-
+        $('.obs-item').removeClass('border border-primary');
         $('#obs_idObservacion').val(0);
         $('#obsFormTitle').text('Obs (nueva)');
         $('#obs_comentario').val('');
         $('#obs_severidad').val('media');
-        $('#obs_estado').val('abierta');
+        $('#obs_estado').val('Abierta');
 
         $('#obs_registradoPor').val('@usuario');
-        $('#obs_fechaRegistro').val(nowStr());
+        var fecha = new Date();
+        var fecha1 = parseDate(fecha).toLocaleDateString('es-ES')
+        $('#obs_fechaRegistro').val(fecha1);
 
         $('#obs_cerradoPor').val('');
         $('#obs_fechaCierre').val('');
 
         $('#obs_nombreArchivo').val('');
         $('#obs_file').val('');
-
+        window.clearObservationFile();
         setBadges();
     }
 
@@ -500,54 +788,78 @@
                 if(!r || !r.ok) return alert(r?.error || 'No se pudo obtener la observación');
 
                 const o = r.observacion || {};
+                $('#obs_severidad').select2({
+                    placeholder: 'Seleccione cliente',
+                    width: '100%'
+                });
+                $('#cbo_observadopor').select2({
+                    placeholder: 'Seleccione cliente',
+                    width: '100%'
+                });
+                $('#obs_estado').select2({
+                    placeholder: 'Seleccione cliente',
+                    width: '100%'
+                });
                 $('#obs_idObservacion').val(o.idObservacion || idObservacion);
                 $('#obsFormTitle').text('Obs #' + (o.idObservacion || idObservacion));
 
                 $('#obs_comentario').val(o.comentario || '');
                 $('#obs_severidad').val((o.severidad || 'media').toLowerCase());
-                $('#obs_estado').val((o.estado || 'abierta').toLowerCase());
-
+                $('#obs_estado').val((o.estado || 'Abierta')).trigger("change");
+                $("#cbo_observadopor").val(o.ObservadorPor || "1").trigger("change");
                 $('#obs_registradoPor').val(o.registradoPor || '@usuario');
-                $('#obs_fechaRegistro').val((o.fechaRegistro || '').toString().substring(0,16));
+                $('#obs_fechaRegistro').val(o.fechaRegistro ? parseDate(o.fechaRegistro).toLocaleDateString('es-ES') : '');
 
                 $('#obs_cerradoPor').val(o.cerradoPor || '');
-                $('#obs_fechaCierre').val((o.fechaCierre || '').toString().substring(0,16));
+                //$('#obs_fechaCierre').val((o.fechaCierre || '').toString().substring(0, 16));
+                $('#obs_fechaCierre').val(o.fechaCierre ? parseDate(o.fechaCierre).toLocaleDateString('es-ES') : '');
 
                 $('#obs_nombreArchivo').val(o.nombreArchivo || '');
 
+                if (o.nombreArchivo && o.extension) {
+                    window.cargarArchivoAdjunto(o.nombreArchivo, o.extension);
+                } else {
+                    $('#file-preview-obs').hide();
+                }
                 setBadges();
             });
     }
 
     function guardarObservacion(){
         const idSub = parseInt($('#obs_idRequerimientoDetalle').val() || '0', 10);
-        if(!idSub) return alert('Selecciona un Detalle (SubReq).');
+        if (!idSub) return showToast('Selecciona un Detalle (SubReq).', 'danger');
 
         const comentario = ($('#obs_comentario').val() || '').trim();
-        if(!comentario) return alert('Falta comentario.');
-
+        if (!comentario) return showToast('Falta comentario.', 'danger');
+        const nombreArchivo = $("#obs_nombreArchivo").val();
+        const extension = $("#obs_extension").val();
+        const registradoPor = $("#obs_registradoPor").val();
+        const observadopor = $("#cbo_observadopor").val();
         const payload = {
             idObservacion: parseInt($('#obs_idObservacion').val() || '0', 10),
             idRequerimientoDetalle: idSub,
             comentario: comentario,
             severidad: $('#obs_severidad').val(),
             estado: $('#obs_estado').val(),
+            observadopor: observadopor,
             registradoPor: $('#obs_registradoPor').val(),
             fechaRegistro: $('#obs_fechaRegistro').val(),
             cerradoPor: $('#obs_cerradoPor').val(),
             fechaCierre: $('#obs_fechaCierre').val(),
-            observadopor: $('#obs_registradoPor').val()
+            nombreArchivo: nombreArchivo,
+            extension: extension
         };
 
         const fd = new FormData();
         fd.append('data', JSON.stringify(payload));
 
-        const file = $('#obs_file')[0].files[0];
+        const file = window.getObservationFile();
         if(file) fd.append('file', file);
 
-        // si tu acción valida antiforgery: agrega el token
-        const token = $('input[name="__RequestVerificationToken"]').val();
-        if(token) fd.append('__RequestVerificationToken', token);
+        //// si tu acción valida antiforgery: agrega el token
+        //const token = $('input[name="__RequestVerificationToken"]').val();
+        //if(token) fd.append('__RequestVerificationToken', token);
+        const isNew = payload.idObservacion === 0;
 
         $.ajax({
             url: URL.obsSave,
@@ -556,10 +868,15 @@
             processData: false,
             contentType: false
         }).done(r=>{
-            if(!r || r.ok === false) return alert(r?.mensaje || 'No se pudo guardar');
-            resetObsForm();
-            listarObservaciones();
-        }).fail(()=> alert('Error servidor al guardar observación'));
+            if (!r || r.ok === false) return showToast(r?.mensaje || 'No se pudo guardar', 'danger');
+            var message = isNew ? 'Observación guardada exitosamente' : 'Observación actualizada exitosamente'
+            toastr.success(message);
+            setTimeout(() => {
+                resetObsForm();
+                listarObservaciones();
+
+            }, 400)
+        }).fail(() => toastr.error("Error servidor al guardar observación"));
     }
 
     function cerrarObservacion(){
@@ -597,7 +914,10 @@
     });
 
     $('#btnReloadDetails').on('click', loadSubRequerimientos);
-    $('#btnReloadObs').on('click', listarObservaciones);
+    $('#btnReloadObs').on('click', function () {
+        resetObsForm();
+        listarObservaciones();
+    });
 
     $('#btnNewObs').on('click', resetObsForm);
     $('#btnObsReset').on('click', function(){
@@ -612,14 +932,342 @@
     $('#obs_severidad, #obs_estado').on('change', setBadges);
 
     // (No tienes endpoint delete en tu controller actual. Si lo agregas, lo conecto.)
-    $('#btnDelObs').on('click', function(){
-        alert('Eliminar: falta endpoint. Si quieres, te creo DeleteObservacion(idObservacion).');
-    });
+        $('#btnDelObs').on('click', function () {
+            if (!S.idObs)
+                return toastr.error('Selecciona una observación.');
+
+            Swal.fire({
+                title: '¿Eliminar observación?',
+                text: 'Esta acción no se puede deshacer.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#d33'
+            }).then((result) => {
+                if (!result.isConfirmed) return;
+
+                $.post(URL.obsDelete, { idObservacion: S.idObs })
+                    .done(r => {
+                        if (!r || !r.ok)
+                            return toastr.error(r?.mensaje || 'Error');
+
+                        toastr.success('Observación eliminada');
+                        resetObsForm();
+                        listarObservaciones();
+                    })
+                    .fail(() => toastr.error('Error servidor'));
+            });
+        });
+
 
     // ===================== INIT =====================
     $(function(){
         loadAdicionales();
         resetObsAll();
     });
+    </script>
+    <script>
+        // ==========================================
+        // COMPONENTE DE SUBIDA DE ARCHIVOS PARA EL MODAL
+        // ==========================================
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Elementos del DOM específicos para el modal
+            const dropArea = document.getElementById('drop-area-obs');
+            const fileInput = document.getElementById('obs_file');
+            const selectFileBtn = document.getElementById('select-file-btn-obs');
+            const filePreview = document.getElementById('file-preview-obs');
+            const noFileMessage = document.getElementById('no-file-message-obs');
+            const removeFileBtn = document.getElementById('remove-file-btn-obs');
+            const previewName = document.getElementById('preview-name-obs');
+            const previewSize = document.getElementById('preview-size-obs');
+
+            // Campos ocultos para almacenar información del archivo
+            const obsNombreArchivo = document.getElementById('obs_nombreArchivo');
+            const obsExtension = document.getElementById('obs_extension');
+            const obsFileSize = document.getElementById('obs_fileSize');
+
+            // Variables de estado
+            let currentFile = null;
+
+            // Eventos principales
+            setupEventListeners();
+
+            function setupEventListeners() {
+                // Eventos del área de arrastrar y soltar
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    dropArea.addEventListener(eventName, preventDefaults, false);
+                });
+
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropArea.addEventListener(eventName, highlight, false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropArea.addEventListener(eventName, unhighlight, false);
+                });
+
+                dropArea.addEventListener('drop', handleDrop, false);
+
+                // Evento de click en el área de arrastrar y soltar (solo para el área, no para el botón)
+                dropArea.addEventListener('click', () => {
+                    fileInput.click();
+                });
+
+                // Input de archivo
+                fileInput.addEventListener('change', handleFile, false);
+
+                // Botón de eliminar archivo
+                removeFileBtn.addEventListener('click', removeFile);
+                // Botón de eliminar archivo
+                removeFileBtn.addEventListener('click', function () {
+                    removeFile();
+
+                    // Limpiar campos específicos
+                    $("#obs_nombreArchivo").val("");
+                    $("#obs_extension").val("");
+                });
+
+            }
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            function highlight(e) {
+                dropArea.classList.add('active');
+            }
+
+            function unhighlight(e) {
+                dropArea.classList.remove('active');
+            }
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const droppedFiles = dt.files;
+
+                if (droppedFiles.length > 0) {
+                    handleFile({ target: { files: droppedFiles } });
+                }
+            }
+
+            function handleFile(e) {
+                const selectedFile = e.target.files[0];
+
+                if (selectedFile) {
+                    if (isValidFile(selectedFile)) {
+                        addFile(selectedFile);
+                    } else {
+                        showStatusMessage(`El archivo "${selectedFile.name}" no es válido.`, 'error');
+                    }
+                }
+
+                // Limpiar el input para permitir seleccionar el mismo archivo de nuevo
+                fileInput.value = '';
+            }
+
+            function isValidFile(file) {
+                // Validación de tamaño máximo (10MB)
+                const maxSize = 10 * 1024 * 1024;
+                if (file.size > maxSize) {
+                    showStatusMessage(`El archivo "${file.name}" excede el tamaño máximo de 10MB.`, 'error');
+                    return false;
+                }
+                return true;
+            }
+
+            function addFile(file) {
+                // Sobre escribe el archivo actual
+                currentFile = file;
+                renderFilePreview();
+                updateHiddenFields();
+                showStatusMessage(`Archivo "${file.name}" seleccionado`, 'success');
+            }
+
+            function removeFile() {
+                currentFile = null;
+                renderFilePreview();
+                clearHiddenFields();
+                const downloadBtn = document.getElementById('download-file-btn-obs');
+                downloadBtn.style.display = 'none';
+                showStatusMessage('Archivo eliminado', 'success');
+            }
+
+            function renderFilePreview() {
+                const downloadBtn = document.getElementById('download-file-btn-obs');
+                if (currentFile) {
+                    // Mostrar toda la sección del adjunto
+                    filePreview.style.display = 'block';
+                    noFileMessage.style.display = 'none';
+
+                    // Actualizar información del archivo
+                    previewName.textContent = currentFile.name;
+                    previewSize.textContent = formatFileSize(currentFile.size);
+
+                    // Actualizar icono según el tipo de archivo
+                    const fileIcon = filePreview.querySelector('.file-icon i');
+                    const iconClass = getFileIconClass(currentFile);
+                    fileIcon.className = `fas ${iconClass}`;
+                    downloadBtn.style.display = 'none';
+                } else {
+                    // Ocultar toda la sección del adjunto
+                    filePreview.style.display = 'none';
+                    noFileMessage.style.display = 'none';
+
+                    downloadBtn.style.display = 'none';
+                }
+            }
+
+            function updateHiddenFields() {
+                if (currentFile) {
+                    obsNombreArchivo.value = currentFile.name;
+                    obsExtension.value = getFileExtension(currentFile.name);
+                    obsFileSize.value = currentFile.size;
+                }
+            }
+
+            function clearHiddenFields() {
+                obsNombreArchivo.value = '';
+                obsExtension.value = '';
+                obsFileSize.value = '';
+            }
+
+            function getFileIconClass(file) {
+                const extension = file.name.split('.').pop().toLowerCase();
+                const iconMap = {
+                    'pdf': 'fa-file-pdf text-danger',
+                    'doc': 'fa-file-word text-primary',
+                    'docx': 'fa-file-word text-primary',
+                    'xls': 'fa-file-excel text-success',
+                    'xlsx': 'fa-file-excel text-success',
+                    'ppt': 'fa-file-powerpoint text-warning',
+                    'pptx': 'fa-file-powerpoint text-warning',
+                    'txt': 'fa-file-alt text-secondary',
+                    'jpg': 'fa-file-image text-info',
+                    'jpeg': 'fa-file-image text-info',
+                    'png': 'fa-file-image text-info',
+                    'gif': 'fa-file-image text-info',
+                    'zip': 'fa-file-archive text-warning',
+                    'rar': 'fa-file-archive text-warning',
+                    'mp3': 'fa-file-audio text-warning',
+                    'mp4': 'fa-file-video text-danger',
+                    'avi': 'fa-file-video text-danger'
+                };
+
+                return iconMap[extension] || 'fa-file';
+            }
+
+            function getFileExtension(filename) {
+                return filename.split('.').pop().toLowerCase();
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            function showStatusMessage(message, type) {
+                // Eliminar mensajes anteriores
+                const existingMessage = document.querySelector('.status-message');
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
+
+                // Crear nuevo mensaje
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `status-message status-${type}`;
+                messageDiv.textContent = message;
+
+                // Insertar después del área de arrastrar y soltar
+                const container = dropArea.closest('.col-12') || dropArea.parentElement;
+                container.insertBefore(messageDiv, dropArea.nextSibling);
+
+                // Mostrar mensaje
+                messageDiv.style.display = 'block';
+
+                // Ocultar después de 3 segundos
+                setTimeout(() => {
+                    messageDiv.style.opacity = '0';
+                    setTimeout(() => messageDiv.remove(), 300);
+                }, 3000);
+            }
+
+            // Función para obtener el archivo actual (para usar en el guardado)
+            window.getObservationFile = function () {
+                return currentFile;
+            };
+
+            // Función para limpiar el archivo (para usar cuando se cierra el modal)
+            window.clearObservationFile = function () {
+                currentFile = null;
+                renderFilePreview();
+                clearHiddenFields();
+                const downloadBtn = document.getElementById('download-file-btn-obs');
+                downloadBtn.style.display = 'none';
+            };
+
+            // Función para cargar archivo adjunto al editar observación
+            window.cargarArchivoAdjunto = function (nombreArchivo, extension) {
+                // Mostrar la vista previa
+                filePreview.style.display = 'block';
+                noFileMessage.style.display = 'none';
+                previewName.textContent = nombreArchivo;
+                previewSize.textContent = 'Archivo adjunto'; // No tenemos el tamaño real
+
+                // Actualizar icono según el tipo de archivo
+                const fileIcon = filePreview.querySelector('.file-icon i');
+                const iconClass = getFileIconClassFromExtension(extension);
+                fileIcon.className = `fas ${iconClass}`;
+
+                // Actualizar campos ocultos
+                obsNombreArchivo.value = nombreArchivo;
+                obsExtension.value = extension;
+                obsFileSize.value = '0';
+
+                // Mostrar botón de descarga y configurar onclick
+                const downloadBtn = document.getElementById('download-file-btn-obs');
+                downloadBtn.style.display = 'inline-block';
+                downloadBtn.onclick = function () {
+                    const link = document.createElement('a');
+                    link.href = URL.obsDownload + '?idObservacion=' + S.idObs;
+                    link.download = nombreArchivo;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                };
+            };
+
+            // Función para obtener la clase del icono según la extensión
+            function getFileIconClassFromExtension(extension) {
+                const iconMap = {
+                    '.pdf': 'fa-file-pdf text-danger',
+                    '.doc': 'fa-file-word text-primary',
+                    '.docx': 'fa-file-word text-primary',
+                    '.xls': 'fa-file-excel text-success',
+                    '.xlsx': 'fa-file-excel text-success',
+                    '.ppt': 'fa-file-powerpoint text-warning',
+                    '.pptx': 'fa-file-powerpoint text-warning',
+                    '.txt': 'fa-file-alt text-secondary',
+                    '.jpg': 'fa-file-image text-info',
+                    '.jpeg': 'fa-file-image text-info',
+                    '.png': 'fa-file-image text-info',
+                    '.gif': 'fa-file-image text-info',
+                    '.zip': 'fa-file-archive text-warning',
+                    '.rar': 'fa-file-archive text-warning',
+                    '.mp3': 'fa-file-audio text-warning',
+                    '.mp4': 'fa-file-video text-danger',
+                    '.avi': 'fa-file-video text-danger'
+                };
+
+                return iconMap[extension.toLowerCase()] || 'fa-file';
+            }
+        });
     </script>
 }

@@ -43,7 +43,7 @@
                     new { Value=5, Text="Sábado" },
                     new { Value=6, Text="Domingo" }
                 }, "Value", "Text", Model.dia),
-                new { @class = "form-select" })
+                new { @class = "form-select", data_control = "select2" })
         </div>
 
         <div class="col-md-3">
@@ -54,7 +54,7 @@
                     new { Value=2, Text="Media" },
                     new { Value=3, Text="Baja" }
                 }, "Value", "Text", Model.prioridad),
-                new { @class = "form-select" })
+                new { @class = "form-select", data_control = "select2" })
         </div>
 
         <div class="col-md-3">
@@ -66,7 +66,7 @@
                     new { Value="hecho", Text="Hecho" },
                     new { Value="bloqueado", Text="Bloqueado" }
                 }, "Value", "Text", (Model.estado ?? "pendiente")),
-                new { @class = "form-select" })
+                new { @class = "form-select", data_control = "select2" })
         </div>
 
         <div class="col-md-3">
@@ -89,6 +89,7 @@
 
     <!-- Valores para preselección -->
     <input type="hidden" id="hdSubSelected" value="@Model.idRequerimientoDetalle" />
+    <input type="hidden" id="hdAsociado" name="idObservacion" value="@Model.idObservacion" />
 }
 
 <input type="hidden" id="hdTrabSelected" value="@(Model.idPersonaResponsable ?? 0)" />

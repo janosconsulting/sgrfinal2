@@ -43,6 +43,7 @@ namespace Mantenimiento.Negocio.Poco
         public string nombreArchivo { get; set; }
 
         public string extension { get; set; }
+        public int? esAsociado { get; set; }
     }
 
     public class GestionarObservacionPoco
