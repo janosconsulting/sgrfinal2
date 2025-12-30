@@ -48,8 +48,17 @@ namespace ReyDavid.Web.Controllers
             return View(model);
         }
 
-        // JSON: Tree (Req + SubReq)
-        public JsonResult Tree(string q = "")
+        public ActionResult Observaciones()
+        {
+            if (Session["usuario"] == null)
+                return RedirectToAction("Index", "Login");
+
+           
+            return View();
+        }
+
+    
+        public JsonResult Tree(int? idAdicional = null, string q = "")
         {
             try
             {
@@ -194,6 +203,45 @@ namespace ReyDavid.Web.Controllers
             int day = (int)d.DayOfWeek; // Sunday=0
             int diff = day == 0 ? -6 : (1 - day);
             return d.AddDays(diff).Date;
+        }
+
+        public JsonResult ListarAdicionales()
+        {
+            try
+            {
+                var lista = planSemanalServicio.ListarAdicionales();
+                return Json(new { ok = true, lista }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ok = false, error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult ListarRequerimientosPorAdicional(int idAdicional)
+        {
+            try
+            {
+                var lista = planSemanalServicio.ListarRequerimientosPorAdicional(idAdicional);
+                return Json(new { ok = true, lista }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ok = false, error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult ListarSubRequerimientosPorRequerimiento(int idRequerimiento)
+        {
+            try
+            {
+                var lista = planSemanalServicio.ListarSubRequerimientosPorRequerimiento(idRequerimiento);
+                return Json(new { ok = true, lista }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ok = false, error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public JsonResult ListarObservaciones(int idRequerimientoDetalle)

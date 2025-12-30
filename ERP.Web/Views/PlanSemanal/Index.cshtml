@@ -179,7 +179,11 @@
         }
 
     .dropzone {
-        min-height: 400px !important;
+        min-height: 140px;
+        padding: 8px;
+        border: 2px dashed #dbe3f3;
+        border-radius: 12px;
+        background-color: #f9fbff;
     }
 
     .plan-semanal .ps-col-date {
@@ -386,12 +390,6 @@
         transform: scale(1.02);
     }
 
-    .plan-semanal .ctitle {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
 
     /* ===== CARD COMPACTA ===== */
     .plan-semanal .card-compact {
@@ -410,10 +408,14 @@
             margin-left: 8px;
         }
 
+        /* Título: mostrar todo el texto */
         .plan-semanal .card-compact .ctitle {
-            font-weight: 700;
-            font-size: .85rem;
-            margin-bottom: 4px;
+            white-space: normal !important;
+            overflow: visible !important;
+            text-overflow: unset !important;
+            word-break: break-word; /* rompe palabras largas */
+            overflow-wrap: anywhere; /* mejor para textos largos */
+            line-height: 1.25;
         }
 
         /* Metadata pills */
@@ -625,6 +627,67 @@
     .modal .file-size {
         font-size: 0.75rem;
     }
+    /* CONTENEDOR */
+    .req-tree {
+        font-size: 13px;
+    }
+
+        /* REQUERIMIENTO */
+        .req-tree .req-item {
+            margin-bottom: 8px;
+        }
+
+        .req-tree .req-row {
+            display: flex;
+            align-items: center;
+            padding: 6px 10px;
+            border-radius: 8px;
+            background: #eef3ff; /* azul claro */
+            color: #1b2a4e;
+            font-weight: 600;
+            cursor: default;
+        }
+
+            .req-tree .req-row i {
+                color: #3e97ff; /* primary metronic */
+            }
+
+        /* SUB LIST */
+        .req-tree .sub-list {
+            margin-top: 4px;
+            padding-left: 16px;
+        }
+
+        /* SUBREQUERIMIENTO */
+        .req-tree .sub-item {
+            display: flex;
+            align-items: center;
+            padding: 6px 10px;
+            margin-bottom: 4px;
+            border-radius: 6px;
+            background: #f8f9fa; /* gris claro */
+            color: #3f4254;
+            cursor: pointer;
+            transition: all .15s ease;
+        }
+
+            .req-tree .sub-item i {
+                color: #50cd89; /* success metronic */
+            }
+            /* Hover */
+            .req-tree .sub-item:hover {
+                background: #e8fff3; /* verde claro */
+            }
+
+            /* Seleccionado */
+            .req-tree .sub-item.selected {
+                background: #50cd89; /* success */
+                color: #fff;
+            }
+
+                .req-tree .sub-item.selected i {
+                    color: #fff;
+                }
 
     /* Responsive para el modal */
     @@media (max-width: 768px) {
@@ -693,13 +756,13 @@
                         <div class="separator my-4"></div>
 
                         <!-- Tree -->
-                        <div id="tree"></div>
+                        <div id="tree" class="req-tree"></div>
                     </div>
                 </div>
             </div>
 
             <!-- CENTER: Plan Semanal -->
-            <div class="col-12 col-xl-8">
+            <div class="col-12 col-xl-7">
                 <div class="card card-flush h-100">
                     <div class="card-header pt-5">
                         <select id="fTrabajador" class="form-select form-select-sm" style="min-width:220px;" data-control="select2" data-placeholder="Todos">
@@ -748,7 +811,7 @@
             </div>
 
             <!-- RIGHT: Trazabilidad -->
-            <div class="col-12 col-xl-2">
+            <div class="col-12 col-xl-3">
                 <div class="card card-flush h-100">
                     <div class="card-header pt-5">
                         <div class="card-title d-flex align-items-center gap-2">
@@ -1722,7 +1785,7 @@
 
                     <!-- Body -->
                     <div class="card-body-info">
-                        <div class="ctitle lh-sm">
+                        <div class="ctitle lh-sm" style="text-align:left;">
                             ${esc(c.titulo)}
                         </div>
 

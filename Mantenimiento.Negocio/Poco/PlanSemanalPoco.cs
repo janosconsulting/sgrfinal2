@@ -118,4 +118,30 @@ namespace Mantenimiento.Negocio.Poco
         public string estado { get; set; }
         public int? prioridad { get; set; }
     }
+
+    public class sp_Adicional_Listar
+    {
+        public int idAdicional { get; set; }
+        public string codigo { get; set; }
+        public string nombre { get; set; }
+        public string estado { get; set; }
+    }
+
+    public class sp_Requerimiento_ListarPorAdicional
+    {
+        public int idRequerimiento { get; set; }
+        public int idAdicional { get; set; }
+        public string codigo { get; set; }
+        public string nombre { get; set; }
+        public string estado { get; set; }
+    }
+
+    public class sp_SubRequerimiento_ListarPorRequerimiento
+    {
+        public int idRequerimientoDetalle { get; set; }
+        public int idRequerimiento { get; set; }
+        public string codigo { get; set; }
+        public string nombre { get; set; }
+        public string estado { get; set; }
+    }
 }

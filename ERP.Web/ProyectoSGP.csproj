@@ -6498,6 +6498,7 @@
     <Content Include="Views\Propuesta\Imprimir.cshtml" />
     <Content Include="Views\PlanSemanal\Index.cshtml" />
     <Content Include="Views\PlanSemanal\_FormTarjeta.cshtml" />
+    <Content Include="Views\PlanSemanal\Observaciones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ControlCombustible.Utilitario\Mantenimiento.Utilitario.csproj">

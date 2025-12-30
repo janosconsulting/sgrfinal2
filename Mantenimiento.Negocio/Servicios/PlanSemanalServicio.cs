@@ -278,5 +278,47 @@ WHERE IdPlanDetalle = @idPlanDetalle;";
                 return connection.Get<RequerimientoDetalleObservacion>(idObservacion);
             }
         }
+
+        public List<sp_Adicional_Listar> ListarAdicionales()
+        {
+            using (var cn = new SqlConnection(ConnectionConfig.ConnectionString))
+            {
+                var res = cn.Query<sp_Adicional_Listar>(
+                    "sp_Adicional_Listar",
+                    commandType: CommandType.StoredProcedure
+                );
+                return res.AsList();
+            }
+        }
+
+        public List<sp_Requerimiento_ListarPorAdicional> ListarRequerimientosPorAdicional(int idAdicional)
+        {
+            using (var cn = new SqlConnection(ConnectionConfig.ConnectionString))
+            {
+                var p = new DynamicParameters();
+                p.Add("@IdAdicional", idAdicional, DbType.Int32, ParameterDirection.Input);
+
+                var res = cn.Query<sp_Requerimiento_ListarPorAdicional>(
+                    "sp_Requerimiento_ListarPorAdicional", p,
+                    commandType: CommandType.StoredProcedure
+                );
+                return res.AsList();
+            }
+        }
+
+        public List<sp_SubRequerimiento_ListarPorRequerimiento> ListarSubRequerimientosPorRequerimiento(int idRequerimiento)
+        {
+            using (var cn = new SqlConnection(ConnectionConfig.ConnectionString))
+            {
+                var p = new DynamicParameters();
+                p.Add("@IdRequerimiento", idRequerimiento, DbType.Int32, ParameterDirection.Input);
+
+                var res = cn.Query<sp_SubRequerimiento_ListarPorRequerimiento>(
+                    "sp_SubRequerimiento_ListarPorRequerimiento", p,
+                    commandType: CommandType.StoredProcedure
+                );
+                return res.AsList();
+            }
+        }
     }
 }

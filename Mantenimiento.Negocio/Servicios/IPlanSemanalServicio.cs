@@ -24,5 +24,9 @@ namespace Mantenimiento.Negocio.Contratos.Servicios
         bool CerrarObservacion(int idObservacion, string usuario);
         RequerimientoDetalleObservacion ObtenerObservacion(int idObservacion);
         bool Actualizar(RequerimientoDetalleObservacion oDT);
+        List<sp_Adicional_Listar> ListarAdicionales();
+        List<sp_Requerimiento_ListarPorAdicional> ListarRequerimientosPorAdicional(int idAdicional);
+        List<sp_SubRequerimiento_ListarPorRequerimiento> ListarSubRequerimientosPorRequerimiento(int idRequerimiento);
+
     }
 }

@@ -1,0 +1,625 @@
+﻿@{
+    ViewBag.Title = "Adicionales · Requerimientos · Observaciones";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    var usuario = (string)ViewBag.usuario ?? "";
+}
+
+<div class="container-fluid py-4">
+
+    <!-- TOPBAR -->
+    <div class="border rounded-4 bg-white p-4 mb-4 shadow-sm">
+        <div class="row g-3 align-items-end">
+
+            <div class="col-lg-4">
+                <label class="form-label fw-bold">Adicional</label>
+                <select class="form-select" id="ddlAdicional">
+                    <option value="">-- Seleccione adicional --</option>
+                </select>
+            </div>
+
+            <div class="col-lg-4">
+                <label class="form-label fw-bold">Buscar</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                    <input class="form-control" id="txtBuscar" placeholder="Requerimiento / Detalle / Observación..." />
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <label class="form-label fw-bold">Estado</label>
+                <select class="form-select" id="ddlEstado">
+                    <option value="todos">Todos</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="enprogreso">En progreso</option>
+                    <option value="listo">Listo</option>
+                    <option value="observado">Observado</option>
+                    <option value="abierta">abierta</option>
+                    <option value="cerrada">cerrada</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2 d-grid">
+                <button class="btn btn-primary" id="btnAplicar">
+                    <i class="bi bi-funnel me-2"></i>Aplicar
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 3 COLUMNS -->
+    <div class="row g-4">
+
+        <!-- LEFT: REQUERIMIENTOS -->
+        <div class="col-lg-3">
+            <div class="border rounded-4 bg-white shadow-sm overflow-hidden" style="min-height:72vh;">
+                <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
+                    <div class="fw-bold d-flex align-items-center gap-2">
+                        <i class="bi bi-folder2-open text-primary"></i> Requerimientos
+                        <span class="badge text-bg-light" id="reqCount">0</span>
+                    </div>
+                </div>
+
+                <div class="p-3">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="border rounded-4 p-3">
+                                <div class="text-muted small">Listos</div>
+                                <div class="fs-3 fw-bold text-success" id="kpiListos">0</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="border rounded-4 p-3">
+                                <div class="text-muted small">Observados</div>
+                                <div class="fs-3 fw-bold text-warning" id="kpiObs">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3" style="max-height:56vh; overflow:auto;" id="reqList">
+                    <div class="text-muted small text-center py-5">
+                        Selecciona un Adicional y aplica filtro.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CENTER: DETALLES -->
+        <div class="col-lg-5">
+            <div class="border rounded-4 bg-white shadow-sm overflow-hidden" style="min-height:72vh;">
+                <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
+                    <div class="fw-bold d-flex align-items-center gap-2">
+                        <i class="bi bi-diagram-3 text-primary"></i> Detalles del Requerimiento
+                    </div>
+                    <div class="text-muted small" id="centerTitle">—</div>
+                </div>
+
+                <div class="p-3 d-flex align-items-center justify-content-between">
+                    <button class="btn btn-light btn-sm" type="button" disabled>
+                        <i class="bi bi-plus-lg me-2"></i>Nuevo detalle
+                    </button>
+                    <button class="btn btn-light btn-sm" id="btnReloadDetails" type="button">
+                        <i class="bi bi-arrow-clockwise me-2"></i>Recargar
+                    </button>
+                </div>
+
+                <div class="p-3" style="max-height:56vh; overflow:auto;" id="detailList">
+                    <div class="text-muted small text-center py-5">
+                        Selecciona un Requerimiento.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: OBSERVACIONES -->
+        <div class="col-lg-4">
+            <div class="border rounded-4 bg-white shadow-sm overflow-hidden" style="min-height:72vh;">
+                <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
+                    <div class="fw-bold d-flex align-items-center gap-2">
+                        <i class="bi bi-chat-left-text text-primary"></i> Observaciones del Detalle
+                    </div>
+                    <div class="text-muted small" id="rightTitle">—</div>
+                </div>
+
+                <div class="p-3 d-flex align-items-center justify-content-between">
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-primary btn-sm" id="btnNewObs" type="button" disabled>
+                            <i class="bi bi-plus-lg me-2"></i>Nueva
+                        </button>
+                        <button class="btn btn-light btn-sm" id="btnReloadObs" type="button">
+                            <i class="bi bi-arrow-clockwise me-2"></i>Recargar
+                        </button>
+                    </div>
+                    <button class="btn btn-light btn-sm" id="btnDelObs" type="button" disabled>
+                        <i class="bi bi-trash me-2"></i>Eliminar
+                    </button>
+                </div>
+
+                <div class="p-3">
+                    <div class="row g-3">
+
+                        <!-- LISTA OBS -->
+                        <div class="col-12 col-md-6">
+                            <div class="border rounded-4 p-3" style="background:#f8fbff; border-style:dashed; max-height:54vh; overflow:auto;">
+                                <div id="obsEmpty" class="text-muted small">
+                                    <i class="bi bi-inboxes me-2"></i>
+                                    Selecciona un Detalle (SubReq) para ver observaciones.
+                                </div>
+                                <div class="mt-3" id="obsList"></div>
+                            </div>
+                        </div>
+
+                        <!-- FORM OBS -->
+                        <div class="col-12 col-md-6">
+                            <div class="border rounded-4 p-3" style="max-height:54vh; overflow:auto;">
+                                @Html.AntiForgeryToken()
+
+                                <input type="hidden" id="obs_idRequerimientoDetalle" value="0" />
+                                <input type="hidden" id="obs_idObservacion" value="0" />
+
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <div class="d-flex gap-2">
+                                        <span class="badge bg-warning text-dark" id="tagEstado">abierta</span>
+                                        <span class="badge bg-info text-dark" id="tagSev">media</span>
+                                    </div>
+                                    <div class="text-muted small" id="obsFormTitle">Obs (nueva)</div>
+                                </div>
+
+                                <label class="form-label fw-bold">Comentario</label>
+                                <textarea class="form-control mb-3" rows="6" id="obs_comentario" placeholder="Describe la observación..."></textarea>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-6">
+                                        <label class="form-label fw-bold">Severidad</label>
+                                        <select class="form-select" id="obs_severidad">
+                                            <option value="baja">baja</option>
+                                            <option value="media" selected>media</option>
+                                            <option value="alta">alta</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label fw-bold">Estado</label>
+                                        <select class="form-select" id="obs_estado">
+                                            <option value="abierta" selected>abierta</option>
+                                            <option value="enprogreso">enprogreso</option>
+                                            <option value="resuelta">resuelta</option>
+                                            <option value="cerrada">cerrada</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-6">
+                                        <label class="form-label fw-bold">Registrado por</label>
+                                        <input class="form-control" id="obs_registradoPor" value="@usuario" readonly />
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label fw-bold">Fecha registro</label>
+                                        <input class="form-control" id="obs_fechaRegistro" readonly />
+                                    </div>
+                                </div>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-6">
+                                        <label class="form-label fw-bold">Cerrado por</label>
+                                        <input class="form-control" id="obs_cerradoPor" readonly />
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label fw-bold">Fecha cierre</label>
+                                        <input class="form-control" id="obs_fechaCierre" readonly />
+                                    </div>
+                                </div>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-6">
+                                        <label class="form-label fw-bold">Adjunto (opcional)</label>
+                                        <input type="file" class="form-control" id="obs_file" />
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label fw-bold">Nombre archivo</label>
+                                        <input class="form-control" id="obs_nombreArchivo" readonly />
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-2 mt-2">
+                                    <button class="btn btn-light w-50" type="button" id="btnObsReset">
+                                        <i class="bi bi-arrow-counterclockwise me-2"></i>Reset
+                                    </button>
+                                    <button class="btn btn-primary w-50" type="button" id="btnObsSave">
+                                        <i class="bi bi-check2 me-2"></i>Guardar
+                                    </button>
+                                </div>
+
+                                <button class="btn btn-light w-100 mt-2" type="button" id="btnObsCerrar">
+                                    <i class="bi bi-lock me-2"></i>Cerrar
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+@section Scripts{
+    <script>
+    // ===================== URLS (MVC) =====================
+    const URL = {
+        adicionales: '@Url.Action("ListarAdicionales","PlanSemanal")',
+        reqsByAd: '@Url.Action("ListarRequerimientosPorAdicional","PlanSemanal")',
+        subsByReq: '@Url.Action("ListarSubRequerimientosPorRequerimiento","PlanSemanal")',
+        obsBySub: '@Url.Action("ListarObservaciones","PlanSemanal")',
+        obsGet: '@Url.Action("ObtenerObservacion","PlanSemanal")',
+        obsSave: '@Url.Action("GuardarObservacion","PlanSemanal")',
+        obsClose: '@Url.Action("CerrarObservacion","PlanSemanal")'
+    };
+
+    // ===================== STATE =====================
+    const S = {
+        idAdicional: 0,
+        idRequerimiento: 0,
+        idSubReq: 0,
+        idObs: 0,
+        q: '',
+        estado: 'todos'
+    };
+
+    // ===================== HELPERS =====================
+    function esc(s){
+        s = (s ?? '').toString();
+        return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+    }
+    function nowStr(){
+        const d = new Date();
+        const p = n => (n<10?'0'+n:n);
+        return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+    }
+    function setBadges(){
+        $('#tagEstado').text($('#obs_estado').val() || 'abierta');
+        $('#tagSev').text($('#obs_severidad').val() || 'media');
+    }
+
+    // ===================== LOAD TOP =====================
+    function loadAdicionales(){
+        $.get(URL.adicionales)
+            .done(r=>{
+                if(!r || !r.ok) return alert(r?.error || 'Error listando adicionales');
+                let html = `<option value="">-- Seleccione adicional --</option>`;
+                (r.lista || []).forEach(a=>{
+                    html += `<option value="${a.idAdicional}">${esc(a.codigo)} · ${esc(a.nombre)}</option>`;
+                });
+                $('#ddlAdicional').html(html);
+            });
+    }
+
+    // ===================== REQUERIMIENTOS =====================
+    function loadRequerimientos(){
+        $('#reqList').html(`<div class="text-muted small text-center py-5">Cargando...</div>`);
+
+        if(!S.idAdicional){
+            $('#reqList').html(`<div class="text-muted small text-center py-5">Selecciona un Adicional.</div>`);
+            return;
+        }
+
+        $.get(URL.reqsByAd, { idAdicional: S.idAdicional, q: S.q, estado: S.estado })
+            .done(r=>{
+                if(!r || !r.ok) return alert(r?.error || 'Error listando requerimientos');
+                const lista = r.lista || [];
+                $('#reqCount').text(lista.length);
+
+                // KPIs simples (si no viene estado real, se quedarán 0)
+                const listos = lista.filter(x => (x.estado||'').toLowerCase()==='listo').length;
+                const obs = lista.filter(x => (x.estado||'').toLowerCase()==='observado').length;
+                $('#kpiListos').text(listos);
+                $('#kpiObs').text(obs);
+
+                if(!lista.length){
+                    $('#reqList').html(`<div class="text-muted small text-center py-5">Sin requerimientos.</div>`);
+                    return;
+                }
+
+                let html = '';
+                lista.forEach(x=>{
+                    const active = (S.idRequerimiento === x.idRequerimiento) ? 'border border-primary' : '';
+                    html += `
+                        <div class="border rounded-4 p-3 mb-3 req-card ${active}" style="cursor:pointer;" data-id="${x.idRequerimiento}">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge text-bg-primary">${esc(x.codigo||'REQ')}</span>
+                                    <div class="fw-bold">${esc(x.nombre||'')}</div>
+                                </div>
+                                <span class="badge text-bg-light">${esc((x.estado||'').toLowerCase() || 'pendiente')}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                $('#reqList').html(html);
+
+                $('.req-card').off('click').on('click', function(){
+                    $('.req-card').removeClass('border border-primary');
+                    $(this).addClass('border border-primary');
+                    S.idRequerimiento = parseInt($(this).attr('data-id'),10);
+                    $('#centerTitle').text($(this).find('.fw-bold').text());
+                    resetDetalles();
+                    loadSubRequerimientos();
+                });
+            });
+    }
+
+    function resetDetalles(){
+        S.idSubReq = 0;
+        $('#detailList').html(`<div class="text-muted small text-center py-5">Cargando detalles...</div>`);
+        resetObsAll();
+    }
+
+    // ===================== SUBREQUERIMIENTOS (DETALLES) =====================
+    function loadSubRequerimientos(){
+        if(!S.idRequerimiento){
+            $('#detailList').html(`<div class="text-muted small text-center py-5">Selecciona un Requerimiento.</div>`);
+            return;
+        }
+
+        $.get(URL.subsByReq, { idRequerimiento: S.idRequerimiento, q: S.q, estado: S.estado })
+            .done(r=>{
+                if(!r || !r.ok) return alert(r?.error || 'Error listando detalles');
+
+                const lista = r.lista || [];
+                if(!lista.length){
+                    $('#detailList').html(`<div class="text-muted small text-center py-5">Sin detalles.</div>`);
+                    return;
+                }
+
+                let html = '';
+                lista.forEach(d=>{
+                    const active = (S.idSubReq === d.idRequerimientoDetalle) ? 'border border-primary' : '';
+                    html += `
+                        <div class="border rounded-4 p-3 mb-3 detail-card ${active}" style="cursor:pointer;" data-id="${d.idRequerimientoDetalle}">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge text-bg-success">${esc(d.codigo||'SUB')}</span>
+                                    <div class="fw-bold">${esc(d.nombre||'')}</div>
+                                </div>
+                                <span class="badge text-bg-light">${esc((d.estado||'').toLowerCase() || 'pendiente')}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                $('#detailList').html(html);
+
+                $('.detail-card').off('click').on('click', function(){
+                    $('.detail-card').removeClass('border border-primary');
+                    $(this).addClass('border border-primary');
+                    S.idSubReq = parseInt($(this).attr('data-id'),10);
+                    $('#rightTitle').text($(this).find('.fw-bold').text());
+                    onSelectSubReq(S.idSubReq);
+                });
+            });
+    }
+
+    // ===================== OBSERVACIONES =====================
+    function resetObsAll(){
+        S.idObs = 0;
+        $('#btnNewObs').prop('disabled', true);
+        $('#obs_idRequerimientoDetalle').val(0);
+        $('#obsList').html('');
+        $('#obsEmpty').show().html(`<i class="bi bi-inboxes me-2"></i>Selecciona un Detalle (SubReq) para ver observaciones.`);
+        resetObsForm();
+    }
+
+    function onSelectSubReq(idRequerimientoDetalle){
+        $('#btnNewObs').prop('disabled', false);
+        $('#obs_idRequerimientoDetalle').val(idRequerimientoDetalle);
+        resetObsForm();
+        listarObservaciones();
+    }
+
+    function listarObservaciones(){
+        if(!S.idSubReq) return;
+
+        $('#obsList').html('');
+        $('#obsEmpty').hide();
+
+        $.get(URL.obsBySub, { idRequerimientoDetalle: S.idSubReq, q: S.q, estado: S.estado })
+            .done(r=>{
+                if(!r || !r.ok){
+                    $('#obsEmpty').show().html(`<div class="text-danger">${esc(r?.error || 'No se pudo listar')}</div>`);
+                    return;
+                }
+                const lista = r.lista || [];
+                if(!lista.length){
+                    $('#obsEmpty').show().html(`<i class="bi bi-inboxes me-2"></i>Aún no hay observaciones. Crea una con <b>Nueva</b>.`);
+                    return;
+                }
+
+                let html = '';
+                lista.forEach(o=>{
+                    const estado = (o.estado||'abierta').toLowerCase();
+                    const sev = (o.severidad||'media').toLowerCase();
+                    const short = (o.comentario||'').length > 70 ? (o.comentario||'').substring(0,70)+'...' : (o.comentario||'');
+
+                    html += `
+                        <div class="border rounded-4 p-3 mb-3 obs-item" style="cursor:pointer;" data-id="${o.idObservacion}">
+                            <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
+                                <div class="d-flex gap-2">
+                                    <span class="badge ${estado==='cerrada'?'bg-success':'bg-warning text-dark'}">${esc(estado)}</span>
+                                    <span class="badge bg-info text-dark">${esc(sev)}</span>
+                                </div>
+                                <div class="text-muted small">${esc((o.fechaRegistro||'').toString().substring(0,16))}</div>
+                            </div>
+                            <div class="fw-bold">${esc(short)}</div>
+                            <div class="text-muted small mt-1">${esc(o.registradoPor||'')}</div>
+                        </div>
+                    `;
+                });
+
+                $('#obsList').html(html);
+
+                $('.obs-item').off('click').on('click', function(){
+                    $('.obs-item').removeClass('border border-primary');
+                    $(this).addClass('border border-primary');
+                    S.idObs = parseInt($(this).attr('data-id'),10);
+                    $('#btnDelObs').prop('disabled', false); // solo UI; si no tienes delete endpoint, lo dejamos sin acción
+                    cargarObservacion(S.idObs);
+                });
+            });
+    }
+
+    function resetObsForm(){
+        S.idObs = 0;
+        $('#btnDelObs').prop('disabled', true);
+
+        $('#obs_idObservacion').val(0);
+        $('#obsFormTitle').text('Obs (nueva)');
+        $('#obs_comentario').val('');
+        $('#obs_severidad').val('media');
+        $('#obs_estado').val('abierta');
+
+        $('#obs_registradoPor').val('@usuario');
+        $('#obs_fechaRegistro').val(nowStr());
+
+        $('#obs_cerradoPor').val('');
+        $('#obs_fechaCierre').val('');
+
+        $('#obs_nombreArchivo').val('');
+        $('#obs_file').val('');
+
+        setBadges();
+    }
+
+    function cargarObservacion(idObservacion){
+        $.get(URL.obsGet, { idObservacion: idObservacion })
+            .done(r=>{
+                if(!r || !r.ok) return alert(r?.error || 'No se pudo obtener la observación');
+
+                const o = r.observacion || {};
+                $('#obs_idObservacion').val(o.idObservacion || idObservacion);
+                $('#obsFormTitle').text('Obs #' + (o.idObservacion || idObservacion));
+
+                $('#obs_comentario').val(o.comentario || '');
+                $('#obs_severidad').val((o.severidad || 'media').toLowerCase());
+                $('#obs_estado').val((o.estado || 'abierta').toLowerCase());
+
+                $('#obs_registradoPor').val(o.registradoPor || '@usuario');
+                $('#obs_fechaRegistro').val((o.fechaRegistro || '').toString().substring(0,16));
+
+                $('#obs_cerradoPor').val(o.cerradoPor || '');
+                $('#obs_fechaCierre').val((o.fechaCierre || '').toString().substring(0,16));
+
+                $('#obs_nombreArchivo').val(o.nombreArchivo || '');
+
+                setBadges();
+            });
+    }
+
+    function guardarObservacion(){
+        const idSub = parseInt($('#obs_idRequerimientoDetalle').val() || '0', 10);
+        if(!idSub) return alert('Selecciona un Detalle (SubReq).');
+
+        const comentario = ($('#obs_comentario').val() || '').trim();
+        if(!comentario) return alert('Falta comentario.');
+
+        const payload = {
+            idObservacion: parseInt($('#obs_idObservacion').val() || '0', 10),
+            idRequerimientoDetalle: idSub,
+            comentario: comentario,
+            severidad: $('#obs_severidad').val(),
+            estado: $('#obs_estado').val(),
+            registradoPor: $('#obs_registradoPor').val(),
+            fechaRegistro: $('#obs_fechaRegistro').val(),
+            cerradoPor: $('#obs_cerradoPor').val(),
+            fechaCierre: $('#obs_fechaCierre').val(),
+            observadopor: $('#obs_registradoPor').val()
+        };
+
+        const fd = new FormData();
+        fd.append('data', JSON.stringify(payload));
+
+        const file = $('#obs_file')[0].files[0];
+        if(file) fd.append('file', file);
+
+        // si tu acción valida antiforgery: agrega el token
+        const token = $('input[name="__RequestVerificationToken"]').val();
+        if(token) fd.append('__RequestVerificationToken', token);
+
+        $.ajax({
+            url: URL.obsSave,
+            type: 'POST',
+            data: fd,
+            processData: false,
+            contentType: false
+        }).done(r=>{
+            if(!r || r.ok === false) return alert(r?.mensaje || 'No se pudo guardar');
+            resetObsForm();
+            listarObservaciones();
+        }).fail(()=> alert('Error servidor al guardar observación'));
+    }
+
+    function cerrarObservacion(){
+        const idObs = parseInt($('#obs_idObservacion').val() || '0', 10);
+        if(!idObs) return alert('Selecciona una observación.');
+
+        $.post(URL.obsClose, { idObservacion: idObs })
+            .done(r=>{
+                if(!r || !r.ok) return alert(r?.mensaje || 'No se pudo cerrar');
+                listarObservaciones();
+                // recargar la obs para ver estado
+                cargarObservacion(idObs);
+            })
+            .fail(()=> alert('Error servidor al cerrar observación'));
+    }
+
+    // ===================== EVENTS =====================
+    $('#btnAplicar').on('click', function(){
+        S.q = ($('#txtBuscar').val() || '').trim();
+        S.estado = $('#ddlEstado').val() || 'todos';
+        loadRequerimientos();
+
+        // reset selections downstream
+        S.idRequerimiento = 0;
+        S.idSubReq = 0;
+        $('#centerTitle').text('—');
+        $('#rightTitle').text('—');
+        $('#detailList').html(`<div class="text-muted small text-center py-5">Selecciona un Requerimiento.</div>`);
+        resetObsAll();
+    });
+
+    $('#ddlAdicional').on('change', function(){
+        S.idAdicional = parseInt($(this).val() || '0', 10);
+        $('#btnAplicar').click();
+    });
+
+    $('#btnReloadDetails').on('click', loadSubRequerimientos);
+    $('#btnReloadObs').on('click', listarObservaciones);
+
+    $('#btnNewObs').on('click', resetObsForm);
+    $('#btnObsReset').on('click', function(){
+        const idObs = parseInt($('#obs_idObservacion').val() || '0', 10);
+        if(idObs) cargarObservacion(idObs);
+        else resetObsForm();
+    });
+
+    $('#btnObsSave').on('click', guardarObservacion);
+    $('#btnObsCerrar').on('click', cerrarObservacion);
+
+    $('#obs_severidad, #obs_estado').on('change', setBadges);
+
+    // (No tienes endpoint delete en tu controller actual. Si lo agregas, lo conecto.)
+    $('#btnDelObs').on('click', function(){
+        alert('Eliminar: falta endpoint. Si quieres, te creo DeleteObservacion(idObservacion).');
+    });
+
+    // ===================== INIT =====================
+    $(function(){
+        loadAdicionales();
+        resetObsAll();
+    });
+    </script>
+}
