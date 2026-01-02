@@ -10,7 +10,8 @@ using Mantenimiento.Datos.Entidades;
 using System.Web;
 using System.IO;
 using Newtonsoft.Json;
-
+using System.Linq;
+using ClosedXML.Excel;
 namespace ReyDavid.Web.Controllers
 {
     public class PlanSemanalController : Controller
@@ -399,6 +400,155 @@ namespace ReyDavid.Web.Controllers
             catch (Exception ex)
             {
                 return Json(new { ok = false, mensaje = ex.Message });
+            }
+        }
+        public ActionResult ExportarDatos(int idAdicional, string q = "", string estado = "Todos", int idRequerimiento = 0, int idSubReq = 0)
+        {
+            try
+            {
+                if (Session["usuario"] == null)
+                    return RedirectToAction("Index", "Login");
+
+                var usuario = Session["usuario"].ToString();
+                var fechaExportacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                // Obtener el nombre del adicional seleccionado
+                var adicionales = planSemanalServicio.ListarAdicionales();
+                var adicionalSeleccionado = adicionales.FirstOrDefault(a => a.idAdicional == idAdicional)?.nombre ?? "Desconocido";
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add("Datos");
+
+                    // Título principal
+                    worksheet.Cell(1, 1).Value = "Exportación de Datos - Plan Semanal";
+                    worksheet.Cell(1, 1).Style.Font.Bold = true;
+                    worksheet.Cell(1, 1).Style.Font.FontSize = 14;
+                    worksheet.Range("A1:G1").Merge();
+
+                    // Información adicional
+                    worksheet.Cell(2, 1).Value = $"Adicional Seleccionado: {adicionalSeleccionado}";
+                    worksheet.Cell(2, 1).Style.Font.Bold = true;
+
+                    worksheet.Cell(3, 1).Value = $"Fecha de Exportación: {fechaExportacion}";
+                    worksheet.Cell(3, 1).Style.Font.Bold = true;
+
+                    worksheet.Cell(4, 1).Value = $"Usuario que Exporta: {usuario}";
+                    worksheet.Cell(4, 1).Style.Font.Bold = true;
+
+                    // Headers
+                    worksheet.Cell(6, 1).Value = "Requerimiento";
+                    worksheet.Cell(6, 2).Value = "Detalle";
+                    worksheet.Cell(6, 3).Value = "Observación";
+                    worksheet.Cell(6, 4).Value = "Estado Obs";
+                    worksheet.Cell(6, 5).Value = "Severidad";
+                    worksheet.Cell(6, 6).Value = "Registrado Por";
+                    worksheet.Cell(6, 7).Value = "Fecha Registro";
+
+                    // Estilo para headers
+                    var headerRange = worksheet.Range("A6:G6");
+                    headerRange.Style.Font.Bold = true;
+                    headerRange.Style.Fill.BackgroundColor = XLColor.LightGray;
+                    headerRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+
+                    int row = 7;
+                    var requerimientos = planSemanalServicio.ListarRequerimientosPorAdicional(idAdicional);
+                    if (!string.IsNullOrEmpty(q))
+                    {
+                        requerimientos = requerimientos.Where(x => (x.nombre ?? "").IndexOf(q, StringComparison.OrdinalIgnoreCase) >= 0 || (x.codigo ?? "").IndexOf(q, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                    }
+                    if (estado != "Todos")
+                    {
+                        requerimientos = requerimientos.Where(x => (x.estado ?? "") == estado).ToList();
+                    }
+
+                    foreach (var req in requerimientos)
+                    {
+                        if (idRequerimiento > 0 && req.idRequerimiento != idRequerimiento) continue;
+
+                        var detalles = planSemanalServicio.ListarSubRequerimientosPorRequerimiento(req.idRequerimiento);
+                        if (!string.IsNullOrEmpty(q))
+                        {
+                            detalles = detalles.Where(x => (x.nombre ?? "").IndexOf(q, StringComparison.OrdinalIgnoreCase) >= 0 || (x.codigo ?? "").IndexOf(q, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                        }
+                        if (estado != "Todos")
+                        {
+                            detalles = detalles.Where(x => (x.estado ?? "") == estado).ToList();
+                        }
+
+                        foreach (var det in detalles)
+                        {
+                            if (idSubReq > 0 && det.idRequerimientoDetalle != idSubReq) continue;
+
+                            var observaciones = planSemanalServicio.ListarObservaciones(det.idRequerimientoDetalle);
+                            if (!string.IsNullOrEmpty(q))
+                            {
+                                observaciones = observaciones.Where(x => (x.comentario ?? "").IndexOf(q, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                            }
+                            if (estado != "Todos")
+                            {
+                                observaciones = observaciones.Where(x => (x.estado ?? "") == estado).ToList();
+                            }
+
+                            if (observaciones.Any())
+                            {
+                                foreach (var obs in observaciones)
+                                {
+                                    worksheet.Cell(row, 1).Value = req.nombre;
+                                    worksheet.Cell(row, 2).Value = det.nombre;
+                                    worksheet.Cell(row, 3).Value = obs.comentario;
+                                    worksheet.Cell(row, 4).Value = obs.estado;
+                                    worksheet.Cell(row, 5).Value = obs.severidad;
+                                    worksheet.Cell(row, 6).Value = obs.registradoPor;
+                                    worksheet.Cell(row, 7).Value = obs.fechaRegistro.ToString("yyyy-MM-dd");
+                                    row++;
+                                }
+                            }
+                            else
+                            {
+                                worksheet.Cell(row, 1).Value = req.nombre;
+                                worksheet.Cell(row, 2).Value = det.nombre;
+                                worksheet.Cell(row, 3).Value = "";
+                                worksheet.Cell(row, 4).Value = "";
+                                worksheet.Cell(row, 5).Value = "";
+                                worksheet.Cell(row, 6).Value = "";
+                                worksheet.Cell(row, 7).Value = "";
+                                row++;
+                            }
+                        }
+                    }
+
+
+                    // Ajustar anchos de columna para mejor visualización
+                    worksheet.Column(1).Width = 25; // Requerimiento
+                    worksheet.Column(2).Width = 55; // Detalle
+                    worksheet.Column(2).Style.Alignment.WrapText = true;
+                    worksheet.Column(3).Width = 50; // Observación
+                    worksheet.Column(3).Style.Alignment.WrapText = true;
+                    worksheet.Column(4).Width = 15; // Estado Obs
+                    worksheet.Column(5).Width = 15; // Severidad
+                    worksheet.Column(6).Width = 20; // Registrado Por
+                    worksheet.Column(7).Width = 15; // Fecha Registro
+
+                    // Agregar bordes a la tabla de datos si hay datos
+                    if (row > 7)
+                    {
+                        var dataRange = worksheet.Range($"A7:G{row - 1}");
+                        dataRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                        dataRange.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                    }
+
+                    using (var stream = new MemoryStream())
+                    {
+                        workbook.SaveAs(stream);
+                        stream.Position = 0;
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ExportacionDatos.xlsx");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(500, ex.Message);
             }
         }
     }

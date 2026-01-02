@@ -30,13 +30,13 @@
             <div class="col-lg-2">
                 <label class="form-label fw-bold">Estado</label>
                 <select class="form-select" id="ddlEstado">
-                    <option value="todos">Todos</option>
-                    <option value="pendiente">Pendiente</option>
-                    <option value="enprogreso">En progreso</option>
-                    <option value="listo">Listo</option>
-                    <option value="observado">Observado</option>
-                    <option value="abierta">abierta</option>
-                    <option value="cerrada">cerrada</option>
+                    <option value="Todos">Todos</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En progreso">En progreso</option>
+                    <option value="Listo">Listo</option>
+                    <option value="Bbservado">Observado</option>
+                    <option value="Abierta">Abierta</option>
+                    <option value="Cerrada">Cerrada</option>
                 </select>
             </div>
 
@@ -45,7 +45,11 @@
                     <i class="bi bi-funnel me-2"></i>Aplicar
                 </button>
             </div>
-
+            <div class="col-lg-2 d-grid">
+                <button class="btn btn-success" id="btnExportar">
+                    <i class="bi bi-download me-2"></i>Exportar
+                </button>
+            </div>
         </div>
     </div>
 
@@ -505,6 +509,7 @@
         obsSave: '@Url.Action("GuardarObservacion","PlanSemanal")',
         obsClose: '@Url.Action("CerrarObservacion","PlanSemanal")',
         obsDelete: '@Url.Action("EliminarObservacion","PlanSemanal")',
+        export: '@Url.Action("ExportarDatos","PlanSemanal")',
         obsDownload: '@Url.Action("DescargarArchivo","PlanSemanal")'
     };
 
@@ -896,7 +901,7 @@
     // ===================== EVENTS =====================
     $('#btnAplicar').on('click', function(){
         S.q = ($('#txtBuscar').val() || '').trim();
-        S.estado = $('#ddlEstado').val() || 'todos';
+        S.estado = $('#ddlEstado').val() || 'Todos';
         loadRequerimientos();
 
         // reset selections downstream
@@ -906,6 +911,15 @@
         $('#rightTitle').text('—');
         $('#detailList').html(`<div class="text-muted small text-center py-5">Selecciona un Requerimiento.</div>`);
         resetObsAll();
+    });
+
+    $('#btnExportar').on('click', function () {
+        if (!S.idAdicional) {
+            showToast('Selecciona un Adicional.', 'danger');
+            return;
+        }
+        var url = URL.export + '?idAdicional=' + S.idAdicional + '&q=' + encodeURIComponent(S.q) + '&estado=' + S.estado + '&idRequerimiento=' + S.idRequerimiento + '&idSubReq=' + S.idSubReq;
+        window.open(url, '_blank');
     });
 
     $('#ddlAdicional').on('change', function(){
