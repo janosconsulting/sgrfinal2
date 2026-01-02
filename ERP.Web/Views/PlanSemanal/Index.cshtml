@@ -1137,6 +1137,10 @@
             renderTree();
             renderDetailEmpty();
         });
+        $("#btnExport").on("click", function(){
+            const url = "@Url.Action("ExportarTareasSemanal", "PlanSemanal")?idPlanSemana=" + ID_PLAN + "&lunes=" + LUNES_ISO + "&idPersonaResponsable=" + (filtroTrabajador || "");
+            window.location.href = url;
+        });
 
         $("#btnNewCard").on("click", function () {
             console.log(1)

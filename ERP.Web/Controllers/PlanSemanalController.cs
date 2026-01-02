@@ -13,6 +13,8 @@ using Newtonsoft.Json;
 using System.Linq;
 using ClosedXML.Excel;
 using ERP.Web.Helpers;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
 namespace ReyDavid.Web.Controllers
 {
     public class PlanSemanalController : Controller
@@ -552,6 +554,141 @@ namespace ReyDavid.Web.Controllers
         //        return new HttpStatusCodeResult(500, ex.Message);
         //    }
         //}
+        public ActionResult ExportarTareasSemanal(int idPlanSemana, string lunes, int? idPersonaResponsable = null)
+        {
+            try
+            {
+                if (Session["usuario"] == null)
+                    return RedirectToAction("Index", "Login");
+
+                var usuario = Session["usuario"].ToString();
+                var fechaExportacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                var fechaLunes = DateTime.Parse(lunes);
+
+                var cards = planSemanalServicio.ListarTarjetas(idPlanSemana, idPersonaResponsable);
+                var dayNames = new[] { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" };
+
+                using (var package = new ExcelPackage())
+                {
+                    var worksheet = package.Workbook.Worksheets.Add("Plan Semanal");
+
+                    // Título principal
+                    worksheet.Cells[1, 1].Value = "Exportación de Tareas - Plan Semanal";
+                    worksheet.Cells[1, 1].Style.Font.Bold = true;
+                    worksheet.Cells[1, 1].Style.Font.Size = 14;
+                    worksheet.Cells["A1:I1"].Merge = true;
+
+                    // Información de la semana
+                    var fechaFin = fechaLunes.AddDays(6);
+                    worksheet.Cells[2, 1].Value = $"Semana: {fechaLunes:dd/MM/yyyy} - {fechaFin:dd/MM/yyyy}";
+                    worksheet.Cells[2, 1].Style.Font.Bold = true;
+
+                    worksheet.Cells[3, 1].Value = $"Fecha de Exportación: {fechaExportacion}";
+                    worksheet.Cells[3, 1].Style.Font.Bold = true;
+
+                    worksheet.Cells[4, 1].Value = $"Usuario: {usuario}";
+                    worksheet.Cells[4, 1].Style.Font.Bold = true;
+
+                    // Headers
+                    worksheet.Cells[6, 1].Value = "Día";
+                    worksheet.Cells[6, 2].Value = "Fecha";
+                    worksheet.Cells[6, 3].Value = "Título";
+                    worksheet.Cells[6, 4].Value = "Requerimiento";
+                    worksheet.Cells[6, 5].Value = "SubRequerimiento";
+                    worksheet.Cells[6, 6].Value = "Responsable";
+                    worksheet.Cells[6, 7].Value = "Estado";
+                    worksheet.Cells[6, 8].Value = "Prioridad";
+                    worksheet.Cells[6, 9].Value = "Tipo";
+
+                    // Estilo para headers
+                    var headerRange = worksheet.Cells["A6:I6"];
+                    headerRange.Style.Font.Bold = true;
+                    headerRange.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    headerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
+                    headerRange.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                    int row = 7;
+
+                    // Agrupar tarjetas por día
+                    var tarjetasOrdenadas = cards.OrderBy(c => c.dia).ThenBy(c => c.prioridad).ToList();
+
+                    foreach (var card in tarjetasOrdenadas)
+                    {
+                        var dia = card.dia;
+                        var fechaDia = fechaLunes.AddDays(dia);
+                        var nombreDia = dia >= 0 && dia < 7 ? dayNames[dia] : "Desconocido";
+
+                        worksheet.Cells[row, 1].Value = nombreDia;
+                        worksheet.Cells[row, 2].Value = fechaDia.ToString("dd/MM/yyyy");
+                        worksheet.Cells[row, 3].Value = card.titulo ?? "";
+                        worksheet.Cells[row, 4].Value = card.reqCodigo ?? "";
+                        worksheet.Cells[row, 5].Value = card.subNombre ?? "";
+                        worksheet.Cells[row, 6].Value = card.responsable ?? "";
+                        worksheet.Cells[row, 7].Value = card.estado ?? "";
+                        worksheet.Cells[row, 8].Value = $"P{card.prioridad}";
+                        worksheet.Cells[row, 9].Value = card.idObservacion.HasValue && card.idObservacion > 0 ? "Observación" : "Tarea";
+
+                        // Colorear según estado
+                        var estadoLower = (card.estado ?? "").ToLower();
+                        if (estadoLower == "hecho")
+                        {
+                            worksheet.Cells[row, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            worksheet.Cells[row, 7].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGreen);
+                        }
+                        else if (estadoLower == "proceso")
+                        {
+                            worksheet.Cells[row, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            worksheet.Cells[row, 7].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightYellow);
+                        }
+                        else if (estadoLower == "bloqueado")
+                        {
+                            worksheet.Cells[row, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            worksheet.Cells[row, 7].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightPink);
+                        }
+
+                        row++;
+                    }
+
+                    // Ajustar anchos de columna
+                    worksheet.Column(1).Width = 12; // Día
+                    worksheet.Column(2).Width = 12; // Fecha
+                    worksheet.Column(3).Width = 40; // Título
+                    worksheet.Column(3).Style.WrapText = true;
+                    worksheet.Column(4).Width = 20; // Requerimiento
+                    worksheet.Column(5).Width = 30; // SubRequerimiento
+                    worksheet.Column(5).Style.WrapText = true;
+                    worksheet.Column(6).Width = 20; // Responsable
+                    worksheet.Column(7).Width = 12; // Estado
+                    worksheet.Column(8).Width = 10; // Prioridad
+                    worksheet.Column(9).Width = 12; // Tipo
+
+                    // Agregar bordes a la tabla de datos
+                    if (row > 7)
+                    {
+                        var dataRange = worksheet.Cells[$"A7:I{row - 1}"];
+                        dataRange.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                        foreach (var cell in dataRange)
+                        {
+                            cell.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                            cell.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            cell.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                            cell.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        }
+                    }
+
+                    var stream = new MemoryStream();
+                    package.SaveAs(stream);
+                    stream.Position = 0;
+                    var fileName = $"PlanSemanal_{fechaLunes:yyyyMMdd}.xlsx";
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(500, "Error al exportar: " + ex.Message);
+            }
+        }
+
 
         public ActionResult ExportarDatos(int idAdicional, string q = "", string estado = "Todos")
         {

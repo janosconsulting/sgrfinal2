@@ -96,6 +96,8 @@ namespace Mantenimiento.Negocio.Poco
         public byte dia { get; set; }
         public string titulo { get; set; }
         public string responsable { get; set; }
+        public string reqCodigo { get; set; }
+        public string subNombre { get; set; }
         public string estado { get; set; }
         public byte prioridad { get; set; }
         public decimal? horas { get; set; }
