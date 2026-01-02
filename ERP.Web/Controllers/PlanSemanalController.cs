@@ -405,155 +405,8 @@ namespace ReyDavid.Web.Controllers
                 return Json(new { ok = false, mensaje = ex.Message });
             }
         }
-        //public ActionResult ExportarDatos(int idAdicional, string q = "", string estado = "Todos", int idRequerimiento = 0, int idSubReq = 0)
-        //{
-        //    try
-        //    {
-        //        if (Session["usuario"] == null)
-        //            return RedirectToAction("Index", "Login");
 
-        //        var usuario = Session["usuario"].ToString();
-        //        var fechaExportacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-
-        //        // Obtener el nombre del adicional seleccionado
-        //        var adicionales = planSemanalServicio.ListarAdicionales();
-        //        var adicionalSeleccionado = adicionales.FirstOrDefault(a => a.idAdicional == idAdicional)?.nombre ?? "Desconocido";
-
-        //        using (var workbook = new XLWorkbook())
-        //        {
-        //            var worksheet = workbook.Worksheets.Add("Datos");
-
-        //            // Título principal
-        //            worksheet.Cell(1, 1).Value = "Exportación de Datos - Plan Semanal";
-        //            worksheet.Cell(1, 1).Style.Font.Bold = true;
-        //            worksheet.Cell(1, 1).Style.Font.FontSize = 14;
-        //            worksheet.Range("A1:G1").Merge();
-
-        //            // Información adicional
-        //            worksheet.Cell(2, 1).Value = $"Adicional Seleccionado: {adicionalSeleccionado}";
-        //            worksheet.Cell(2, 1).Style.Font.Bold = true;
-
-        //            worksheet.Cell(3, 1).Value = $"Fecha de Exportación: {fechaExportacion}";
-        //            worksheet.Cell(3, 1).Style.Font.Bold = true;
-
-        //            worksheet.Cell(4, 1).Value = $"Usuario que Exporta: {usuario}";
-        //            worksheet.Cell(4, 1).Style.Font.Bold = true;
-
-        //            // Headers
-        //            worksheet.Cell(6, 1).Value = "Requerimiento";
-        //            worksheet.Cell(6, 2).Value = "Detalle";
-        //            worksheet.Cell(6, 3).Value = "Observación";
-        //            worksheet.Cell(6, 4).Value = "Estado Obs";
-        //            worksheet.Cell(6, 5).Value = "Severidad";
-        //            worksheet.Cell(6, 6).Value = "Registrado Por";
-        //            worksheet.Cell(6, 7).Value = "Fecha Registro";
-
-        //            // Estilo para headers
-        //            var headerRange = worksheet.Range("A6:G6");
-        //            headerRange.Style.Font.Bold = true;
-        //            headerRange.Style.Fill.BackgroundColor = XLColor.LightGray;
-        //            headerRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-
-        //            int row = 7;
-        //            var requerimientos = planSemanalServicio.ListarRequerimientosPorAdicional(idAdicional);
-        //            if (!string.IsNullOrEmpty(q))
-        //            {
-        //                requerimientos = requerimientos.Where(x => (x.nombre ?? "").IndexOf(q, StringComparison.OrdinalIgnoreCase) >= 0 || (x.codigo ?? "").IndexOf(q, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-        //            }
-        //            if (estado != "Todos")
-        //            {
-        //                requerimientos = requerimientos.Where(x => (x.estado ?? "") == estado).ToList();
-        //            }
-
-        //            foreach (var req in requerimientos)
-        //            {
-        //                if (idRequerimiento > 0 && req.idRequerimiento != idRequerimiento) continue;
-
-        //                var detalles = planSemanalServicio.ListarSubRequerimientosPorRequerimiento(req.idRequerimiento);
-        //                if (!string.IsNullOrEmpty(q))
-        //                {
-        //                    detalles = detalles.Where(x => (x.nombre ?? "").IndexOf(q, StringComparison.OrdinalIgnoreCase) >= 0 || (x.codigo ?? "").IndexOf(q, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-        //                }
-        //                if (estado != "Todos")
-        //                {
-        //                    detalles = detalles.Where(x => (x.estado ?? "") == estado).ToList();
-        //                }
-
-        //                foreach (var det in detalles)
-        //                {
-        //                    if (idSubReq > 0 && det.idRequerimientoDetalle != idSubReq) continue;
-
-        //                    var observaciones = planSemanalServicio.ListarObservaciones(det.idRequerimientoDetalle);
-        //                    if (!string.IsNullOrEmpty(q))
-        //                    {
-        //                        observaciones = observaciones.Where(x => (x.comentario ?? "").IndexOf(q, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-        //                    }
-        //                    if (estado != "Todos")
-        //                    {
-        //                        observaciones = observaciones.Where(x => (x.estado ?? "") == estado).ToList();
-        //                    }
-
-        //                    if (observaciones.Any())
-        //                    {
-        //                        foreach (var obs in observaciones)
-        //                        {
-        //                            worksheet.Cell(row, 1).Value = req.nombre;
-        //                            worksheet.Cell(row, 2).Value = det.nombre;
-        //                            worksheet.Cell(row, 3).Value = obs.comentario;
-        //                            worksheet.Cell(row, 4).Value = obs.estado;
-        //                            worksheet.Cell(row, 5).Value = obs.severidad;
-        //                            worksheet.Cell(row, 6).Value = obs.registradoPor;
-        //                            worksheet.Cell(row, 7).Value = obs.fechaRegistro.ToString("yyyy-MM-dd");
-        //                            row++;
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        worksheet.Cell(row, 1).Value = req.nombre;
-        //                        worksheet.Cell(row, 2).Value = det.nombre;
-        //                        worksheet.Cell(row, 3).Value = "";
-        //                        worksheet.Cell(row, 4).Value = "";
-        //                        worksheet.Cell(row, 5).Value = "";
-        //                        worksheet.Cell(row, 6).Value = "";
-        //                        worksheet.Cell(row, 7).Value = "";
-        //                        row++;
-        //                    }
-        //                }
-        //            }
-
-
-        //            // Ajustar anchos de columna para mejor visualización
-        //            worksheet.Column(1).Width = 25; // Requerimiento
-        //            worksheet.Column(2).Width = 55; // Detalle
-        //            worksheet.Column(2).Style.Alignment.WrapText = true;
-        //            worksheet.Column(3).Width = 50; // Observación
-        //            worksheet.Column(3).Style.Alignment.WrapText = true;
-        //            worksheet.Column(4).Width = 15; // Estado Obs
-        //            worksheet.Column(5).Width = 15; // Severidad
-        //            worksheet.Column(6).Width = 20; // Registrado Por
-        //            worksheet.Column(7).Width = 15; // Fecha Registro
-
-        //            // Agregar bordes a la tabla de datos si hay datos
-        //            if (row > 7)
-        //            {
-        //                var dataRange = worksheet.Range($"A7:G{row - 1}");
-        //                dataRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-        //                dataRange.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
-        //            }
-
-        //            using (var stream = new MemoryStream())
-        //            {
-        //                workbook.SaveAs(stream);
-        //                stream.Position = 0;
-        //                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ExportacionDatos.xlsx");
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new HttpStatusCodeResult(500, ex.Message);
-        //    }
-        //}
+       
         public ActionResult ExportarTareasSemanal(int idPlanSemana, string lunes, int? idPersonaResponsable = null)
         {
             try
@@ -576,7 +429,7 @@ namespace ReyDavid.Web.Controllers
                     worksheet.Cells[1, 1].Value = "Exportación de Tareas - Plan Semanal";
                     worksheet.Cells[1, 1].Style.Font.Bold = true;
                     worksheet.Cells[1, 1].Style.Font.Size = 14;
-                    worksheet.Cells["A1:I1"].Merge = true;
+                    worksheet.Cells["A1:J1"].Merge = true;
 
                     // Información de la semana
                     var fechaFin = fechaLunes.AddDays(6);
@@ -599,12 +452,13 @@ namespace ReyDavid.Web.Controllers
                     worksheet.Cells[6, 7].Value = "Estado";
                     worksheet.Cells[6, 8].Value = "Prioridad";
                     worksheet.Cells[6, 9].Value = "Tipo";
+                    worksheet.Cells[6, 10].Value = "Detalle";
 
                     // Estilo para headers
-                    var headerRange = worksheet.Cells["A6:I6"];
+                    var headerRange = worksheet.Cells["A6:J6"];
                     headerRange.Style.Font.Bold = true;
                     headerRange.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    headerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
+                    headerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.FromArgb(173, 216, 230)); // LightBlue
                     headerRange.Style.Border.BorderAround(ExcelBorderStyle.Thin);
 
                     int row = 7;
@@ -618,6 +472,19 @@ namespace ReyDavid.Web.Controllers
                         var fechaDia = fechaLunes.AddDays(dia);
                         var nombreDia = dia >= 0 && dia < 7 ? dayNames[dia] : "Desconocido";
 
+                        string detalle = "";
+                        string tipo = card.idObservacion.HasValue && card.idObservacion > 0 ? "Observación" : "Tarea";
+                        if (tipo == "Tarea")
+                        {
+                            var tarjeta = planSemanalServicio.ObtenerTarjeta(card.idPlanDetalle);
+                            detalle = tarjeta?.titulo ?? "";
+                        }
+                        else if (tipo == "Observación")
+                        {
+                            var observacion = planSemanalServicio.ObtenerObservacion(card.idObservacion.Value);
+                            detalle = observacion?.comentario ?? "";
+                        }
+
                         worksheet.Cells[row, 1].Value = nombreDia;
                         worksheet.Cells[row, 2].Value = fechaDia.ToString("dd/MM/yyyy");
                         worksheet.Cells[row, 3].Value = card.titulo ?? "";
@@ -626,24 +493,25 @@ namespace ReyDavid.Web.Controllers
                         worksheet.Cells[row, 6].Value = card.responsable ?? "";
                         worksheet.Cells[row, 7].Value = card.estado ?? "";
                         worksheet.Cells[row, 8].Value = $"P{card.prioridad}";
-                        worksheet.Cells[row, 9].Value = card.idObservacion.HasValue && card.idObservacion > 0 ? "Observación" : "Tarea";
+                        worksheet.Cells[row, 9].Value = tipo;
+                        worksheet.Cells[row, 10].Value = detalle;
 
                         // Colorear según estado
                         var estadoLower = (card.estado ?? "").ToLower();
                         if (estadoLower == "hecho")
                         {
                             worksheet.Cells[row, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            worksheet.Cells[row, 7].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGreen);
+                            worksheet.Cells[row, 7].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.FromArgb(144, 238, 144)); // LightGreen
                         }
                         else if (estadoLower == "proceso")
                         {
                             worksheet.Cells[row, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            worksheet.Cells[row, 7].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightYellow);
+                            worksheet.Cells[row, 7].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.FromArgb(255, 255, 224)); // LightYellow
                         }
                         else if (estadoLower == "bloqueado")
                         {
                             worksheet.Cells[row, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            worksheet.Cells[row, 7].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightPink);
+                            worksheet.Cells[row, 7].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.FromArgb(255, 182, 193)); // LightPink
                         }
 
                         row++;
@@ -661,12 +529,15 @@ namespace ReyDavid.Web.Controllers
                     worksheet.Column(7).Width = 12; // Estado
                     worksheet.Column(8).Width = 10; // Prioridad
                     worksheet.Column(9).Width = 12; // Tipo
+                    worksheet.Column(10).Width = 50; // Detalle
+                    worksheet.Column(10).Style.WrapText = true;
 
                     // Agregar bordes a la tabla de datos
                     if (row > 7)
                     {
-                        var dataRange = worksheet.Cells[$"A7:I{row - 1}"];
+                        var dataRange = worksheet.Cells[$"A7:J{row - 1}"];
                         dataRange.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                        // Bordes internos: aplicar a cada celda
                         foreach (var cell in dataRange)
                         {
                             cell.Style.Border.Left.Style = ExcelBorderStyle.Thin;
@@ -688,8 +559,6 @@ namespace ReyDavid.Web.Controllers
                 return new HttpStatusCodeResult(500, "Error al exportar: " + ex.Message);
             }
         }
-
-
         public ActionResult ExportarDatos(int idAdicional, string q = "", string estado = "Todos")
         {
             if (Session["usuario"] == null)
