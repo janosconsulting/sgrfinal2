@@ -1102,11 +1102,16 @@
                 modalTarjeta.hide();
                 return;
             }
+            const form = document.getElementById("frmTarjeta");
 
+            const formData = new FormData(form);
             $.ajax({
                 url: $form.attr("action"),
                 type: "POST",
-                data: $form.serialize(),
+                //data: $form.serialize(),
+                data: formData,
+                processData: false, // 👈 OBLIGATORIO
+                contentType: false,
                 success: function (res) {
                     if (res && res.idResultado === 1) {
                         toastr.success(res.mensaje || "Guardado correctamente");
@@ -1544,6 +1549,59 @@
             window.clearObservationFile();
         }
     }
+        // Función para cargar archivo adjunto al editar observación
+   function cargarArchivoAdjuntoTask(nombreArchivo, extension, idTarea = 0) {
+
+
+       // Mostrar la vista previa
+       const filePreview = document.getElementById('file-preview-task');
+       const noFileMessage = document.getElementById('no-file-message-task');
+       const previewName = document.getElementById('preview-name-task');
+       const previewSize = document.getElementById('preview-size-task');
+       const fileIcon = filePreview.querySelector('.file-icon i');
+
+       // Mostrar toda la sección del adjunto
+       filePreview.style.display = 'block';
+       noFileMessage.style.display = 'none';
+
+       // Actualizar información del archivo
+       previewName.textContent = nombreArchivo;
+       previewSize.textContent = 'Archivo adjunto'; // No tenemos el tamaño real
+
+       // Actualizar icono según el tipo de archivo
+       const iconClass = getFileIconClassFromExtension(extension);
+       fileIcon.className = `fas ${iconClass}`;
+
+       // Actualizar campos ocultos
+       $("#task_nombreArchivo").val(nombreArchivo);
+       $("#task_extension").val(extension);
+       $("#task_fileSize").val('0');
+
+
+       // Rebuild actions
+       const fileActions = document.querySelector('#file-preview-task .file-actions');
+       fileActions.innerHTML = '';
+
+       if (idTarea > 0) {
+           const downloadBtn = document.createElement('button');
+           downloadBtn.type = 'button';
+           downloadBtn.className = 'btn btn-sm btn-primary';
+           downloadBtn.innerHTML = '<i class="fas fa-download"></i> Descargar';
+           downloadBtn.onclick = () => window.open('@Url.Action("DescargarArchivo", "PlanSemanal")?idObservacion=' + idTarea, '_blank');
+           fileActions.appendChild(downloadBtn);
+       }
+
+       const removeBtn = document.createElement('button');
+       removeBtn.type = 'button';
+       removeBtn.className = 'btn btn-sm btn-remove';
+       removeBtn.id = 'remove-file-btn-task';
+       removeBtn.title = 'Eliminar archivo';
+       removeBtn.innerHTML = '<i class="fas fa-trash" style="color: white"></i>';
+       removeBtn.onclick = window.removeFile1;
+       fileActions.appendChild(removeBtn);
+   }
+
+
      // Función para cargar archivo adjunto al editar observación
     function cargarArchivoAdjunto(nombreArchivo, extension, idObs = 0) {
 
@@ -1940,6 +1998,344 @@
         openTarjetaModal(0, idSubReq, idObs, 0);
 
     }
+    //function SetupEvListenersTask() {
+    //    const dropAreaTask = document.getElementById('drop-area-task');
+    //    const fileInputTask = document.getElementById('task_file');
+    //    const selectFileBtnTask = document.getElementById('select-file-btn-task');
+    //    const filePreviewTask = document.getElementById('file-preview-task');
+    //    const noFileMessageTask = document.getElementById('no-file-message-task');
+    //    const removeFileBtnTask = document.getElementById('remove-file-btn-task');
+    //    const previewNameTask = document.getElementById('preview-name-task');
+    //    const previewSizeTask = document.getElementById('preview-size-task');
+
+    //    // Campos ocultos para almacenar información del archivo
+    //    const taskNombreArchivo = document.getElementById('task_nombreArchivo');
+    //    const taskExtension = document.getElementById('task_extension');
+    //    const taskFileSize = document.getElementById('task_fileSize');
+
+    //    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    //        dropAreaTask.addEventListener(eventName, preventDefaults, false);
+    //    });
+    //    ['dragenter', 'dragover'].forEach(eventName => {
+    //        dropAreaTask.addEventListener(eventName, highlight, false);
+    //    });
+    //    ['dragleave', 'drop'].forEach(eventName => {
+    //        dropAreaTask.addEventListener(eventName, unhighlight, false);
+    //    });
+    //    dropAreaTask.addEventListener('drop', handleDrop, false);
+    //    dropAreaTask.addEventListener('click', () => {
+    //        fileInputTask.click();
+    //    });
+
+    //    fileInputTask.addEventListener('change', handleFile, false);
+
+
+    //    removeFileBtnTask.addEventListener('click', function (e) {
+    //        e.preventDefault();
+    //        removeFile1();
+
+    //        // Limpiar campos específicos
+    //        $("#task_nombreArchivo").val("");
+    //        $("#task_extension").val("");
+    //    });
+    //    function removeFile1() {
+    //        currentFile = null;
+    //        renderFilePreview();
+    //        clearHiddenFields();
+    //        showStatusMessage('Archivo eliminado', 'success');
+    //    }
+    //    function preventDefaults(e) {
+    //        e.preventDefault();
+    //        e.stopPropagation();
+    //    }
+
+    //    function highlight(e) {
+    //        dropAreaTask.classList.add('active');
+    //    }
+
+    //    function unhighlight(e) {
+    //        dropAreaTask.classList.remove('active');
+    //    }
+
+    //    function handleDrop(e) {
+    //        const dt = e.dataTransfer;
+    //        const droppedFiles = dt.files;
+
+    //        if (droppedFiles.length > 0) {
+    //            handleFile({ target: { files: droppedFiles } });
+    //        }
+    //    }
+    //    function handleFile(e) {
+    //        const selectedFile = e.target.files[0];
+
+    //        if (selectedFile) {
+    //            if (isValidFile(selectedFile)) {
+    //                addFile(selectedFile);
+    //            } else {
+    //                showStatusMessage(`El archivo "${selectedFile.name}" no es válido.`, 'error');
+    //            }
+    //        }
+
+    //        // Limpiar el input para permitir seleccionar el mismo archivo de nuevo
+    //        fileInput.value = '';
+    //    }
+
+    //    function isValidFile(file) {
+    //        // Validación de tamaño máximo (10MB)
+    //        const maxSize = 10 * 1024 * 1024;
+    //        if (file.size > maxSize) {
+    //            showStatusMessage(`El archivo "${file.name}" excede el tamaño máximo de 10MB.`, 'error');
+    //            return false;
+    //        }
+    //        return true;
+    //    }
+
+    //    function addFile(file) {
+    //        // Sobre escribe el archivo actual
+    //        currentFile = file;
+    //        renderFilePreview();
+    //        updateHiddenFields();
+    //        showStatusMessage(`Archivo "${file.name}" seleccionado`, 'success');
+    //    }
+
+    //    function removeFile() {
+    //        currentFile = null;
+    //        renderFilePreview();
+    //        clearHiddenFields();
+    //        showStatusMessage('Archivo eliminado', 'success');
+    //    }
+    //    // Expose to global scope
+    //    window.removeFile = removeFile;
+
+    //    function renderFilePreview() {
+    //        if (currentFile) {
+    //            // Mostrar toda la sección del adjunto
+    //            filePreviewTask.style.display = 'block';
+    //            noFileMessageTask.style.display = 'none';
+
+    //            // Actualizar información del archivo
+    //            previewNameTask.textContent = currentFile.name;
+    //            previewSizeTask.textContent = formatFileSize(currentFile.size);
+
+    //            // Actualizar icono según el tipo de archivo
+    //            const fileIcon = filePreviewTask.querySelector('.file-icon i');
+    //            const iconClass = getFileIconClass(currentFile);
+    //            fileIcon.className = `fas ${iconClass}`;
+    //        } else {
+    //            // Ocultar toda la sección del adjunto
+    //            filePreviewTask.style.display = 'none';
+    //            noFileMessageTask.style.display = 'none';
+    //        }
+    //    }
+
+    //    function updateHiddenFields() {
+    //        if (currentFile) {
+    //            taskNombreArchivo.value = currentFile.name;
+    //            taskExtension.value = getFileExtension(currentFile.name);
+    //            taskFileSize.value = currentFile.size;
+    //        }
+    //    }
+
+    //    function clearHiddenFields() {
+    //         taskNombreArchivo.value = '';
+    //         taskExtension.value = '';
+    //         taskFileSize.value = '';
+    //    }
+
+    //    function getFileIconClass(file) {
+    //        const extension = file.name.split('.').pop().toLowerCase();
+    //        const iconMap = {
+    //            'pdf': 'fa-file-pdf text-danger',
+    //            'doc': 'fa-file-word text-primary',
+    //            'docx': 'fa-file-word text-primary',
+    //            'xls': 'fa-file-excel text-success',
+    //            'xlsx': 'fa-file-excel text-success',
+    //            'ppt': 'fa-file-powerpoint text-warning',
+    //            'pptx': 'fa-file-powerpoint text-warning',
+    //            'txt': 'fa-file-alt text-secondary',
+    //            'jpg': 'fa-file-image text-info',
+    //            'jpeg': 'fa-file-image text-info',
+    //            'png': 'fa-file-image text-info',
+    //            'gif': 'fa-file-image text-info',
+    //            'zip': 'fa-file-archive text-warning',
+    //            'rar': 'fa-file-archive text-warning',
+    //            'mp3': 'fa-file-audio text-warning',
+    //            'mp4': 'fa-file-video text-danger',
+    //            'avi': 'fa-file-video text-danger'
+    //        };
+
+    //        return iconMap[extension] || 'fa-file';
+    //    }
+
+    //    function getFileExtension(filename) {
+    //        return filename.split('.').pop().toLowerCase();
+    //    }
+
+    //    function formatFileSize(bytes) {
+    //        if (bytes === 0) return '0 Bytes';
+
+    //        const k = 1024;
+    //        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    //        const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    //        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    //    }
+
+    //    function showStatusMessage(message, type) {
+    //        // Eliminar mensajes anteriores
+    //        const existingMessage = document.querySelector('.status-message');
+    //        if (existingMessage) {
+    //            existingMessage.remove();
+    //        }
+
+    //        // Crear nuevo mensaje
+    //        const messageDiv = document.createElement('div');
+    //        messageDiv.className = `status-message status-${type}`;
+    //        messageDiv.textContent = message;
+
+    //        // Insertar después del área de arrastrar y soltar
+    //        const modalBody = dropAreaTask.closest('.modal-body');
+    //        modalBody.insertBefore(messageDiv, dropAreaTask.nextSibling);
+
+    //        // Mostrar mensaje
+    //        messageDiv.style.display = 'block';
+
+    //        // Ocultar después de 3 segundos
+    //        setTimeout(() => {
+    //            messageDiv.style.opacity = '0';
+    //            setTimeout(() => messageDiv.remove(), 300);
+    //        }, 3000);
+    //    }
+
+    //    // Función para obtener el archivo actual (para usar en el guardado)
+    //    window.getObservationFile = function () {
+    //        return currentFile;
+    //    };
+
+    //    // Función para limpiar el archivo (para usar cuando se cierra el modal)
+    //    window.clearObservationFile = function () {
+    //        currentFile = null;
+    //        renderFilePreview();
+    //        clearHiddenFields();
+    //    };
+    //}
+    function SetupEvListenersTask() {
+        const dropAreaTask = document.getElementById('drop-area-task');
+        const fileInputTask = document.getElementById('task_file');
+        const filePreviewTask = document.getElementById('file-preview-task');
+        const noFileMessageTask = document.getElementById('no-file-message-task');
+        const removeFileBtnTask = document.getElementById('remove-file-btn-task');
+        const previewNameTask = document.getElementById('preview-name-task');
+        const previewSizeTask = document.getElementById('preview-size-task');
+
+        const taskNombreArchivo = document.getElementById('task_nombreArchivo');
+        const taskExtension = document.getElementById('task_extension');
+        const taskFileSize = document.getElementById('task_fileSize');
+
+        let currentFile = null;
+
+        // Drag & drop
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropAreaTask.addEventListener(eventName, preventDefaults, false);
+        });
+        ['dragenter', 'dragover'].forEach(eventName => dropAreaTask.addEventListener(eventName, highlight, false));
+        ['dragleave', 'drop'].forEach(eventName => dropAreaTask.addEventListener(eventName, unhighlight, false));
+        dropAreaTask.addEventListener('drop', handleDrop, false);
+        dropAreaTask.addEventListener('click', () => fileInputTask.click());
+
+        fileInputTask.addEventListener('change', handleFile, false);
+
+        // Botón eliminar
+        removeFileBtnTask.addEventListener('click', function (e) {
+            e.preventDefault(); // evita submit
+            removeFile1();
+        });
+
+        function removeFile1() {
+            currentFile = null;
+            renderFilePreview();
+            clearHiddenFields();
+            showStatusMessage('Archivo eliminado', 'success');
+        }
+
+        function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
+        function highlight() { dropAreaTask.classList.add('active'); }
+        function unhighlight() { dropAreaTask.classList.remove('active'); }
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const droppedFiles = dt.files;
+            if (droppedFiles.length > 0) handleFile({ target: { files: droppedFiles } });
+        }
+
+        function handleFile(e) {
+            const selectedFile = e.target.files[0];
+            if (selectedFile && isValidFile(selectedFile)) addFile(selectedFile);
+            fileInputTask.value = ''; // limpiar input para volver a seleccionar
+        }
+
+        function isValidFile(file) {
+            const maxSize = 10 * 1024 * 1024; // 10MB
+            if (file.size > maxSize) { showStatusMessage('Archivo muy grande', 'error'); return false; }
+            return true;
+        }
+
+        function addFile(file) {
+            currentFile = file;
+            renderFilePreview();
+            updateHiddenFields();
+            showStatusMessage(`Archivo "${file.name}" seleccionado`, 'success');
+        }
+
+        function renderFilePreview() {
+            if (currentFile) {
+                filePreviewTask.style.display = 'block';
+                noFileMessageTask.style.display = 'none';
+                previewNameTask.textContent = currentFile.name;
+                previewSizeTask.textContent = formatFileSize(currentFile.size);
+            } else {
+                filePreviewTask.style.display = 'none';
+                noFileMessageTask.style.display = 'none';
+            }
+        }
+
+        function updateHiddenFields() {
+            if (currentFile) {
+                taskNombreArchivo.value = currentFile.name;
+                taskExtension.value = getFileExtension(currentFile.name);
+                taskFileSize.value = currentFile.size;
+            }
+        }
+
+        function clearHiddenFields() {
+            taskNombreArchivo.value = '';
+            taskExtension.value = '';
+            taskFileSize.value = '';
+        }
+
+        function getFileExtension(filename) {
+            return filename.split('.').pop().toLowerCase();
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024, sizes = ['Bytes', 'KB', 'MB', 'GB'], i = Math.floor(Math.log(bytes) / Math.log(k));
+            return (bytes / Math.pow(k, i)).toFixed(2) + ' ' + sizes[i];
+        }
+
+        function showStatusMessage(msg, type) {
+            const existing = document.querySelector('.status-message'); if (existing) existing.remove();
+            const div = document.createElement('div'); div.className = `status-message status-${type}`; div.textContent = msg;
+            dropAreaTask.parentNode.insertBefore(div, dropAreaTask.nextSibling);
+            setTimeout(() => { div.remove(); }, 3000);
+        }
+
+        // Funciones globales
+        window.getObservationFile = () => currentFile;
+        window.clearObservationFile = removeFile;
+        window.removeFile1 = removeFile1;
+    }
+
     function openTarjetaModal(idPlanDetalle, idRequerimientoDetalle, idObservacion, dia) {
         $.get("@Url.Action("FormTarjeta","PlanSemanal")", {
             idPlanSemana: ID_PLAN,
@@ -1958,9 +2354,25 @@
             $("#hdAsociado").val(idObservacion)
             initTarjetaCombos();
             initTrabajadorCombo();
+            SetupEvListenersTask();
+           
 
 
             modalTarjeta.show();
+            setTimeout(() => {
+
+                if (idPlanDetalle > 0) {
+
+                    var nombreArchivo = $("#task_nombreArchivo").val();
+                    var extension = $("#task_extension").val();
+                    if (nombreArchivo && extension) {
+                        cargarArchivoAdjuntoTask(nombreArchivo, extension, idPlanDetalle);
+                    } else {
+                        // Limpiar la vista previa si no hay archivo
+                        limpiarCamposArchivo();
+                    }
+                }
+            }, 400)
 
         }).fail(function () {
             toastr.error("No se pudo cargar el formulario");
@@ -2114,9 +2526,11 @@
         // ==========================================
         // COMPONENTE DE SUBIDA DE ARCHIVOS PARA EL MODAL
         // ==========================================
-
+        //=== TAREAS ===//
+      
         document.addEventListener('DOMContentLoaded', function() {
             // Elementos del DOM específicos para el modal
+            //=== OBSERVACION ===//
             const dropArea = document.getElementById('drop-area-obs');
             const fileInput = document.getElementById('obs_file');
             const selectFileBtn = document.getElementById('select-file-btn-obs');
@@ -2125,6 +2539,9 @@
             const removeFileBtn = document.getElementById('remove-file-btn-obs');
             const previewName = document.getElementById('preview-name-obs');
             const previewSize = document.getElementById('preview-size-obs');
+
+
+    
 
             // Campos ocultos para almacenar información del archivo
             const obsNombreArchivo = document.getElementById('obs_nombreArchivo');
@@ -2137,27 +2554,33 @@
             // Eventos principales
             setupEventListeners();
 
+          
             function setupEventListeners() {
                 // Eventos del área de arrastrar y soltar
                 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                     dropArea.addEventListener(eventName, preventDefaults, false);
                 });
+               
 
                 ['dragenter', 'dragover'].forEach(eventName => {
                     dropArea.addEventListener(eventName, highlight, false);
                 });
 
+               
                 ['dragleave', 'drop'].forEach(eventName => {
                     dropArea.addEventListener(eventName, unhighlight, false);
                 });
 
+               
                 dropArea.addEventListener('drop', handleDrop, false);
+               
 
                 // Evento de click en el área de arrastrar y soltar (solo para el área, no para el botón)
                dropArea.addEventListener('click', () => {
-                    fileInput.click();
+                   fileInput.click();
+                   
                 });
-
+             
                 // Input de archivo
                 fileInput.addEventListener('change', handleFile, false);
 
@@ -2171,6 +2594,7 @@
                     $("#obs_nombreArchivo").val("");
                     $("#obs_extension").val("");
                 });
+
 
             }
 

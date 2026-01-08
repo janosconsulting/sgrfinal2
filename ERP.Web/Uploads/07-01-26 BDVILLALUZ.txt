@@ -1,0 +1,764 @@
+--07-01-26
+-- ACTIVIDADES REALIZADAS
+-- AGREGACION DE VALIDACION DE LOS CAMPOS GRADO DE INSTRUCCION , FECHA DE NACIMIENTO Y TELEFONO DE REFERENCIA
+EN LOS FORMULARIO DE CONTRATO (REGISTRO) Y TRANSFERENCIA (REGISTRO, EDICION)
+
+-- CORRECCION EN IMPRIMIR RENUNCIA (CAMBIAR LA INFORMACION DE LA CABECERA);
+
+
+
+
+--actualizacion de sp : agreacion de campos de telefono2, fechaNacimiento y idGradoInstruccion
+ALTER PROCEDURE [dbo].[sp_ListarDetalleTransferenciaAdquiriente]
+@idTransferenciaLote INT = 5
+AS 
+BEGIN
+	SELECT
+	tla.idTransferenciaLoteAdquiriente,
+	P.idPersona as id,
+	CONCAT(ISNULL(p.nombres, ''), ' ',ISNULL(p.apellidoPaterno, ''), ' ',ISNULL(p.apellidoMaterno, '') ) as adquiriente,
+	p.idTipoIdentidad,
+	p.nroIdentidad,
+	p.sexo,
+	p.estadoCivil,
+	p.ocupacion,
+	U.Departamento,
+	U.Provincia,
+	U.CodUbigeo as Distrito,
+	U.Distrito AS Distrito1,
+	P.telefono2,
+	p.fechaNacimiento,
+	ISNULL(p.idGradoInstruccion, 0) AS idGradoInstruccion,
+	p.direccion,
+	p.telefonos
+	FROM  OPE.TransferenciaLoteAdquiriente tla
+	INNER JOIN MAN.Persona p
+	ON p.idPersona = tla.idCliente
+	INNER JOIN MAN.Ubigeo U
+	ON U.CodUbigeo = p.ubigeo
+	WHERE tla.idTransferenciaLote = @idTransferenciaLote AND tla.idEstado != 2;
+END
+-- ACTUALIZACION DE SP EN LA QUE SE AGREGO EL CAMPO MONEDA
+ALTER PROCEDURE [dbo].[sp_ListarTransferenciasLote]
+    @idEmpresa   INT,
+    @fechaInicio DATETIME,
+    @fechaFin    DATETIME
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        tl.idTransferenciaLote,
+        c.idContrato,
+        /* Transferentes (ContratoCliente) */
+        (
+            SELECT STUFF((
+                SELECT ', ' +
+                       LTRIM(RTRIM(ISNULL(p2.nombres, ''))) + ' ' +
+                       LTRIM(RTRIM(ISNULL(p2.apellidoPaterno, ''))) + ' ' +
+                       LTRIM(RTRIM(ISNULL(p2.apellidoMaterno, '')))
+                FROM MAN.Persona p2
+                WHERE p2.idPersona IN (
+                    SELECT cc.idCliente
+                    FROM OPE.ContratoCliente cc
+                    WHERE cc.idContrato = c.idContrato
+                      AND ISNULL(cc.idEstado, 0) <> 2
+                )
+                FOR XML PATH(''), TYPE
+            ).value('.', 'nvarchar(max)'), 1, 2, '')
+        ) AS transferentes,
+        /* Adquirientes (TransferenciaLoteAdquiriente) */
+        (
+            SELECT STUFF((
+                SELECT ', ' +
+                       LTRIM(RTRIM(ISNULL(p3.nombres, ''))) + ' ' +
+                       LTRIM(RTRIM(ISNULL(p3.apellidoPaterno, ''))) + ' ' +
+                       LTRIM(RTRIM(ISNULL(p3.apellidoMaterno, '')))
+                FROM MAN.Persona p3
+                WHERE p3.idPersona IN (
+                    SELECT ta.idCliente
+                    FROM OPE.TransferenciaLoteAdquiriente ta
+                    WHERE ta.idTransferenciaLote = tl.idTransferenciaLote
+                      AND ISNULL(ta.idEstado, 0) <> 2
+                )
+                FOR XML PATH(''), TYPE
+            ).value('.', 'nvarchar(max)'), 1, 2, '')
+        ) AS adquirientes,
+        CONVERT(varchar(10), c.fechaOperacion, 103) + ' ' + CONVERT(varchar(8), c.fechaOperacion, 108) AS fechaOperacion,
+        tl.precio,
+		m.nombre as moneda,
+        tl.usuarioRegistra,
+        CONVERT(varchar(10), tl.fechaRegistro, 103) + ' ' + CONVERT(varchar(8), tl.fechaRegistro, 108) AS fechaRegistro
+    FROM OPE.TransferenciaLote tl
+    INNER JOIN OPE.Contrato c
+        ON tl.idContrato = c.idContrato
+	INNER JOIN MAN.Moneda m
+		ON m.idMoneda = tl.idMoneda
+    WHERE c.idEmpresa = @idEmpresa
+	  AND tl.idEstado != 2
+      AND CAST(tl.fechaRegistro AS date)
+          BETWEEN CAST(@fechaInicio AS date) AND CAST(@fechaFin AS date)
+    ORDER BY tl.idTransferenciaLote DESC;
+END
+
+
+-- EXCLUIR REGISTRO DE CONTRATOPRODUCTO ESTEN REGISTRADO EN RENUNCIA DE TIPO 1
+USE [bdVillaLuz]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ReporteDashboardProyectoTodasManzanas]    Script Date: 7/01/2026 18:12:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[sp_ReporteDashboardProyectoTodasManzanas]      
+	@idProyecto INT = 331     
+AS     
+    
+ CREATE TABLE #lotes (    
+	idProducto INT,    
+	nombre VARCHAR(400),    
+	idManzana INT,    
+	manzana VARCHAR(200),    
+	proyecto VARCHAR(300),    
+	stock INT,    
+	importe DECIMAL(12,2),    
+	cobrado DECIMAL(12,2),    
+	pendiente DECIMAL(12,2)    
+ );    
+     
+    
+	 INSERT INTO #lotes (idProducto, nombre,idManzana, manzana,proyecto,stock,importe,cobrado,pendiente)    
+	 SELECT    
+		 p.idProducto,    
+		 p.nombre,    
+		 m.idManzana,    
+		 m.nombre as manzana,    
+		 pl.nombre as proyecto,    
+		 s.cantidad,    
+		 (    
+			 select     
+			 sum(cp.subTotal)    
+			 from ope.ContratoProducto cp    
+			 where cp.idProducto = p.idProducto 
+			 AND cp.idEstado != 2   
+			 AND NOT EXISTS (
+                    SELECT 1
+                    FROM ope.Renuncia r
+                    WHERE r.idContratoProducto = cp.idContratoProducto
+                      AND r.tipo = 1
+              )
+		 ),    
+		 (    
+			 select     
+			 sum(cp.pagado)    
+			 from ope.ContratoProducto cp    
+			 where cp.idProducto = p.idProducto 
+			 AND cp.idEstado != 2 
+			 AND NOT EXISTS (
+                    SELECT 1
+                    FROM ope.Renuncia r
+                    WHERE r.idContratoProducto = cp.idContratoProducto
+                      AND r.tipo = 1
+              )
+		 ),    
+		 (    
+			 select     
+			 sum(cp.subTotal-cp.pagado)    
+			 from ope.ContratoProducto cp    
+			 where cp.idProducto = p.idProducto 
+				AND cp.idEstado != 2  
+				AND NOT EXISTS (
+					SELECT 1
+					FROM ope.Renuncia r
+					WHERE r.idContratoProducto = cp.idContratoProducto
+						AND r.tipo = 1
+				)
+		 )    
+	from    
+	man.Producto p    
+	 inner join man.Manzana m    
+	  on m.idManzana = p.idManzana    
+	 inner join man.ProyectoLotizacion pl    
+	  on pl.idProyectoLotizacion = m.idProyectoLotizacion    
+	 inner join man.Saldo s     
+	  on s.idProducto = p.idProducto    
+	where m.idEstado != 2 and p.idEstado != 2    
+	and pl.idProyectoLotizacion = @idProyecto    
+	and s.esVisible is not null;    
+    
+	SELECT      
+		COUNT(1) AS totalLotes,    
+		SUM(IIF(stock = 0,1,0)) AS totalVendidos,      
+		SUM(IIF(stock = 1,1,0)) as totalDisponibles,      
+		SUM(IIF(stock = 0,importe,0)) as montoVendido,    
+		SUM(cobrado) as cobrado,    
+		sum(pendiente) as pendiente    
+	FROM    
+	#lotes;    
+    
+	SELECT    
+		l.idManzana,    
+		l.manzana,    
+		COUNT(1) as totalLotes,    
+		SUM(IIF(l.stock = 0,1,0)) AS vendido,    
+		SUM(IIF(l.stock = 1,1,0)) as disponibles,    
+		SUM(IIF(l.stock = 0,importe,0)) as importe    
+		-- SUM(importe) as importe    
+	FROM    
+	#lotes l    
+	GROUP BY l.idManzana,l.manzana    
+    
+	select      
+		fp.idFormaPago,      
+		fp.nombre as formaPago,      
+		COUNT(1) AS cantidad,     
+		SUM(c.totalImporte) as importe      
+	from      
+	ope.Contrato C      
+	inner join man.FormaPago fp      
+		on fp.idFormaPago = c.idFormaPago      
+	WHERE C.idProyecto = @idProyecto AND C.idEstado != 2    
+	GROUP BY fp.idFormaPago,fp.nombre    
+	;     
+     
+    
+	 SELECT    
+	 t.periodo,    
+	 sum(t.proyectado) as proyectado,    
+	 sum(t.real) as real,    
+	 100*sum(t.real)/sum(t.proyectado) as porCumplimiento    
+	 from    
+	 (    
+		 select    
+		  FORMAT(c.fechaOperacion, 'yyyy-MM') AS periodo,    
+		  c.totalImporte as proyectado,    
+		  c.totalImporte as real    
+		 from    
+		 ope.Contrato c    
+		 where c.idProyecto = @idProyecto and c.idEstado != 2 AND c.idFormaPago = 1    
+     
+		 union    
+    
+		 select    
+		  FORMAT(cc.fechaPago, 'yyyy-MM') AS periodo,    
+		  cc.importe as proyectado,    
+		  isnull(cc.pagado,0) as real    
+		 from    
+		 ope.Contrato c    
+		  inner join ope.ContratoCuota cc    
+		   on cc.idContrato = c.idContrato    
+		 where c.idProyecto = @idProyecto and c.idEstado != 2 AND c.idFormaPago = 2    
+     
+	 )    
+	 as     
+	 t    
+	 group by t.periodo    
+	 ORDER BY CAST(t.periodo + '-01' AS DATE);     
+	 ;    
+    
+	SELECT TOP 10    
+		p.nombres AS cliente,    
+		COUNT(cl.idProducto) AS lotes,    
+	 SUM(cl.subTotal) as importe    
+	FROM ope.Contrato c    
+	INNER JOIN man.Persona p    
+		ON p.idPersona = c.idCliente    
+	INNER JOIN ope.ContratoProducto cl    
+		ON cl.idContrato = c.idContrato 
+		AND NOT EXISTS (
+            SELECT 1
+            FROM ope.Renuncia r
+            WHERE r.idContratoProducto = cl.idContratoProducto
+              AND r.tipo = 1
+       )
+	WHERE c.idProyecto = @idProyecto    
+	  AND c.idEstado != 2    
+	GROUP BY p.nombres    
+	ORDER BY lotes DESC,importe DESC;    
+    
+	/*CUMPLIMIENTO DE PAGOS POR CLIENTE */    
+	DECLARE @hoy date = CAST(GETDATE() AS date);    
+    
+	SELECT    
+		p.nombres        AS cliente,    
+		p.idPersona as idCliente,    
+		COUNT(*)                                     AS totalCuotas,    
+		SUM(CASE     
+			  WHEN cl.fechaPago < @hoy AND ISNULL(cl.pagado,0) < cl.importe     
+			  THEN 1 ELSE 0     
+			END)                                     AS cuotasVencidas,    
+		-- % de cumplimiento = cuotas pagadas / total cuotas    
+		CAST(    
+		  100.0 * SUM(CASE WHEN ISNULL(cl.pagado,0) >= cl.importe THEN 1 ELSE 0 END)    
+		  / NULLIF(COUNT(*),0)    
+		  AS DECIMAL(6,2)    
+	  ) AS cumplimientoPorc,
+	   SUM(CASE     
+			  WHEN cl.fechaPago < @hoy AND ISNULL(cl.pagado,0) < cl.importe     
+			  THEN (cl.importe - isnull(cl.pagado,0)) ELSE 0     
+			END) as totalVencido,
+	   SUM(cl.importe) as totalImporte
+	FROM ope.Contrato c    
+	JOIN man.Persona p       ON p.idPersona  = c.idCliente    
+	JOIN ope.ContratoCuota cl ON cl.idContrato = c.idContrato    
+	WHERE c.idProyecto = @idProyecto    
+	  AND c.idEstado   <> 2          -- contratos activos    
+	  AND cl.idEstado  = 1           -- cuotas válidas (ajusta si aplica)    
+	  AND cl.orden != 0    
+	GROUP BY p.nombres, p.idPersona   
+	ORDER BY CumplimientoPorc ASC;   -- o ASC si quieres de menor a mayor    
+    
+--exec dbo.sp_ReporteDashboardProyectoTodasManzanas      
+    
+	/*CARTERA ACTIVA POR CLIENTE */    
+	SELECT    
+		p.nombres AS cliente,    
+	 p.idPersona as idCliente,    
+		CAST(SUM(cl.importe) AS DECIMAL(18,2))                                                       AS totalAPagar,    
+		CAST(SUM(ISNULL(cl.pagado,0)) AS DECIMAL(18,2))                                              AS pagado,    
+		CAST(SUM(CASE WHEN ISNULL(cl.pagado,0) < cl.importe     
+					  THEN cl.importe - ISNULL(cl.pagado,0) ELSE 0 END) AS DECIMAL(18,2))           AS pendiente,    
+		SUM(CASE WHEN ISNULL(cl.pagado,0) < cl.importe THEN 1 ELSE 0 END)                            AS cuotasPorPagar,    
+		--CONVERT(date, MAX(CASE WHEN ISNULL(cl.pagado,0) > 0 THEN cl.fechaPagado END))                AS fechaUltimoPago    
+	 CONVERT(VARCHAR, MAX(CASE WHEN ISNULL(cl.pagado,0) > 0 THEN cl.fechaPagado END), 23) AS fechaUltimoPago    
+	FROM ope.Contrato c    
+	JOIN man.Persona       p  ON p.idPersona   = c.idCliente    
+	JOIN ope.ContratoCuota cl ON cl.idContrato = c.idContrato    
+	WHERE c.idProyecto = @idProyecto    
+	  AND c.idEstado  <> 2          -- contratos activos (ajusta si aplica)    
+	  AND cl.idEstado = 1       
+	  --AND cl.orden != 0 -- cuotas válidas/activas    
+	GROUP BY p.nombres, p.idPersona    
+	ORDER BY 5 desc;             -- o por Pendiente DESC si prefieres    
+
+
+	;WITH BASE AS
+	(
+		SELECT
+			p.nombres           AS cliente,
+			p.idPersona         AS idCliente,
+			c.idContrato,
+			cl.importe,
+			ISNULL(cl.pagado,0) AS pagado,
+			cl.fechaPago        AS fechaVcto,           -- asumimos: fecha de VENCIMIENTO (ajusta si tu columna se llama fechaVcto)
+			CASE 
+				WHEN ISNULL(cl.pagado,0) >= cl.importe THEN 0
+				ELSE cl.importe - ISNULL(cl.pagado,0)
+			END AS saldoCuota,
+			CASE 
+				WHEN cl.fechaPago < @hoy AND ISNULL(cl.pagado,0) < cl.importe 
+					 THEN DATEDIFF(DAY, cl.fechaPago, @hoy)
+				ELSE 0
+			END AS DPD
+		FROM ope.Contrato c
+		JOIN man.Persona p         ON p.idPersona   = c.idCliente
+		JOIN ope.ContratoCuota cl  ON cl.idContrato = c.idContrato
+		WHERE c.idProyecto = @idProyecto
+		  AND c.idEstado   <> 2         -- contratos activos (ajusta si aplica)
+		  AND cl.idEstado   = 1         -- cuotas válidas (ajusta si aplica)
+		  AND cl.orden     <> 0
+	)
+	SELECT
+		b.cliente,
+		b.idCliente,
+
+		-- Métricas generales
+		COUNT(*)                                           AS totalCuotas,
+		SUM(CASE WHEN b.fechaVcto < @hoy AND b.saldoCuota > 0 THEN 1 ELSE 0 END) AS cuotasVencidas,
+		CAST( 100.0 * SUM(CASE WHEN b.pagado >= b.importe THEN 1 ELSE 0 END) 
+			  / NULLIF(COUNT(*),0) AS DECIMAL(6,2))        AS cumplimientoPorc,
+
+		SUM(b.importe)                                     AS totalImporte,
+		SUM(b.pagado)                                      AS totalPagado,
+		SUM(b.saldoCuota)                                  AS saldoTotal,
+
+		-- Buckets de deuda vencida por días de atraso
+		SUM(CASE WHEN b.saldoCuota > 0 AND b.fechaVcto < @hoy AND b.DPD BETWEEN  1 AND 30 THEN b.saldoCuota ELSE 0 END) AS venc_1_30,
+		SUM(CASE WHEN b.saldoCuota > 0 AND b.fechaVcto < @hoy AND b.DPD BETWEEN 31 AND 60 THEN b.saldoCuota ELSE 0 END) AS venc_31_60,
+		SUM(CASE WHEN b.saldoCuota > 0 AND b.fechaVcto < @hoy AND b.DPD BETWEEN 61 AND 90 THEN b.saldoCuota ELSE 0 END) AS venc_61_90,
+		SUM(CASE WHEN b.saldoCuota > 0 AND b.fechaVcto < @hoy AND b.DPD > 90                 THEN b.saldoCuota ELSE 0 END) AS venc_91_mas,
+
+		-- Total vencido
+		SUM(CASE WHEN b.saldoCuota > 0 AND b.fechaVcto < @hoy THEN b.saldoCuota ELSE 0 END) AS totalVencido
+	FROM BASE b
+	GROUP BY b.cliente, b.idCliente
+	ORDER BY totalVencido DESC, venc_91_mas DESC;  -- orden sugerido (ajusta a tu preferencia)
+ 
+	DROP TABLE #lotes;    
+
+
+
+--	select * from ope.Renuncia 
+
+
+-- X MANZANA EXCLUIR LA RENUNCIA X TIPO 1 
+USE [bdVillaLuz]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ReporteDashboardProyectoxManzana]    Script Date: 7/01/2026 18:33:42 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[sp_ReporteDashboardProyectoxManzana]-- 7,37
+	@idProyecto INT =	333,
+	@idManzana INT = 10247
+AS 
+
+IF OBJECT_ID('tempdb..#tmpContratos') IS NOT NULL DROP Table #tmpContratos
+
+ CREATE TABLE #lotes (
+        idProducto INT,
+        nombre VARCHAR(400),
+		idManzana INT,
+		manzana VARCHAR(200),
+		proyecto VARCHAR(300),
+		stock INT,
+		importe DECIMAL(12,2),
+		cobrado DECIMAL(12,2),
+		pendiente DECIMAL(12,2),
+		idContrato INT
+ );
+ 
+ INSERT INTO #lotes (idProducto, nombre,idManzana, manzana,proyecto,stock,importe,cobrado,pendiente,idContrato)
+ select
+ p.idProducto,
+ p.nombre,
+ m.idManzana,
+ m.nombre as manzana,
+ pl.nombre as proyecto,
+ s.cantidad,
+  (
+	select 
+	sum(cp.subTotal)
+	from ope.ContratoProducto cp
+	where cp.idProducto = p.idProducto and cp.idEstado != 2
+	 AND NOT EXISTS (
+                    SELECT 1
+                    FROM ope.Renuncia r
+                    WHERE r.idContratoProducto = cp.idContratoProducto
+                      AND r.tipo = 1
+              )
+ ),
+  (
+	select 
+	sum(cp.pagado)
+	from ope.ContratoProducto cp
+	where cp.idProducto = p.idProducto and cp.idEstado != 2
+	 AND NOT EXISTS (
+                    SELECT 1
+                    FROM ope.Renuncia r
+                    WHERE r.idContratoProducto = cp.idContratoProducto
+                      AND r.tipo = 1
+              )
+ ),
+ (
+	select 
+	sum(cp.subTotal-cp.pagado)
+	from ope.ContratoProducto cp
+	where cp.idProducto = p.idProducto and cp.idEstado != 2
+	 AND NOT EXISTS (
+                    SELECT 1
+                    FROM ope.Renuncia r
+                    WHERE r.idContratoProducto = cp.idContratoProducto
+                      AND r.tipo = 1
+              )
+ ),
+ isnull((
+	select 
+	max(cp.idContrato)
+	from ope.ContratoProducto cp
+	where cp.idProducto = p.idProducto and cp.idEstado != 2
+	 AND NOT EXISTS (
+                    SELECT 1
+                    FROM ope.Renuncia r
+                    WHERE r.idContratoProducto = cp.idContratoProducto
+                      AND r.tipo = 1
+              )
+ ),0)
+from
+man.Producto p
+ inner join man.Manzana m
+  on m.idManzana = p.idManzana
+ inner join man.ProyectoLotizacion pl
+  on pl.idProyectoLotizacion = m.idProyectoLotizacion
+ inner join man.Saldo s 
+  on s.idProducto = p.idProducto and s.idEstado = 1 and isnull(s.esVisible,0) = 1
+where m.idEstado != 2 and p.idEstado != 2
+and pl.idProyectoLotizacion = @idProyecto
+
+and m.idManzana = @idManzana
+;
+
+
+SELECT  
+COUNT(1) AS totalLotes,
+SUM(IIF(stock = 0,1,0)) AS totalVendidos,  
+SUM(IIF(stock = 1,1,0)) as totalDisponibles,  
+SUM(IIF(stock = 0,importe,0)) as montoVendido,
+SUM(cobrado) as cobrado,
+sum(pendiente) as pendiente
+FROM
+#lotes;
+
+
+SELECT
+ l.nombre as lote,
+ IIF(l.stock = 0,'VENDIDO','DISPONIBLE') AS estado,
+ cl.nombres as cliente
+FROM
+#lotes l
+ left join ope.Contrato c
+  on c.idContrato = l.idContrato
+ left join man.Persona cl
+  on cl.idPersona = c.idCliente
+WHERE l.idManzana = @idManzana
+
+select
+distinct
+ c.idContrato,
+ cp.subTotal as totalImporte,
+ c.idCliente,
+ c.idProyecto,
+ c.idEstado,
+ c.fechaOperacion,
+ c.idFormaPago
+into #tmpContratos
+from
+ope.Contrato c
+  inner join ope.ContratoProducto cp
+   on cp.idContrato = c.idContrato
+    AND NOT EXISTS (
+                    SELECT 1
+                    FROM ope.Renuncia r
+                    WHERE r.idContratoProducto = cp.idContratoProducto
+                      AND r.tipo = 1
+              )
+  inner join man.Producto p
+   on p.idProducto = cp.idProducto
+  inner join man.Manzana m
+   on m.idManzana = p.idManzana
+where c.idEstado != 2 and m.idManzana = @idManzana
+
+ select  
+   fp.idFormaPago,  
+   fp.nombre as formaPago,  
+   COUNT(1) AS cantidad, 
+   SUM(c.totalImporte) as importe  
+ from  
+ #tmpContratos C  
+  inner join man.FormaPago fp  
+   on fp.idFormaPago = c.idFormaPago  
+ WHERE C.idProyecto = @idProyecto AND C.idEstado != 2
+ GROUP BY fp.idFormaPago,fp.nombre
+ 
+ ; 
+ 
+ select
+ t.periodo,
+ sum(t.proyectado) as proyectado,
+ sum(t.real) as real,
+ 100*sum(t.real)/sum(t.proyectado) as porCumplimiento
+ from
+ (
+ select
+  FORMAT(c.fechaOperacion, 'yyyy-MM') AS periodo,
+  c.totalImporte as proyectado,
+  c.totalImporte as real
+ from
+ #tmpContratos c
+ where c.idProyecto = @idProyecto and c.idEstado != 2 AND c.idFormaPago = 1
+ 
+ union
+
+ select
+  FORMAT(cc.fechaPago, 'yyyy-MM') AS periodo,
+  cc.importe as proyectado,
+  isnull(cc.pagado,0) as real
+ from
+ #tmpContratos c
+  inner join ope.ContratoCuota cc
+   on cc.idContrato = c.idContrato
+ where c.idProyecto = @idProyecto and c.idEstado != 2 AND c.idFormaPago = 2
+ 
+ )
+ as 
+ t
+ group by t.periodo
+ ORDER BY CAST(t.periodo + '-01' AS DATE); 
+ ;
+
+ --select * from ope.ContratoCuota
+ /*
+ select  
+  py.*
+ from  
+ ope.ProyeccionCobranza py  
+  inner join ope.Contrato c  
+   on c.idContrato = py.idContrato  
+   where c.idProyecto = @idProyecto;  
+  
+  */
+
+
+SELECT TOP 10
+    p.nombres AS cliente,
+    COUNT(cl.idProducto) AS lotes,
+	SUM(cl.subTotal) as importe
+FROM #tmpContratos c
+INNER JOIN man.Persona p
+    ON p.idPersona = c.idCliente
+INNER JOIN ope.ContratoProducto cl
+    ON cl.idContrato = c.idContrato
+	 AND NOT EXISTS (
+                    SELECT 1
+                    FROM ope.Renuncia r
+                    WHERE r.idContratoProducto = cl.idContratoProducto
+                      AND r.tipo = 1
+              )
+WHERE c.idProyecto = @idProyecto
+  AND c.idEstado != 2
+GROUP BY p.nombres
+ORDER BY lotes DESC,importe DESC;
+
+/*CUMPLIMIENTO DE PAGOS POR CLIENTE */
+DECLARE @hoy date = CAST(GETDATE() AS date);
+
+SELECT
+    p.nombres                                   AS cliente,
+    COUNT(*)                                     AS totalCuotas,
+    SUM(CASE 
+          WHEN cl.fechaPago < @hoy AND ISNULL(cl.pagado,0) < cl.importe 
+          THEN 1 ELSE 0 
+        END)                                     AS cuotasVencidas,
+    -- % de cumplimiento = cuotas pagadas / total cuotas
+    CAST(
+      100.0 * SUM(CASE WHEN ISNULL(cl.pagado,0) >= cl.importe THEN 1 ELSE 0 END)
+      / NULLIF(COUNT(*),0)
+      AS DECIMAL(6,2)
+    ) AS cumplimientoPorc,
+   SUM(CASE     
+          WHEN cl.fechaPago < @hoy AND ISNULL(cl.pagado,0) < cl.importe     
+          THEN (cl.importe - isnull(cl.pagado,0)) ELSE 0     
+        END) as totalVencido,
+   SUM(cl.importe) as totalImporte
+FROM #tmpContratos c
+JOIN man.Persona p       ON p.idPersona  = c.idCliente
+JOIN ope.ContratoCuota cl ON cl.idContrato = c.idContrato
+WHERE c.idProyecto = @idProyecto
+  AND c.idEstado   <> 2          -- contratos activos
+  AND cl.idEstado  = 1           -- cuotas válidas (ajusta si aplica)
+  AND cl.orden != 0
+GROUP BY p.nombres
+ORDER BY CumplimientoPorc DESC;   -- o ASC si quieres de menor a mayor
+
+--exec dbo.sp_ReporteDashboardProyectoTodasManzanas  
+
+/*CARTERA ACTIVA POR CLIENTE */
+SELECT
+    p.nombres AS cliente,
+    CAST(SUM(cl.importe) AS DECIMAL(18,2))                                                       AS totalAPagar,
+    CAST(SUM(ISNULL(cl.pagado,0)) AS DECIMAL(18,2))                                              AS pagado,
+    CAST(SUM(CASE WHEN ISNULL(cl.pagado,0) < cl.importe 
+                  THEN cl.importe - ISNULL(cl.pagado,0) ELSE 0 END) AS DECIMAL(18,2))           AS pendiente,
+    SUM(CASE WHEN ISNULL(cl.pagado,0) < cl.importe THEN 1 ELSE 0 END)                            AS cuotasPorPagar,
+    --CONVERT(date, MAX(CASE WHEN ISNULL(cl.pagado,0) > 0 THEN cl.fechaPagado END))                AS fechaUltimoPago
+	    CONVERT(VARCHAR, MAX(CASE WHEN ISNULL(cl.pagado,0) > 0 THEN cl.fechaPagado END), 23) AS fechaUltimoPago
+FROM #tmpContratos c
+JOIN man.Persona       p  ON p.idPersona   = c.idCliente
+JOIN ope.ContratoCuota cl ON cl.idContrato = c.idContrato
+WHERE c.idProyecto = @idProyecto
+  AND c.idEstado  <> 2          -- contratos activos (ajusta si aplica)
+  AND cl.idEstado = 1   
+  AND cl.orden != 0 -- cuotas válidas/activas
+GROUP BY p.nombres
+ORDER BY p.nombres;             -- o por Pendiente DESC si prefieres
+
+
+;WITH BASE AS
+(
+    SELECT
+        p.nombres           AS cliente,
+        p.idPersona         AS idCliente,
+        c.idContrato,
+        cl.importe,
+        ISNULL(cl.pagado,0) AS pagado,
+        cl.fechaPago        AS fechaVcto,           -- asumimos: fecha de VENCIMIENTO (ajusta si tu columna se llama fechaVcto)
+        CASE 
+            WHEN ISNULL(cl.pagado,0) >= cl.importe THEN 0
+            ELSE cl.importe - ISNULL(cl.pagado,0)
+        END AS saldoCuota,
+        CASE 
+            WHEN cl.fechaPago < @hoy AND ISNULL(cl.pagado,0) < cl.importe 
+                 THEN DATEDIFF(DAY, cl.fechaPago, @hoy)
+            ELSE 0
+        END AS DPD
+    FROM ope.Contrato c
+    JOIN man.Persona p         ON p.idPersona   = c.idCliente
+    JOIN ope.ContratoCuota cl  ON cl.idContrato = c.idContrato
+    WHERE c.idProyecto = @idProyecto
+      AND c.idEstado   <> 2         -- contratos activos (ajusta si aplica)
+      AND cl.idEstado   = 1         -- cuotas válidas (ajusta si aplica)
+      AND cl.orden     <> 0
+)
+SELECT
+    b.cliente,
+    b.idCliente,
+
+    -- Métricas generales
+    COUNT(*)                                           AS totalCuotas,
+    SUM(CASE WHEN b.fechaVcto < @hoy AND b.saldoCuota > 0 THEN 1 ELSE 0 END) AS cuotasVencidas,
+    CAST( 100.0 * SUM(CASE WHEN b.pagado >= b.importe THEN 1 ELSE 0 END) 
+          / NULLIF(COUNT(*),0) AS DECIMAL(6,2))        AS cumplimientoPorc,
+
+    SUM(b.importe)                                     AS totalImporte,
+    SUM(b.pagado)                                      AS totalPagado,
+    SUM(b.saldoCuota)                                  AS saldoTotal,
+
+    -- Buckets de deuda vencida por días de atraso
+    SUM(CASE WHEN b.saldoCuota > 0 AND b.fechaVcto < @hoy AND b.DPD BETWEEN  1 AND 30 THEN b.saldoCuota ELSE 0 END) AS venc_1_30,
+    SUM(CASE WHEN b.saldoCuota > 0 AND b.fechaVcto < @hoy AND b.DPD BETWEEN 31 AND 60 THEN b.saldoCuota ELSE 0 END) AS venc_31_60,
+    SUM(CASE WHEN b.saldoCuota > 0 AND b.fechaVcto < @hoy AND b.DPD BETWEEN 61 AND 90 THEN b.saldoCuota ELSE 0 END) AS venc_61_90,
+    SUM(CASE WHEN b.saldoCuota > 0 AND b.fechaVcto < @hoy AND b.DPD > 90                 THEN b.saldoCuota ELSE 0 END) AS venc_91_mas,
+
+    -- Total vencido
+    SUM(CASE WHEN b.saldoCuota > 0 AND b.fechaVcto < @hoy THEN b.saldoCuota ELSE 0 END) AS totalVencido
+FROM BASE b
+GROUP BY b.cliente, b.idCliente
+ORDER BY totalVencido DESC, venc_91_mas DESC;  -- orden sugerido (ajusta a tu preferencia)
+ 
+
+DROP TABLE #lotes;
+
+SELECT * FROM MAN.Saldo WHERE IDPRODUCTO in(
+
+	SELECT idProducto  FROM OPE.ContratoProducto WHERE idContratoProducto IN (
+
+		SELECT idContratoProducto FROM OPE.Renuncia WHERE idEstado != 2 AND idEmpresa= 56 AND TIPO = 1
+	)
+
+)
+
+
+--UPDATE s
+--SET 
+--    s.cantidad = 1,
+--    s.ingresos  = 1,
+--    s.salidas   = 0
+--FROM MAN.Saldo s
+--INNER JOIN OPE.ContratoProducto cp
+--    ON cp.idProducto = s.idProducto
+--INNER JOIN OPE.Renuncia r
+--    ON r.idContratoProducto = cp.idContratoProducto
+--WHERE 
+--    r.idEstado <> 2
+--    AND r.idEmpresa = 56
+--    AND r.tipo = 1;
+
+---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+
+
+--BDKEDRO2 USUARIO VISUALIZADO (56) MULTI ALMACENES , (65) UNA EMPRESA PRINCIPAL
+--AGREGACION DE EXPORTAR EL JQGRID DEL STOCK MULTIALMACEN
+--- REALIZAR AJUSTE CUANDO APLICO UNA RENUNCIA EL PRODUCTO SELECCIONADO EN LA RENUNCIA EL STOCK DEBE APLICARSE EN 1 (SALIDA - INGRESO)

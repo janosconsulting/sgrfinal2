@@ -1,7 +1,7 @@
 ﻿@model Mantenimiento.Datos.Entidades.PlanSemanaDetalle
 
 
-@using (Html.BeginForm("GuardarTarjeta", "PlanSemanal", FormMethod.Post, new { id = "frmTarjeta", @class = "form" }))
+@using (Html.BeginForm("GuardarTarjeta", "PlanSemanal", FormMethod.Post, new { id = "frmTarjeta", @class = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -86,6 +86,84 @@
             <option></option>
         </select>
     </div>
+    <!--<div class="mb-5">
+        <label class="form-label fw-bold">Adjunto (opcional)</label>
+
+        <div id="drop-area-tarjeta"
+             class="border border-dashed border-primary text-center p-3 mb-3"
+             style="cursor:pointer">
+
+            <i class="fas fa-cloud-upload-alt fa-2x text-primary mb-2"></i>
+            <p class="mb-0">Arrastra o selecciona un archivo</p>-->
+
+            <!-- INPUT REAL -->
+            <!--<input type="file"
+                   id="tarjeta_file"
+                   name="archivo"-->   <!-- 👈 ESTE name ES CLAVE -->
+            <!--class="d-none"
+            accept="image/*,.pdf">
+        </div>
+
+        <div id="file-preview-tarjeta" style="display:none">
+            <strong id="preview-name-tarjeta"></strong>
+            <span id="preview-size-tarjeta" class="text-muted ms-2"></span>
+            <button type="button"
+                    id="remove-file-btn-tarjeta"
+                    class="btn btn-sm btn-danger ms-2">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    </div>-->
+    <div class="mb-5">
+        <div class="col-md-12">
+            <label class="form-label fw-bold">Adjunto (opcional)</label>
+
+            <!-- Área de arrastrar y soltar -->
+            <div id="drop-area-task" class="drop-area border-2 border-dashed border-primary text-center p-3 mb-3" style="cursor: pointer;">
+                <div class="drop-area-content">
+                    <i class="fas fa-cloud-upload-alt fa-2x text-primary mb-2"></i>
+                    <p class="mb-0">Arrastra y suelta un archivo aquí</p>
+                    <input type="file" id="task_file" name="archivo" class="d-none">
+                </div>
+            </div>
+
+            <!-- Vista previa del archivo -->
+            <div id="file-preview-task" class="file-preview" style="display: none;">
+                <div class="file-item">
+                    <div class="file-info">
+                        <div class="d-flex align-items-center">
+                            <div class="file-icon">
+                                <i class="fas fa-file"></i>
+                            </div>
+                            <div class="file-details">
+                                <div class="file-name" id="preview-name-task">Nombre del archivo</div>
+                                <div class="file-size" id="preview-size-task">Tamaño del archivo</div>
+                            </div>
+                        </div>
+                        <div class="file-actions">
+                            <button class="btn btn-sm btn-remove" type="button" id="remove-file-btn-task" title="Eliminar archivo">
+                                <i class="fas fa-trash" style="color: white"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mensaje cuando no hay archivo -->
+            <div id="no-file-message-task" class="text-center text-muted py-3" style="display: none;">
+                <i class="fas fa-inbox fa-2x mb-2"></i>
+                <p class="mb-0">No hay archivo seleccionado</p>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Campos ocultos para almacenar información del archivo -->
+    <input type="hidden" id="task_nombreArchivo" name="NombreArchivo" value="@Model.NombreArchivo"  />
+    <input type="hidden" id="task_extension" name="Extension" value="@Model.Extension" />
+    <input type="hidden" id="task_fileSize" />
+
 
     <!-- Valores para preselección -->
     <input type="hidden" id="hdSubSelected" value="@Model.idRequerimientoDetalle" />

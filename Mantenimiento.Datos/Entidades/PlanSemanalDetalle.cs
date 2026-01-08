@@ -39,5 +39,8 @@ namespace Mantenimiento.Datos.Entidades
         public DateTime? fechaActualizacion { get; set; }
 
         public int? idPersonaResponsable { get; set; }
+        public string NombreArchivo { get; set; }        
+        public string Extension { get; set; }
+
     }
 }

@@ -121,7 +121,7 @@ namespace ReyDavid.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult GuardarTarjeta(PlanSemanaDetalle tarjeta)
+        public ActionResult GuardarTarjeta(PlanSemanaDetalle tarjeta, HttpPostedFileBase archivo)
         {
             Resultado res = new Resultado();
             try
@@ -136,6 +136,25 @@ namespace ReyDavid.Web.Controllers
                     return Json(new { idResultado = (int)enumTipoMensaje.error, mensaje = "Selecciona un SubRequerimiento." }, JsonRequestBehavior.AllowGet);
 
                 var usuario = Session["usuario"].ToString();
+                // Manejar el archivo si existe
+                string rutaArchivo = null;
+                if (archivo != null && archivo.ContentLength > 0)
+                {
+                    // Definir la ruta donde guardar el archivo, por ejemplo en ~/Uploads/
+                    var uploadsPath = Server.MapPath("~/Uploads/");
+                    if (!Directory.Exists(uploadsPath))
+                    {
+                        Directory.CreateDirectory(uploadsPath);
+                    }
+                    var fileName = Path.GetFileName(archivo.FileName);
+                    rutaArchivo = Path.Combine(uploadsPath, fileName);
+                    archivo.SaveAs(rutaArchivo);
+                    // Guardar nombre y extensión en el objeto
+                    tarjeta.NombreArchivo = archivo.FileName;
+                    tarjeta.Extension = Path.GetExtension(archivo.FileName);
+                    // Si se guarda la ruta en DB, setear oDT.rutaArchivo = rutaArchivo;
+                }
+
 
                 var ok = planSemanalServicio.GuardarTarjeta(tarjeta, usuario);
                 if (ok)
