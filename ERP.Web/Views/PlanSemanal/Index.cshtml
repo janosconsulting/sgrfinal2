@@ -710,6 +710,8 @@
             min-height: 100px;
         }
     }
+
+
 </style>
 
 <!--begin::Content-->
@@ -764,10 +766,27 @@
             <!-- CENTER: Plan Semanal -->
             <div class="col-12 col-xl-7">
                 <div class="card card-flush h-100">
+                    <div class="row pt-5 mx-4">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-8">
+                                    <select id="fTrabajador" class="form-select form-select-sm" style="min-width:220px;" data-control="select2" data-placeholder="Todos">
+                                        <option></option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <select id="fEstado" class="form-select form-select-sm" data-control="select2" data-placeholder="Todos">
+                                        <option value="0">Todos</option>
+                                        <option value="pendiente">Pendiente</option>
+                                        <option value="proceso">En Proceso</option>
+                                        <option value="hecho">Hecho</option>
+                                        <option value="bloqueado">Bloqueado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-header pt-5">
-                        <select id="fTrabajador" class="form-select form-select-sm" style="min-width:220px;" data-control="select2" data-placeholder="Todos">
-                            <option></option>
-                        </select>
                         <div class="card-title d-flex flex-column">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="bi bi-calendar2-week fs-3 text-primary"></i>
@@ -897,7 +916,7 @@
                     <div class="col-md-4">
                         <label class="form-label fw-bold">Observado por</label>
                         <select class="form-select" id="cbo_observadopor">
-                            <option value="1" >Interna</option>
+                            <option value="1">Interna</option>
                             <option value="2">Cliente</option>
                         </select>
                     </div>
@@ -963,7 +982,7 @@
                                     </div>
                                     <div class="file-actions">
                                         <button class="btn btn-sm btn-remove" id="remove-file-btn-obs" title="Eliminar archivo">
-                                            <i class="fas fa-trash" style="color: white"></i> 
+                                            <i class="fas fa-trash" style="color: white"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -1274,12 +1293,31 @@
             CURRENT_SUBREQ_ID = idSubReq;
 
           const lista = r.lista || [];
-          $("#detailPane").html(renderDetailPane(idSubReq, info, lista));
+          // También cargar tareas
+          loadTareas(idSubReq, info, lista);
         });
     }
 
-    function renderDetailPane(idSubReq, info, lista){
-      const head = `
+    function loadTareas(idSubReq, info, observaciones) {
+      $.get("@Url.Action("ListarTareasPorSubRequerimiento","PlanSemanal")", { idRequerimientoDetalle: idSubReq })
+        .done(function(r){
+          if(!r || !r.ok){ toastr.error(r?.error || "Error al listar tareas"); return; }
+          const tareas = r.tareas || [];
+          renderDetailPane(idSubReq, info, observaciones, tareas);
+        })
+        .fail(function(){
+          // Si falla, renderizar solo con observaciones
+          renderDetailPane(idSubReq, info, observaciones, []);
+        });
+    }
+
+    function renderDetailPane(idSubReq, info, lista, tareas = []){
+      // Determinar si hay contenido
+      const hayObs = lista && lista.length > 0;
+      const hayTareas = tareas && tareas.length > 0;
+
+      // Generar HTML de tabs
+      const tabsHtml = `
         <div class="d-flex flex-stack mb-4">
           <div>
             <div class="fw-bold">${esc(info?.reqCodigo || "")} ${esc(info?.reqNombre || "Requerimiento")}</div>
@@ -1290,19 +1328,50 @@
           </button>
         </div>
         <div class="separator mb-4"></div>
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x mb-5 fs-6" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active text-primary fw-bold" data-bs-toggle="tab" href="#tab-obs" aria-selected="${hayObs}" role="tab">
+              <i class="bi bi-chat-dots me-2"></i>Observaciones (${lista.length})
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link  text-primary fw-bold" data-bs-toggle="tab" href="#tab-tareas" aria-selected="${!hayObs && hayTareas}" role="tab">
+              <i class="bi bi-kanban me-2"></i>Tareas (${tareas.length})
+            </a>
+          </li>
+        </ul>
+
+        <!-- Contenido de tabs -->
+        <div class="tab-content" id="detailTabContent">
+          <!-- Tab Observaciones -->
+          <div class="tab-pane fade show active" id="tab-obs" role="tabpanel">
+            ${renderObservaciones(lista, idSubReq)}
+          </div>
+          <!-- Tab Tareas -->
+          <div class="tab-pane fade " id="tab-tareas" role="tabpanel">
+            ${renderTareas(tareas, idSubReq)}
+          </div>
+        </div>
       `;
 
-      if(!lista.length){
-        return head + `
-          <div class="border border-dashed rounded p-4 bg-light">
+      $("#detailPane").html(tabsHtml);
+    }
+
+    function renderObservaciones(lista, idSubReq) {
+      if(!lista || lista.length === 0){
+        return `
+          <div class="border border-dashed rounded p-4 bg-light text-center">
+            <i class="bi bi-inbox fs-2 text-muted mb-2"></i>
             <div class="fw-bold">Sin observaciones</div>
             <div class="text-muted fs-7 mt-1">Este subrequerimiento no tiene observaciones registradas.</div>
           </div>
         `;
       }
 
-      const items = lista.map(o => {
-          const badge = o.estado === "Cerrada" ? "badge-light-success" : "badge-light-warning";
+      return lista.map(o => {
+        const badge = o.estado === "Cerrada" ? "badge-light-success" : "badge-light-warning";
         const sev = (o.severidad || "").toLowerCase();
         const sevBadge = sev === "alta" ? "badge-light-danger" : sev === "baja" ? "badge-light" : "badge-light-primary";
 
@@ -1353,8 +1422,85 @@
           </div>
         `;
       }).join("");
+    }
+    function formatFechaLarga(fecha) {
+        if (!fecha) return '';
+        return new Intl.DateTimeFormat('es-ES', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        }).format(fecha);
+    }
 
-      return head + items;
+
+    function renderTareas(tareas, idSubReq) {
+      if(!tareas || tareas.length === 0){
+        return `
+          <div class="border border-dashed rounded p-4 bg-light text-center">
+            <i class="bi bi-kanban fs-2 text-muted mb-2"></i>
+            <div class="fw-bold">Sin tareas</div>
+            <div class="text-muted fs-7 mt-1">Este subrequerimiento no tiene tareas asociadas.</div>
+          </div>
+        `;
+      }
+
+      return tareas.map(t => {
+        const estado = (t.estado || "pendiente").toLowerCase();
+        const estadoBadge = estado === "hecho" ? "badge-light-success" :
+                           estado === "proceso" ? "badge-light-warning" :
+                           estado === "bloqueado" ? "badge-light-danger" : "badge-light-primary";
+
+        const prioridad = t.prioridad || 2;
+        const priClass = prioridad == 1 ? "text-danger" : prioridad == 2 ? "text-warning" : "text-success";
+
+        return `
+          <div class="d-flex align-items-start gap-3 p-3 border rounded mb-3 bg-white">
+            <div class="symbol symbol-35px symbol-circle ${priClass} bg-light">
+              <div class="symbol-label">
+                <i class="bi bi-kanban"></i>
+              </div>
+            </div>
+
+            <div class="flex-grow-1">
+              <div class="d-flex flex-wrap gap-2 align-items-center">
+                <span class="badge ${estadoBadge}">${esc(t.estado || "Pendiente")}</span>
+                <span class="badge badge-light">P${prioridad}</span>
+                ${t.idObservacion ? `<span class="badge badge-light-info"><i class="bi bi-link-45deg"></i> Con Obs.</span>` : ''}
+                <span class="text-muted fs-8">
+                  ${DAY_NAMES[t.dia || 0]} ${t.fechaDia ? formatFechaLarga(new Date(t.fechaDia)) : ''}
+                </span>
+              </div>
+
+              <div class="mt-2 fw-bold">${esc(t.titulo || "Sin título")}</div>
+
+              <div class="mt-1 text-muted fs-8">
+                <i class="bi bi-person"></i> ${esc(t.responsable || "Sin asignar")}
+                ${t.tieneAdjunto == 1 ? `<i class="bi bi-paperclip ms-2"></i>` : ''}
+              </div>
+
+              <div class="mt-3">
+                <button class="btn btn-sm btn-light-primary" onclick="editarTarea(${t.idPlanDetalle})">
+                  <i class="bi bi-pencil"></i> Editar
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function editarTarea(idPlanDetalle) {
+      // Buscar la tarjeta en cardsData
+      const card = cardsData.find(c => c.idPlanDetalle === idPlanDetalle);
+      if(card) {
+        openTarjetaModal(idPlanDetalle, card.idRequerimientoDetalle, card.idObservacion, card.dia);
+      }
+    }
+
+    function asociarObsATarea(idPlanDetalle, idSubReq) {
+      // Abrir modal de observación para asociar
+      openObsModal(idSubReq);
+      // TODO: Podríamos pasar el idPlanDetalle para asociar después
     }
 
     function openObsModal(idSubReq){
@@ -1756,13 +1902,14 @@
     let filtroTrabajador = null;
 
     function initFiltroTrabajador(){
-      const $f = $("#fTrabajador");
+        const $f = $("#fTrabajador");
+        const $e = $("#fEstado");
 
       $.get("@Url.Action("ListarTrabajadores2", "Trabajador")")
         .done(function(r){
           if(!r || !r.ok){ toastr.error(r?.error || "Error trabajadores"); return; }
-
-          $f.empty().append('<option></option>');
+            filtroTrabajador = 0;
+          $f.empty().append('<option value="0" seleccione>Todos</option>');
           (r.lista||[]).forEach(x=>{
               $f.append(`<option value="${x.idPersona}">${esc(x.nombreCli)}</option>`);
           });
@@ -1773,13 +1920,16 @@
             filtroTrabajador = v ? parseInt(v,10) : null;
             loadCards(); // recarga con filtro
           });
+            $e.on("change", function () {
+                loadCards(); // recarga con filtro
+            });
         });
     }
 
     function loadCards(){
         $.get("@Url.Action("ListarTarjetas","PlanSemanal")", {
             idPlanSemana: ID_PLAN,
-            idPersonaResponsable: filtroTrabajador })
+            idPersonaResponsable: filtroTrabajador, estado: $("#fEstado").val() })
             .done(function(r){
                 if(!r || !r.ok){ toast(r?.error || "Error Cards"); return; }
                 cardsData = r.cards || [];
@@ -1920,7 +2070,10 @@
                             <span class="meta-pill">
                                 <i class="bi bi-calendar-event"></i> ${esc((c.fechaDia || "").substring(0, 10))}
                             </span>
-
+                            ${c.tieneAdjunto == 1 ? `
+                            <span class="meta-pill">
+                                <i class="bi bi-paperclip"></i>
+                            </span>` : ``}
                             <span class="meta-pill pri-${c.prioridad}">
                                 P${c.prioridad}
                             </span>
@@ -1968,9 +2121,10 @@
     // ========= Right panel =========
     function renderDetailEmpty(){
         $("#detailPane").html(`
-          <div class="detailbox">
-            <p class="detail-title">Selecciona un SubRequerimiento</p>
-            <p class="small muted" style="margin:8px 0 0">Aquí verás el detalle y la trazabilidad.</p>
+          <div class="border border-dashed rounded p-4 bg-light text-center">
+            <i class="bi bi-bezier2 fs-2 text-muted mb-2"></i>
+            <div class="fw-bold">Selecciona un SubRequerimiento</div>
+            <div class="text-muted fs-7 mt-1">Aquí verás las observaciones y tareas asociadas.</div>
           </div>
         `);
     }
@@ -1981,17 +2135,12 @@
             return;
         }
 
-        $("#detailPane").html(`
-          <div class="detailbox">
-            <p class="detail-title">${esc(selected.reqCodigo || "")} — ${esc(selected.reqNombre || "")}</p>
-            <div class="detail-meta">
-              <span class="pill"><i class="bi bi-diagram-3"></i> SubReq: <b>${esc(selected.subNombre || ("#"+selected.subId))}</b></span>
-            </div>
-            <div style="margin-top:10px" class="small muted">
-              (Aquí conectas Observaciones reales cuando metas tu ObservacionController.)
-            </div>
-          </div>
-        `);
+        // Si ya hay un subrequerimiento seleccionado, usar loadObservaciones que maneja los tabs
+        loadObservaciones(selected.subId, {
+            reqCodigo: selected.reqCodigo,
+            reqNombre: selected.reqNombre,
+            subNombre: selected.subNombre
+        });
     }
     function asociarObs(idObs, idSubReq) {
         // Abrir el modal de tarjeta enviando el idObservacion
@@ -2355,7 +2504,7 @@
             initTarjetaCombos();
             initTrabajadorCombo();
             SetupEvListenersTask();
-           
+
 
 
             modalTarjeta.show();
@@ -2523,255 +2672,255 @@
     }
 </script>
 <script>
-        // ==========================================
-        // COMPONENTE DE SUBIDA DE ARCHIVOS PARA EL MODAL
-        // ==========================================
-        //=== TAREAS ===//
-      
-        document.addEventListener('DOMContentLoaded', function() {
-            // Elementos del DOM específicos para el modal
-            //=== OBSERVACION ===//
-            const dropArea = document.getElementById('drop-area-obs');
-            const fileInput = document.getElementById('obs_file');
-            const selectFileBtn = document.getElementById('select-file-btn-obs');
-            const filePreview = document.getElementById('file-preview-obs');
-            const noFileMessage = document.getElementById('no-file-message-obs');
-            const removeFileBtn = document.getElementById('remove-file-btn-obs');
-            const previewName = document.getElementById('preview-name-obs');
-            const previewSize = document.getElementById('preview-size-obs');
+    // ==========================================
+    // COMPONENTE DE SUBIDA DE ARCHIVOS PARA EL MODAL
+    // ==========================================
+    //=== TAREAS ===//
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Elementos del DOM específicos para el modal
+        //=== OBSERVACION ===//
+        const dropArea = document.getElementById('drop-area-obs');
+        const fileInput = document.getElementById('obs_file');
+        const selectFileBtn = document.getElementById('select-file-btn-obs');
+        const filePreview = document.getElementById('file-preview-obs');
+        const noFileMessage = document.getElementById('no-file-message-obs');
+        const removeFileBtn = document.getElementById('remove-file-btn-obs');
+        const previewName = document.getElementById('preview-name-obs');
+        const previewSize = document.getElementById('preview-size-obs');
 
 
-    
-
-            // Campos ocultos para almacenar información del archivo
-            const obsNombreArchivo = document.getElementById('obs_nombreArchivo');
-            const obsExtension = document.getElementById('obs_extension');
-            const obsFileSize = document.getElementById('obs_fileSize');
-
-            // Variables de estado
-            let currentFile = null;
-
-            // Eventos principales
-            setupEventListeners();
-
-          
-            function setupEventListeners() {
-                // Eventos del área de arrastrar y soltar
-                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                    dropArea.addEventListener(eventName, preventDefaults, false);
-                });
-               
-
-                ['dragenter', 'dragover'].forEach(eventName => {
-                    dropArea.addEventListener(eventName, highlight, false);
-                });
-
-               
-                ['dragleave', 'drop'].forEach(eventName => {
-                    dropArea.addEventListener(eventName, unhighlight, false);
-                });
-
-               
-                dropArea.addEventListener('drop', handleDrop, false);
-               
-
-                // Evento de click en el área de arrastrar y soltar (solo para el área, no para el botón)
-               dropArea.addEventListener('click', () => {
-                   fileInput.click();
-                   
-                });
-             
-                // Input de archivo
-                fileInput.addEventListener('change', handleFile, false);
-
-                // Botón de eliminar archivo
-                removeFileBtn.addEventListener('click', removeFile);
-                // Botón de eliminar archivo
-                removeFileBtn.addEventListener('click', function () {
-                    removeFile();
-
-                    // Limpiar campos específicos
-                    $("#obs_nombreArchivo").val("");
-                    $("#obs_extension").val("");
-                });
 
 
+        // Campos ocultos para almacenar información del archivo
+        const obsNombreArchivo = document.getElementById('obs_nombreArchivo');
+        const obsExtension = document.getElementById('obs_extension');
+        const obsFileSize = document.getElementById('obs_fileSize');
+
+        // Variables de estado
+        let currentFile = null;
+
+        // Eventos principales
+        setupEventListeners();
+
+
+        function setupEventListeners() {
+            // Eventos del área de arrastrar y soltar
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            });
+
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            });
+
+
+            dropArea.addEventListener('drop', handleDrop, false);
+
+
+            // Evento de click en el área de arrastrar y soltar (solo para el área, no para el botón)
+            dropArea.addEventListener('click', () => {
+                fileInput.click();
+
+            });
+
+            // Input de archivo
+            fileInput.addEventListener('change', handleFile, false);
+
+            // Botón de eliminar archivo
+            removeFileBtn.addEventListener('click', removeFile);
+            // Botón de eliminar archivo
+            removeFileBtn.addEventListener('click', function () {
+                removeFile();
+
+                // Limpiar campos específicos
+                $("#obs_nombreArchivo").val("");
+                $("#obs_extension").val("");
+            });
+
+
+        }
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function highlight(e) {
+            dropArea.classList.add('active');
+        }
+
+        function unhighlight(e) {
+            dropArea.classList.remove('active');
+        }
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const droppedFiles = dt.files;
+
+            if (droppedFiles.length > 0) {
+                handleFile({ target: { files: droppedFiles } });
             }
+        }
 
-            function preventDefaults(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
+        function handleFile(e) {
+            const selectedFile = e.target.files[0];
 
-            function highlight(e) {
-                dropArea.classList.add('active');
-            }
-
-            function unhighlight(e) {
-                dropArea.classList.remove('active');
-            }
-
-            function handleDrop(e) {
-                const dt = e.dataTransfer;
-                const droppedFiles = dt.files;
-
-                if (droppedFiles.length > 0) {
-                    handleFile({ target: { files: droppedFiles } });
-                }
-            }
-
-            function handleFile(e) {
-                const selectedFile = e.target.files[0];
-
-                if (selectedFile) {
-                    if (isValidFile(selectedFile)) {
-                        addFile(selectedFile);
-                    } else {
-                        showStatusMessage(`El archivo "${selectedFile.name}" no es válido.`, 'error');
-                    }
-                }
-
-                // Limpiar el input para permitir seleccionar el mismo archivo de nuevo
-                fileInput.value = '';
-            }
-
-            function isValidFile(file) {
-                // Validación de tamaño máximo (10MB)
-                const maxSize = 10 * 1024 * 1024;
-                if (file.size > maxSize) {
-                    showStatusMessage(`El archivo "${file.name}" excede el tamaño máximo de 10MB.`, 'error');
-                    return false;
-                }
-                return true;
-            }
-
-            function addFile(file) {
-                // Sobre escribe el archivo actual
-                currentFile = file;
-                renderFilePreview();
-                updateHiddenFields();
-                showStatusMessage(`Archivo "${file.name}" seleccionado`, 'success');
-            }
-
-            function removeFile() {
-                currentFile = null;
-                renderFilePreview();
-                clearHiddenFields();
-                showStatusMessage('Archivo eliminado', 'success');
-            }
-            // Expose to global scope
-            window.removeFile = removeFile;
-
-            function renderFilePreview() {
-                if (currentFile) {
-                    // Mostrar toda la sección del adjunto
-                    filePreview.style.display = 'block';
-                    noFileMessage.style.display = 'none';
-                    
-                    // Actualizar información del archivo
-                    previewName.textContent = currentFile.name;
-                    previewSize.textContent = formatFileSize(currentFile.size);
-                    
-                    // Actualizar icono según el tipo de archivo
-                    const fileIcon = filePreview.querySelector('.file-icon i');
-                    const iconClass = getFileIconClass(currentFile);
-                    fileIcon.className = `fas ${iconClass}`;
+            if (selectedFile) {
+                if (isValidFile(selectedFile)) {
+                    addFile(selectedFile);
                 } else {
-                    // Ocultar toda la sección del adjunto
-                    filePreview.style.display = 'none';
-                    noFileMessage.style.display = 'none';
+                    showStatusMessage(`El archivo "${selectedFile.name}" no es válido.`, 'error');
                 }
             }
 
-            function updateHiddenFields() {
-                if (currentFile) {
-                    obsNombreArchivo.value = currentFile.name;
-                    obsExtension.value = getFileExtension(currentFile.name);
-                    obsFileSize.value = currentFile.size;
-                }
+            // Limpiar el input para permitir seleccionar el mismo archivo de nuevo
+            fileInput.value = '';
+        }
+
+        function isValidFile(file) {
+            // Validación de tamaño máximo (10MB)
+            const maxSize = 10 * 1024 * 1024;
+            if (file.size > maxSize) {
+                showStatusMessage(`El archivo "${file.name}" excede el tamaño máximo de 10MB.`, 'error');
+                return false;
             }
+            return true;
+        }
 
-            function clearHiddenFields() {
-                obsNombreArchivo.value = '';
-                obsExtension.value = '';
-                obsFileSize.value = '';
+        function addFile(file) {
+            // Sobre escribe el archivo actual
+            currentFile = file;
+            renderFilePreview();
+            updateHiddenFields();
+            showStatusMessage(`Archivo "${file.name}" seleccionado`, 'success');
+        }
+
+        function removeFile() {
+            currentFile = null;
+            renderFilePreview();
+            clearHiddenFields();
+            showStatusMessage('Archivo eliminado', 'success');
+        }
+        // Expose to global scope
+        window.removeFile = removeFile;
+
+        function renderFilePreview() {
+            if (currentFile) {
+                // Mostrar toda la sección del adjunto
+                filePreview.style.display = 'block';
+                noFileMessage.style.display = 'none';
+
+                // Actualizar información del archivo
+                previewName.textContent = currentFile.name;
+                previewSize.textContent = formatFileSize(currentFile.size);
+
+                // Actualizar icono según el tipo de archivo
+                const fileIcon = filePreview.querySelector('.file-icon i');
+                const iconClass = getFileIconClass(currentFile);
+                fileIcon.className = `fas ${iconClass}`;
+            } else {
+                // Ocultar toda la sección del adjunto
+                filePreview.style.display = 'none';
+                noFileMessage.style.display = 'none';
             }
+        }
 
-            function getFileIconClass(file) {
-                const extension = file.name.split('.').pop().toLowerCase();
-                const iconMap = {
-                    'pdf': 'fa-file-pdf text-danger',
-                    'doc': 'fa-file-word text-primary',
-                    'docx': 'fa-file-word text-primary',
-                    'xls': 'fa-file-excel text-success',
-                    'xlsx': 'fa-file-excel text-success',
-                    'ppt': 'fa-file-powerpoint text-warning',
-                    'pptx': 'fa-file-powerpoint text-warning',
-                    'txt': 'fa-file-alt text-secondary',
-                    'jpg': 'fa-file-image text-info',
-                    'jpeg': 'fa-file-image text-info',
-                    'png': 'fa-file-image text-info',
-                    'gif': 'fa-file-image text-info',
-                    'zip': 'fa-file-archive text-warning',
-                    'rar': 'fa-file-archive text-warning',
-                    'mp3': 'fa-file-audio text-warning',
-                    'mp4': 'fa-file-video text-danger',
-                    'avi': 'fa-file-video text-danger'
-                };
-
-                return iconMap[extension] || 'fa-file';
+        function updateHiddenFields() {
+            if (currentFile) {
+                obsNombreArchivo.value = currentFile.name;
+                obsExtension.value = getFileExtension(currentFile.name);
+                obsFileSize.value = currentFile.size;
             }
+        }
 
-            function getFileExtension(filename) {
-                return filename.split('.').pop().toLowerCase();
-            }
+        function clearHiddenFields() {
+            obsNombreArchivo.value = '';
+            obsExtension.value = '';
+            obsFileSize.value = '';
+        }
 
-            function formatFileSize(bytes) {
-                if (bytes === 0) return '0 Bytes';
-
-                const k = 1024;
-                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-                const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-            }
-
-            function showStatusMessage(message, type) {
-                // Eliminar mensajes anteriores
-                const existingMessage = document.querySelector('.status-message');
-                if (existingMessage) {
-                    existingMessage.remove();
-                }
-
-                // Crear nuevo mensaje
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `status-message status-${type}`;
-                messageDiv.textContent = message;
-
-                // Insertar después del área de arrastrar y soltar
-                const modalBody = dropArea.closest('.modal-body');
-                modalBody.insertBefore(messageDiv, dropArea.nextSibling);
-
-                // Mostrar mensaje
-                messageDiv.style.display = 'block';
-
-                // Ocultar después de 3 segundos
-                setTimeout(() => {
-                    messageDiv.style.opacity = '0';
-                    setTimeout(() => messageDiv.remove(), 300);
-                }, 3000);
-            }
-
-            // Función para obtener el archivo actual (para usar en el guardado)
-            window.getObservationFile = function() {
-                return currentFile;
+        function getFileIconClass(file) {
+            const extension = file.name.split('.').pop().toLowerCase();
+            const iconMap = {
+                'pdf': 'fa-file-pdf text-danger',
+                'doc': 'fa-file-word text-primary',
+                'docx': 'fa-file-word text-primary',
+                'xls': 'fa-file-excel text-success',
+                'xlsx': 'fa-file-excel text-success',
+                'ppt': 'fa-file-powerpoint text-warning',
+                'pptx': 'fa-file-powerpoint text-warning',
+                'txt': 'fa-file-alt text-secondary',
+                'jpg': 'fa-file-image text-info',
+                'jpeg': 'fa-file-image text-info',
+                'png': 'fa-file-image text-info',
+                'gif': 'fa-file-image text-info',
+                'zip': 'fa-file-archive text-warning',
+                'rar': 'fa-file-archive text-warning',
+                'mp3': 'fa-file-audio text-warning',
+                'mp4': 'fa-file-video text-danger',
+                'avi': 'fa-file-video text-danger'
             };
 
-            // Función para limpiar el archivo (para usar cuando se cierra el modal)
-            window.clearObservationFile = function() {
-                currentFile = null;
-                renderFilePreview();
-                clearHiddenFields();
-            };
-        });
+            return iconMap[extension] || 'fa-file';
+        }
+
+        function getFileExtension(filename) {
+            return filename.split('.').pop().toLowerCase();
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showStatusMessage(message, type) {
+            // Eliminar mensajes anteriores
+            const existingMessage = document.querySelector('.status-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+
+            // Crear nuevo mensaje
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `status-message status-${type}`;
+            messageDiv.textContent = message;
+
+            // Insertar después del área de arrastrar y soltar
+            const modalBody = dropArea.closest('.modal-body');
+            modalBody.insertBefore(messageDiv, dropArea.nextSibling);
+
+            // Mostrar mensaje
+            messageDiv.style.display = 'block';
+
+            // Ocultar después de 3 segundos
+            setTimeout(() => {
+                messageDiv.style.opacity = '0';
+                setTimeout(() => messageDiv.remove(), 300);
+            }, 3000);
+        }
+
+        // Función para obtener el archivo actual (para usar en el guardado)
+        window.getObservationFile = function () {
+            return currentFile;
+        };
+
+        // Función para limpiar el archivo (para usar cuando se cierra el modal)
+        window.clearObservationFile = function () {
+            currentFile = null;
+            renderFilePreview();
+            clearHiddenFields();
+        };
+    });
 </script>

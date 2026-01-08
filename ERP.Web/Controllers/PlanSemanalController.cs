@@ -77,11 +77,11 @@ namespace ReyDavid.Web.Controllers
         }
 
         // JSON: Cards
-        public JsonResult ListarTarjetas(int idPlanSemana, int? idPersonaResponsable = null)
+        public JsonResult ListarTarjetas(int idPlanSemana,string estado, int? idPersonaResponsable)
         {
             try
             {
-                var cards = planSemanalServicio.ListarTarjetas(idPlanSemana, idPersonaResponsable);
+                var cards = planSemanalServicio.ListarTarjetas(idPlanSemana,estado, idPersonaResponsable.GetValueOrDefault());
                 return Json(new { ok = true, cards }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -426,7 +426,7 @@ namespace ReyDavid.Web.Controllers
         }
 
        
-        public ActionResult ExportarTareasSemanal(int idPlanSemana, string lunes, int? idPersonaResponsable = null)
+        public ActionResult ExportarTareasSemanal(int idPlanSemana, string lunes, string estado, int? idPersonaResponsable = null)
         {
             try
             {
@@ -437,7 +437,7 @@ namespace ReyDavid.Web.Controllers
                 var fechaExportacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 var fechaLunes = DateTime.Parse(lunes);
 
-                var cards = planSemanalServicio.ListarTarjetas(idPlanSemana, idPersonaResponsable);
+                var cards = planSemanalServicio.ListarTarjetas(idPlanSemana,estado, idPersonaResponsable);
                 var dayNames = new[] { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" };
 
                 using (var package = new ExcelPackage())
@@ -576,6 +576,22 @@ namespace ReyDavid.Web.Controllers
             catch (Exception ex)
             {
                 return new HttpStatusCodeResult(500, "Error al exportar: " + ex.Message);
+            }
+        }
+        public JsonResult ListarTareasPorSubRequerimiento(int idRequerimientoDetalle)
+        {
+            try
+            {
+                // Obtener todas las tarjetas y filtrar por idRequerimientoDetalle
+                var todasLasTarjetas = planSemanalServicio.ListarTarjetas(0, "0", 0);
+                var tareas = todasLasTarjetas
+                     .Where(t => t.idRequerimientoDetalle == idRequerimientoDetalle && (t.idObservacion == null || t.idObservacion == 0))
+                     .ToList();
+                return Json(new { ok = true, tareas }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ok = false, error = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
         public ActionResult ExportarDatos(int idAdicional, string q = "", string estado = "Todos")

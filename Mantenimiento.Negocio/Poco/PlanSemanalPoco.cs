@@ -104,6 +104,7 @@ namespace Mantenimiento.Negocio.Poco
         public int idRequerimientoDetalle { get; set; }
         public int? idPersonaResponsable { get; set; }
         public int? idObservacion { get; set; }
+        public int tieneAdjunto { get; set; }
     }
 
     public class sp_PlanSemanal_TreeRequerimiento

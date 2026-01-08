@@ -92,7 +92,7 @@ namespace Mantenimiento.Negocio.Servicios
             }
         }
 
-        public List<sp_PlanSemanal_ListarTarjetas> ListarTarjetas(int idPlanSemana, int? idPersonaResponsable)
+        public List<sp_PlanSemanal_ListarTarjetas> ListarTarjetas(int idPlanSemana, string estado, int? idPersonaResponsable)
         {
             try
             {
@@ -100,6 +100,8 @@ namespace Mantenimiento.Negocio.Servicios
                 {
                     var p = new DynamicParameters();
                     p.Add("@idPlanSemana", idPlanSemana, DbType.Int32);
+                    p.Add("@idPersonaResponsable", idPersonaResponsable, DbType.Int32);
+                    p.Add("@estado", estado, DbType.String);
 
                     var result = connection.Query<sp_PlanSemanal_ListarTarjetas>(
                         "sp_PlanSemanal_ListarTarjetas",
