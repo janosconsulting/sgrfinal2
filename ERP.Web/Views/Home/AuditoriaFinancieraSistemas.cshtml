@@ -1,0 +1,631 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!--<< Header Area >>-->
+<body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!--<< Breadcrumb Section Start >>-->
+    <div class="breadcrumb-wrapper bg-cover" style="background-image: url('@Url.Content("~/Content/theme/assets/img/breadcrumb.jpg")');">
+        <div class="border-shape">
+            <img src="@Url.Content("~/Content/theme/assets/img/element.png")" alt="shape-img">
+        </div>
+        <div class="line-shape">
+            <img src="@Url.Content("~/Content/theme/assets/img/line-element.png")" alt="shape-img">
+        </div>
+        <div class="container">
+            <div class="page-heading">
+                <h1 class="wow fadeInUp" data-wow-delay=".3s">Auditoria Financiera y de Sistemas</h1>
+                <ul class="breadcrumb-items wow fadeInUp" data-wow-delay=".5s">
+                    
+                    <li>
+                        Diagnóstico profesional para tomar decisiones seguras, reducir riesgos y optimizar la gestión tecnológica y financiera de tu empresa.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <style>
+
+        .section-title {
+            font-weight: 800;
+        }
+
+        .service-card {
+            border: none;
+            border-radius: 16px;
+            transition: all .3s ease;
+        }
+
+            .service-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 15px 40px rgba(0,0,0,.12);
+            }
+
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+        }
+
+        .badge-recommended {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+        }
+    </style>
+    <!-- ================= INFORMACIÓN AMPLIADA AUDITORÍAS ================= -->
+    <section class="py-5 bg-white" id="info-auditorias">
+        <div class="container">
+
+            <!-- TÍTULO -->
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">¿Por qué realizar una Auditoría?</h2>
+                <p class="text-muted mt-2">
+                    Una auditoría permite conocer el estado real del negocio, detectar riesgos ocultos
+                    y tomar decisiones basadas en información confiable.
+                </p>
+            </div>
+
+            <!-- BLOQUES INFORMATIVOS -->
+            <div class="row g-4 mb-5">
+
+                <div class="col-md-6">
+                    <div class="p-4 bg-light rounded h-100 shadow-sm">
+                        <h5 class="fw-bold mb-3">
+                            <i class="fas fa-laptop-code text-primary me-2"></i>
+                            Auditoría de Sistemas
+                        </h5>
+                        <p class="text-muted">
+                            Evalúa la calidad, seguridad y eficiencia de los sistemas informáticos que soportan
+                            las operaciones del negocio.
+                        </p>
+                        <ul class="list-unstyled small">
+                            <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Detecta fallas técnicas y riesgos de seguridad</li>
+                            <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Identifica problemas de rendimiento</li>
+                            <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Evalúa la mantenibilidad del sistema</li>
+                            <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Reduce dependencia de personas clave</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="p-4 bg-light rounded h-100 shadow-sm">
+                        <h5 class="fw-bold mb-3">
+                            <i class="fas fa-file-invoice-dollar text-success me-2"></i>
+                            Auditoría Financiera y Control de Gestión
+                        </h5>
+                        <p class="text-muted">
+                            Analiza la coherencia entre los procesos operativos, los sistemas y la información financiera.
+                        </p>
+                        <ul class="list-unstyled small">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Verifica ingresos vs registros del sistema</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Identifica fugas económicas</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Evalúa controles internos</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Mejora la toma de decisiones financieras</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <!-- ================= AUDITORÍA: CUÁNDO Y BENEFICIOS ================= -->
+            <div class="row align-items-stretch mb-5">
+
+                <!-- COLUMNA IZQUIERDA -->
+                <div class="col-md-6 mb-4">
+                    <div class="p-4 bg-light rounded shadow-sm h-100">
+                        <h5 class="fw-bold mb-3">
+                            <i class="fas fa-search text-primary me-2"></i>
+                            ¿Cuándo es recomendable una auditoría?
+                        </h5>
+
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-bug fa-lg text-danger me-3 mt-1"></i>
+                            <p class="small mb-0">
+                                Cuando el sistema presenta errores frecuentes, lentitud o
+                                comportamientos inesperados.
+                            </p>
+                        </div>
+
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-chart-line fa-lg text-warning me-3 mt-1"></i>
+                            <p class="small mb-0">
+                                Cuando el negocio ha crecido y el sistema no fue diseñado
+                                para ese nivel de operación.
+                            </p>
+                        </div>
+
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-balance-scale fa-lg text-primary me-3 mt-1"></i>
+                            <p class="small mb-0">
+                                Antes de tomar decisiones importantes como nuevas
+                                inversiones, migraciones o ampliaciones.
+                            </p>
+                        </div>
+
+                        <div class="d-flex">
+                            <i class="fas fa-shield-alt fa-lg text-danger me-3 mt-1"></i>
+                            <p class="small mb-0">
+                                Cuando se requiere mayor control, seguridad y confiabilidad
+                                de la información.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMNA DERECHA -->
+                <div class="col-md-6 mb-4">
+                    <div class="p-4 bg-light rounded shadow-sm h-100">
+                        <h5 class="fw-bold mb-3">
+                            <i class="fas fa-award me-2"></i>
+                            Lo que obtiene tu empresa
+                        </h5>
+
+                        <ul class="list-unstyled small mb-0">
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Visión clara y objetiva del estado actual de sus sistemas
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Identificación de riesgos técnicos y operativos priorizados
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Recomendaciones prácticas y accionables
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Información confiable para la toma de decisiones gerenciales
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Base sólida para crecimiento y nuevas inversiones tecnológicas
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- METODOLOGÍA -->
+            <div class="text-center mb-4">
+                <h2 class="fw-bold">Nuestra Metodología</h2>
+            </div>
+            <!-- ================= METODOLOGÍA DETALLADA ================= -->
+
+            <div class="row g-4 mb-5">
+
+                <div class="col-md-4">
+                    <div class="p-4 bg-light rounded shadow-sm h-100">
+                        <i class="fas fa-comments fa-2x text-primary mb-3"></i>
+                        <h6 class="fw-bold">1. Reunión Inicial</h6>
+                        <p class="small text-muted">
+                            Entendemos el negocio, los objetivos del cliente y el alcance del sistema
+                            o procesos a evaluar.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-4 bg-light rounded shadow-sm h-100">
+                        <i class="fas fa-folder-open fa-2x text-primary mb-3"></i>
+                        <h6 class="fw-bold">2. Recolección de Información</h6>
+                        <p class="small text-muted">
+                            Revisamos documentación, accesos, reportes, flujos operativos y configuraciones
+                            relevantes del sistema.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-4 bg-light rounded shadow-sm h-100">
+                        <i class="fas fa-search fa-2x text-primary mb-3"></i>
+                        <h6 class="fw-bold">3. Análisis Técnico y Financiero</h6>
+                        <p class="small text-muted">
+                            Analizamos arquitectura, seguridad, procesos, datos financieros y controles
+                            internos relacionados al sistema.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-4 bg-light rounded shadow-sm h-100">
+                        <i class="fas fa-exclamation-triangle fa-2x text-warning mb-3"></i>
+                        <h6 class="fw-bold">4. Identificación de Riesgos</h6>
+                        <p class="small text-muted">
+                            Detectamos riesgos técnicos, operativos y financieros, clasificándolos
+                            según su impacto y prioridad.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-4 bg-light rounded shadow-sm h-100">
+                        <i class="fas fa-file-alt fa-2x text-primary mb-3"></i>
+                        <h6 class="fw-bold">5. Elaboración del Informe</h6>
+                        <p class="small text-muted">
+                            Preparamos un informe claro con hallazgos, impacto, recomendaciones
+                            y un roadmap de mejoras.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-4 bg-light rounded shadow-sm h-100">
+                        <i class="fas fa-user-tie fa-2x text-primary mb-3"></i>
+                        <h6 class="fw-bold">6. Presentación Ejecutiva</h6>
+                        <p class="small text-muted">
+                            Presentamos los resultados a gerencia y resolvemos dudas para apoyar
+                            la toma de decisiones.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CTA -->
+            <div class="text-center">
+                <a href="#contacto" class="btn btn-primary btn-lg">
+                    Solicitar Auditoría
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= AUDITORÍAS ================= -->
+    <section class="py-5" id="auditorias">
+        <div class="container">
+
+            <div class="text-center mb-5">
+                <h2 class="section-title">Nuestros Servicios de Auditoría</h2>
+                <p class="text-muted mt-2">
+                    Evaluamos sistemas, procesos y finanzas con un enfoque claro, técnico y entendible para gerencia.
+                </p>
+            </div>
+
+            <div class="row g-4">
+
+                <!-- AUDITORÍA DE SISTEMAS -->
+                <div class="col-md-4">
+                    <div class="card service-card h-100 position-relative">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-circle bg-primary text-white mb-3">
+                                <i class="fas fa-desktop fa-lg"></i>
+                            </div>
+                            <h5 class="fw-bold">Auditoría de Sistemas</h5>
+                            <p class="text-muted small mb-3">
+                                Evaluación técnica y funcional de tus aplicaciones, infraestructura y procesos digitales.
+                            </p>
+                            <ul class="list-unstyled small text-start">
+                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Arquitectura y código</li>
+                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Seguridad y accesos</li>
+                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Base de datos y rendimiento</li>
+                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Riesgos tecnológicos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AUDITORÍA FINANCIERA -->
+                <div class="col-md-4">
+                    <div class="card service-card h-100 position-relative">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-circle bg-success text-white mb-3">
+                                <i class="fas fa-file-invoice-dollar fa-lg"></i>
+                            </div>
+                            <h5 class="fw-bold">Auditoría Financiera</h5>
+                            <p class="text-muted small mb-3">
+                                Control y validación de la información financiera relacionada con los sistemas y operaciones.
+                            </p>
+                            <ul class="list-unstyled small text-start">
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Ingresos vs sistema</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Egresos y gastos</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Controles internos</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Riesgos financieros</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AUDITORÍA INTEGRAL -->
+                <div class="col-md-4">
+                    <div class="card service-card h-100 position-relative border border-warning">
+                        <span class="badge bg-warning text-dark badge-recommended">Recomendado</span>
+                        <div class="card-body text-center p-4">
+                            <div class="icon-circle bg-warning text-dark mb-3">
+                                <i class="fas fa-chart-line fa-lg"></i>
+                            </div>
+                            <h5 class="fw-bold">Auditoría Integral</h5>
+                            <p class="text-muted small mb-3">
+                                Visión completa: tecnología + finanzas + procesos para decisiones estratégicas.
+                            </p>
+                            <ul class="list-unstyled small text-start">
+                                <li class="mb-2"><i class="fas fa-check text-warning me-2"></i> Sistemas + Finanzas</li>
+                                <li class="mb-2"><i class="fas fa-check text-warning me-2"></i> Informe consolidado</li>
+                                <li class="mb-2"><i class="fas fa-check text-warning me-2"></i> Roadmap de mejoras</li>
+                                <li class="mb-2"><i class="fas fa-check text-warning me-2"></i> Reunión ejecutiva</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= PROYECTOS AUDITADOS ================= -->
+    <section class="py-5 bg-white" id="proyectos-auditoria">
+        <div class="container">
+
+            <!-- TÍTULO -->
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Proyectos de Auditoría Realizados</h2>
+                <p class="text-muted mt-2">
+                    Participamos en proyectos de auditoría tecnológica orientados a mejorar
+                    la seguridad, el rendimiento y la calidad de los sistemas digitales.
+                </p>
+            </div>
+
+            <!-- PROYECTOS -->
+            <div class="row g-4 justify-content-center">
+
+                <!-- PROYECTO 1 -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm border-0 text-center">
+                        <div class="card-body p-4">
+                            <img src="https://indolmasa.pe/wp-content/uploads/2024/01/logoHD-removebg-preview.png"
+                                 alt="Proyecto 1"
+                                 class="img-fluid mb-3"
+                                 style="max-height:80px;">
+                            <h6 class="fw-bold">Auditoría de Tecnologías de la Información (TI)</h6>
+                            <p class="small text-muted">
+                                Evaluación del entorno tecnológico, revisión de controles,
+                                accesos, procesos y riesgos asociados a la operación del sistema.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 2 -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm border-0 text-center">
+                        <div class="card-body p-4">
+                            <img src="https://transta.net/images/logo.png"
+                                 alt="Proyecto 2"
+                                 class="img-fluid mb-3"
+                                 style="max-height:80px;">
+                            <h6 class="fw-bold">Auditoría de Sitio Web</h6>
+                            <p class="small text-muted">
+                                Auditoría técnica del sitio web de <strong>transta.net</strong>,
+                                enfocada en rendimiento, estructura, seguridad básica y
+                                buenas prácticas de desarrollo web.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 3 -->
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm border-0 text-center">
+                        <div class="card-body p-4">
+                            <img src="https://codetus.com/Uploads/Files/iconEmpresa/luchine.png"
+                                 alt="Proyecto 3"
+                                 class="img-fluid mb-3"
+                                 style="max-height:80px;">
+                            <h6 class="fw-bold">Auditoría de Sistema de Gestión Hotelera</h6>
+                            <p class="small text-muted">
+                                Auditoría funcional y técnica de un sistema para hoteles,
+                                orientada a evaluar procesos de reservas, operaciones,
+                                seguridad de la información y estabilidad del sistema.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- NOTA DE CONFIDENCIALIDAD -->
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-10">
+                    <div class="p-3 bg-light rounded text-center">
+                        <p class="small text-muted mb-0">
+                            Los proyectos mostrados corresponden a auditorías reales realizadas.
+                            Algunos detalles se mantienen bajo acuerdos de confidencialidad.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ================= CTA ================= -->
+    <section class="py-5 text-center text-white" style="background:#212529;">
+        <div class="container">
+            <h3 class="fw-bold mb-3">¿Quieres saber en qué estado real está tu negocio?</h3>
+            <p class="mb-4">
+                Solicita una auditoría profesional y obtén información clara para tomar mejores decisiones.
+            </p>
+            <a href="#contacto" class="btn btn-success btn-lg fw-bold">
+                Solicitar Auditoría
+            </a>
+        </div>
+    </section>
+    <!-- ================= FAQ ESTRATÉGICA ================= -->
+    <section class="py-5 bg-light" id="faq-auditoria">
+        <div class="container">
+
+            <!-- TÍTULO -->
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Preguntas Frecuentes</h2>
+                <p class="text-muted mt-2">
+                    Respondemos las dudas más comunes antes de contratar una auditoría.
+                </p>
+            </div>
+
+            <div class="accordion" id="accordionFAQ">
+
+                <!-- FAQ 1 -->
+                <div class="accordion-item mb-3">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            ¿Qué es una auditoría de sistemas y para qué sirve?
+                        </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#accordionFAQ">
+                        <div class="accordion-body">
+                            Una auditoría de sistemas evalúa el estado real de las aplicaciones,
+                            procesos y controles tecnológicos del negocio. Sirve para identificar
+                            riesgos, errores ocultos, problemas de rendimiento y oportunidades
+                            de mejora antes de que generen pérdidas.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="accordion-item mb-3">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                            ¿En qué se diferencia de un soporte o mantenimiento?
+                        </button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                        <div class="accordion-body">
+                            El soporte corrige errores visibles.
+                            La auditoría analiza el sistema de forma integral, detecta causas,
+                            riesgos futuros y propone mejoras estructurales.
+                            <strong>Es preventiva, no reactiva.</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="accordion-item mb-3">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                            ¿La auditoría financiera reemplaza a mi contador?
+                        </button>
+                    </h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                        <div class="accordion-body">
+                            No. La auditoría financiera se enfoca en el <strong>
+                                control interno,
+                                procesos y sistemas
+                            </strong>.
+                            No reemplaza una auditoría contable legal, sino que complementa
+                            el trabajo del contador y fortalece la gestión del negocio.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="accordion-item mb-3">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                            ¿Necesito una auditoría si mi sistema “funciona”?
+                        </button>
+                    </h2>
+                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                        <div class="accordion-body">
+                            Sí. Muchos sistemas funcionan, pero tienen riesgos ocultos:
+                            accesos indebidos, procesos ineficientes, dependencias críticas o
+                            pérdidas económicas no visibles.
+                            <strong>La auditoría detecta lo que no se ve.</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="accordion-item mb-3">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                            ¿Interrumpen la operación del negocio?
+                        </button>
+                    </h2>
+                    <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                        <div class="accordion-body">
+                            No. La auditoría se realiza de forma planificada, sin afectar
+                            las operaciones diarias. El objetivo es analizar, no intervenir
+                            ni detener el sistema.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="accordion-item mb-3">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                            ¿Qué entregables recibiré?
+                        </button>
+                    </h2>
+                    <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                        <div class="accordion-body">
+                            Recibirás un <strong>informe profesional</strong> con:
+                            <ul>
+                                <li>Hallazgos y riesgos clasificados</li>
+                                <li>Impacto técnico y/o financiero</li>
+                                <li>Recomendaciones claras</li>
+                                <li>Roadmap de mejoras priorizadas</li>
+                                <li>Resumen ejecutivo para gerencia</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 7 -->
+                <div class="accordion-item mb-3">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">
+                            ¿Luego de la auditoría estoy obligado a contratar mejoras?
+                        </button>
+                    </h2>
+                    <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                        <div class="accordion-body">
+                            No existe ninguna obligación.
+                            La auditoría es independiente.
+                            Si el cliente lo desea, puede solicitar apoyo para implementar
+                            las mejoras detectadas.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 8 -->
+                <div class="accordion-item mb-3">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq8">
+                            ¿Cada cuánto tiempo se recomienda una auditoría?
+                        </button>
+                    </h2>
+                    <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                        <div class="accordion-body">
+                            Se recomienda realizar una auditoría:
+                            <ul>
+                                <li>Al menos una vez al año</li>
+                                <li>Antes de tomar decisiones importantes</li>
+                                <li>Cuando el negocio crece rápidamente</li>
+                                <li>Si existen problemas recurrentes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CTA FINAL -->
+            <div class="text-center mt-5">
+                <a href="#contacto" class="btn btn-primary btn-lg">
+                    Solicitar Auditoría
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+
+</body>
+</html>

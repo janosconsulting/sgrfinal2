@@ -101,6 +101,12 @@ namespace ReyDavid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult AuditoriaFinancieraSistemas()
+        {
+            return View();
+        }
+
         public ActionResult AsesoresComerciales()
         {
             return View();
@@ -109,6 +115,8 @@ namespace ReyDavid.Web.Controllers
         {
             return View();
         }
+
+
         public ActionResult CasosdeExito()
         {
             var servicio = new CasosExitoServicio(); // Crear instancia del servicio

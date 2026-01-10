@@ -6555,6 +6555,7 @@
     <Content Include="Views\PlanSemanal\Index.cshtml" />
     <Content Include="Views\PlanSemanal\_FormTarjeta.cshtml" />
     <Content Include="Views\PlanSemanal\Observaciones.cshtml" />
+    <Content Include="Views\Home\AuditoriaFinancieraSistemas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ControlCombustible.Utilitario\Mantenimiento.Utilitario.csproj">
