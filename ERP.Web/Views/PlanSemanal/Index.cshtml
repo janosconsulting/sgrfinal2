@@ -1161,8 +1161,10 @@
             renderTree();
             renderDetailEmpty();
         });
-        $("#btnExport").on("click", function(){
-            const url = "@Url.Action("ExportarTareasSemanal", "PlanSemanal")?idPlanSemana=" + ID_PLAN + "&lunes=" + LUNES_ISO + "&idPersonaResponsable=" + (filtroTrabajador || "");
+        $("#btnExport").on("click", function () {
+            var estado = $("#fEstado").val();
+
+            const url = "@Url.Action("ExportarTareasSemanal", "PlanSemanal")?idPlanSemana=" + ID_PLAN + "&lunes=" + LUNES_ISO + "&estado=" + estado + "&idPersonaResponsable=" + (filtroTrabajador || "");
             window.location.href = url;
         });
 

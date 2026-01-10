@@ -437,7 +437,7 @@ namespace ReyDavid.Web.Controllers
                 var fechaExportacion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 var fechaLunes = DateTime.Parse(lunes);
 
-                var cards = planSemanalServicio.ListarTarjetas(idPlanSemana,estado, idPersonaResponsable);
+                var cards = planSemanalServicio.ListarTarjetas(idPlanSemana,estado, idPersonaResponsable.GetValueOrDefault());
                 var dayNames = new[] { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" };
 
                 using (var package = new ExcelPackage())
